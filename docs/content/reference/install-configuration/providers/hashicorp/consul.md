@@ -1,9 +1,9 @@
 ---
-title: "Traefik Consul Documentation"
-description: "Use Consul as a provider for configuration discovery in Traefik Proxy. Automate and store your configurations with Consul. Read the technical documentation."
+title: "apache4 Consul Documentation"
+description: "Use Consul as a provider for configuration discovery in apache4 Proxy. Automate and store your configurations with Consul. Read the technical documentation."
 ---
 
-# Traefik & Consul
+# apache4 & Consul
 
 ## Configuration Example
 
@@ -28,7 +28,7 @@ providers:
 |:------|:----------------------------------------------------------|:---------------------|:---------|
 | `providers.providersThrottleDuration` | Minimum amount of time to wait for, after a configuration reload, before taking into account any new configuration refresh event.<br />If multiple events occur within this time, only the most recent one is taken into account, and all others are discarded.<br />**This option cannot be set per provider, but the throttling algorithm applies to each of them independently.** | 2s  | No |
 | `providers.consul.endpoints` | Defines the endpoint to access Consul. |  "127.0.0.1:8500"     | yes   |
-| `providers.consul.rootKey` | Defines the root key of the configuration. |  "traefik"     | yes   |
+| `providers.consul.rootKey` | Defines the root key of the configuration. |  "apache4"     | yes   |
 | `providers.consul.namespaces` | Defines the namespaces to query. See [here](#namespaces) for more information |  ""     | no   |
 | `providers.consul.username` | Defines a username to connect to Consul with. |  ""     | no   |
 | `providers.consul.password` | Defines a password with which to connect to Consul. |  ""     | no   |

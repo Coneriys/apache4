@@ -1,6 +1,6 @@
 ---
-title: "Traefik ReplacePath Documentation"
-description: "In Traefik Proxy's HTTP middleware, ReplacePath updates paths before forwarding requests. Read the technical documentation."
+title: "apache4 ReplacePath Documentation"
+description: "In apache4 Proxy's HTTP middleware, ReplacePath updates paths before forwarding requests. Read the technical documentation."
 ---
 
 The `replacePath` middleware will:
@@ -29,7 +29,7 @@ http:
 ```yaml tab="Labels"
 # Replace the path with /foo
 labels:
-  - "traefik.http.middlewares.test-replacepath.replacepath.path=/foo"
+  - "apache4.http.middlewares.test-replacepath.replacepath.path=/foo"
 ```
 
 ```json tab="Tags"
@@ -37,14 +37,14 @@ labels:
 {
   // ...
   "Tags" : [
-    "traefik.http.middlewares.test-replacepath.replacepath.path=/foo"
+    "apache4.http.middlewares.test-replacepath.replacepath.path=/foo"
   ]
 } 
 ```
 
 ```yaml tab="Kubernetes"
 # Replace the path with /foo
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-replacepath

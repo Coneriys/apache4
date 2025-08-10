@@ -1,8 +1,8 @@
-Owner = "traefik"
-RepositoryName = "traefik"
+Owner = "apache4"
+RepositoryName = "apache4"
 
 OutputType = "file"
-FileName = "traefik_changelog.md"
+FileName = "apache4_changelog.md"
 
 # example RC1 of v3.5.0-rc1
 CurrentRef = "master"

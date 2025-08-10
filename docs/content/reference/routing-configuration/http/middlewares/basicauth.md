@@ -1,6 +1,6 @@
 ---
-title: "Traefik BasicAuth Documentation"
-description: "The HTTP basic authentication (BasicAuth) middleware in Traefik Proxy restricts access to your Services to known users. Read the technical documentation."
+title: "apache4 BasicAuth Documentation"
+description: "The HTTP basic authentication (BasicAuth) middleware in apache4 Proxy restricts access to your Services to known users. Read the technical documentation."
 ---
 
 ![BasicAuth](../../../../assets/img/middleware/basicauth.png)
@@ -39,21 +39,21 @@ http:
 #
 # Also, note that dollar signs should NOT be doubled when not evaluated (e.g. Ansible docker_container module).
 labels:
-  - "traefik.http.middlewares.test-auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
+  - "apache4.http.middlewares.test-auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
 ```
 
 ```json tab="Tags"
 {
   // ...
   "Tags": [
-    "traefik.http.middlewares.test-auth.basicauth.users=test:$apr1$H6uskkkW$IgXLP6ewTrSuBkTrqE8wj/,test2:$apr1$d9hr9HBB$4HxwgUir3HP4EsggP/QNo0"
+    "apache4.http.middlewares.test-auth.basicauth.users=test:$apr1$H6uskkkW$IgXLP6ewTrSuBkTrqE8wj/,test2:$apr1$d9hr9HBB$4HxwgUir3HP4EsggP/QNo0"
   ]
 }
 ```
 
 ```yaml tab="Kubernetes"
 # Declaring the user list
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-auth
@@ -68,7 +68,7 @@ spec:
 |:-----------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------|:---------|
 | `users` | Array of authorized users. Each user must be declared using the `name:hashed-password` format. (More information [here](#users))| ""      | No      |
 | `usersFile` | Path to an external file that contains the authorized users for the middleware. <br />The file content is a list of `name:hashed-password`. (More information [here](#usersfile)) | ""      | No      |
-| `realm` | Allow customizing the realm for the authentication.| "traefik"      | No      |
+| `realm` | Allow customizing the realm for the authentication.| "apache4"      | No      |
 | `headerField` | Allow defining a header field to store the authenticated user.| ""      | No      |
 | `removeHeader` | Allow removing the authorization header before forwarding the request to your service. | false      | No      |
 
@@ -94,4 +94,4 @@ The option `users` supports Kubernetes secrets.
     Please note that these keys are not hashed or encrypted in any way, and therefore is less secure than other methods.
     You can find more information on the [Kubernetes Basic Authentication Secret Documentation](https://kubernetes.io/docs/concepts/configuration/secret/#basic-authentication-secret)
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

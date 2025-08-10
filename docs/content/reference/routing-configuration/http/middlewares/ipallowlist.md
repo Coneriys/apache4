@@ -1,6 +1,6 @@
 ---
-title: "Traefik HTTP Middlewares IPAllowList"
-description: "Learn how to use IPAllowList in HTTP middleware for limiting clients to specific IPs in Traefik Proxy. Read the technical documentation."
+title: "apache4 HTTP Middlewares IPAllowList"
+description: "Learn how to use IPAllowList in HTTP middleware for limiting clients to specific IPs in apache4 Proxy. Read the technical documentation."
 ---
 
 `ipAllowList` accepts / refuses requests based on the client IP.
@@ -28,20 +28,20 @@ http:
 ```yaml tab="Labels"
 # Accepts request from defined IP
 labels:
-  - "traefik.http.middlewares.test-ipallowlist.ipallowlist.sourcerange=127.0.0.1/32, 192.168.1.7"
+  - "apache4.http.middlewares.test-ipallowlist.ipallowlist.sourcerange=127.0.0.1/32, 192.168.1.7"
 ```
 
 ```json tab="Tags"
 // Accepts request from defined IP
 {
   "Tags" : [
-    "traefik.http.middlewares.test-ipallowlist.ipallowlist.sourcerange=127.0.0.1/32, 192.168.1.7"
+    "apache4.http.middlewares.test-ipallowlist.ipallowlist.sourcerange=127.0.0.1/32, 192.168.1.7"
   ]
 }
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-ipallowlist
@@ -58,12 +58,12 @@ spec:
 |:-----------|:------------------------------|:--------|:---------|
 | `sourceRange` | List of allowed IPs (or ranges of allowed IPs by using CIDR notation). |      | Yes      |
 | `ipStrategy.depth` | Depth position of the IP to select in the `X-Forwarded-For` header (starting from the right).<br />0 means no depth.<br />If greater than the total number of IPs in `X-Forwarded-For`, then the client IP is empty<br /> If higher than 0, the `excludedIPs` options is not evaluated.<br /> More information about [`ipStrategy](#ipstrategy), and [`depth`](#example-of-depth--x-forwarded-for) below. | 0      | No      |
-| `ipStrategy.excludedIPs` | Allows Traefik to scan the `X-Forwarded-For` header and select the first IP not in the list.<br />If `depth` is specified, `excludedIPs` is ignored.<br /> More information about [`ipStrategy](#ipstrategy), and [`excludedIPs`](#example-of-excludedips--x-forwarded-for) below. |       | No      |
+| `ipStrategy.excludedIPs` | Allows apache4 to scan the `X-Forwarded-For` header and select the first IP not in the list.<br />If `depth` is specified, `excludedIPs` is ignored.<br /> More information about [`ipStrategy](#ipstrategy), and [`excludedIPs`](#example-of-excludedips--x-forwarded-for) below. |       | No      |
 | `ipStrategy.ipv6Subnet` |  If `ipv6Subnet` is provided and the selected IP is IPv6, the IP is transformed into the first IP of the subnet it belongs to. <br />More information about [`ipStrategy.ipv6Subnet`](#ipstrategyipv6subnet), and [`excludedIPs`](#example-of-excludedips--x-forwarded-for) below. |       | No      |
 
 ### ipStrategy
 
-The `ipStrategy` option defines two parameters that configures how Traefik determines the client IP: `depth`, and `excludedIPs`.
+The `ipStrategy` option defines two parameters that configures how apache4 determines the client IP: `depth`, and `excludedIPs`.
 
 If no strategy is set, the default behavior is to match `sourceRange` against the Remote address found in the request.
 
@@ -73,7 +73,7 @@ Therefore, during passlisting, as the previous network hop is not yet present in
 
 #### `ipStrategy.depth`
 
-The `depth` option tells Traefik to use the `X-Forwarded-For` header and take the IP located at the `depth` position (starting from the right).
+The `depth` option tells apache4 to use the `X-Forwarded-For` header and take the IP located at the `depth` position (starting from the right).
 
 - If `depth` is greater than the total number of IPs in `X-Forwarded-For`, then the client IP will be empty.
 - `depth` is ignored if its value is less than or equal to 0.

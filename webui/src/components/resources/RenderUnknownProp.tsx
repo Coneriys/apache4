@@ -1,4 +1,4 @@
-import { Text } from '@traefiklabs/faency'
+import { Text } from '@apache4labs/faency'
 import { ReactNode } from 'react'
 
 import { BooleanState, ItemBlock } from './DetailSections'

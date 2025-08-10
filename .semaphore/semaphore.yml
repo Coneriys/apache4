@@ -1,5 +1,5 @@
 version: v1.0
-name: Traefik Release - deprecated
+name: apache4 Release - deprecated
 agent:
   machine:
     type: f1-standard-2

@@ -1,6 +1,6 @@
 ---
-title: "Traefik CLI Flags Documentation"
-description: "Reference the CLI flags for static configuration in Traefik Proxy. Read the technical documentation."
+title: "apache4 CLI Flags Documentation"
+description: "Reference the CLI flags for static configuration in apache4 Proxy. Read the technical documentation."
 ---
 
 # Static Configuration: CLI

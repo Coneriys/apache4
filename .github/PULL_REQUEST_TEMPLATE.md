@@ -2,17 +2,17 @@
 PLEASE READ THIS MESSAGE.
 
 Documentation:
-- for Traefik v2: use branch v2.11 (fixes only)
-- for Traefik v3: use branch v3.5
+- for apache4 v2: use branch v2.11 (fixes only)
+- for apache4 v3: use branch v3.5
 
 Bug:
-- for Traefik v2: use branch v2.11 (security fixes only)
-- for Traefik v3: use branch v3.5
+- for apache4 v2: use branch v2.11 (security fixes only)
+- for apache4 v3: use branch v3.5
 
 Enhancements:
 - use branch master
 
-HOW TO WRITE A GOOD PULL REQUEST? https://doc.traefik.io/traefik/contributing/submitting-pull-requests/
+HOW TO WRITE A GOOD PULL REQUEST? https://doc.apache4.io/apache4/contributing/submitting-pull-requests/
 
 -->
 

@@ -13,5 +13,5 @@
   insecure = true
 
 [providers.consul]
-  rootKey = "traefik"
+  rootKey = "apache4"
   endpoints = ["{{ .ConsulAddress }}"]

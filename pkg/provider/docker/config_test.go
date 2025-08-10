@@ -11,10 +11,10 @@ import (
 	"github.com/docker/go-connections/nat"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	ptypes "github.com/traefik/paerser/types"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/tls"
-	"github.com/traefik/traefik/v3/pkg/types"
+	ptypes "github.com/apache4/paerser/types"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/tls"
+	"github.com/apache4/apache4/v3/pkg/types"
 )
 
 func TestDynConfBuilder_DefaultRule(t *testing.T) {
@@ -159,7 +159,7 @@ func TestDynConfBuilder_DefaultRule(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.domain": "foo.bar",
+						"apache4.domain": "foo.bar",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -174,7 +174,7 @@ func TestDynConfBuilder_DefaultRule(t *testing.T) {
 					},
 				},
 			},
-			defaultRule: `Host("{{ .Name }}.{{ index .Labels "traefik.domain" }}")`,
+			defaultRule: `Host("{{ .Name }}.{{ index .Labels "apache4.domain" }}")`,
 			expected: &dynamic.Configuration{
 				TCP: &dynamic.TCPConfiguration{
 					Routers:           map[string]*dynamic.TCPRouter{},
@@ -443,7 +443,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.test": "",
+						"apache4.http.services.test": "",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -487,7 +487,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.tcp.services.test": "",
+						"apache4.tcp.services.test": "",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -531,7 +531,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.udp.services.test": "",
+						"apache4.udp.services.test": "",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -603,7 +603,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Test",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -682,12 +682,12 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Test",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 						"Test2": {
 							Service:     "Test2",
-							Rule:        "Host(`Test2.traefik.wtf`)",
+							Rule:        "Host(`Test2.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -782,7 +782,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Test",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -820,7 +820,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Service1.loadbalancer.passhostheader": "true",
+						"apache4.http.services.Service1.loadbalancer.passhostheader": "true",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -850,7 +850,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Service1",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -885,9 +885,9 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Service1.loadbalancer.passhostheader": "true",
-						"traefik.http.routers.Router1.rule":                          "Host(`foo.com`)",
-						"traefik.http.routers.Router1.service":                       "Service1",
+						"apache4.http.services.Service1.loadbalancer.passhostheader": "true",
+						"apache4.http.routers.Router1.rule":                          "Host(`foo.com`)",
+						"apache4.http.routers.Router1.service":                       "Service1",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -951,7 +951,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.routers.Router1.rule": "Host(`foo.com`)",
+						"apache4.http.routers.Router1.rule": "Host(`foo.com`)",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1015,8 +1015,8 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.routers.Router1.rule":                          "Host(`foo.com`)",
-						"traefik.http.services.Service1.loadbalancer.passhostheader": "true",
+						"apache4.http.routers.Router1.rule":                          "Host(`foo.com`)",
+						"apache4.http.services.Service1.loadbalancer.passhostheader": "true",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1080,9 +1080,9 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.routers.Router1.rule":                          "Host(`foo.com`)",
-						"traefik.http.services.Service1.loadbalancer.passhostheader": "true",
-						"traefik.http.services.Service2.loadbalancer.passhostheader": "true",
+						"apache4.http.routers.Router1.rule":                          "Host(`foo.com`)",
+						"apache4.http.services.Service1.loadbalancer.passhostheader": "true",
+						"apache4.http.services.Service2.loadbalancer.passhostheader": "true",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1155,8 +1155,8 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.routers.Router1.rule":    "Host(`foo.com`)",
-						"traefik.http.routers.Router1.service": "Service1",
+						"apache4.http.routers.Router1.rule":    "Host(`foo.com`)",
+						"apache4.http.routers.Router1.service": "Service1",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1221,7 +1221,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Service1.loadbalancer.passhostheader": "true",
+						"apache4.http.services.Service1.loadbalancer.passhostheader": "true",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1240,7 +1240,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Service1.loadbalancer.passhostheader": "false",
+						"apache4.http.services.Service1.loadbalancer.passhostheader": "false",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1270,7 +1270,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Service1",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -1291,7 +1291,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Service1.loadbalancer.passhostheader": "false",
+						"apache4.http.services.Service1.loadbalancer.passhostheader": "false",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1310,7 +1310,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Service1.loadbalancer.passhostheader": "true",
+						"apache4.http.services.Service1.loadbalancer.passhostheader": "true",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1329,7 +1329,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Service1.loadbalancer.passhostheader": "true",
+						"apache4.http.services.Service1.loadbalancer.passhostheader": "true",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1359,7 +1359,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Service1",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -1380,7 +1380,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Service1.loadbalancer.passhostheader": "true",
+						"apache4.http.services.Service1.loadbalancer.passhostheader": "true",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1399,7 +1399,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Service1.loadbalancer.passhostheader": "true",
+						"apache4.http.services.Service1.loadbalancer.passhostheader": "true",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1429,7 +1429,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Service1",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -1467,7 +1467,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.middlewares.Middleware1.inflightreq.amount": "42",
+						"apache4.http.middlewares.Middleware1.inflightreq.amount": "42",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1497,7 +1497,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Test",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -1539,7 +1539,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.middlewares.Middleware1.inflightreq.amount": "42",
+						"apache4.http.middlewares.Middleware1.inflightreq.amount": "42",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1558,7 +1558,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.middlewares.Middleware1.inflightreq.amount": "42",
+						"apache4.http.middlewares.Middleware1.inflightreq.amount": "42",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1588,7 +1588,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Test",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -1633,7 +1633,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.middlewares.Middleware1.inflightreq.amount": "42",
+						"apache4.http.middlewares.Middleware1.inflightreq.amount": "42",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1652,7 +1652,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.middlewares.Middleware1.inflightreq.amount": "41",
+						"apache4.http.middlewares.Middleware1.inflightreq.amount": "41",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1682,7 +1682,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Test",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -1721,7 +1721,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.middlewares.Middleware1.inflightreq.amount": "42",
+						"apache4.http.middlewares.Middleware1.inflightreq.amount": "42",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1740,7 +1740,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.middlewares.Middleware1.inflightreq.amount": "41",
+						"apache4.http.middlewares.Middleware1.inflightreq.amount": "41",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1759,7 +1759,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.middlewares.Middleware1.inflightreq.amount": "40",
+						"apache4.http.middlewares.Middleware1.inflightreq.amount": "40",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1789,7 +1789,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Test",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -1831,7 +1831,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.routers.Router1.rule": "Host(`foo.com`)",
+						"apache4.http.routers.Router1.rule": "Host(`foo.com`)",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1850,7 +1850,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.routers.Router1.rule": "Host(`bar.com`)",
+						"apache4.http.routers.Router1.rule": "Host(`bar.com`)",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1913,7 +1913,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.routers.Router1.rule": "Host(`foo.com`)",
+						"apache4.http.routers.Router1.rule": "Host(`foo.com`)",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1932,7 +1932,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.routers.Router1.rule": "Host(`bar.com`)",
+						"apache4.http.routers.Router1.rule": "Host(`bar.com`)",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -1951,7 +1951,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.routers.Router1.rule": "Host(`foobar.com`)",
+						"apache4.http.routers.Router1.rule": "Host(`foobar.com`)",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -2017,7 +2017,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.routers.Router1.rule": "Host(`foo.com`)",
+						"apache4.http.routers.Router1.rule": "Host(`foo.com`)",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -2036,7 +2036,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.routers.Router1.rule": "Host(`foo.com`)",
+						"apache4.http.routers.Router1.rule": "Host(`foo.com`)",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -2103,7 +2103,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.routers.Router1.rule": "Host(`foo.com`)",
+						"apache4.http.routers.Router1.rule": "Host(`foo.com`)",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -2121,7 +2121,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test2",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.routers.Router1.rule": "Host(`foo.com`)",
+						"apache4.http.routers.Router1.rule": "Host(`foo.com`)",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -2194,7 +2194,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.wrong.label": "42",
+						"apache4.wrong.label": "42",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -2224,7 +2224,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Test",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -2259,8 +2259,8 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Service1.LoadBalancer.server.scheme": "h2c",
-						"traefik.http.services.Service1.LoadBalancer.server.port":   "8080",
+						"apache4.http.services.Service1.LoadBalancer.server.scheme": "h2c",
+						"apache4.http.services.Service1.LoadBalancer.server.port":   "8080",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -2290,7 +2290,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Service1",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -2325,8 +2325,8 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Service1.LoadBalancer.server.port": "",
-						"traefik.http.services.Service2.LoadBalancer.server.port": "8080",
+						"apache4.http.services.Service1.LoadBalancer.server.port": "",
+						"apache4.http.services.Service2.LoadBalancer.server.port": "8080",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -2399,7 +2399,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Service1.LoadBalancer.server.url": "http://1.2.3.4:5678",
+						"apache4.http.services.Service1.LoadBalancer.server.url": "http://1.2.3.4:5678",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -2429,7 +2429,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Service1",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -2464,8 +2464,8 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Service1.LoadBalancer.server.url":          "http://1.2.3.4:5678",
-						"traefik.http.services.Service1.LoadBalancer.server.preservepath": "true",
+						"apache4.http.services.Service1.LoadBalancer.server.url":          "http://1.2.3.4:5678",
+						"apache4.http.services.Service1.LoadBalancer.server.preservepath": "true",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -2495,7 +2495,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Service1",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -2531,8 +2531,8 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Service1.LoadBalancer.server.url":  "http://1.2.3.4:5678",
-						"traefik.http.services.Service1.LoadBalancer.server.port": "1234",
+						"apache4.http.services.Service1.LoadBalancer.server.url":  "http://1.2.3.4:5678",
+						"apache4.http.services.Service1.LoadBalancer.server.port": "1234",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -2576,8 +2576,8 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Service1.LoadBalancer.server.url":    "http://1.2.3.4:5678",
-						"traefik.http.services.Service1.LoadBalancer.server.scheme": "https",
+						"apache4.http.services.Service1.LoadBalancer.server.url":    "http://1.2.3.4:5678",
+						"apache4.http.services.Service1.LoadBalancer.server.scheme": "https",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -2661,7 +2661,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.middlewares.Middleware1.inflightreq.amount": "42",
+						"apache4.http.middlewares.Middleware1.inflightreq.amount": "42",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{},
@@ -2697,13 +2697,13 @@ func TestDynConfBuilder_build(t *testing.T) {
 			},
 		},
 		{
-			desc: "one container with traefik.enable false",
+			desc: "one container with apache4.enable false",
 			containers: []dockerData{
 				{
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.enable": "false",
+						"apache4.enable": "false",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -2796,7 +2796,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Test",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -2827,7 +2827,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Name:        "Test",
 					Health:      docker.Unhealthy,
 					Labels: map[string]string{
-						"traefik.tcp.routers.foo.rule": "HostSNI(`foo.bar`)",
+						"apache4.tcp.routers.foo.rule": "HostSNI(`foo.bar`)",
 					},
 				},
 			},
@@ -2862,7 +2862,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Name:        "Test",
 					Health:      docker.Unhealthy,
 					Labels: map[string]string{
-						"traefik.tcp.routers.foo.rule": "HostSNI(`foo.bar`)",
+						"apache4.tcp.routers.foo.rule": "HostSNI(`foo.bar`)",
 					},
 				},
 			},
@@ -2905,7 +2905,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Name:        "Test",
 					Health:      docker.Unhealthy,
 					Labels: map[string]string{
-						"traefik.udp.routers.foo": "true",
+						"apache4.udp.routers.foo": "true",
 					},
 				},
 			},
@@ -2939,7 +2939,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.udp.routers.foo": "true",
+						"apache4.udp.routers.foo": "true",
 					},
 					Health: docker.Unhealthy,
 				},
@@ -2981,7 +2981,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.tags": "foo",
+						"apache4.tags": "foo",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -2996,7 +2996,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					},
 				},
 			},
-			constraints: `Label("traefik.tags", "bar")`,
+			constraints: `Label("apache4.tags", "bar")`,
 			expected: &dynamic.Configuration{
 				TCP: &dynamic.TCPConfiguration{
 					Routers:           map[string]*dynamic.TCPRouter{},
@@ -3026,7 +3026,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.tags": "foo",
+						"apache4.tags": "foo",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -3041,7 +3041,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					},
 				},
 			},
-			constraints: `Label("traefik.tags", "foo")`,
+			constraints: `Label("apache4.tags", "foo")`,
 			expected: &dynamic.Configuration{
 				TCP: &dynamic.TCPConfiguration{
 					Routers:           map[string]*dynamic.TCPRouter{},
@@ -3057,7 +3057,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Test",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -3092,8 +3092,8 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.middlewares.Middleware1.basicauth.users": "test:$apr1$H6uskkkW$IgXLP6ewTrSuBkTrqE8wj/,test2:$apr1$d9hr9HBB$4HxwgUir3HP4EsggP/QNo0",
-						"traefik.http.routers.Test.middlewares":                "Middleware1",
+						"apache4.http.middlewares.Middleware1.basicauth.users": "test:$apr1$H6uskkkW$IgXLP6ewTrSuBkTrqE8wj/,test2:$apr1$d9hr9HBB$4HxwgUir3HP4EsggP/QNo0",
+						"apache4.http.routers.Test.middlewares":                "Middleware1",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -3123,7 +3123,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Test",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							Middlewares: []string{"Middleware1"},
 							DefaultRule: true,
 						},
@@ -3168,9 +3168,9 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.tcp.routers.Test.rule":                               "HostSNI(`foo.bar`)",
-						"traefik.tcp.middlewares.Middleware1.ipallowlist.sourcerange": "foobar, fiibar",
-						"traefik.tcp.routers.Test.middlewares":                        "Middleware1",
+						"apache4.tcp.routers.Test.rule":                               "HostSNI(`foo.bar`)",
+						"apache4.tcp.middlewares.Middleware1.ipallowlist.sourcerange": "foobar, fiibar",
+						"apache4.tcp.routers.Test.middlewares":                        "Middleware1",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -3236,8 +3236,8 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.tcp.routers.foo.rule": "HostSNI(`foo.bar`)",
-						"traefik.tcp.routers.foo.tls":  "true",
+						"apache4.tcp.routers.foo.rule": "HostSNI(`foo.bar`)",
+						"apache4.tcp.routers.foo.tls":  "true",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -3297,7 +3297,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.udp.routers.foo.entrypoints": "mydns",
+						"apache4.udp.routers.foo.entrypoints": "mydns",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -3356,7 +3356,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.tcp.routers.foo.tls": "true",
+						"apache4.tcp.routers.foo.tls": "true",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -3410,9 +3410,9 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.tcp.routers.foo.rule":                      "HostSNI(`foo.bar`)",
-						"traefik.tcp.routers.foo.tls.options":               "foo",
-						"traefik.tcp.services.foo.loadbalancer.server.port": "8080",
+						"apache4.tcp.routers.foo.rule":                      "HostSNI(`foo.bar`)",
+						"apache4.tcp.routers.foo.tls.options":               "foo",
+						"apache4.tcp.services.foo.loadbalancer.server.port": "8080",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -3474,8 +3474,8 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.udp.routers.foo.entrypoints":               "mydns",
-						"traefik.udp.services.foo.loadbalancer.server.port": "8080",
+						"apache4.udp.routers.foo.entrypoints":               "mydns",
+						"apache4.udp.services.foo.loadbalancer.server.port": "8080",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -3534,9 +3534,9 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.udp.routers.foo.entrypoints":                        "mydns",
-						"traefik.udp.services.foo.loadbalancer.server.port":          "8080",
-						"traefik.http.services.Service1.loadbalancer.passhostheader": "true",
+						"apache4.udp.routers.foo.entrypoints":                        "mydns",
+						"apache4.udp.services.foo.loadbalancer.server.port":          "8080",
+						"apache4.http.services.Service1.loadbalancer.passhostheader": "true",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -3555,9 +3555,9 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.udp.routers.foo.entrypoints":                        "mydns",
-						"traefik.udp.services.foo.loadbalancer.server.port":          "8080",
-						"traefik.http.services.Service1.loadbalancer.passhostheader": "true",
+						"apache4.udp.routers.foo.entrypoints":                        "mydns",
+						"apache4.udp.services.foo.loadbalancer.server.port":          "8080",
+						"apache4.http.services.Service1.loadbalancer.passhostheader": "true",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -3605,7 +3605,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Service1",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -3643,7 +3643,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.udp.services.foo.loadbalancer.server.port": "8080",
+						"apache4.udp.services.foo.loadbalancer.server.port": "8080",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -3698,7 +3698,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.tcp.services.foo.loadbalancer.server.port": "8080",
+						"apache4.tcp.services.foo.loadbalancer.server.port": "8080",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -3752,7 +3752,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.http.services.Test.loadbalancer.server.port": "80",
+						"apache4.http.services.Test.loadbalancer.server.port": "80",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -3790,7 +3790,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Test",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -3825,9 +3825,9 @@ func TestDynConfBuilder_build(t *testing.T) {
 					ServiceName: "Test",
 					Name:        "Test",
 					Labels: map[string]string{
-						"traefik.tls.stores.default.defaultgeneratedcert.resolver":    "foobar",
-						"traefik.tls.stores.default.defaultgeneratedcert.domain.main": "foobar",
-						"traefik.tls.stores.default.defaultgeneratedcert.domain.sans": "foobar, fiibar",
+						"apache4.tls.stores.default.defaultgeneratedcert.resolver":    "foobar",
+						"apache4.tls.stores.default.defaultgeneratedcert.domain.main": "foobar",
+						"apache4.tls.stores.default.defaultgeneratedcert.domain.sans": "foobar, fiibar",
 					},
 					NetworkSettings: networkSettings{
 						Ports: nat.PortMap{
@@ -3854,7 +3854,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					Routers: map[string]*dynamic.Router{
 						"Test": {
 							Service:     "Test",
-							Rule:        "Host(`Test.traefik.wtf`)",
+							Rule:        "Host(`Test.apache4.wtf`)",
 							DefaultRule: true,
 						},
 					},
@@ -3913,7 +3913,7 @@ func TestDynConfBuilder_build(t *testing.T) {
 					AllowEmptyServices: test.allowEmptyServices,
 					ExposedByDefault:   true,
 					UseBindPortIP:      test.useBindPortIP,
-					DefaultRule:        "Host(`{{ normalize .Name }}.traefik.wtf`)",
+					DefaultRule:        "Host(`{{ normalize .Name }}.apache4.wtf`)",
 				},
 			}
 			p.Constraints = test.constraints
@@ -3949,7 +3949,7 @@ func TestDynConfBuilder_getIPPort_docker(t *testing.T) {
 		expected   expected
 	}{
 		{
-			desc: "label traefik.port not set, no binding, falling back on the container's IP/Port",
+			desc: "label apache4.port not set, no binding, falling back on the container's IP/Port",
 			container: containerJSON(
 				ports(nat.PortMap{
 					"8080/tcp": {},
@@ -3961,7 +3961,7 @@ func TestDynConfBuilder_getIPPort_docker(t *testing.T) {
 			},
 		},
 		{
-			desc: "label traefik.port not set, single binding with port only, falling back on the container's IP/Port",
+			desc: "label apache4.port not set, single binding with port only, falling back on the container's IP/Port",
 			container: containerJSON(
 				withNetwork("testnet", ipv4("10.11.12.13")),
 				ports(nat.PortMap{
@@ -3978,7 +3978,7 @@ func TestDynConfBuilder_getIPPort_docker(t *testing.T) {
 			},
 		},
 		{
-			desc: "label traefik.port not set, binding with ip:port should create a route to the bound ip:port",
+			desc: "label apache4.port not set, binding with ip:port should create a route to the bound ip:port",
 			container: containerJSON(
 				ports(nat.PortMap{
 					"80/tcp": []nat.PortBinding{
@@ -3995,7 +3995,7 @@ func TestDynConfBuilder_getIPPort_docker(t *testing.T) {
 			},
 		},
 		{
-			desc:       "label traefik.port set, no binding, falling back on the container's IP/traefik.port",
+			desc:       "label apache4.port set, no binding, falling back on the container's IP/apache4.port",
 			container:  containerJSON(withNetwork("testnet", ipv4("10.11.12.13"))),
 			serverPort: "80",
 			expected: expected{
@@ -4004,7 +4004,7 @@ func TestDynConfBuilder_getIPPort_docker(t *testing.T) {
 			},
 		},
 		{
-			desc: "label traefik.port set, single binding with ip:port for the label, creates the route",
+			desc: "label apache4.port set, single binding with ip:port for the label, creates the route",
 			container: containerJSON(
 				ports(nat.PortMap{
 					"443/tcp": []nat.PortBinding{
@@ -4022,7 +4022,7 @@ func TestDynConfBuilder_getIPPort_docker(t *testing.T) {
 			},
 		},
 		{
-			desc: "label traefik.port set, no binding on the corresponding port, falling back on the container's IP/label.port",
+			desc: "label apache4.port set, no binding on the corresponding port, falling back on the container's IP/label.port",
 			container: containerJSON(
 				ports(nat.PortMap{
 					"443/tcp": []nat.PortBinding{
@@ -4040,7 +4040,7 @@ func TestDynConfBuilder_getIPPort_docker(t *testing.T) {
 			},
 		},
 		{
-			desc: "label traefik.port set, multiple bindings on different ports, uses the label to select the correct (first) binding",
+			desc: "label apache4.port set, multiple bindings on different ports, uses the label to select the correct (first) binding",
 			container: containerJSON(
 				ports(nat.PortMap{
 					"80/tcp": []nat.PortBinding{
@@ -4064,7 +4064,7 @@ func TestDynConfBuilder_getIPPort_docker(t *testing.T) {
 			},
 		},
 		{
-			desc: "label traefik.port set, multiple bindings on different ports, uses the label to select the correct (second) binding",
+			desc: "label apache4.port set, multiple bindings on different ports, uses the label to select the correct (second) binding",
 			container: containerJSON(
 				ports(nat.PortMap{
 					"80/tcp": []nat.PortBinding{
@@ -4250,7 +4250,7 @@ func TestDynConfBuilder_getIPAddress_swarm(t *testing.T) {
 		{
 			service: swarmService(
 				serviceLabels(map[string]string{
-					"traefik.swarm.network": "barnet",
+					"apache4.swarm.network": "barnet",
 				}),
 				withEndpointSpec(modeVIP),
 				withEndpoint(

@@ -1,34 +1,34 @@
 ---
-title: "Traefik CLI Documentation"
-description: "Learn the basics of the Traefik Proxy command line interface (CLI). Read the technical documentation."
+title: "apache4 CLI Documentation"
+description: "Learn the basics of the apache4 Proxy command line interface (CLI). Read the technical documentation."
 ---
 
 # CLI
 
-The Traefik Command Line
+The apache4 Command Line
 {: .subtitle }
 
 ## General
 
 ```bash
-traefik [command] [flags] [arguments]
+apache4 [command] [flags] [arguments]
 ```
 
-Use `traefik [command] --help` for help on any command.
+Use `apache4 [command] --help` for help on any command.
 
 Commands:
 
-- `healthcheck` Calls Traefik `/ping` to check the health of Traefik (the API must be enabled).
-- `version` Shows the current Traefik version.
+- `healthcheck` Calls apache4 `/ping` to check the health of apache4 (the API must be enabled).
+- `version` Shows the current apache4 version.
 
 Flag's usage:
 
 ```bash
 # set flag_argument to flag(s)
-traefik [--flag=flag_argument] [-f [flag_argument]]
+apache4 [--flag=flag_argument] [-f [flag_argument]]
 
 # set true/false to boolean flag(s)
-traefik [--flag[=true|false| ]] [-f [true|false| ]]
+apache4 [--flag[=true|false| ]] [-f [true|false| ]]
 ```
 
 All flags are documented in the [(static configuration) CLI reference](../reference/static-configuration/cli.md).
@@ -37,8 +37,8 @@ All flags are documented in the [(static configuration) CLI reference](../refere
 
 ### `healthcheck`
 
-Calls Traefik `/ping` to check the health of Traefik.
-Its exit status is `0` if Traefik is healthy and `1` otherwise.
+Calls apache4 `/ping` to check the health of apache4.
+Its exit status is `0` if apache4 is healthy and `1` otherwise.
 
 This can be used with Docker [HEALTHCHECK](https://docs.docker.com/engine/reference/builder/#healthcheck) instruction
 or any other health check orchestration mechanism.
@@ -49,22 +49,22 @@ or any other health check orchestration mechanism.
 Usage:
 
 ```bash
-traefik healthcheck [command] [flags] [arguments]
+apache4 healthcheck [command] [flags] [arguments]
 ```
 
 Example:
 
 ```bash
-$ traefik healthcheck
+$ apache4 healthcheck
 OK: http://:8082/ping
 ```
 
 ### `version`
 
-Shows the current Traefik version.
+Shows the current apache4 version.
 
 Usage:
 
 ```bash
-traefik version
+apache4 version
 ```

@@ -1,4 +1,4 @@
-import { Flex, styled, Text } from '@traefiklabs/faency'
+import { Flex, styled, Text } from '@apache4labs/faency'
 import { useContext, useEffect, useMemo } from 'react'
 import { FiGlobe, FiLayers, FiLogIn, FiZap } from 'react-icons/fi'
 import { useParams } from 'react-router-dom'

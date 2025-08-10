@@ -1,10 +1,10 @@
 ---
 title: 'API Key Authentication'
-description: 'Traefik Hub API Gateway - The API Key authentication middleware allows you to secure an API by requiring a secret key, base64 encoded or not, to be given, via an HTTP header, a cookie or a query parameter.'
+description: 'apache4 Hub API Gateway - The API Key authentication middleware allows you to secure an API by requiring a secret key, base64 encoded or not, to be given, via an HTTP header, a cookie or a query parameter.'
 ---
 
-!!! info "Traefik Hub Feature"
-    This middleware is available exclusively in [Traefik Hub](https://traefik.io/traefik-hub/). Learn more about [Traefik Hub's advanced features](https://doc.traefik.io/traefik-hub/api-gateway/intro).
+!!! info "apache4 Hub Feature"
+    This middleware is available exclusively in [apache4 Hub](https://apache4.io/apache4-hub/). Learn more about [apache4 Hub's advanced features](https://doc.apache4.io/apache4-hub/api-gateway/intro).
 
 The API Key authentication middleware allows you to secure an API by requiring a secret key, base64 encoded or not, to be given, via an HTTP header, a cookie or a query parameter.
 
@@ -13,7 +13,7 @@ The API Key authentication middleware allows you to secure an API by requiring a
 ## Configuration Example
 
 ```yaml tab="Middleware API Key"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-apikey
@@ -53,4 +53,4 @@ stringData:
 | `secretNonBase64Encoded`     | Defines whether the secret sent by the client is base64 encoded. | false   | No       |
 | `secretValues`               | Contain the hash of the API keys. <br /> Supported hashing algorithms are Bcrypt, SHA1 and MD5. <br /> The hash should be generated using `htpasswd`.<br />Can reference a Kubernetes Secret using the URN format: `urn:k8s:secret:[name]:[valueKey]` | []      | Yes      |
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

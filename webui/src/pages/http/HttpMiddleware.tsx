@@ -1,4 +1,4 @@
-import { Box, Card, H1, Skeleton, styled, Text } from '@traefiklabs/faency'
+import { Box, Card, H1, Skeleton, styled, Text } from '@apache4labs/faency'
 import { useParams } from 'react-router-dom'
 
 import { DetailSectionSkeleton } from 'components/resources/DetailSections'

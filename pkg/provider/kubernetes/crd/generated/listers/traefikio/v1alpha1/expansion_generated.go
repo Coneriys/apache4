@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016-2020 Containous SAS; 2020-2025 Traefik Labs
+Copyright (c) 2016-2020 Containous SAS; 2020-2025 apache4 Labs
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -98,10 +98,10 @@ type TLSStoreListerExpansion interface{}
 // TLSStoreNamespaceLister.
 type TLSStoreNamespaceListerExpansion interface{}
 
-// TraefikServiceListerExpansion allows custom methods to be added to
-// TraefikServiceLister.
-type TraefikServiceListerExpansion interface{}
+// apache4ServiceListerExpansion allows custom methods to be added to
+// apache4ServiceLister.
+type apache4ServiceListerExpansion interface{}
 
-// TraefikServiceNamespaceListerExpansion allows custom methods to be added to
-// TraefikServiceNamespaceLister.
-type TraefikServiceNamespaceListerExpansion interface{}
+// apache4ServiceNamespaceListerExpansion allows custom methods to be added to
+// apache4ServiceNamespaceLister.
+type apache4ServiceNamespaceListerExpansion interface{}

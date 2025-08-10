@@ -1,6 +1,6 @@
 ---
-title: "Traefik Proxy HTTP Middleware Overview"
-description: "Read the official Traefik Proxy documentation for an overview of the available HTTP middleware."
+title: "apache4 Proxy HTTP Middleware Overview"
+description: "Read the official apache4 Proxy documentation for an overview of the available HTTP middleware."
 ---
 
 # HTTP Middlewares
@@ -16,18 +16,18 @@ Controlling connections
 # As a Docker Label
 whoami:
   #  A container that exposes an API to show its IP address
-  image: traefik/whoami
+  image: apache4/whoami
   labels:
     # Create a middleware named `foo-add-prefix`
-    - "traefik.http.middlewares.foo-add-prefix.addprefix.prefix=/foo"
+    - "apache4.http.middlewares.foo-add-prefix.addprefix.prefix=/foo"
     # Apply the middleware named `foo-add-prefix` to the router named `router1`
-    - "traefik.http.routers.router1.middlewares=foo-add-prefix@docker"
+    - "apache4.http.routers.router1.middlewares=foo-add-prefix@docker"
 ```
 
 ```yaml tab="IngressRoute"
-# As a Kubernetes Traefik IngressRoute
+# As a Kubernetes apache4 IngressRoute
 ---
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: stripprefix
@@ -37,7 +37,7 @@ spec:
       - /stripit
 
 ---
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: ingressroute
@@ -51,9 +51,9 @@ spec:
 
 ```yaml tab="Consul Catalog"
 # Create a middleware named `foo-add-prefix`
-- "traefik.http.middlewares.foo-add-prefix.addprefix.prefix=/foo"
+- "apache4.http.middlewares.foo-add-prefix.addprefix.prefix=/foo"
 # Apply the middleware named `foo-add-prefix` to the router named `router1`
-- "traefik.http.routers.router1.middlewares=foo-add-prefix@consulcatalog"
+- "apache4.http.routers.router1.middlewares=foo-add-prefix@consulcatalog"
 ```
 
 ```toml tab="File (TOML)"
@@ -127,6 +127,6 @@ http:
 
 ## Community Middlewares
 
-Please take a look at the community-contributed plugins in the [plugin catalog](https://plugins.traefik.io/plugins).
+Please take a look at the community-contributed plugins in the [plugin catalog](https://plugins.apache4.io/plugins).
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

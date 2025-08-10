@@ -1,6 +1,6 @@
 ---
-title: "Traefik File Documentation"
-description: "The file provider in Traefik Proxy lets you define the dynamic configuration in a YAML or TOML file. Read the technical documentation."
+title: "apache4 File Documentation"
+description: "The file provider in apache4 Proxy lets you define the dynamic configuration in a YAML or TOML file. Read the technical documentation."
 ---
 
 # File
@@ -57,7 +57,7 @@ http:
         users:
         - test:$apr1$H6uskkkW$IgXLP6ewTrSuBkTrqE8wj/
         - test2:$apr1$d9hr9HBB$4HxwgUir3HP4EsggP/QNo0
-        usersFile: etc/traefik/.htpasswd
+        usersFile: etc/apache4/.htpasswd
 
   # Add the service
   services:
@@ -84,7 +84,7 @@ http:
     [http.middlewares.my-basic-auth.basicAuth]
       users = ["test:$apr1$H6uskkkW$IgXLP6ewTrSuBkTrqE8wj/",
                 "test2:$apr1$d9hr9HBB$4HxwgUir3HP4EsggP/QNo0"]
-      usersFile = "etc/traefik/.htpasswd"
+      usersFile = "etc/apache4/.htpasswd"
 
   # Add the service
   [http.services]
@@ -103,11 +103,11 @@ http:
 | `providers.providersThrottleDuration` | Minimum amount of time to wait for, after a configuration reload, before taking into account any new configuration refresh event.<br />If multiple events occur within this time, only the most recent one is taken into account, and all others are discarded.<br />**This option cannot be set per provider, but the throttling algorithm applies to each of them independently.** | 2s  | No |
 | `providers.file.filename` | Defines the path to the configuration file.  |  ""    | Yes   |
 | `providers.file.directory` | Defines the path to the directory that contains the configuration files. The `filename` and `directory` options are mutually exclusive. It is recommended to use `directory`.  |  ""    | Yes   |
-| `providers.file.watch` | Set the `watch` option to `true` to allow Traefik to automatically watch for file changes. It works with both the `filename` and the `directory` options. | true | No |
+| `providers.file.watch` | Set the `watch` option to `true` to allow apache4 to automatically watch for file changes. It works with both the `filename` and the `directory` options. | true | No |
 
 !!! warning "Limitations"
 
-    With the file provider, Traefik listens for file system notifications to update the dynamic configuration.
+    With the file provider, apache4 listens for file system notifications to update the dynamic configuration.
 
     If you use a mounted/bound file system in your orchestrator (like docker or kubernetes), the way the files are linked may be a source of errors.
     If the link between the file systems is broken, when a source file/directory is changed/renamed, nothing will be reported to the linked file/directory, so the file system notifications will be neither triggered nor caught.
@@ -115,10 +115,10 @@ http:
     For example, in Docker, if the host file is renamed, the link to the mounted file is broken and the container's file is no longer updated.
     To avoid this kind of issue, it is recommended to:
 
-    * set the Traefik [**directory**](#directory) configuration with the parent directory
+    * set the apache4 [**directory**](#directory) configuration with the parent directory
     * mount/bind the parent directory
 
-    As it is very difficult to listen to all file system notifications, Traefik uses [fsnotify](https://github.com/fsnotify/fsnotify).
+    As it is very difficult to listen to all file system notifications, apache4 uses [fsnotify](https://github.com/fsnotify/fsnotify).
     If using a directory with a mounted directory does not fix your issue, please check your file system compatibility with fsnotify.
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

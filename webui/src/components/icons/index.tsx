@@ -1,4 +1,4 @@
-import { CSS, Flex, VariantProps } from '@traefiklabs/faency'
+import { CSS, Flex, VariantProps } from '@apache4labs/faency'
 import { HTMLAttributes } from 'react'
 
 export type CustomIconProps = HTMLAttributes<SVGElement> & {

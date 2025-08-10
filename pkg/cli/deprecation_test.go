@@ -7,8 +7,8 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/traefik/paerser/cli"
-	"github.com/traefik/traefik/v3/cmd"
+	"github.com/apache4/paerser/cli"
+	"github.com/apache4/apache4/v3/cmd"
 )
 
 func ptr[T any](t T) *T {
@@ -352,30 +352,30 @@ func TestLoad(t *testing.T) {
 		{
 			desc: "[ENV] providers.marathon is deprecated",
 			env: map[string]string{
-				"TRAEFIK_ACCESS_LOG":               "",
-				"TRAEFIK_LOG_LEVEL":                "DEBUG",
-				"TRAEFIK_ENTRYPOINT_TEST_HTTP_TLS": "true",
-				"TRAEFIK_PROVIDERS_MARATHON":       "true",
+				"apache4_ACCESS_LOG":               "",
+				"apache4_LOG_LEVEL":                "DEBUG",
+				"apache4_ENTRYPOINT_TEST_HTTP_TLS": "true",
+				"apache4_PROVIDERS_MARATHON":       "true",
 			},
 			wantDeprecated: true,
 		},
 		{
 			desc: "[ENV] multiple deprecated",
 			env: map[string]string{
-				"TRAEFIK_ACCESS_LOG":               "true",
-				"TRAEFIK_LOG_LEVEL":                "DEBUG",
-				"TRAEFIK_ENTRYPOINT_TEST_HTTP_TLS": "true",
-				"TRAEFIK_PROVIDERS_MARATHON":       "true",
-				"TRAEFIK_PILOT_TOKEN":              "xxx",
+				"apache4_ACCESS_LOG":               "true",
+				"apache4_LOG_LEVEL":                "DEBUG",
+				"apache4_ENTRYPOINT_TEST_HTTP_TLS": "true",
+				"apache4_PROVIDERS_MARATHON":       "true",
+				"apache4_PILOT_TOKEN":              "xxx",
 			},
 			wantDeprecated: true,
 		},
 		{
 			desc: "[ENV] no deprecated",
 			env: map[string]string{
-				"TRAEFIK_ACCESS_LOG":               "true",
-				"TRAEFIK_LOG_LEVEL":                "DEBUG",
-				"TRAEFIK_ENTRYPOINT_TEST_HTTP_TLS": "true",
+				"apache4_ACCESS_LOG":               "true",
+				"apache4_LOG_LEVEL":                "DEBUG",
+				"apache4_ENTRYPOINT_TEST_HTTP_TLS": "true",
 			},
 
 			wantDeprecated: false,
@@ -383,21 +383,21 @@ func TestLoad(t *testing.T) {
 		{
 			desc: "[FILE] providers.marathon is deprecated",
 			args: []string{
-				"--configfile=./fixtures/traefik_deprecated.toml",
+				"--configfile=./fixtures/apache4_deprecated.toml",
 			},
 			wantDeprecated: true,
 		},
 		{
 			desc: "[FILE] multiple deprecated",
 			args: []string{
-				"--configfile=./fixtures/traefik_multiple_deprecated.toml",
+				"--configfile=./fixtures/apache4_multiple_deprecated.toml",
 			},
 			wantDeprecated: true,
 		},
 		{
 			desc: "[FILE] no deprecated",
 			args: []string{
-				"--configfile=./fixtures/traefik_no_deprecated.toml",
+				"--configfile=./fixtures/apache4_no_deprecated.toml",
 			},
 			wantDeprecated: false,
 		},
@@ -405,7 +405,7 @@ func TestLoad(t *testing.T) {
 
 	for _, test := range testCases {
 		t.Run(test.desc, func(t *testing.T) {
-			tconfig := cmd.NewTraefikConfiguration()
+			tconfig := cmd.Newapache4Configuration()
 			c := &cli.Command{Configuration: tconfig}
 			l := DeprecationLoader{}
 

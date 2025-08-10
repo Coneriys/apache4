@@ -5,9 +5,9 @@ import (
 	"net/http"
 
 	"github.com/rs/zerolog"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/logs"
-	"github.com/traefik/traefik/v3/pkg/middlewares"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/middlewares"
 	oxybuffer "github.com/vulcand/oxy/v2/buffer"
 )
 

@@ -1,6 +1,6 @@
 ---
-title: "Traefik OpenTelemetry Documentation"
-description: "Traefik supports several metrics backends, including OpenTelemetry. Learn how to implement it for observability in Traefik Proxy. Read the technical documentation."
+title: "apache4 OpenTelemetry Documentation"
+description: "apache4 supports several metrics backends, including OpenTelemetry. Learn how to implement it for observability in apache4 Proxy. Read the technical documentation."
 ---
 
 # OpenTelemetry
@@ -141,7 +141,7 @@ metrics:
 
 #### `serviceName`
 
-_Optional, Default="traefik"_
+_Optional, Default="apache4"_
 
 Defines the service name resource attribute.
 

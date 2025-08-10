@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.16.1
-  name: tlsoptions.traefik.containo.us
+  name: tlsoptions.apache4.containo.us
 spec:
-  group: traefik.containo.us
+  group: apache4.containo.us
   names:
     kind: TLSOption
     listKind: TLSOptionList
@@ -18,8 +18,8 @@ spec:
     schema:
       openAPIV3Schema:
         description: |-
-          TLSOption is the CRD implementation of a Traefik TLS Option, allowing to configure some parameters of the TLS connection.
-          More info: https://doc.traefik.io/traefik/v2.11/https/tls/#tls-options
+          TLSOption is the CRD implementation of a apache4 TLS Option, allowing to configure some parameters of the TLS connection.
+          More info: https://doc.apache4.io/apache4/v2.11/https/tls/#tls-options
         properties:
           apiVersion:
             description: |-
@@ -44,14 +44,14 @@ spec:
               alpnProtocols:
                 description: |-
                   ALPNProtocols defines the list of supported application level protocols for the TLS handshake, in order of preference.
-                  More info: https://doc.traefik.io/traefik/v2.11/https/tls/#alpn-protocols
+                  More info: https://doc.apache4.io/apache4/v2.11/https/tls/#alpn-protocols
                 items:
                   type: string
                 type: array
               cipherSuites:
                 description: |-
                   CipherSuites defines the list of supported cipher suites for TLS versions up to TLS 1.2.
-                  More info: https://doc.traefik.io/traefik/v2.11/https/tls/#cipher-suites
+                  More info: https://doc.apache4.io/apache4/v2.11/https/tls/#cipher-suites
                 items:
                   type: string
                 type: array
@@ -79,19 +79,19 @@ spec:
               curvePreferences:
                 description: |-
                   CurvePreferences defines the preferred elliptic curves.
-                  More info: https://doc.traefik.io/traefik/v2.11/https/tls/#curve-preferences
+                  More info: https://doc.apache4.io/apache4/v2.11/https/tls/#curve-preferences
                 items:
                   type: string
                 type: array
               maxVersion:
                 description: |-
-                  MaxVersion defines the maximum TLS version that Traefik will accept.
+                  MaxVersion defines the maximum TLS version that apache4 will accept.
                   Possible values: VersionTLS10, VersionTLS11, VersionTLS12, VersionTLS13.
                   Default: None.
                 type: string
               minVersion:
                 description: |-
-                  MinVersion defines the minimum TLS version that Traefik will accept.
+                  MinVersion defines the minimum TLS version that apache4 will accept.
                   Possible values: VersionTLS10, VersionTLS11, VersionTLS12, VersionTLS13.
                   Default: VersionTLS10.
                 type: string
@@ -102,7 +102,7 @@ spec:
                   Deprecated: https://github.com/golang/go/issues/45430
                 type: boolean
               sniStrict:
-                description: SniStrict defines whether Traefik allows connections
+                description: SniStrict defines whether apache4 allows connections
                   from clients connections that do not specify a server_name extension.
                 type: boolean
             type: object

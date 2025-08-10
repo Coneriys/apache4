@@ -1,11 +1,11 @@
 ---
-title: "Traefik Kubernetes Ingress NGINX Documentation"
+title: "apache4 Kubernetes Ingress NGINX Documentation"
 description: "Understand the requirements, routing configuration, and how to set up the Kubernetes Ingress NGINX provider. Read the technical documentation."
 ---
 
-# Traefik & Ingresses with NGINX Annotations 
+# apache4 & Ingresses with NGINX Annotations 
 
-The experimental Traefik Kubernetes Ingress NGINX provider is a Kubernetes Ingress controller; i.e,
+The experimental apache4 Kubernetes Ingress NGINX provider is a Kubernetes Ingress controller; i.e,
 it manages access to cluster services by supporting the [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) specification.
 It also supports some of the [ingress-nginx](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/) annotations on ingresses to customize their behavior.
 
@@ -53,7 +53,7 @@ which in turn creates the resulting routers, services, handlers, etc.
 | `providers.kubernetesIngressNGINX.endpoint`                 | Server endpoint URL.<br />More information [here](#endpoint).                                                                                                                                                                                                                                                                                                                        | ""      | No       |
 | `providers.kubernetesIngressNGINX.token`                    | Bearer token used for the Kubernetes client configuration.                                                                                                                                                                                                                                                                                                                           | ""      | No       |
 | `providers.kubernetesIngressNGINX.certAuthFilePath`         | Path to the certificate authority file.<br />Used for the Kubernetes client configuration.                                                                                                                                                                                                                                                                                           | ""      | No       |
-| `providers.kubernetesIngressNGINX.throttleDuration`         | Minimum amount of time to wait between two Kubernetes events before producing a new configuration.<br />This prevents a Kubernetes cluster that updates many times per second from continuously changing your Traefik configuration.<br />If empty, every event is caught.                                                                                                           | 0s      | No       |
+| `providers.kubernetesIngressNGINX.throttleDuration`         | Minimum amount of time to wait between two Kubernetes events before producing a new configuration.<br />This prevents a Kubernetes cluster that updates many times per second from continuously changing your apache4 configuration.<br />If empty, every event is caught.                                                                                                           | 0s      | No       |
 | `providers.kubernetesIngressNGINX.watchNamespace`           | Namespace the controller watches for updates to Kubernetes objects. All namespaces are watched if this parameter is left empty.                                                                                                                                                                                                                                                      | ""      | No       |
 | `providers.kubernetesIngressNGINX.watchNamespaceSelector`   | Selector selects namespaces the controller watches for updates to Kubernetes objects.                                                                                                                                                                                                                                                                                                | ""      | No       |
 | `providers.kubernetesIngressNGINX.ingressClass`             | Name of the ingress class this controller satisfies.                                                                                                                                                                                                                                                                                                                                 | ""      | No       |
@@ -71,7 +71,7 @@ which in turn creates the resulting routers, services, handlers, etc.
 
 The Kubernetes server endpoint URL.
 
-When deployed into Kubernetes, Traefik reads the environment variables `KUBERNETES_SERVICE_HOST`
+When deployed into Kubernetes, apache4 reads the environment variables `KUBERNETES_SERVICE_HOST`
 and `KUBERNETES_SERVICE_PORT` or `KUBECONFIG` to construct the endpoint.
 
 The access token is looked up in `/var/run/secrets/kubernetes.io/serviceaccount/token`
@@ -81,7 +81,7 @@ Both are mounted automatically when deployed inside Kubernetes.
 The endpoint may be specified to override the environment variable values inside
 a cluster.
 
-When the environment variables are not found, Traefik tries to connect to the 
+When the environment variables are not found, apache4 tries to connect to the 
 Kubernetes API server with an external-cluster client.
 
 In this case, the endpoint is required.
@@ -109,4 +109,4 @@ providers:
 
 See the dedicated section in [routing](../../../routing-configuration/kubernetes/ingress-nginx.md).
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

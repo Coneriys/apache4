@@ -13,8 +13,8 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/sirupsen/logrus"
-	"github.com/traefik/traefik/v3/pkg/config/static"
-	"github.com/traefik/traefik/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/config/static"
+	"github.com/apache4/apache4/v3/pkg/logs"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 

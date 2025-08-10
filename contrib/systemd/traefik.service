@@ -1,18 +1,18 @@
 [Unit]
-Description=Traefik
-Documentation=https://doc.traefik.io/traefik/
+Description=apache4
+Documentation=https://doc.apache4.io/apache4/
 #After=network-online.target
-#AssertFileIsExecutable=/usr/bin/traefik
-#AssertPathExists=/etc/traefik/traefik.toml
+#AssertFileIsExecutable=/usr/bin/apache4
+#AssertPathExists=/etc/apache4/apache4.toml
 
 [Service]
-# Run traefik as its own user (create new user with: useradd -r -s /bin/false -U -M traefik)
-#User=traefik
+# Run apache4 as its own user (create new user with: useradd -r -s /bin/false -U -M apache4)
+#User=apache4
 #AmbientCapabilities=CAP_NET_BIND_SERVICE
 
 # configure service behavior
 Type=notify
-#ExecStart=/usr/bin/traefik --configFile=/etc/traefik/traefik.toml
+#ExecStart=/usr/bin/apache4 --configFile=/etc/apache4/apache4.toml
 Restart=always
 WatchdogSec=1s
 
@@ -31,7 +31,7 @@ WatchdogSec=1s
 #ProtectControlGroups=true
 
 # allow writing of acme.json
-#ReadWritePaths=/etc/traefik/acme.json
+#ReadWritePaths=/etc/apache4/acme.json
 # depending on log and entrypoint configuration, you may need to allow writing to other paths, too
 
 # limit number of processes in this unit

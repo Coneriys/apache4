@@ -1,25 +1,25 @@
 ---
 title: "IngressRouteUDP"
-description: "Understand the routing configuration for the Kubernetes IngressRouteUDP & Traefik CRD"
+description: "Understand the routing configuration for the Kubernetes IngressRouteUDP & apache4 CRD"
 ---
 
-`IngressRouteUDP` is the CRD implementation of a [Traefik UDP router](../../../udp/router/rules-priority.md).
+`IngressRouteUDP` is the CRD implementation of a [apache4 UDP router](../../../udp/router/rules-priority.md).
 
-Before creating `IngressRouteUDP` objects, you need to apply the [Traefik Kubernetes CRDs](https://doc.traefik.io/traefik/reference/dynamic-configuration/kubernetes-crd/#definitions) to your Kubernetes cluster.
+Before creating `IngressRouteUDP` objects, you need to apply the [apache4 Kubernetes CRDs](https://doc.apache4.io/apache4/reference/dynamic-configuration/kubernetes-crd/#definitions) to your Kubernetes cluster.
 
-This registers the `IngressRouteUDP` kind and other Traefik-specific resources.
+This registers the `IngressRouteUDP` kind and other apache4-specific resources.
 
 ## Configuration Example
 
 ```yaml tab="IngressRouteUDP"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRouteUDP
 metadata:
   name: ingressrouteudpfoo
   namespace: apps
 spec:
   entryPoints:
-    - fooudp  # The entry point where Traefik listens for incoming traffic.
+    - fooudp  # The entry point where apache4 listens for incoming traffic.
   routes:
   - services:
     - name: foo # The name of the Kubernetes Service to route to.
@@ -39,21 +39,21 @@ spec:
 | `routes[n].services[n].port`        | Defines the port of a [Kubernetes service](https://kubernetes.io/docs/concepts/services-networking/service/). This can be a reference to a named port.|  | Yes |
 | `routes[n].services[n].weight`      | Defines the weight to apply to the server load balancing. | 1 | No |
 | `routes[n].services[n].nativeLB`    | Controls, when creating the load-balancer, whether the LB's children are directly the pods IPs or if the only child is the Kubernetes Service clusterIP. | false | No |
-| `routes[n].services[n].nodePortLB`  | Controls, when creating the load-balancer, whether the LB's children are directly the nodes internal IPs using the nodePort when the service type is NodePort. It allows services to be reachable when Traefik runs externally from the Kubernetes cluster but within the same network of the nodes. See [here](#nativelb) for more information. | false | No  |
+| `routes[n].services[n].nodePortLB`  | Controls, when creating the load-balancer, whether the LB's children are directly the nodes internal IPs using the nodePort when the service type is NodePort. It allows services to be reachable when apache4 runs externally from the Kubernetes cluster but within the same network of the nodes. See [here](#nativelb) for more information. | false | No  |
 
 ### ExternalName Service
 
-Traefik backends creation needs a port to be set, however Kubernetes [ExternalName Service](https://kubernetes.io/docs/concepts/services-networking/service/#externalname) could be defined without any port. Accordingly, Traefik supports defining a port in two ways:
+apache4 backends creation needs a port to be set, however Kubernetes [ExternalName Service](https://kubernetes.io/docs/concepts/services-networking/service/#externalname) could be defined without any port. Accordingly, apache4 supports defining a port in two ways:
 
 - only on `IngressRouteUDP` service
 - on both sides, you'll be warned if the ports don't match, and the `IngressRouteUDP` service port is used
 
-Thus, in case of two sides port definition, Traefik expects a match between ports.
+Thus, in case of two sides port definition, apache4 expects a match between ports.
 
 === "Ports defined on Resource"
 
     ```yaml tab="IngressRouteUDP"
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRouteUDP
     metadata:
       name: test.route
@@ -85,7 +85,7 @@ Thus, in case of two sides port definition, Traefik expects a match between port
 === "Port defined on the Service"
 
     ```yaml tab="IngressRouteUDP"
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRouteUDP
     metadata:
       name: test.route
@@ -118,7 +118,7 @@ Thus, in case of two sides port definition, Traefik expects a match between port
 === "Port defined on both sides"
 
     ```yaml tab="IngressRouteUDP"
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRouteUDP
     metadata:
       name: test.route
@@ -154,7 +154,7 @@ Thus, in case of two sides port definition, Traefik expects a match between port
 To avoid creating the server load-balancer with the pods IPs and use Kubernetes Service `clusterIP` directly, one should set the `NativeLB` option to true. By default, `NativeLB` is false.
 
 ```yaml tab="IngressRouteUDP"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRouteUDP
 metadata:
   name: test.route

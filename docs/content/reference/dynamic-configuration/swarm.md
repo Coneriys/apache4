@@ -1,6 +1,6 @@
 ---
-title: "Traefik Docker Swarm Configuration Documentation"
-description: "Reference dynamic configuration with Docker Swarm labels in Traefik Proxy. Read the technical documentation."
+title: "apache4 Docker Swarm Configuration Documentation"
+description: "Reference dynamic configuration with Docker Swarm labels in apache4 Proxy. Read the technical documentation."
 ---
 
 # Docker Swarm Configuration Reference

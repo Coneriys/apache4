@@ -11,8 +11,8 @@ import (
 
 	"github.com/go-kit/kit/metrics"
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/types"
-	"github.com/traefik/traefik/v3/pkg/version"
+	"github.com/apache4/apache4/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/version"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc"
@@ -55,7 +55,7 @@ func NewSemConvMetricRegistry(ctx context.Context, config *types.OTLP) (*SemConv
 		}
 	}
 
-	meter := otel.Meter("github.com/traefik/traefik",
+	meter := otel.Meter("github.com/apache4/apache4",
 		metric.WithInstrumentationVersion(version.Version))
 
 	httpServerRequestDuration, err := meter.Float64Histogram(semconv.HTTPServerRequestDurationName,
@@ -112,7 +112,7 @@ func RegisterOpenTelemetry(ctx context.Context, config *types.OTLP) Registry {
 		openTelemetryGaugeCollector = newOpenTelemetryGaugeCollector()
 	}
 
-	meter := otel.Meter("github.com/traefik/traefik",
+	meter := otel.Meter("github.com/apache4/apache4",
 		metric.WithInstrumentationVersion(version.Version))
 
 	reg := &standardRegistry{
@@ -241,7 +241,7 @@ func newOpenTelemetryMeterProvider(ctx context.Context, config *types.OTLP) (*sd
 		sdkmetric.WithReader(sdkmetric.NewPeriodicReader(exporter, opts...)),
 		// View to customize histogram buckets and rename a single histogram instrument.
 		sdkmetric.WithView(sdkmetric.NewView(
-			sdkmetric.Instrument{Name: "traefik_*_request_duration_seconds"},
+			sdkmetric.Instrument{Name: "apache4_*_request_duration_seconds"},
 			sdkmetric.Stream{Aggregation: sdkmetric.AggregationExplicitBucketHistogram{
 				Boundaries: config.ExplicitBoundaries,
 			}},

@@ -1,6 +1,6 @@
 ---
-title: "Traefik Docker Configuration Documentation"
-description: "Reference dynamic configuration with Docker labels in Traefik Proxy. Read the technical documentation."
+title: "apache4 Docker Configuration Documentation"
+description: "Reference dynamic configuration with Docker labels in apache4 Proxy. Read the technical documentation."
 ---
 
 # Docker Configuration Reference

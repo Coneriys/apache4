@@ -11,7 +11,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
-	"github.com/traefik/traefik/v3/integration/try"
+	"github.com/apache4/apache4/v3/integration/try"
 )
 
 type KeepAliveSuite struct {
@@ -94,9 +94,9 @@ func (s *KeepAliveSuite) TestShouldRespectConfiguredBackendHttpKeepAliveTime() {
 	config := KeepAliveConfig{KeepAliveServer: server.URL, IdleConnTimeout: idleTimeout.String()}
 	file := s.adaptFile("fixtures/timeout/keepalive.toml", config)
 
-	s.traefikCmd(withConfigFile(file))
+	s.apache4Cmd(withConfigFile(file))
 
-	// Wait for Traefik
+	// Wait for apache4
 	err := try.GetRequest("http://127.0.0.1:8080/api/rawdata", time.Duration(1)*time.Second, try.StatusCodeIs(200), try.BodyContains("PathPrefix(`/keepalive`)"))
 	require.NoError(s.T(), err)
 

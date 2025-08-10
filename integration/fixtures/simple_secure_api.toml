@@ -6,7 +6,7 @@
   [entryPoints.web]
     address = ":8000"
 
- [entryPoints.traefik]
+ [entryPoints.apache4]
     address = ":8080"
 
 

@@ -1,6 +1,6 @@
 ---
-title: "Traefik File Static Configuration"
-description: "Reference the YAML and TOML files for static configuration in Traefik Proxy. Read the technical documentation."
+title: "apache4 File Static Configuration"
+description: "Reference the YAML and TOML files for static configuration in apache4 Proxy. Read the technical documentation."
 ---
 
 # Static Configuration: File

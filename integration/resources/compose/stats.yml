@@ -1,6 +1,6 @@
 services:
   whoami1:
-    image: traefik/whoami
+    image: apache4/whoami
 
   whoami2:
-    image: traefik/whoami
+    image: apache4/whoami

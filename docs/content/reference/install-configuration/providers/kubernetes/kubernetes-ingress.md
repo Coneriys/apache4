@@ -1,11 +1,11 @@
 ---
-title: "Traefik Kubernetes Ingress Documentation"
-description: "Understand the requirements, routing configuration, and how to set up Traefik Proxy as your Kubernetes Ingress Controller. Read the technical documentation."
+title: "apache4 Kubernetes Ingress Documentation"
+description: "Understand the requirements, routing configuration, and how to set up apache4 Proxy as your Kubernetes Ingress Controller. Read the technical documentation."
 ---
 
-# Traefik & Kubernetes 
+# apache4 & Kubernetes 
 
-The Traefik Kubernetes Ingress provider is a Kubernetes Ingress controller; i.e,
+The apache4 Kubernetes Ingress provider is a Kubernetes Ingress controller; i.e,
 it manages access to cluster services by supporting the [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) specification.
 
 ??? warning "Ingress Backend Resource not supported"
@@ -52,17 +52,17 @@ which in turn creates the resulting routers, services, handlers, etc.
 | `providers.kubernetesIngress.certAuthFilePath`                         | Path to the certificate authority file.<br />Used for the Kubernetes client configuration.                                                                                                                                                                                                                                                                                                                                                                             | ""      | No       |
 | `providers.kubernetesCRD.namespaces`                                   | Array of namespaces to watch.<br />If left empty, watch all namespaces.                                                                                                                                                                                                                                                                                                                                                                                                |         | No       |
 | `providers.kubernetesIngress.labelselector`                            | Allow filtering on Ingress objects using label selectors.<br />No effect on Kubernetes `Secrets`, `EndpointSlices` and `Services`.<br />See [label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors) for details.                                                                                                                                                                                                  | ""      | No       |
-| `providers.kubernetesIngress.ingressClass`                             | The `IngressClass` resource name or the `kubernetes.io/ingress.class` annotation value that identifies resource objects to be processed.<br />If empty, resources missing the annotation, having an empty value, or the value `traefik` are processed.                                                                                                                                                                                                                 | ""      | No       |
-| `providers.kubernetesIngress.disableIngressClassLookup`                | Prevent to discover IngressClasses in the cluster.<br />It alleviates the requirement of giving Traefik the rights to look IngressClasses up.<br />Ignore Ingresses with IngressClass.<br />Annotations are not affected by this option.                                                                                                                                                                                                                               | false   | No       |
+| `providers.kubernetesIngress.ingressClass`                             | The `IngressClass` resource name or the `kubernetes.io/ingress.class` annotation value that identifies resource objects to be processed.<br />If empty, resources missing the annotation, having an empty value, or the value `apache4` are processed.                                                                                                                                                                                                                 | ""      | No       |
+| `providers.kubernetesIngress.disableIngressClassLookup`                | Prevent to discover IngressClasses in the cluster.<br />It alleviates the requirement of giving apache4 the rights to look IngressClasses up.<br />Ignore Ingresses with IngressClass.<br />Annotations are not affected by this option.                                                                                                                                                                                                                               | false   | No       |
 | `providers.kubernetesIngress.`<br />`ingressEndpoint.hostname`         | Hostname used for Kubernetes Ingress endpoints.                                                                                                                                                                                                                                                                                                                                                                                                                        | ""      | No       |
 | `providers.kubernetesIngress.`<br />`ingressEndpoint.ip`               | This IP will get copied to the Ingress `status.loadbalancer.ip`, and currently only supports one IP value (IPv4 or IPv6).                                                                                                                                                                                                                                                                                                                                              | ""      | No       |
 | `providers.kubernetesIngress.`<br />`ingressEndpoint.publishedService` | The Kubernetes service to copy status from.<br />More information [here](#ingressendpointpublishedservice).                                                                                                                                                                                                                                                                                                                                                            | ""      | No       |
-| `providers.kubernetesIngress.throttleDuration`                         | Minimum amount of time to wait between two Kubernetes events before producing a new configuration.<br />This prevents a Kubernetes cluster that updates many times per second from continuously changing your Traefik configuration.<br />If empty, every event is caught.                                                                                                                                                                                             | 0s      | No       |
-| `providers.kubernetesIngress.allowEmptyServices`                       | Allows creating a route to reach a service that has no endpoint available.<br />It allows Traefik to handle the requests and responses targeting this service (applying middleware or observability operations) before returning a `503` HTTP Status.                                                                                                                                                                                                                  | false   | No       |
+| `providers.kubernetesIngress.throttleDuration`                         | Minimum amount of time to wait between two Kubernetes events before producing a new configuration.<br />This prevents a Kubernetes cluster that updates many times per second from continuously changing your apache4 configuration.<br />If empty, every event is caught.                                                                                                                                                                                             | 0s      | No       |
+| `providers.kubernetesIngress.allowEmptyServices`                       | Allows creating a route to reach a service that has no endpoint available.<br />It allows apache4 to handle the requests and responses targeting this service (applying middleware or observability operations) before returning a `503` HTTP Status.                                                                                                                                                                                                                  | false   | No       |
 | `providers.kubernetesIngress.allowCrossNamespace`                      | Allows the `Ingress` to reference resources in namespaces other than theirs.                                                                                                                                                                                                                                                                                                                                                                                           | false   | No       |
 | `providers.kubernetesIngress.allowExternalNameServices`                | Allows the `Ingress` to reference ExternalName services.                                                                                                                                                                                                                                                                                                                                                                                                               | false   | No       |
-| `providers.kubernetesIngress.nativeLBByDefault`                        | Allow using the Kubernetes Service load balancing between the pods instead of the one provided by Traefik for every `Ingress` by default.<br />It can br overridden in the [`ServerTransport`](../../../../routing/services/index.md#serverstransport).                                                                                                                                                                                                                | false   | No       |
-| `providers.kubernetesIngress.disableClusterScopeResources`             | Prevent from discovering cluster scope resources (`IngressClass` and `Nodes`).<br />By doing so, it alleviates the requirement of giving Traefik the rights to look up for cluster resources.<br />Furthermore, Traefik  will not handle Ingresses with IngressClass references, therefore such Ingresses will be ignored (please note that annotations are not affected by this option).<br />This will also prevent from using the `NodePortLB` options on services. | false   | No       |
+| `providers.kubernetesIngress.nativeLBByDefault`                        | Allow using the Kubernetes Service load balancing between the pods instead of the one provided by apache4 for every `Ingress` by default.<br />It can br overridden in the [`ServerTransport`](../../../../routing/services/index.md#serverstransport).                                                                                                                                                                                                                | false   | No       |
+| `providers.kubernetesIngress.disableClusterScopeResources`             | Prevent from discovering cluster scope resources (`IngressClass` and `Nodes`).<br />By doing so, it alleviates the requirement of giving apache4 the rights to look up for cluster resources.<br />Furthermore, apache4  will not handle Ingresses with IngressClass references, therefore such Ingresses will be ignored (please note that annotations are not affected by this option).<br />This will also prevent from using the `NodePortLB` options on services. | false   | No       |
 | `providers.kubernetesIngress.strictPrefixMatching`                     | Make prefix matching strictly comply with the Kubernetes Ingress specification (path-element-wise matching instead of character-by-character string matching). For example, a PathPrefix of `/foo` will match `/foo`, `/foo/`, and `/foo/bar` but not `/foobar`.                                                                                                                                                                                                       | false   | No       |
 
 <!-- markdownlint-enable MD013 -->
@@ -71,7 +71,7 @@ which in turn creates the resulting routers, services, handlers, etc.
 
 The Kubernetes server endpoint URL.
 
-When deployed into Kubernetes, Traefik reads the environment variables `KUBERNETES_SERVICE_HOST`
+When deployed into Kubernetes, apache4 reads the environment variables `KUBERNETES_SERVICE_HOST`
 and `KUBERNETES_SERVICE_PORT` or `KUBECONFIG` to construct the endpoint.
 
 The access token is looked up in `/var/run/secrets/kubernetes.io/serviceaccount/token`
@@ -81,7 +81,7 @@ Both are mounted automatically when deployed inside Kubernetes.
 The endpoint may be specified to override the environment variable values inside
 a cluster.
 
-When the environment variables are not found, Traefik tries to connect to the 
+When the environment variables are not found, apache4 tries to connect to the 
 Kubernetes API server with an external-cluster client.
 
 In this case, the endpoint is required.
@@ -144,9 +144,9 @@ See the dedicated section in [routing](../../../../routing/providers/kubernetes-
 ## Further
 
 To learn more about the various aspects of the Ingress specification that 
-Traefik supports,
+apache4 supports,
 many examples of Ingresses definitions are located in the test 
-[examples](https://github.com/traefik/traefik/tree/v3.1/pkg/provider/kubernetes/ingress/fixtures) 
-of the Traefik repository.
+[examples](https://github.com/apache4/apache4/tree/v3.1/pkg/provider/kubernetes/ingress/fixtures) 
+of the apache4 repository.
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

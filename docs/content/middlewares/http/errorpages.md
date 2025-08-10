@@ -1,6 +1,6 @@
 ---
-title: "Traefik Errors Documentation"
-description: "In Traefik Proxy, the Errors middleware returns custom pages according to configured ranges of HTTP Status codes. Read the technical documentation."
+title: "apache4 Errors Documentation"
+description: "In apache4 Proxy, the Errors middleware returns custom pages according to configured ranges of HTTP Status codes. Read the technical documentation."
 ---
 
 # Errors
@@ -14,20 +14,20 @@ The Errors middleware returns a custom page in lieu of the default, according to
 
 !!! important
 
-    The error page itself is _not_ hosted by Traefik.
+    The error page itself is _not_ hosted by apache4.
 
 ## Configuration Examples
 
 ```yaml tab="Docker & Swarm"
 # Dynamic Custom Error Page for 5XX Status Code
 labels:
-  - "traefik.http.middlewares.test-errors.errors.status=500,501,503,505-599"
-  - "traefik.http.middlewares.test-errors.errors.service=serviceError"
-  - "traefik.http.middlewares.test-errors.errors.query=/{status}.html"
+  - "apache4.http.middlewares.test-errors.errors.status=500,501,503,505-599"
+  - "apache4.http.middlewares.test-errors.errors.service=serviceError"
+  - "apache4.http.middlewares.test-errors.errors.query=/{status}.html"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-errors
@@ -46,9 +46,9 @@ spec:
 
 ```yaml tab="Consul Catalog"
 # Dynamic Custom Error Page for 5XX Status Code excluding 502 and 504
-- "traefik.http.middlewares.test-errors.errors.status=500,501,503,505-599"
-- "traefik.http.middlewares.test-errors.errors.service=serviceError"
-- "traefik.http.middlewares.test-errors.errors.query=/{status}.html"
+- "apache4.http.middlewares.test-errors.errors.status=500,501,503,505-599"
+- "apache4.http.middlewares.test-errors.errors.service=serviceError"
+- "apache4.http.middlewares.test-errors.errors.query=/{status}.html"
 ```
 
 ```yaml tab="File (YAML)"
@@ -121,7 +121,7 @@ The service that will serve the new requested error page.
 
 !!! note ""
 
-    In Kubernetes, you need to reference a Kubernetes Service instead of a Traefik service.
+    In Kubernetes, you need to reference a Kubernetes Service instead of a apache4 service.
 
 !!! info "Host Header"
 

@@ -7,8 +7,8 @@ import (
 	"slices"
 
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/logs"
 )
 
 // GetUDPRoutersByEntryPoints returns all the UDP routers by entry points name and routers name.

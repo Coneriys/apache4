@@ -18,7 +18,7 @@ import {
   Text,
   Tooltip,
   VisuallyHidden,
-} from '@traefiklabs/faency'
+} from '@apache4labs/faency'
 import { useEffect, useMemo, useState } from 'react'
 import { BsChevronDoubleRight, BsChevronDoubleLeft } from 'react-icons/bs'
 import { FiBookOpen, FiGithub, FiHelpCircle } from 'react-icons/fi'
@@ -222,7 +222,7 @@ export const SideNav = ({
               ? { mt: '$4', px: 0, justifyContent: 'center' }
               : undefined,
           }}
-          href="https://github.com/traefik/traefik/"
+          href="https://github.com/apache4/apache4/"
           target="_blank"
           data-testid="proxy-main-nav"
         >
@@ -277,7 +277,7 @@ export const SideNav = ({
               mt: '$3',
               whiteSpace: 'nowrap',
             }}
-            href="https://plugins.traefik.io/"
+            href="https://plugins.apache4.io/"
             target="_blank"
           >
             {!isSmallScreen || isExpanded ? 'Plugins' : ''}
@@ -326,7 +326,7 @@ export const TopNav = () => {
             <DropdownMenuGroup>
               <DropdownMenuItem css={{ height: '$6', cursor: 'pointer' }}>
                 <Link
-                  href={`https://doc.traefik.io/traefik/${parsedVersion}`}
+                  href={`https://doc.apache4.io/apache4/${parsedVersion}`}
                   target="_blank"
                   css={{ textDecoration: 'none', '&:hover': { textDecoration: 'none' } }}
                 >
@@ -338,7 +338,7 @@ export const TopNav = () => {
               </DropdownMenuItem>
               <DropdownMenuItem css={{ height: '$6', cursor: 'pointer' }}>
                 <Link
-                  href="https://github.com/traefik/traefik/"
+                  href="https://github.com/apache4/apache4/"
                   target="_blank"
                   css={{ textDecoration: 'none', '&:hover': { textDecoration: 'none' } }}
                 >

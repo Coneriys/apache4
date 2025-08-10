@@ -1,4 +1,4 @@
-import { Card, CSS, Flex, Text } from '@traefiklabs/faency'
+import { Card, CSS, Flex, Text } from '@apache4labs/faency'
 import { ReactNode } from 'react'
 
 type ResourceCardProps = {

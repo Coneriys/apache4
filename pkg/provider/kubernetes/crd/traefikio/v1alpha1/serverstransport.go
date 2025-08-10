@@ -1,7 +1,7 @@
 package v1alpha1
 
 import (
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 )
@@ -13,7 +13,7 @@ import (
 // ServersTransport is the CRD implementation of a ServersTransport.
 // If no serversTransport is specified, the default@internal will be used.
 // The default@internal serversTransport is created from the static configuration.
-// More info: https://doc.traefik.io/traefik/v3.5/routing/services/#serverstransport_1
+// More info: https://doc.apache4.io/apache4/v3.5/routing/services/#serverstransport_1
 type ServersTransport struct {
 	metav1.TypeMeta `json:",inline"`
 	// Standard object's metadata.

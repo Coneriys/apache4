@@ -1,6 +1,6 @@
 ---
-title: "Traefik Errors Documentation"
-description: "In Traefik Proxy, the Errors middleware returns custom pages according to configured ranges of HTTP Status codes. Read the technical documentation."
+title: "apache4 Errors Documentation"
+description: "In apache4 Proxy, the Errors middleware returns custom pages according to configured ranges of HTTP Status codes. Read the technical documentation."
 ---
 
 ![Errors](../../../../assets/img/middleware/errorpages.png)
@@ -42,9 +42,9 @@ http:
 ```yaml tab="Labels"
 # Dynamic Custom Error Page for 5XX Status Code
 labels:
-  - "traefik.http.middlewares.test-errors.errors.status=500,501,503,505-599"
-  - "traefik.http.middlewares.test-errors.errors.service=error-handler-service"
-  - "traefik.http.middlewares.test-errors.errors.query=/{status}.html"
+  - "apache4.http.middlewares.test-errors.errors.status=500,501,503,505-599"
+  - "apache4.http.middlewares.test-errors.errors.service=error-handler-service"
+  - "apache4.http.middlewares.test-errors.errors.query=/{status}.html"
 ```
 
 ```json tab="Tags"
@@ -52,9 +52,9 @@ labels:
 {
   // ...
   "Tags": [
-    "traefik.http.middlewares.test-errors.errors.status=500,501,503,505-599",
-    "traefik.http.middlewares.test-errors.errors.service=error-handler-service",
-    "traefik.http.middlewares.test-errors.errors.query=/{status}.html"
+    "apache4.http.middlewares.test-errors.errors.status=500,501,503,505-599",
+    "apache4.http.middlewares.test-errors.errors.service=error-handler-service",
+    "apache4.http.middlewares.test-errors.errors.query=/{status}.html"
   ]
 
 }
@@ -62,7 +62,7 @@ labels:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-errors

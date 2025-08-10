@@ -1,11 +1,11 @@
 ---
-title: "Traefik OpenTelemetry Documentation"
-description: "Traefik supports several tracing backends, including OpenTelemetry. Learn how to implement it for observability in Traefik Proxy. Read the technical documentation."
+title: "apache4 OpenTelemetry Documentation"
+description: "apache4 supports several tracing backends, including OpenTelemetry. Learn how to implement it for observability in apache4 Proxy. Read the technical documentation."
 ---
 
 # OpenTelemetry
 
-Traefik Proxy follows [official OpenTelemetry semantic conventions v1.26.0](https://github.com/open-telemetry/semantic-conventions/blob/v1.26.0/docs/http/http-spans.md).
+apache4 Proxy follows [official OpenTelemetry semantic conventions v1.26.0](https://github.com/open-telemetry/semantic-conventions/blob/v1.26.0/docs/http/http-spans.md).
 
 To enable the OpenTelemetry tracer:
 
@@ -34,7 +34,7 @@ tracing:
 
 !!! info "Propagation"
     
-    Traefik supports the `OTEL_PROPAGATORS` env variable to set up the propragators. The supported propagators are:
+    apache4 supports the `OTEL_PROPAGATORS` env variable to set up the propragators. The supported propagators are:
 
     - tracecontext (default)
     - baggage (default)

@@ -21,8 +21,8 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
-	"github.com/traefik/traefik/v3/integration/try"
-	"github.com/traefik/traefik/v3/pkg/api"
+	"github.com/apache4/apache4/v3/integration/try"
+	"github.com/apache4/apache4/v3/pkg/api"
 )
 
 // Redis test suites.
@@ -111,48 +111,48 @@ func (s *RedisSentinelSuite) TestSentinelConfiguration() {
 	})
 
 	data := map[string]string{
-		"traefik/http/routers/Router0/entryPoints/0": "web",
-		"traefik/http/routers/Router0/middlewares/0": "compressor",
-		"traefik/http/routers/Router0/middlewares/1": "striper",
-		"traefik/http/routers/Router0/service":       "simplesvc",
-		"traefik/http/routers/Router0/rule":          "Host(`kv1.localhost`)",
-		"traefik/http/routers/Router0/priority":      "42",
-		"traefik/http/routers/Router0/tls":           "true",
+		"apache4/http/routers/Router0/entryPoints/0": "web",
+		"apache4/http/routers/Router0/middlewares/0": "compressor",
+		"apache4/http/routers/Router0/middlewares/1": "striper",
+		"apache4/http/routers/Router0/service":       "simplesvc",
+		"apache4/http/routers/Router0/rule":          "Host(`kv1.localhost`)",
+		"apache4/http/routers/Router0/priority":      "42",
+		"apache4/http/routers/Router0/tls":           "true",
 
-		"traefik/http/routers/Router1/rule":                 "Host(`kv2.localhost`)",
-		"traefik/http/routers/Router1/priority":             "42",
-		"traefik/http/routers/Router1/tls/domains/0/main":   "aaa.localhost",
-		"traefik/http/routers/Router1/tls/domains/0/sans/0": "aaa.aaa.localhost",
-		"traefik/http/routers/Router1/tls/domains/0/sans/1": "bbb.aaa.localhost",
-		"traefik/http/routers/Router1/tls/domains/1/main":   "bbb.localhost",
-		"traefik/http/routers/Router1/tls/domains/1/sans/0": "aaa.bbb.localhost",
-		"traefik/http/routers/Router1/tls/domains/1/sans/1": "bbb.bbb.localhost",
-		"traefik/http/routers/Router1/entryPoints/0":        "web",
-		"traefik/http/routers/Router1/service":              "simplesvc",
+		"apache4/http/routers/Router1/rule":                 "Host(`kv2.localhost`)",
+		"apache4/http/routers/Router1/priority":             "42",
+		"apache4/http/routers/Router1/tls/domains/0/main":   "aaa.localhost",
+		"apache4/http/routers/Router1/tls/domains/0/sans/0": "aaa.aaa.localhost",
+		"apache4/http/routers/Router1/tls/domains/0/sans/1": "bbb.aaa.localhost",
+		"apache4/http/routers/Router1/tls/domains/1/main":   "bbb.localhost",
+		"apache4/http/routers/Router1/tls/domains/1/sans/0": "aaa.bbb.localhost",
+		"apache4/http/routers/Router1/tls/domains/1/sans/1": "bbb.bbb.localhost",
+		"apache4/http/routers/Router1/entryPoints/0":        "web",
+		"apache4/http/routers/Router1/service":              "simplesvc",
 
-		"traefik/http/services/simplesvc/loadBalancer/servers/0/url": "http://10.0.1.1:8888",
-		"traefik/http/services/simplesvc/loadBalancer/servers/1/url": "http://10.0.1.1:8889",
+		"apache4/http/services/simplesvc/loadBalancer/servers/0/url": "http://10.0.1.1:8888",
+		"apache4/http/services/simplesvc/loadBalancer/servers/1/url": "http://10.0.1.1:8889",
 
-		"traefik/http/services/srvcA/loadBalancer/servers/0/url": "http://10.0.1.2:8888",
-		"traefik/http/services/srvcA/loadBalancer/servers/1/url": "http://10.0.1.2:8889",
+		"apache4/http/services/srvcA/loadBalancer/servers/0/url": "http://10.0.1.2:8888",
+		"apache4/http/services/srvcA/loadBalancer/servers/1/url": "http://10.0.1.2:8889",
 
-		"traefik/http/services/srvcB/loadBalancer/servers/0/url": "http://10.0.1.3:8888",
-		"traefik/http/services/srvcB/loadBalancer/servers/1/url": "http://10.0.1.3:8889",
+		"apache4/http/services/srvcB/loadBalancer/servers/0/url": "http://10.0.1.3:8888",
+		"apache4/http/services/srvcB/loadBalancer/servers/1/url": "http://10.0.1.3:8889",
 
-		"traefik/http/services/mirror/mirroring/service":           "simplesvc",
-		"traefik/http/services/mirror/mirroring/mirrors/0/name":    "srvcA",
-		"traefik/http/services/mirror/mirroring/mirrors/0/percent": "42",
-		"traefik/http/services/mirror/mirroring/mirrors/1/name":    "srvcB",
-		"traefik/http/services/mirror/mirroring/mirrors/1/percent": "42",
+		"apache4/http/services/mirror/mirroring/service":           "simplesvc",
+		"apache4/http/services/mirror/mirroring/mirrors/0/name":    "srvcA",
+		"apache4/http/services/mirror/mirroring/mirrors/0/percent": "42",
+		"apache4/http/services/mirror/mirroring/mirrors/1/name":    "srvcB",
+		"apache4/http/services/mirror/mirroring/mirrors/1/percent": "42",
 
-		"traefik/http/services/Service03/weighted/services/0/name":   "srvcA",
-		"traefik/http/services/Service03/weighted/services/0/weight": "42",
-		"traefik/http/services/Service03/weighted/services/1/name":   "srvcB",
-		"traefik/http/services/Service03/weighted/services/1/weight": "42",
+		"apache4/http/services/Service03/weighted/services/0/name":   "srvcA",
+		"apache4/http/services/Service03/weighted/services/0/weight": "42",
+		"apache4/http/services/Service03/weighted/services/1/name":   "srvcB",
+		"apache4/http/services/Service03/weighted/services/1/weight": "42",
 
-		"traefik/http/middlewares/compressor/compress":            "true",
-		"traefik/http/middlewares/striper/stripPrefix/prefixes/0": "foo",
-		"traefik/http/middlewares/striper/stripPrefix/prefixes/1": "bar",
+		"apache4/http/middlewares/compressor/compress":            "true",
+		"apache4/http/middlewares/striper/stripPrefix/prefixes/0": "foo",
+		"apache4/http/middlewares/striper/stripPrefix/prefixes/1": "bar",
 	}
 
 	for k, v := range data {
@@ -160,9 +160,9 @@ func (s *RedisSentinelSuite) TestSentinelConfiguration() {
 		require.NoError(s.T(), err)
 	}
 
-	s.traefikCmd(withConfigFile(file))
+	s.apache4Cmd(withConfigFile(file))
 
-	// wait for traefik
+	// wait for apache4
 	err := try.GetRequest("http://127.0.0.1:8080/api/rawdata", 2*time.Second,
 		try.BodyContains(`"striper@redis":`, `"compressor@redis":`, `"srvcA@redis":`, `"srvcB@redis":`),
 	)

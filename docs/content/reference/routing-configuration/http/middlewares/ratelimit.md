@@ -1,6 +1,6 @@
 ---
-title: "Traefik RateLimit Documentation"
-description: "Traefik Proxy's HTTP RateLimit middleware ensures Services receive fair amounts of requests. Read the technical documentation."
+title: "apache4 RateLimit Documentation"
+description: "apache4 Proxy's HTTP RateLimit middleware ensures Services receive fair amounts of requests. Read the technical documentation."
 ---
 
 The `rateLimit` middleware ensures that services will receive a *fair* amount of requests, and allows you to define what fair is.
@@ -39,8 +39,8 @@ http:
 # Here, an average of 100 requests per second is allowed.
 # In addition, a burst of 200 requests is allowed.
 labels:
-  - "traefik.http.middlewares.test-ratelimit.ratelimit.average=100"
-  - "traefik.http.middlewares.test-ratelimit.ratelimit.burst=200"
+  - "apache4.http.middlewares.test-ratelimit.ratelimit.average=100"
+  - "apache4.http.middlewares.test-ratelimit.ratelimit.burst=200"
 ```
 
 ```json tab="Tags"
@@ -48,8 +48,8 @@ labels:
 // In addition, a burst of 200 requests is allowed.
 {
   "Tags": [
-    "traefik.http.middlewares.test-ratelimit.ratelimit.average=100",
-    "traefik.http.middlewares.test-ratelimit.ratelimit.burst=50"
+    "apache4.http.middlewares.test-ratelimit.ratelimit.average=100",
+    "apache4.http.middlewares.test-ratelimit.ratelimit.burst=50"
   ]
 }
 ```
@@ -57,7 +57,7 @@ labels:
 ```yaml tab="Kubernetes"
 # Here, an average of 100 requests per second is allowed.
 # In addition, a burst of 200 requests is allowed.
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-ratelimit
@@ -88,7 +88,7 @@ If none are set, the default is to use the request's remote address field (as an
 
 ### ipStrategy
 
-The `ipStrategy` option defines three parameters that configures how Traefik determines the client IP: `depth`, `excludedIPs` and `ipv6Subnet`.
+The `ipStrategy` option defines three parameters that configures how apache4 determines the client IP: `depth`, `excludedIPs` and `ipv6Subnet`.
 
 As a middleware, rate-limiting happens before the actual proxying to the backend takes place.
 In addition, the previous network hop only gets appended to `X-Forwarded-For` during the last stages of proxying, that is after it has already passed through rate-limiting.

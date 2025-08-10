@@ -1,4 +1,4 @@
-import { Box, Button, Flex, styled, Text } from '@traefiklabs/faency'
+import { Box, Button, Flex, styled, Text } from '@apache4labs/faency'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ReactNode, useEffect } from 'react'
 import { FiX } from 'react-icons/fi'

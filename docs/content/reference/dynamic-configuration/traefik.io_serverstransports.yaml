@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.16.1
-  name: serverstransports.traefik.io
+  name: serverstransports.apache4.io
 spec:
-  group: traefik.io
+  group: apache4.io
   names:
     kind: ServersTransport
     listKind: ServersTransportList
@@ -21,7 +21,7 @@ spec:
           ServersTransport is the CRD implementation of a ServersTransport.
           If no serversTransport is specified, the default@internal will be used.
           The default@internal serversTransport is created from the static configuration.
-          More info: https://doc.traefik.io/traefik/v3.5/routing/services/#serverstransport_1
+          More info: https://doc.apache4.io/apache4/v3.5/routing/services/#serverstransport_1
         properties:
           apiVersion:
             description: |-

@@ -1,4 +1,4 @@
-import { Flex, globalCss, styled } from '@traefiklabs/faency'
+import { Flex, globalCss, styled } from '@apache4labs/faency'
 import { ReactNode, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 
@@ -47,7 +47,7 @@ const Page = ({ children, title }: Props) => {
     <ToastProvider>
       {globalStyles()}
       <Helmet>
-        <title>{title ? `${title} - ` : ''}Traefik Proxy</title>
+        <title>{title ? `${title} - ` : ''}apache4 Proxy</title>
       </Helmet>
       <Flex>
         <SideBarPanel isOpen={isSideBarPanelOpen} onOpenChange={setIsSideBarPanelOpen} />

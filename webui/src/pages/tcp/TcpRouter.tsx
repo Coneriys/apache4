@@ -1,4 +1,4 @@
-import { Flex, styled, Text } from '@traefiklabs/faency'
+import { Flex, styled, Text } from '@apache4labs/faency'
 import { useParams } from 'react-router-dom'
 
 import { CardListSection, DetailSectionSkeleton } from 'components/resources/DetailSections'

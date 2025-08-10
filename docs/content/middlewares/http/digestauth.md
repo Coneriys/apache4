@@ -1,6 +1,6 @@
 ---
-title: "Traefik DigestAuth Documentation"
-description: "Traefik Proxy's HTTP DigestAuth middleware restricts access to your services to known users. Read the technical documentation."
+title: "apache4 DigestAuth Documentation"
+description: "apache4 Proxy's HTTP DigestAuth middleware restricts access to your services to known users. Read the technical documentation."
 ---
 
 # DigestAuth
@@ -17,12 +17,12 @@ The DigestAuth middleware grants access to services to authorized users only.
 ```yaml tab="Docker & Swarm"
 # Declaring the user list
 labels:
-  - "traefik.http.middlewares.test-auth.digestauth.users=test:traefik:a2688e031edb4be6a3797f3882655c05,test2:traefik:518845800f9e2bfb1f1f740ec24f074e"
+  - "apache4.http.middlewares.test-auth.digestauth.users=test:apache4:a2688e031edb4be6a3797f3882655c05,test2:apache4:518845800f9e2bfb1f1f740ec24f074e"
 ```
 
 ```yaml tab="Kubernetes"
 # Declaring the user list
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-auth
@@ -33,7 +33,7 @@ spec:
 
 ```yaml tab="Consul Catalog"
 # Declaring the user list
-- "traefik.http.middlewares.test-auth.digestauth.users=test:traefik:a2688e031edb4be6a3797f3882655c05,test2:traefik:518845800f9e2bfb1f1f740ec24f074e"
+- "apache4.http.middlewares.test-auth.digestauth.users=test:apache4:a2688e031edb4be6a3797f3882655c05,test2:apache4:518845800f9e2bfb1f1f740ec24f074e"
 ```
 
 ```yaml tab="File (YAML)"
@@ -43,8 +43,8 @@ http:
     test-auth:
       digestAuth:
         users:
-          - "test:traefik:a2688e031edb4be6a3797f3882655c05"
-          - "test2:traefik:518845800f9e2bfb1f1f740ec24f074e"
+          - "test:apache4:a2688e031edb4be6a3797f3882655c05"
+          - "test2:apache4:518845800f9e2bfb1f1f740ec24f074e"
 ```
 
 ```toml tab="File (TOML)"
@@ -52,8 +52,8 @@ http:
 [http.middlewares]
   [http.middlewares.test-auth.digestAuth]
     users = [
-      "test:traefik:a2688e031edb4be6a3797f3882655c05",
-      "test2:traefik:518845800f9e2bfb1f1f740ec24f074e",
+      "test:apache4:a2688e031edb4be6a3797f3882655c05",
+      "test2:apache4:518845800f9e2bfb1f1f740ec24f074e",
     ]
 ```
 
@@ -74,11 +74,11 @@ The `users` option is an array of authorized users. Each user will be declared u
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-auth.digestauth.users=test:traefik:a2688e031edb4be6a3797f3882655c05,test2:traefik:518845800f9e2bfb1f1f740ec24f074e"
+  - "apache4.http.middlewares.test-auth.digestauth.users=test:apache4:a2688e031edb4be6a3797f3882655c05,test2:apache4:518845800f9e2bfb1f1f740ec24f074e"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-auth
@@ -99,7 +99,7 @@ data:
 ```
 
 ```yaml tab="Consul Catalog"
-- "traefik.http.middlewares.test-auth.digestauth.users=test:traefik:a2688e031edb4be6a3797f3882655c05,test2:traefik:518845800f9e2bfb1f1f740ec24f074e"
+- "apache4.http.middlewares.test-auth.digestauth.users=test:apache4:a2688e031edb4be6a3797f3882655c05,test2:apache4:518845800f9e2bfb1f1f740ec24f074e"
 ```
 
 ```yaml tab="File (YAML)"
@@ -108,16 +108,16 @@ http:
     test-auth:
       digestAuth:
         users:
-          - "test:traefik:a2688e031edb4be6a3797f3882655c05"
-          - "test2:traefik:518845800f9e2bfb1f1f740ec24f074e"
+          - "test:apache4:a2688e031edb4be6a3797f3882655c05"
+          - "test2:apache4:518845800f9e2bfb1f1f740ec24f074e"
 ```
 
 ```toml tab="File (TOML)"
 [http.middlewares]
   [http.middlewares.test-auth.digestAuth]
     users = [
-      "test:traefik:a2688e031edb4be6a3797f3882655c05",
-      "test2:traefik:518845800f9e2bfb1f1f740ec24f074e",
+      "test:apache4:a2688e031edb4be6a3797f3882655c05",
+      "test2:apache4:518845800f9e2bfb1f1f740ec24f074e",
     ]
 ```
 
@@ -134,11 +134,11 @@ The file content is a list of `name:realm:encoded-password`.
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-auth.digestauth.usersfile=/path/to/my/usersfile"
+  - "apache4.http.middlewares.test-auth.digestauth.usersfile=/path/to/my/usersfile"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-auth
@@ -160,7 +160,7 @@ data:
 ```
 
 ```yaml tab="Consul Catalog"
-- "traefik.http.middlewares.test-auth.digestauth.usersfile=/path/to/my/usersfile"
+- "apache4.http.middlewares.test-auth.digestauth.usersfile=/path/to/my/usersfile"
 ```
 
 ```yaml tab="File (YAML)"
@@ -180,21 +180,21 @@ http:
 ??? example "A file containing test/test and test2/test2"
 
     ```txt
-    test:traefik:a2688e031edb4be6a3797f3882655c05
-    test2:traefik:518845800f9e2bfb1f1f740ec24f074e
+    test:apache4:a2688e031edb4be6a3797f3882655c05
+    test2:apache4:518845800f9e2bfb1f1f740ec24f074e
     ```
 
 ### `realm`
 
-You can customize the realm for the authentication with the `realm` option. The default value is `traefik`.
+You can customize the realm for the authentication with the `realm` option. The default value is `apache4`.
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-auth.digestauth.realm=MyRealm"
+  - "apache4.http.middlewares.test-auth.digestauth.realm=MyRealm"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-auth
@@ -204,7 +204,7 @@ spec:
 ```
 
 ```yaml tab="Consul Catalog"
-- "traefik.http.middlewares.test-auth.digestauth.realm=MyRealm"
+- "apache4.http.middlewares.test-auth.digestauth.realm=MyRealm"
 ```
 
 ```yaml tab="File (YAML)"
@@ -227,11 +227,11 @@ You can customize the header field for the authenticated user using the `headerF
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.my-auth.digestauth.headerField=X-WebAuth-User"
+  - "apache4.http.middlewares.my-auth.digestauth.headerField=X-WebAuth-User"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: my-auth
@@ -242,7 +242,7 @@ spec:
 ```
 
 ```yaml tab="Consul Catalog"
-- "traefik.http.middlewares.my-auth.digestauth.headerField=X-WebAuth-User"
+- "apache4.http.middlewares.my-auth.digestauth.headerField=X-WebAuth-User"
 ```
 
 ```yaml tab="File (YAML)"
@@ -266,11 +266,11 @@ Set the `removeHeader` option to `true` to remove the authorization header befor
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-auth.digestauth.removeheader=true"
+  - "apache4.http.middlewares.test-auth.digestauth.removeheader=true"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-auth
@@ -280,7 +280,7 @@ spec:
 ```
 
 ```yaml tab="Consul Catalog"
-- "traefik.http.middlewares.test-auth.digestauth.removeheader=true"
+- "apache4.http.middlewares.test-auth.digestauth.removeheader=true"
 ```
 
 ```yaml tab="File (YAML)"

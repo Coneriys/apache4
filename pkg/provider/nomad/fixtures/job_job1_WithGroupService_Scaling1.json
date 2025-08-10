@@ -167,7 +167,7 @@
           "Address": "",
           "EnableTagOverride": false,
           "Tags": [
-            "traefik.enable=true"
+            "apache4.enable=true"
           ],
           "CanaryTags": null,
           "Checks": null,

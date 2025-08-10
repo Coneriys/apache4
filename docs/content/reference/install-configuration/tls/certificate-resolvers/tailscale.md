@@ -1,6 +1,6 @@
 ---
-title: "Traefik Tailscale Documentation"
-description: "Learn how to configure Traefik Proxy to resolve TLS certificates for your Tailscale services. Read the technical documentation."
+title: "apache4 Tailscale Documentation"
+description: "Learn how to configure apache4 Proxy to resolve TLS certificates for your Tailscale services. Read the technical documentation."
 ---
 
 # Tailscale
@@ -53,19 +53,19 @@ a Tailscale certificate resolver needs to be configured as below.
 
     ```yaml tab="Docker & Swarm"
     labels:
-      - traefik.http.routers.blog.rule=Host(`monitoring.yak-bebop.ts.net`) && Path(`/metrics`)
-      - traefik.http.routers.blog.tls.certresolver=myresolver
+      - apache4.http.routers.blog.rule=Host(`monitoring.yak-bebop.ts.net`) && Path(`/metrics`)
+      - apache4.http.routers.blog.tls.certresolver=myresolver
     ```
 
     ```yaml tab="Docker (Swarm)"
     deploy:
       labels:
-        - traefik.http.routers.blog.rule=Host(`monitoring.yak-bebop.ts.net`) && Path(`/metrics`)
-        - traefik.http.routers.blog.tls.certresolver=myresolver
+        - apache4.http.routers.blog.rule=Host(`monitoring.yak-bebop.ts.net`) && Path(`/metrics`)
+        - apache4.http.routers.blog.tls.certresolver=myresolver
     ```
 
     ```yaml tab="Kubernetes"
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRoute
     metadata:
       name: blogtls
@@ -105,21 +105,21 @@ a Tailscale certificate resolver needs to be configured as below.
 
     ```yaml tab="Docker & Swarm"
     labels:
-      - traefik.http.routers.blog.rule=Path(`/metrics`)
-      - traefik.http.routers.blog.tls.certresolver=myresolver
-      - traefik.http.routers.blog.tls.domains[0].main=monitoring.yak-bebop.ts.net
+      - apache4.http.routers.blog.rule=Path(`/metrics`)
+      - apache4.http.routers.blog.tls.certresolver=myresolver
+      - apache4.http.routers.blog.tls.domains[0].main=monitoring.yak-bebop.ts.net
     ```
 
     ```yaml tab="Docker (Swarm)"
     deploy:
       labels:
-        - traefik.http.routers.blog.rule=Path(`/metrics`)
-        - traefik.http.routers.blog.tls.certresolver=myresolver
-        - traefik.http.routers.blog.tls.domains[0].main=monitoring.yak-bebop.ts.net
+        - apache4.http.routers.blog.rule=Path(`/metrics`)
+        - apache4.http.routers.blog.tls.certresolver=myresolver
+        - apache4.http.routers.blog.tls.domains[0].main=monitoring.yak-bebop.ts.net
     ```
 
     ```yaml tab="Kubernetes"
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRoute
     metadata:
       name: blogtls
@@ -179,4 +179,4 @@ A certificate resolver requests certificates for a set of domain names inferred 
 
 ## Tailscale Certificates Renewal
 
-Traefik automatically tracks the expiry date of each Tailscale certificate it fetches and starts to renew a certificate 14 days before its expiry to match the Tailscale daemon renewal policy.
+apache4 automatically tracks the expiry date of each Tailscale certificate it fetches and starts to renew a certificate 14 days before its expiry to match the Tailscale daemon renewal policy.

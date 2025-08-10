@@ -7,8 +7,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/middlewares/replacepath"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/middlewares/replacepath"
 )
 
 func TestReplacePathRegex(t *testing.T) {

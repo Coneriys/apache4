@@ -31,15 +31,15 @@ import (
 	"github.com/stretchr/testify/suite"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/network"
-	"github.com/traefik/traefik/v3/integration/try"
+	"github.com/apache4/apache4/v3/integration/try"
 	"gopkg.in/yaml.v3"
 )
 
 var (
-	showLog                      = flag.Bool("tlog", false, "always show Traefik logs")
+	showLog                      = flag.Bool("tlog", false, "always show apache4 logs")
 	k8sConformance               = flag.Bool("k8sConformance", false, "run K8s Gateway API conformance test")
 	k8sConformanceRunTest        = flag.String("k8sConformanceRunTest", "", "run a specific K8s Gateway API conformance test")
-	k8sConformanceTraefikVersion = flag.String("k8sConformanceTraefikVersion", "dev", "specify the Traefik version for the K8s Gateway API conformance report")
+	k8sConformanceapache4Version = flag.String("k8sConformanceapache4Version", "dev", "specify the apache4 version for the K8s Gateway API conformance report")
 )
 
 const tailscaleSecretFilePath = "tailscale.secret"
@@ -71,10 +71,10 @@ type BaseSuite struct {
 	hostIP     string
 }
 
-func (s *BaseSuite) waitForTraefik(containerName string) {
+func (s *BaseSuite) waitForapache4(containerName string) {
 	time.Sleep(1 * time.Second)
 
-	// Wait for Traefik to turn ready.
+	// Wait for apache4 to turn ready.
 	req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1:8080/api/rawdata", nil)
 	require.NoError(s.T(), err)
 
@@ -82,21 +82,21 @@ func (s *BaseSuite) waitForTraefik(containerName string) {
 	require.NoError(s.T(), err)
 }
 
-func (s *BaseSuite) displayTraefikLogFile(path string) {
+func (s *BaseSuite) displayapache4LogFile(path string) {
 	if s.T().Failed() {
 		if _, err := os.Stat(path); !os.IsNotExist(err) {
 			content, errRead := os.ReadFile(path)
 			// TODO TestName
-			// fmt.Printf("%s: Traefik logs: \n", c.TestName())
-			fmt.Print("Traefik logs: \n")
+			// fmt.Printf("%s: apache4 logs: \n", c.TestName())
+			fmt.Print("apache4 logs: \n")
 			if errRead == nil {
 				fmt.Println(string(content))
 			} else {
 				fmt.Println(errRead)
 			}
 		} else {
-			// fmt.Printf("%s: No Traefik logs.\n", c.TestName())
-			fmt.Print("No Traefik logs.\n")
+			// fmt.Printf("%s: No apache4 logs.\n", c.TestName())
+			fmt.Print("No apache4 logs.\n")
 		}
 		errRemove := os.Remove(path)
 		if errRemove != nil {
@@ -108,7 +108,7 @@ func (s *BaseSuite) displayTraefikLogFile(path string) {
 func (s *BaseSuite) SetupSuite() {
 	if isDockerDesktop(s.T()) {
 		_, err := os.Stat(tailscaleSecretFilePath)
-		require.NoError(s.T(), err, "Tailscale need to be configured when running integration tests with Docker Desktop: (https://doc.traefik.io/traefik/v2.11/contributing/building-testing/#testing)")
+		require.NoError(s.T(), err, "Tailscale need to be configured when running integration tests with Docker Desktop: (https://doc.apache4.io/apache4/v2.11/contributing/building-testing/#testing)")
 	}
 
 	// configure default standard log.
@@ -117,7 +117,7 @@ func (s *BaseSuite) SetupSuite() {
 	// stdlog.SetOutput(log.Logger)
 
 	// Create docker network
-	// docker network create traefik-test-network --driver bridge --subnet 172.31.42.0/24
+	// docker network create apache4-test-network --driver bridge --subnet 172.31.42.0/24
 	var opts []network.NetworkCustomizer
 	opts = append(opts, network.WithDriver("bridge"))
 	opts = append(opts, network.WithIPAM(&dockernetwork.IPAM{
@@ -317,14 +317,14 @@ func (s *BaseSuite) composeDown() {
 	s.containers = map[string]testcontainers.Container{}
 }
 
-func (s *BaseSuite) cmdTraefik(args ...string) (*exec.Cmd, *bytes.Buffer) {
-	binName := "traefik"
+func (s *BaseSuite) cmdapache4(args ...string) (*exec.Cmd, *bytes.Buffer) {
+	binName := "apache4"
 	if runtime.GOOS == "windows" {
 		binName += ".exe"
 	}
 
-	traefikBinPath := filepath.Join("..", "dist", runtime.GOOS, runtime.GOARCH, binName)
-	cmd := exec.Command(traefikBinPath, args...)
+	apache4BinPath := filepath.Join("..", "dist", runtime.GOOS, runtime.GOARCH, binName)
+	cmd := exec.Command(apache4BinPath, args...)
 
 	s.T().Cleanup(func() {
 		s.killCmd(cmd)
@@ -352,14 +352,14 @@ func (s *BaseSuite) killCmd(cmd *exec.Cmd) {
 	time.Sleep(100 * time.Millisecond)
 }
 
-func (s *BaseSuite) traefikCmd(args ...string) *exec.Cmd {
-	cmd, out := s.cmdTraefik(args...)
+func (s *BaseSuite) apache4Cmd(args ...string) *exec.Cmd {
+	cmd, out := s.cmdapache4(args...)
 
 	s.T().Cleanup(func() {
 		if s.T().Failed() || *showLog {
 			s.displayLogK3S()
 			s.displayLogCompose()
-			s.displayTraefikLog(out)
+			s.displayapache4Log(out)
 		}
 	})
 
@@ -400,9 +400,9 @@ func (s *BaseSuite) displayLogCompose() {
 	}
 }
 
-func (s *BaseSuite) displayTraefikLog(output *bytes.Buffer) {
+func (s *BaseSuite) displayapache4Log(output *bytes.Buffer) {
 	if output == nil || output.Len() == 0 {
-		log.Info().Msg("No Traefik logs.")
+		log.Info().Msg("No apache4 logs.")
 	} else {
 		for _, line := range strings.Split(output.String(), "\n") {
 			log.Info().Msg(line)

@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016-2020 Containous SAS; 2020-2025 Traefik Labs
+Copyright (c) 2016-2020 Containous SAS; 2020-2025 apache4 Labs
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,69 +30,69 @@ import (
 	"context"
 	time "time"
 
-	versioned "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned"
-	internalinterfaces "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/informers/externalversions/internalinterfaces"
-	v1alpha1 "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/listers/traefikio/v1alpha1"
-	traefikiov1alpha1 "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/traefikio/v1alpha1"
+	versioned "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned"
+	internalinterfaces "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/informers/externalversions/internalinterfaces"
+	v1alpha1 "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/listers/apache4io/v1alpha1"
+	apache4iov1alpha1 "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/apache4io/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	watch "k8s.io/apimachinery/pkg/watch"
 	cache "k8s.io/client-go/tools/cache"
 )
 
-// TraefikServiceInformer provides access to a shared informer and lister for
-// TraefikServices.
-type TraefikServiceInformer interface {
+// apache4ServiceInformer provides access to a shared informer and lister for
+// apache4Services.
+type apache4ServiceInformer interface {
 	Informer() cache.SharedIndexInformer
-	Lister() v1alpha1.TraefikServiceLister
+	Lister() v1alpha1.apache4ServiceLister
 }
 
-type traefikServiceInformer struct {
+type apache4ServiceInformer struct {
 	factory          internalinterfaces.SharedInformerFactory
 	tweakListOptions internalinterfaces.TweakListOptionsFunc
 	namespace        string
 }
 
-// NewTraefikServiceInformer constructs a new informer for TraefikService type.
+// Newapache4ServiceInformer constructs a new informer for apache4Service type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewTraefikServiceInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
-	return NewFilteredTraefikServiceInformer(client, namespace, resyncPeriod, indexers, nil)
+func Newapache4ServiceInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
+	return NewFilteredapache4ServiceInformer(client, namespace, resyncPeriod, indexers, nil)
 }
 
-// NewFilteredTraefikServiceInformer constructs a new informer for TraefikService type.
+// NewFilteredapache4ServiceInformer constructs a new informer for apache4Service type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewFilteredTraefikServiceInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
+func NewFilteredapache4ServiceInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{
 			ListFunc: func(options v1.ListOptions) (runtime.Object, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.TraefikV1alpha1().TraefikServices(namespace).List(context.TODO(), options)
+				return client.apache4V1alpha1().apache4Services(namespace).List(context.TODO(), options)
 			},
 			WatchFunc: func(options v1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.TraefikV1alpha1().TraefikServices(namespace).Watch(context.TODO(), options)
+				return client.apache4V1alpha1().apache4Services(namespace).Watch(context.TODO(), options)
 			},
 		},
-		&traefikiov1alpha1.TraefikService{},
+		&apache4iov1alpha1.apache4Service{},
 		resyncPeriod,
 		indexers,
 	)
 }
 
-func (f *traefikServiceInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
-	return NewFilteredTraefikServiceInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
+func (f *apache4ServiceInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
+	return NewFilteredapache4ServiceInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
 }
 
-func (f *traefikServiceInformer) Informer() cache.SharedIndexInformer {
-	return f.factory.InformerFor(&traefikiov1alpha1.TraefikService{}, f.defaultInformer)
+func (f *apache4ServiceInformer) Informer() cache.SharedIndexInformer {
+	return f.factory.InformerFor(&apache4iov1alpha1.apache4Service{}, f.defaultInformer)
 }
 
-func (f *traefikServiceInformer) Lister() v1alpha1.TraefikServiceLister {
-	return v1alpha1.NewTraefikServiceLister(f.Informer().GetIndexer())
+func (f *apache4ServiceInformer) Lister() v1alpha1.apache4ServiceLister {
+	return v1alpha1.Newapache4ServiceLister(f.Informer().GetIndexer())
 }

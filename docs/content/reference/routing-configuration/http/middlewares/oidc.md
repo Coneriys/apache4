@@ -1,10 +1,10 @@
 ---
 title: 'OpenID Connect Authentication'
-description: 'Traefik Hub API Gateway - The OIDC Authentication middleware secures your applications by delegating the authentication to an external provider.'
+description: 'apache4 Hub API Gateway - The OIDC Authentication middleware secures your applications by delegating the authentication to an external provider.'
 ---
 
-!!! info "Traefik Hub Feature"
-    This middleware is available exclusively in [Traefik Hub](https://traefik.io/traefik-hub/). Learn more about [Traefik Hub's advanced features](https://doc.traefik.io/traefik-hub/api-gateway/intro).
+!!! info "apache4 Hub Feature"
+    This middleware is available exclusively in [apache4 Hub](https://apache4.io/apache4-hub/). Learn more about [apache4 Hub's advanced features](https://doc.apache4.io/apache4-hub/api-gateway/intro).
 
 The OIDC Authentication middleware secures your applications by delegating the authentication to an external provider
 
@@ -13,7 +13,7 @@ The OIDC Authentication middleware secures your applications by delegating the a
 ## Configuration Example
 
 ```yaml tab="Middleware OIDC"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-oidc
@@ -100,10 +100,10 @@ stringData:
 | `session.sameSite` | Inform browsers how they should handle the session cookie on cross-site requests. <br /> Setting it to `lax` or `strict` can provide some protection against cross-site request forgery attacks ([CSRF](https://developer.mozilla.org/en-US/docs/Glossary/CSRF)). <br /> More information [here](#samesite---accepted-values). | lax | No |
 | `session.httpOnly` | Forbids JavaScript from accessing the cookie. <br /> For example, through the `Document.cookie` property, the `XMLHttpRequest` API, or the `Request` API. <br /> This mitigates attacks against cross-site scripting ([XSS](https://developer.mozilla.org/en-US/docs/Glossary/XSS)). | true | No |
 | `session.secure` | Defines whether the session cookie is only sent to the server when a request is made with the `https` scheme. | false | No |
-| `session.store.redis.endpoints`              | Endpoints of the Redis instances to connect to (example: `redis.traefik-hub.svc.cluster.local:6379`) | "" | Yes      |
-| `session.store.redis.username`               | The username Traefik Hub will use to connect to Redis                                                | "" | No       |
-| `session.store.redis.password`               | The password Traefik Hub will use to connect to Redis                                                | "" | No       |
-| `session.store.redis.database`               | The database Traefik Hub will use to sore information (default: `0`)                                 | "" | No       |
+| `session.store.redis.endpoints`              | Endpoints of the Redis instances to connect to (example: `redis.apache4-hub.svc.cluster.local:6379`) | "" | Yes      |
+| `session.store.redis.username`               | The username apache4 Hub will use to connect to Redis                                                | "" | No       |
+| `session.store.redis.password`               | The password apache4 Hub will use to connect to Redis                                                | "" | No       |
+| `session.store.redis.database`               | The database apache4 Hub will use to sore information (default: `0`)                                 | "" | No       |
 | `session.store.redis.cluster`                | Enable Redis Cluster                                                                                 | "" | No       |
 | `session.store.redis.tls.caBundle`           | Custom CA bundle                                                                                     | "" | No       |
 | `session.store.redis.tls.cert`               | TLS certificate                                                                                      | "" | No       |
@@ -112,9 +112,9 @@ stringData:
 | `session.store.redis.sentinel.masterSet`     | Name of the set of main nodes to use for main selection. Required when using Sentinel.               | "" | No       |
 | `session.store.redis.sentinel.username`      | Username to use for sentinel authentication (can be different from `username`)                       | "" | No       |
 | `session.store.redis.sentinel.password`      | Password to use for sentinel authentication (can be different from `password`)                       | "" | No       |
-| `csrf` | When enabled, a CSRF cookie, named `traefikee-csrf-token`, is bound to the OIDC session to protect service from CSRF attacks. <br /> It is based on the [Signed Double Submit Cookie](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#signed-double-submit-cookie) implementation as defined by the OWASP Foundation.<br />Moreinformation [here](#csrf). | "" | No |
+| `csrf` | When enabled, a CSRF cookie, named `apache4ee-csrf-token`, is bound to the OIDC session to protect service from CSRF attacks. <br /> It is based on the [Signed Double Submit Cookie](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#signed-double-submit-cookie) implementation as defined by the OWASP Foundation.<br />Moreinformation [here](#csrf). | "" | No |
 | `csrf.secure` | Defines whether the CSRF cookie is only sent to the server when a request is made with the `https` scheme. | false | No |
-| `csrf.headerName` | Defines the name of the header used to send the CSRF token value received previously in the CSRF cookie. | TraefikHub-Csrf-Token | No |
+| `csrf.headerName` | Defines the name of the header used to send the CSRF token value received previously in the CSRF cookie. | apache4Hub-Csrf-Token | No |
 
 ### redirectUrl
 
@@ -125,7 +125,7 @@ If the router rule is accepting all paths on a domain, no extra work is needed.
 If the router rule is specific about the paths allowed, the path set in this option should be included.
 
 ```yaml tab="Defining specific rule for redirectUrl"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: whoami
@@ -173,7 +173,7 @@ See the following examples.
     Only `http` and `https` schemes are supported.
 
 ```yaml tab="Defining the redirectUrl"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-oidc
@@ -299,7 +299,7 @@ urn:k8s:secret:[name]:[valueKey]
 ```
 
 ```yaml tab="Middleware JWT"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-oidc
@@ -389,7 +389,7 @@ The following Redis modes are supported:
 For more information about Redis, we recommend the [official Redis documentation](https://redis.io/docs/ "Link to official Redis documentation").
 
 ```yaml tab="Defining Redis connection"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-oidc
@@ -404,7 +404,7 @@ spec:
         store:
           redis:
             endpoints:
-              - redis-master.traefik-hub.svc.cluster.local:6379
+              - redis-master.apache4-hub.svc.cluster.local:6379
             password: "urn:k8s:secret:oidc:redisPass"
 ```
 
@@ -427,4 +427,4 @@ This means that a new CSRF token will be generated and sent to the client whenev
 When a request is sent and uses a non-safe method (see [RFC7231#section-4.2.1](https://datatracker.ietf.org/doc/html/rfc7231.html#section-4.2.1)),
 the CSRF token value (extracted from the cookie) have to be sent to the server in the header configured with the [headerName option](#configuration-options).
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

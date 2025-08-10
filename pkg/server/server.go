@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/metrics"
-	"github.com/traefik/traefik/v3/pkg/safe"
-	"github.com/traefik/traefik/v3/pkg/server/middleware"
+	"github.com/apache4/apache4/v3/pkg/metrics"
+	"github.com/apache4/apache4/v3/pkg/safe"
+	"github.com/apache4/apache4/v3/pkg/server/middleware"
 )
 
 // Server is the reverse-proxy/load-balancer engine.
@@ -84,7 +84,7 @@ func (s *Server) Close() {
 		if errors.Is(ctx.Err(), context.Canceled) {
 			return
 		} else if errors.Is(ctx.Err(), context.DeadlineExceeded) {
-			panic("Timeout while stopping traefik, killing instance ✝")
+			panic("Timeout while stopping apache4, killing instance ✝")
 		}
 	}(ctx)
 

@@ -8,8 +8,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/tcp"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/tcp"
 )
 
 func TestNewIPAllowLister(t *testing.T) {
@@ -43,7 +43,7 @@ func TestNewIPAllowLister(t *testing.T) {
 			t.Parallel()
 
 			next := tcp.HandlerFunc(func(conn tcp.WriteCloser) {})
-			allowLister, err := New(t.Context(), next, test.allowList, "traefikTest")
+			allowLister, err := New(t.Context(), next, test.allowList, "apache4Test")
 
 			if test.expectedError {
 				assert.Error(t, err)
@@ -92,7 +92,7 @@ func TestIPAllowLister_ServeHTTP(t *testing.T) {
 				require.NoError(t, err)
 			})
 
-			allowLister, err := New(t.Context(), next, test.allowList, "traefikTest")
+			allowLister, err := New(t.Context(), next, test.allowList, "apache4Test")
 			require.NoError(t, err)
 
 			server, client := net.Pipe()

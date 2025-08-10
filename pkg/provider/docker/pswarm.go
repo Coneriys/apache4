@@ -14,15 +14,15 @@ import (
 	"github.com/docker/docker/api/types/versions"
 	"github.com/docker/docker/client"
 	"github.com/rs/zerolog/log"
-	ptypes "github.com/traefik/paerser/types"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/job"
-	"github.com/traefik/traefik/v3/pkg/logs"
-	"github.com/traefik/traefik/v3/pkg/provider"
-	"github.com/traefik/traefik/v3/pkg/safe"
+	ptypes "github.com/apache4/paerser/types"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/job"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/provider"
+	"github.com/apache4/apache4/v3/pkg/safe"
 )
 
-// SwarmAPIVersion is a constant holding the version of the Provider API traefik will use.
+// SwarmAPIVersion is a constant holding the version of the Provider API apache4 will use.
 const SwarmAPIVersion = "1.24"
 
 const swarmName = "swarm"
@@ -62,7 +62,7 @@ func (p *SwarmProvider) createClient(ctx context.Context) (*client.Client, error
 	return createClient(ctx, p.ClientConfig)
 }
 
-// Provide allows the docker provider to provide configurations to traefik using the given configuration channel.
+// Provide allows the docker provider to provide configurations to apache4 using the given configuration channel.
 func (p *SwarmProvider) Provide(configurationChan chan<- dynamic.Message, pool *safe.Pool) error {
 	pool.GoCtx(func(routineCtx context.Context) {
 		logger := log.Ctx(routineCtx).With().Str(logs.ProviderName, swarmName).Logger()
@@ -240,7 +240,7 @@ func (p *SwarmProvider) parseService(ctx context.Context, service swarmtypes.Ser
 	}
 	if service.Spec.EndpointSpec.Mode == swarmtypes.ResolutionModeDNSRR {
 		if dData.ExtraConf.LBSwarm {
-			logger.Warn().Msgf("Ignored %s endpoint-mode not supported, service name: %s. Fallback to Traefik load balancing", swarmtypes.ResolutionModeDNSRR, service.Spec.Annotations.Name)
+			logger.Warn().Msgf("Ignored %s endpoint-mode not supported, service name: %s. Fallback to apache4 load balancing", swarmtypes.ResolutionModeDNSRR, service.Spec.Annotations.Name)
 		}
 	} else if service.Spec.EndpointSpec.Mode == swarmtypes.ResolutionModeVIP {
 		dData.NetworkSettings.Networks = make(map[string]*networkData)

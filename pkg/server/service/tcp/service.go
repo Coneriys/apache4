@@ -9,10 +9,10 @@ import (
 	"time"
 
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/config/runtime"
-	"github.com/traefik/traefik/v3/pkg/logs"
-	"github.com/traefik/traefik/v3/pkg/server/provider"
-	"github.com/traefik/traefik/v3/pkg/tcp"
+	"github.com/apache4/apache4/v3/pkg/config/runtime"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/server/provider"
+	"github.com/apache4/apache4/v3/pkg/tcp"
 	"golang.org/x/net/proxy"
 )
 

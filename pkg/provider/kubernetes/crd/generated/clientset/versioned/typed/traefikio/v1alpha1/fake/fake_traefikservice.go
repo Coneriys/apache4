@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016-2020 Containous SAS; 2020-2025 Traefik Labs
+Copyright (c) 2016-2020 Containous SAS; 2020-2025 apache4 Labs
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ package fake
 import (
 	"context"
 
-	v1alpha1 "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/traefikio/v1alpha1"
+	v1alpha1 "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/apache4io/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	labels "k8s.io/apimachinery/pkg/labels"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,31 +37,31 @@ import (
 	testing "k8s.io/client-go/testing"
 )
 
-// FakeTraefikServices implements TraefikServiceInterface
-type FakeTraefikServices struct {
-	Fake *FakeTraefikV1alpha1
+// Fakeapache4Services implements apache4ServiceInterface
+type Fakeapache4Services struct {
+	Fake *Fakeapache4V1alpha1
 	ns   string
 }
 
-var traefikservicesResource = v1alpha1.SchemeGroupVersion.WithResource("traefikservices")
+var apache4servicesResource = v1alpha1.SchemeGroupVersion.WithResource("apache4services")
 
-var traefikservicesKind = v1alpha1.SchemeGroupVersion.WithKind("TraefikService")
+var apache4servicesKind = v1alpha1.SchemeGroupVersion.WithKind("apache4Service")
 
-// Get takes name of the traefikService, and returns the corresponding traefikService object, and an error if there is any.
-func (c *FakeTraefikServices) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.TraefikService, err error) {
+// Get takes name of the apache4Service, and returns the corresponding apache4Service object, and an error if there is any.
+func (c *Fakeapache4Services) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.apache4Service, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewGetAction(traefikservicesResource, c.ns, name), &v1alpha1.TraefikService{})
+		Invokes(testing.NewGetAction(apache4servicesResource, c.ns, name), &v1alpha1.apache4Service{})
 
 	if obj == nil {
 		return nil, err
 	}
-	return obj.(*v1alpha1.TraefikService), err
+	return obj.(*v1alpha1.apache4Service), err
 }
 
-// List takes label and field selectors, and returns the list of TraefikServices that match those selectors.
-func (c *FakeTraefikServices) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.TraefikServiceList, err error) {
+// List takes label and field selectors, and returns the list of apache4Services that match those selectors.
+func (c *Fakeapache4Services) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.apache4ServiceList, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewListAction(traefikservicesResource, traefikservicesKind, c.ns, opts), &v1alpha1.TraefikServiceList{})
+		Invokes(testing.NewListAction(apache4servicesResource, apache4servicesKind, c.ns, opts), &v1alpha1.apache4ServiceList{})
 
 	if obj == nil {
 		return nil, err
@@ -71,8 +71,8 @@ func (c *FakeTraefikServices) List(ctx context.Context, opts v1.ListOptions) (re
 	if label == nil {
 		label = labels.Everything()
 	}
-	list := &v1alpha1.TraefikServiceList{ListMeta: obj.(*v1alpha1.TraefikServiceList).ListMeta}
-	for _, item := range obj.(*v1alpha1.TraefikServiceList).Items {
+	list := &v1alpha1.apache4ServiceList{ListMeta: obj.(*v1alpha1.apache4ServiceList).ListMeta}
+	for _, item := range obj.(*v1alpha1.apache4ServiceList).Items {
 		if label.Matches(labels.Set(item.Labels)) {
 			list.Items = append(list.Items, item)
 		}
@@ -80,58 +80,58 @@ func (c *FakeTraefikServices) List(ctx context.Context, opts v1.ListOptions) (re
 	return list, err
 }
 
-// Watch returns a watch.Interface that watches the requested traefikServices.
-func (c *FakeTraefikServices) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
+// Watch returns a watch.Interface that watches the requested apache4Services.
+func (c *Fakeapache4Services) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
-		InvokesWatch(testing.NewWatchAction(traefikservicesResource, c.ns, opts))
+		InvokesWatch(testing.NewWatchAction(apache4servicesResource, c.ns, opts))
 
 }
 
-// Create takes the representation of a traefikService and creates it.  Returns the server's representation of the traefikService, and an error, if there is any.
-func (c *FakeTraefikServices) Create(ctx context.Context, traefikService *v1alpha1.TraefikService, opts v1.CreateOptions) (result *v1alpha1.TraefikService, err error) {
+// Create takes the representation of a apache4Service and creates it.  Returns the server's representation of the apache4Service, and an error, if there is any.
+func (c *Fakeapache4Services) Create(ctx context.Context, apache4Service *v1alpha1.apache4Service, opts v1.CreateOptions) (result *v1alpha1.apache4Service, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewCreateAction(traefikservicesResource, c.ns, traefikService), &v1alpha1.TraefikService{})
+		Invokes(testing.NewCreateAction(apache4servicesResource, c.ns, apache4Service), &v1alpha1.apache4Service{})
 
 	if obj == nil {
 		return nil, err
 	}
-	return obj.(*v1alpha1.TraefikService), err
+	return obj.(*v1alpha1.apache4Service), err
 }
 
-// Update takes the representation of a traefikService and updates it. Returns the server's representation of the traefikService, and an error, if there is any.
-func (c *FakeTraefikServices) Update(ctx context.Context, traefikService *v1alpha1.TraefikService, opts v1.UpdateOptions) (result *v1alpha1.TraefikService, err error) {
+// Update takes the representation of a apache4Service and updates it. Returns the server's representation of the apache4Service, and an error, if there is any.
+func (c *Fakeapache4Services) Update(ctx context.Context, apache4Service *v1alpha1.apache4Service, opts v1.UpdateOptions) (result *v1alpha1.apache4Service, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateAction(traefikservicesResource, c.ns, traefikService), &v1alpha1.TraefikService{})
+		Invokes(testing.NewUpdateAction(apache4servicesResource, c.ns, apache4Service), &v1alpha1.apache4Service{})
 
 	if obj == nil {
 		return nil, err
 	}
-	return obj.(*v1alpha1.TraefikService), err
+	return obj.(*v1alpha1.apache4Service), err
 }
 
-// Delete takes name of the traefikService and deletes it. Returns an error if one occurs.
-func (c *FakeTraefikServices) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
+// Delete takes name of the apache4Service and deletes it. Returns an error if one occurs.
+func (c *Fakeapache4Services) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(traefikservicesResource, c.ns, name, opts), &v1alpha1.TraefikService{})
+		Invokes(testing.NewDeleteActionWithOptions(apache4servicesResource, c.ns, name, opts), &v1alpha1.apache4Service{})
 
 	return err
 }
 
 // DeleteCollection deletes a collection of objects.
-func (c *FakeTraefikServices) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionAction(traefikservicesResource, c.ns, listOpts)
+func (c *Fakeapache4Services) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
+	action := testing.NewDeleteCollectionAction(apache4servicesResource, c.ns, listOpts)
 
-	_, err := c.Fake.Invokes(action, &v1alpha1.TraefikServiceList{})
+	_, err := c.Fake.Invokes(action, &v1alpha1.apache4ServiceList{})
 	return err
 }
 
-// Patch applies the patch and returns the patched traefikService.
-func (c *FakeTraefikServices) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.TraefikService, err error) {
+// Patch applies the patch and returns the patched apache4Service.
+func (c *Fakeapache4Services) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.apache4Service, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceAction(traefikservicesResource, c.ns, name, pt, data, subresources...), &v1alpha1.TraefikService{})
+		Invokes(testing.NewPatchSubresourceAction(apache4servicesResource, c.ns, name, pt, data, subresources...), &v1alpha1.apache4Service{})
 
 	if obj == nil {
 		return nil, err
 	}
-	return obj.(*v1alpha1.TraefikService), err
+	return obj.(*v1alpha1.apache4Service), err
 }

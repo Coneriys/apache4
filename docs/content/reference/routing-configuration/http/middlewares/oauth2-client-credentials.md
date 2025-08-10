@@ -1,12 +1,12 @@
 ---
 title: 'OAuth 2.0 Client Credentials Authentication'
-description: 'Traefik Hub API Gateway - The OAuth 2.0 Client Credentials Authentication middleware secures your applications using the client credentials flow'
+description: 'apache4 Hub API Gateway - The OAuth 2.0 Client Credentials Authentication middleware secures your applications using the client credentials flow'
 ---
 
-!!! info "Traefik Hub Feature"
-    This middleware is available exclusively in [Traefik Hub](https://traefik.io/traefik-hub/). Learn more about [Traefik Hub's advanced features](https://doc.traefik.io/traefik-hub/api-gateway/intro).
+!!! info "apache4 Hub Feature"
+    This middleware is available exclusively in [apache4 Hub](https://apache4.io/apache4-hub/). Learn more about [apache4 Hub's advanced features](https://doc.apache4.io/apache4-hub/api-gateway/intro).
 
-The OAuth 2.0 Client Credentials Authentication middleware allows Traefik Hub to secure routes using the OAuth 2.0 Client Credentials flow as described in the [RFC 6749](https://www.rfc-editor.org/rfc/rfc6749.html#section-4.4).
+The OAuth 2.0 Client Credentials Authentication middleware allows apache4 Hub to secure routes using the OAuth 2.0 Client Credentials flow as described in the [RFC 6749](https://www.rfc-editor.org/rfc/rfc6749.html#section-4.4).
 Access tokens can be cached using an external KV store.
 
 The OAuth Client Credentials Authentication middleware allows using Redis (or Sentinel) as persistent KV store to authorization access tokens
@@ -17,7 +17,7 @@ while they are valid. This reduces latency and the number of calls made to the a
 ## Configuration Example
 
 ```yaml tab="Middleware OAuth Client Credentials"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-client-creds
@@ -61,10 +61,10 @@ stringData:
 | `clientSecret` | Defines the unique client secret for an account on the OpenID Connect provider, must be set when the `clientID` option is set.<br />More information [here](#storing-secret-values-in-kubernetes-secrets). | ""      | Yes       |
 | `forwardHeaders` | Defines the HTTP headers to add to requests and populates them with values extracted from the access token claims returned by the authorization server. <br /> Claims to be forwarded that are not found in the JWT result in empty headers. <br /> The `forwardHeaders` option can only be used with JWT-formatted token. | []      | No       |
 | `store.keyPrefix` | Defines the prefix of the key for the entries that store the sessions. | ""      | No       |
-| `store.redis.endpoints`              | Endpoints of the Redis instances to connect to (example: `redis.traefik-hub.svc.cluster.local:6379`) | "" | Yes      |
-| `store.redis.username`               | The username Traefik Hub will use to connect to Redis          | "" | No       |
-| `store.redis.password`               | The password Traefik Hub will use to connect to Redis    | "" | No       |
-| `store.redis.database`               | The database Traefik Hub will use to sore information (default: `0`)                                 | "" | No       |
+| `store.redis.endpoints`              | Endpoints of the Redis instances to connect to (example: `redis.apache4-hub.svc.cluster.local:6379`) | "" | Yes      |
+| `store.redis.username`               | The username apache4 Hub will use to connect to Redis          | "" | No       |
+| `store.redis.password`               | The password apache4 Hub will use to connect to Redis    | "" | No       |
+| `store.redis.database`               | The database apache4 Hub will use to sore information (default: `0`)                                 | "" | No       |
 | `store.redis.cluster`                | Enable Redis Cluster           | "" | No       |
 | `store.redis.tls.caBundle`           | Custom CA bundle    | "" | No       |
 | `store.redis.tls.cert`               | TLS certificate         | "" | No       |
@@ -176,7 +176,7 @@ urn:k8s:secret:[name]:[valueKey]
 ```
 
 ```yaml tab="Middleware JWT"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-client-creds
@@ -252,4 +252,4 @@ The following Redis modes are supported:
 
 For more information about Redis, we recommend the [official Redis documentation](https://redis.io/docs/ "Link to official Redis documentation").
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

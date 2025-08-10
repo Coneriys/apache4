@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/traefik/traefik/v3/pkg/proxy/httputil"
+	"github.com/apache4/apache4/v3/pkg/proxy/httputil"
 	"github.com/valyala/fasthttp"
 	"golang.org/x/net/http/httpguts"
 )

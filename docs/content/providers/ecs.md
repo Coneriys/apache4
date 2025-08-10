@@ -1,14 +1,14 @@
 ---
-title: "Traefik AWS ECS Documentation"
-description: "Configuration discovery in Traefik is achieved through Providers. Read the technical documentation for leveraging AWS ECS in Traefik."
+title: "apache4 AWS ECS Documentation"
+description: "Configuration discovery in apache4 is achieved through Providers. Read the technical documentation for leveraging AWS ECS in apache4."
 ---
 
-# Traefik & AWS ECS
+# apache4 & AWS ECS
 
 A Story of Labels & Elastic Containers
 {: .subtitle }
 
-Attach labels to your ECS containers and let Traefik do the rest!
+Attach labels to your ECS containers and let apache4 do the rest!
 
 ## Configuration Examples
 
@@ -31,14 +31,14 @@ Attach labels to your ECS containers and let Traefik do the rest!
 
 ## Policy
 
-Traefik needs the following policy to read ECS information:
+apache4 needs the following policy to read ECS information:
 
 ```json
 {
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "TraefikECSReadAccess",
+            "Sid": "apache4ECSReadAccess",
             "Effect": "Allow",
             "Action": [
                 "ecs:ListClusters",
@@ -148,9 +148,9 @@ providers:
 
 _Optional, Default=true_
 
-Expose ECS services by default in Traefik.
+Expose ECS services by default in apache4.
 
-If set to `false`, services that do not have a `traefik.enable=true` label are ignored from the resulting routing configuration.
+If set to `false`, services that do not have a `apache4.enable=true` label are ignored from the resulting routing configuration.
 
 ```yaml tab="File (YAML)"
 providers:
@@ -174,7 +174,7 @@ providers:
 
 _Optional, Default=""_
 
-The `constraints` option can be set to an expression that Traefik matches against the container labels (task),
+The `constraints` option can be set to an expression that apache4 matches against the container labels (task),
 to determine whether to create any route for that container. 
 If none of the container labels match the expression, no route for that container is created. 
 If the expression is empty, all detected containers are included.
@@ -238,7 +238,7 @@ providers:
 
 _Optional, Default=false_
 
-Determines whether Traefik discovers only healthy tasks (`HEALTHY` healthStatus).
+Determines whether apache4 discovers only healthy tasks (`HEALTHY` healthStatus).
 
 ```yaml tab="File (YAML)"
 providers:
@@ -287,12 +287,12 @@ providers:
 # ...
 ```
 
-??? info "Default rule and Traefik service"
+??? info "Default rule and apache4 service"
 
-    The exposure of the Traefik container, combined with the default rule mechanism,
+    The exposure of the apache4 container, combined with the default rule mechanism,
     can lead to create a router targeting itself in a loop.
     In this case, to prevent an infinite loop,
-    Traefik adds an internal middleware to refuse the request if it comes from the same router.
+    apache4 adds an internal middleware to refuse the request if it comes from the same router.
 
 ### `refreshSeconds`
 

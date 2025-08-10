@@ -1,9 +1,9 @@
 ---
 title: "ServersTransport"
-description: "ServersTransport allows configuring the connection between Traefik and the HTTP servers."
+description: "ServersTransport allows configuring the connection between apache4 and the HTTP servers."
 ---
 
-ServersTransport allows you to configure the transport between Traefik and your HTTP servers.
+ServersTransport allows you to configure the transport between apache4 and your HTTP servers.
 
 ## Configuration Example
 
@@ -80,14 +80,14 @@ http:
 
 ```yaml tab="Labels"
 labels:
-  - "traefik.http.services.Service01.loadBalancer.serversTransport=mytransport"
+  - "apache4.http.services.Service01.loadBalancer.serversTransport=mytransport"
 ```
 
 ```json tab="Tags"
 {
   // ...
   "Tags": [
-    "traefik.http.services.Service01.loadBalancer.serversTransport=mytransport"
+    "apache4.http.services.Service01.loadBalancer.serversTransport=mytransport"
   ]
 }
 ```

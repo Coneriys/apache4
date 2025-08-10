@@ -15,9 +15,9 @@ for os in linux darwin windows freebsd openbsd; do
     go clean -cache
 done
 
-cat dist/**/*_checksums.txt >> "dist/traefik_${VERSION}_checksums.txt"
+cat dist/**/*_checksums.txt >> "dist/apache4_${VERSION}_checksums.txt"
 rm dist/**/*_checksums.txt
-tar cfz "dist/traefik-${VERSION}.src.tar.gz" \
+tar cfz "dist/apache4-${VERSION}.src.tar.gz" \
   --exclude-vcs \
   --exclude .idea \
   --exclude .travis \

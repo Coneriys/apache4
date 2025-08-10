@@ -18,8 +18,8 @@ import (
 	"github.com/pmezard/go-difflib/difflib"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
-	"github.com/traefik/traefik/v3/integration/try"
-	"github.com/traefik/traefik/v3/pkg/api"
+	"github.com/apache4/apache4/v3/integration/try"
+	"github.com/apache4/apache4/v3/pkg/api"
 )
 
 // Consul test suites.
@@ -62,7 +62,7 @@ func (s *ConsulSuite) TearDownSuite() {
 }
 
 func (s *ConsulSuite) TearDownTest() {
-	err := s.kvClient.DeleteTree(s.T().Context(), "traefik")
+	err := s.kvClient.DeleteTree(s.T().Context(), "apache4")
 	if err != nil && !errors.Is(err, store.ErrKeyNotFound) {
 		require.ErrorIs(s.T(), err, store.ErrKeyNotFound)
 	}
@@ -72,48 +72,48 @@ func (s *ConsulSuite) TestSimpleConfiguration() {
 	file := s.adaptFile("fixtures/consul/simple.toml", struct{ ConsulAddress string }{s.consulURL})
 
 	data := map[string]string{
-		"traefik/http/routers/Router0/entryPoints/0": "web",
-		"traefik/http/routers/Router0/middlewares/0": "compressor",
-		"traefik/http/routers/Router0/middlewares/1": "striper",
-		"traefik/http/routers/Router0/service":       "simplesvc",
-		"traefik/http/routers/Router0/rule":          "Host(`kv1.localhost`)",
-		"traefik/http/routers/Router0/priority":      "42",
-		"traefik/http/routers/Router0/tls":           "",
+		"apache4/http/routers/Router0/entryPoints/0": "web",
+		"apache4/http/routers/Router0/middlewares/0": "compressor",
+		"apache4/http/routers/Router0/middlewares/1": "striper",
+		"apache4/http/routers/Router0/service":       "simplesvc",
+		"apache4/http/routers/Router0/rule":          "Host(`kv1.localhost`)",
+		"apache4/http/routers/Router0/priority":      "42",
+		"apache4/http/routers/Router0/tls":           "",
 
-		"traefik/http/routers/Router1/rule":                 "Host(`kv2.localhost`)",
-		"traefik/http/routers/Router1/priority":             "42",
-		"traefik/http/routers/Router1/tls/domains/0/main":   "aaa.localhost",
-		"traefik/http/routers/Router1/tls/domains/0/sans/0": "aaa.aaa.localhost",
-		"traefik/http/routers/Router1/tls/domains/0/sans/1": "bbb.aaa.localhost",
-		"traefik/http/routers/Router1/tls/domains/1/main":   "bbb.localhost",
-		"traefik/http/routers/Router1/tls/domains/1/sans/0": "aaa.bbb.localhost",
-		"traefik/http/routers/Router1/tls/domains/1/sans/1": "bbb.bbb.localhost",
-		"traefik/http/routers/Router1/entryPoints/0":        "web",
-		"traefik/http/routers/Router1/service":              "simplesvc",
+		"apache4/http/routers/Router1/rule":                 "Host(`kv2.localhost`)",
+		"apache4/http/routers/Router1/priority":             "42",
+		"apache4/http/routers/Router1/tls/domains/0/main":   "aaa.localhost",
+		"apache4/http/routers/Router1/tls/domains/0/sans/0": "aaa.aaa.localhost",
+		"apache4/http/routers/Router1/tls/domains/0/sans/1": "bbb.aaa.localhost",
+		"apache4/http/routers/Router1/tls/domains/1/main":   "bbb.localhost",
+		"apache4/http/routers/Router1/tls/domains/1/sans/0": "aaa.bbb.localhost",
+		"apache4/http/routers/Router1/tls/domains/1/sans/1": "bbb.bbb.localhost",
+		"apache4/http/routers/Router1/entryPoints/0":        "web",
+		"apache4/http/routers/Router1/service":              "simplesvc",
 
-		"traefik/http/services/simplesvc/loadBalancer/servers/0/url": "http://10.0.1.1:8888",
-		"traefik/http/services/simplesvc/loadBalancer/servers/1/url": "http://10.0.1.1:8889",
+		"apache4/http/services/simplesvc/loadBalancer/servers/0/url": "http://10.0.1.1:8888",
+		"apache4/http/services/simplesvc/loadBalancer/servers/1/url": "http://10.0.1.1:8889",
 
-		"traefik/http/services/srvcA/loadBalancer/servers/0/url": "http://10.0.1.2:8888",
-		"traefik/http/services/srvcA/loadBalancer/servers/1/url": "http://10.0.1.2:8889",
+		"apache4/http/services/srvcA/loadBalancer/servers/0/url": "http://10.0.1.2:8888",
+		"apache4/http/services/srvcA/loadBalancer/servers/1/url": "http://10.0.1.2:8889",
 
-		"traefik/http/services/srvcB/loadBalancer/servers/0/url": "http://10.0.1.3:8888",
-		"traefik/http/services/srvcB/loadBalancer/servers/1/url": "http://10.0.1.3:8889",
+		"apache4/http/services/srvcB/loadBalancer/servers/0/url": "http://10.0.1.3:8888",
+		"apache4/http/services/srvcB/loadBalancer/servers/1/url": "http://10.0.1.3:8889",
 
-		"traefik/http/services/mirror/mirroring/service":           "simplesvc",
-		"traefik/http/services/mirror/mirroring/mirrors/0/name":    "srvcA",
-		"traefik/http/services/mirror/mirroring/mirrors/0/percent": "42",
-		"traefik/http/services/mirror/mirroring/mirrors/1/name":    "srvcB",
-		"traefik/http/services/mirror/mirroring/mirrors/1/percent": "42",
+		"apache4/http/services/mirror/mirroring/service":           "simplesvc",
+		"apache4/http/services/mirror/mirroring/mirrors/0/name":    "srvcA",
+		"apache4/http/services/mirror/mirroring/mirrors/0/percent": "42",
+		"apache4/http/services/mirror/mirroring/mirrors/1/name":    "srvcB",
+		"apache4/http/services/mirror/mirroring/mirrors/1/percent": "42",
 
-		"traefik/http/services/Service03/weighted/services/0/name":   "srvcA",
-		"traefik/http/services/Service03/weighted/services/0/weight": "42",
-		"traefik/http/services/Service03/weighted/services/1/name":   "srvcB",
-		"traefik/http/services/Service03/weighted/services/1/weight": "42",
+		"apache4/http/services/Service03/weighted/services/0/name":   "srvcA",
+		"apache4/http/services/Service03/weighted/services/0/weight": "42",
+		"apache4/http/services/Service03/weighted/services/1/name":   "srvcB",
+		"apache4/http/services/Service03/weighted/services/1/weight": "42",
 
-		"traefik/http/middlewares/compressor/compress":            "",
-		"traefik/http/middlewares/striper/stripPrefix/prefixes/0": "foo",
-		"traefik/http/middlewares/striper/stripPrefix/prefixes/1": "bar",
+		"apache4/http/middlewares/compressor/compress":            "",
+		"apache4/http/middlewares/striper/stripPrefix/prefixes/0": "foo",
+		"apache4/http/middlewares/striper/stripPrefix/prefixes/1": "bar",
 	}
 
 	for k, v := range data {
@@ -121,9 +121,9 @@ func (s *ConsulSuite) TestSimpleConfiguration() {
 		require.NoError(s.T(), err)
 	}
 
-	s.traefikCmd(withConfigFile(file))
+	s.apache4Cmd(withConfigFile(file))
 
-	// wait for traefik
+	// wait for apache4
 	err := try.GetRequest("http://127.0.0.1:8080/api/rawdata", 2*time.Second,
 		try.BodyContains(`"striper@consul":`, `"compressor@consul":`, `"srvcA@consul":`, `"srvcB@consul":`),
 	)
@@ -173,7 +173,7 @@ func (s *ConsulSuite) assertWhoami(host string, expectedStatusCode int) {
 }
 
 func (s *ConsulSuite) TestDeleteRootKey() {
-	// This test case reproduce the issue: https://github.com/traefik/traefik/issues/8092
+	// This test case reproduce the issue: https://github.com/apache4/apache4/issues/8092
 
 	file := s.adaptFile("fixtures/consul/simple.toml", struct{ ConsulAddress string }{s.consulURL})
 
@@ -181,16 +181,16 @@ func (s *ConsulSuite) TestDeleteRootKey() {
 	svcaddr := net.JoinHostPort(s.getComposeServiceIP("whoami"), "80")
 
 	data := map[string]string{
-		"traefik/http/routers/Router0/entryPoints/0": "web",
-		"traefik/http/routers/Router0/rule":          "Host(`kv1.localhost`)",
-		"traefik/http/routers/Router0/service":       "simplesvc0",
+		"apache4/http/routers/Router0/entryPoints/0": "web",
+		"apache4/http/routers/Router0/rule":          "Host(`kv1.localhost`)",
+		"apache4/http/routers/Router0/service":       "simplesvc0",
 
-		"traefik/http/routers/Router1/entryPoints/0": "web",
-		"traefik/http/routers/Router1/rule":          "Host(`kv2.localhost`)",
-		"traefik/http/routers/Router1/service":       "simplesvc1",
+		"apache4/http/routers/Router1/entryPoints/0": "web",
+		"apache4/http/routers/Router1/rule":          "Host(`kv2.localhost`)",
+		"apache4/http/routers/Router1/service":       "simplesvc1",
 
-		"traefik/http/services/simplesvc0/loadBalancer/servers/0/url": "http://" + svcaddr,
-		"traefik/http/services/simplesvc1/loadBalancer/servers/0/url": "http://" + svcaddr,
+		"apache4/http/services/simplesvc0/loadBalancer/servers/0/url": "http://" + svcaddr,
+		"apache4/http/services/simplesvc1/loadBalancer/servers/0/url": "http://" + svcaddr,
 	}
 
 	for k, v := range data {
@@ -198,9 +198,9 @@ func (s *ConsulSuite) TestDeleteRootKey() {
 		require.NoError(s.T(), err)
 	}
 
-	s.traefikCmd(withConfigFile(file))
+	s.apache4Cmd(withConfigFile(file))
 
-	// wait for traefik
+	// wait for apache4
 	err := try.GetRequest("http://127.0.0.1:8080/api/rawdata", 2*time.Second,
 		try.BodyContains(`"Router0@consul":`, `"Router1@consul":`, `"simplesvc0@consul":`, `"simplesvc1@consul":`),
 	)
@@ -209,13 +209,13 @@ func (s *ConsulSuite) TestDeleteRootKey() {
 	s.assertWhoami("kv2.localhost", http.StatusOK)
 
 	// delete router1
-	err = s.kvClient.DeleteTree(ctx, "traefik/http/routers/Router1")
+	err = s.kvClient.DeleteTree(ctx, "apache4/http/routers/Router1")
 	require.NoError(s.T(), err)
 	s.assertWhoami("kv1.localhost", http.StatusOK)
 	s.assertWhoami("kv2.localhost", http.StatusNotFound)
 
 	// delete simple services and router0
-	err = s.kvClient.DeleteTree(ctx, "traefik")
+	err = s.kvClient.DeleteTree(ctx, "apache4")
 	require.NoError(s.T(), err)
 	s.assertWhoami("kv1.localhost", http.StatusNotFound)
 	s.assertWhoami("kv2.localhost", http.StatusNotFound)

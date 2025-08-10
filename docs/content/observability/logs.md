@@ -1,6 +1,6 @@
 ---
-title: "Traefik Logs Documentation"
-description: "Logs are a key part of observability in Traefik Proxy. Read the technical documentation to learn their configurations, rotations, and time zones."
+title: "apache4 Logs Documentation"
+description: "Logs are a key part of observability in apache4 Proxy. Read the technical documentation to learn their configurations, rotations, and time zones."
 ---
 
 # Logs
@@ -14,7 +14,7 @@ By default, logs are written to stdout, in text format.
 
 ### General
 
-Traefik logs concern everything that happens to Traefik itself (startup, configuration, events, shutdown, and so on).
+apache4 logs concern everything that happens to apache4 itself (startup, configuration, events, shutdown, and so on).
 
 #### `filePath`
 
@@ -24,18 +24,18 @@ You can configure a file path instead using the `filePath` option.
 ```yaml tab="File (YAML)"
 # Writing Logs to a File
 log:
-  filePath: "/path/to/traefik.log"
+  filePath: "/path/to/apache4.log"
 ```
 
 ```toml tab="File (TOML)"
 # Writing Logs to a File
 [log]
-  filePath = "/path/to/traefik.log"
+  filePath = "/path/to/apache4.log"
 ```
 
 ```bash tab="CLI"
 # Writing Logs to a File
---log.filePath=/path/to/traefik.log
+--log.filePath=/path/to/apache4.log
 ```
 
 #### `format`
@@ -58,7 +58,7 @@ log:
 
 ```bash tab="CLI"
 # Writing Logs to a File, in JSON
---log.filePath=/path/to/traefik.log
+--log.filePath=/path/to/apache4.log
 --log.format=json
 ```
 
@@ -221,7 +221,7 @@ log:
 
 ### `serviceName`
 
-_Optional, Default="traefik"_
+_Optional, Default="apache4"_
 
 Defines the service name resource attribute.
 
@@ -643,4 +643,4 @@ log:
 --log.otlp.grpc.tls.insecureSkipVerify=true
 ```
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

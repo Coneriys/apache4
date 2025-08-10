@@ -1,6 +1,6 @@
 ---
-title: "Traefik File Dynamic Configuration"
-description: "This guide will provide you with the YAML and TOML files for dynamic configuration in Traefik Proxy. Read the technical documentation."
+title: "apache4 File Dynamic Configuration"
+description: "This guide will provide you with the YAML and TOML files for dynamic configuration in apache4 Proxy. Read the technical documentation."
 ---
 
 # File Configuration Reference

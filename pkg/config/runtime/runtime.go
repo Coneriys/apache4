@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/logs"
 )
 
 // Status of the router/service.
@@ -22,7 +22,7 @@ const (
 	StatusDown = "DOWN"
 )
 
-// Configuration holds the information about the currently running traefik instance.
+// Configuration holds the information about the currently running apache4 instance.
 type Configuration struct {
 	Routers        map[string]*RouterInfo        `json:"routers,omitempty"`
 	Middlewares    map[string]*MiddlewareInfo    `json:"middlewares,omitempty"`

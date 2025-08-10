@@ -15,11 +15,11 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	ptypes "github.com/traefik/paerser/types"
-	"github.com/traefik/traefik/v3/pkg/config/static"
-	"github.com/traefik/traefik/v3/pkg/middlewares/requestdecorator"
-	tcprouter "github.com/traefik/traefik/v3/pkg/server/router/tcp"
-	"github.com/traefik/traefik/v3/pkg/tcp"
+	ptypes "github.com/apache4/paerser/types"
+	"github.com/apache4/apache4/v3/pkg/config/static"
+	"github.com/apache4/apache4/v3/pkg/middlewares/requestdecorator"
+	tcprouter "github.com/apache4/apache4/v3/pkg/server/router/tcp"
+	"github.com/apache4/apache4/v3/pkg/tcp"
 	"golang.org/x/net/http2"
 )
 

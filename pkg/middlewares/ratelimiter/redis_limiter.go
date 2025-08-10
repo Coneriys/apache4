@@ -8,8 +8,8 @@ import (
 
 	"github.com/redis/go-redis/v9"
 	"github.com/rs/zerolog"
-	ptypes "github.com/traefik/paerser/types"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
+	ptypes "github.com/apache4/paerser/types"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
 	"golang.org/x/time/rate"
 )
 

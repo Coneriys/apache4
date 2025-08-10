@@ -8,7 +8,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/traefik/traefik/v3/pkg/middlewares/requestdecorator"
+	"github.com/apache4/apache4/v3/pkg/middlewares/requestdecorator"
 )
 
 func TestClientIPMatcher(t *testing.T) {
@@ -348,7 +348,7 @@ func TestHostRegexpMatcher(t *testing.T) {
 			},
 		},
 		{
-			desc: "valid HostRegexp matcher with Traefik v2 syntax",
+			desc: "valid HostRegexp matcher with apache4 v2 syntax",
 			rule: "HostRegexp(`{domain:[a-zA-Z-]+\\.com}`)",
 			expected: map[string]int{
 				"https://example.com":      http.StatusNotFound,
@@ -510,7 +510,7 @@ func TestPathRegexpMatcher(t *testing.T) {
 			},
 		},
 		{
-			desc: "valid PathRegexp matcher with Traefik v2 syntax",
+			desc: "valid PathRegexp matcher with apache4 v2 syntax",
 			rule: `PathRegexp("/{path:(css|js)}")`,
 			expected: map[string]int{
 				"https://example.com":                 http.StatusNotFound,
@@ -782,7 +782,7 @@ func TestHeaderRegexpMatcher(t *testing.T) {
 			},
 		},
 		{
-			desc: "valid HeaderRegexp matcher with Traefik v2 syntax",
+			desc: "valid HeaderRegexp matcher with apache4 v2 syntax",
 			rule: "HeaderRegexp(`X-Forwarded-Proto`, `http{secure:s?}`)",
 			expected: map[*http.Header]int{
 				{"X-Forwarded-Proto": []string{"http"}}:                 http.StatusNotFound,
@@ -848,7 +848,7 @@ func TestQueryMatcher(t *testing.T) {
 		},
 		{
 			desc:          "invalid Query matcher (empty key)",
-			rule:          "Query(``, `traefik`)",
+			rule:          "Query(``, `apache4`)",
 			expectedError: true,
 		},
 		{
@@ -858,23 +858,23 @@ func TestQueryMatcher(t *testing.T) {
 		},
 		{
 			desc:          "invalid Query matcher (too many parameters)",
-			rule:          "Query(`q`, `traefik`, `proxy`)",
+			rule:          "Query(`q`, `apache4`, `proxy`)",
 			expectedError: true,
 		},
 		{
 			desc: "valid Query matcher",
-			rule: "Query(`q`, `traefik`)",
+			rule: "Query(`q`, `apache4`)",
 			expected: map[string]int{
 				"https://example.com":                     http.StatusNotFound,
-				"https://example.com?q=traefik":           http.StatusOK,
-				"https://example.com?rel=ddg&q=traefik":   http.StatusOK,
-				"https://example.com?q=traefik&q=proxy":   http.StatusOK,
-				"https://example.com?q=awesome&q=traefik": http.StatusOK,
+				"https://example.com?q=apache4":           http.StatusOK,
+				"https://example.com?rel=ddg&q=apache4":   http.StatusOK,
+				"https://example.com?q=apache4&q=proxy":   http.StatusOK,
+				"https://example.com?q=awesome&q=apache4": http.StatusOK,
 				"https://example.com?q=nginx":             http.StatusNotFound,
 				"https://example.com?rel=ddg":             http.StatusNotFound,
-				"https://example.com?q=TRAEFIK":           http.StatusNotFound,
-				"https://example.com?Q=traefik":           http.StatusNotFound,
-				"https://example.com?rel=traefik":         http.StatusNotFound,
+				"https://example.com?q=apache4":           http.StatusNotFound,
+				"https://example.com?Q=apache4":           http.StatusNotFound,
+				"https://example.com?rel=apache4":         http.StatusNotFound,
 			},
 		},
 		{
@@ -939,26 +939,26 @@ func TestQueryRegexpMatcher(t *testing.T) {
 		},
 		{
 			desc:          "invalid QueryRegexp matcher (invalid regexp)",
-			rule:          "QueryRegexp(`q`, `(traefik`)",
+			rule:          "QueryRegexp(`q`, `(apache4`)",
 			expectedError: true,
 		},
 		{
 			desc:          "invalid QueryRegexp matcher (too many parameters)",
-			rule:          "QueryRegexp(`q`, `traefik`, `proxy`)",
+			rule:          "QueryRegexp(`q`, `apache4`, `proxy`)",
 			expectedError: true,
 		},
 		{
 			desc: "valid QueryRegexp matcher",
-			rule: "QueryRegexp(`q`, `^(traefik|nginx)$`)",
+			rule: "QueryRegexp(`q`, `^(apache4|nginx)$`)",
 			expected: map[string]int{
 				"https://example.com":                     http.StatusNotFound,
-				"https://example.com?q=traefik":           http.StatusOK,
-				"https://example.com?rel=ddg&q=traefik":   http.StatusOK,
-				"https://example.com?q=traefik&q=proxy":   http.StatusOK,
-				"https://example.com?q=awesome&q=traefik": http.StatusOK,
-				"https://example.com?q=TRAEFIK":           http.StatusNotFound,
-				"https://example.com?Q=traefik":           http.StatusNotFound,
-				"https://example.com?rel=traefik":         http.StatusNotFound,
+				"https://example.com?q=apache4":           http.StatusOK,
+				"https://example.com?rel=ddg&q=apache4":   http.StatusOK,
+				"https://example.com?q=apache4&q=proxy":   http.StatusOK,
+				"https://example.com?q=awesome&q=apache4": http.StatusOK,
+				"https://example.com?q=apache4":           http.StatusNotFound,
+				"https://example.com?Q=apache4":           http.StatusNotFound,
+				"https://example.com?rel=apache4":         http.StatusNotFound,
 				"https://example.com?q=nginx":             http.StatusOK,
 				"https://example.com?rel=ddg&q=nginx":     http.StatusOK,
 				"https://example.com?q=nginx&q=proxy":     http.StatusOK,
@@ -975,13 +975,13 @@ func TestQueryRegexpMatcher(t *testing.T) {
 			rule: "QueryRegexp(`q`, `^.*$`)",
 			expected: map[string]int{
 				"https://example.com":                     http.StatusNotFound,
-				"https://example.com?q=traefik":           http.StatusOK,
-				"https://example.com?rel=ddg&q=traefik":   http.StatusOK,
-				"https://example.com?q=traefik&q=proxy":   http.StatusOK,
-				"https://example.com?q=awesome&q=traefik": http.StatusOK,
-				"https://example.com?q=TRAEFIK":           http.StatusOK,
-				"https://example.com?Q=traefik":           http.StatusNotFound,
-				"https://example.com?rel=traefik":         http.StatusNotFound,
+				"https://example.com?q=apache4":           http.StatusOK,
+				"https://example.com?rel=ddg&q=apache4":   http.StatusOK,
+				"https://example.com?q=apache4&q=proxy":   http.StatusOK,
+				"https://example.com?q=awesome&q=apache4": http.StatusOK,
+				"https://example.com?q=apache4":           http.StatusOK,
+				"https://example.com?Q=apache4":           http.StatusNotFound,
+				"https://example.com?rel=apache4":         http.StatusNotFound,
 				"https://example.com?q=nginx":             http.StatusOK,
 				"https://example.com?rel=ddg&q=nginx":     http.StatusOK,
 				"https://example.com?q=nginx&q=proxy":     http.StatusOK,
@@ -994,11 +994,11 @@ func TestQueryRegexpMatcher(t *testing.T) {
 			},
 		},
 		{
-			desc: "valid QueryRegexp matcher with Traefik v2 syntax",
-			rule: "QueryRegexp(`q`, `{value:(traefik|nginx)}`)",
+			desc: "valid QueryRegexp matcher with apache4 v2 syntax",
+			rule: "QueryRegexp(`q`, `{value:(apache4|nginx)}`)",
 			expected: map[string]int{
-				"https://example.com?q=traefik":         http.StatusNotFound,
-				"https://example.com?q={value:traefik}": http.StatusOK,
+				"https://example.com?q=apache4":         http.StatusNotFound,
+				"https://example.com?q={value:apache4}": http.StatusOK,
 			},
 		},
 	}

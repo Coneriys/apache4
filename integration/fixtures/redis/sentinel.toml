@@ -12,7 +12,7 @@
   insecure = true
 
 [providers.redis]
-  rootKey = "traefik"
+  rootKey = "apache4"
   endpoints = ["{{ .RedisAddress }}"]
 
 [providers.redis.sentinel]

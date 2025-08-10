@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/traefik/paerser/parser"
+	"github.com/apache4/paerser/parser"
 )
 
 func encodeNode(labels map[string]string, root string, node *parser.Node) {

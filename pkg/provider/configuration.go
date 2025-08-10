@@ -12,9 +12,9 @@ import (
 
 	"github.com/Masterminds/sprig/v3"
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/logs"
-	"github.com/traefik/traefik/v3/pkg/tls"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/tls"
 )
 
 // Merge merges multiple configurations.

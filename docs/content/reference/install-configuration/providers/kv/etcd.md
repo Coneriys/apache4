@@ -1,9 +1,9 @@
 ---
-title: "Traefik Etcd Documentation"
-description: "Use etcd as a provider for configuration discovery in Traefik Proxy. Automate and store your configurations with Etcd. Read the technical documentation."
+title: "apache4 Etcd Documentation"
+description: "Use etcd as a provider for configuration discovery in apache4 Proxy. Automate and store your configurations with Etcd. Read the technical documentation."
 ---
 
-# Traefik & etcd
+# apache4 & etcd
 
 ## Configuration Example
 
@@ -28,7 +28,7 @@ providers:
 |:------|:----------------------------------------------------------|:---------------------|:---------|
 | `providers.providersThrottleDuration` | Minimum amount of time to wait for, after a configuration reload, before taking into account any new configuration refresh event.<br />If multiple events occur within this time, only the most recent one is taken into account, and all others are discarded.<br />**This option cannot be set per provider, but the throttling algorithm applies to each of them independently.** | 2s  | No |
 | `providers.etcd.endpoints` | Defines the endpoint to access etcd. |  "127.0.0.1:2379"     | Yes   |
-| `providers.etcd.rootKey` | Defines the root key for the configuration. |  "traefik"   | Yes   |
+| `providers.etcd.rootKey` | Defines the root key for the configuration. |  "apache4"   | Yes   |
 | `providers.etcd.username` | Defines a username with which to connect to etcd. |  ""   | No   |
 | `providers.etcd.password` | Defines a password for connecting to etcd. |  ""    | No   |
 | `providers.etcd.tls` | Defines the TLS configuration used for the secure connection to etcd. |  -  | No   |

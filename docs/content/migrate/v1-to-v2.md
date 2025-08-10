@@ -1,31 +1,31 @@
 ---
-title: "Traefik V2 Migration Documentation"
-description: "Migrate from Traefik Proxy v1 to v2 and update all the necessary configurations to take advantage of all the improvements. Read the technical documentation."
+title: "apache4 V2 Migration Documentation"
+description: "Migrate from apache4 Proxy v1 to v2 and update all the necessary configurations to take advantage of all the improvements. Read the technical documentation."
 ---
 
 # Migration Guide: From v1 to v2
 
-How to Migrate from Traefik v1 to Traefik v2.
+How to Migrate from apache4 v1 to apache4 v2.
 {: .subtitle }
 
-The version 2 of Traefik introduces a number of breaking changes,
+The version 2 of apache4 introduces a number of breaking changes,
 which require one to update their configuration when they migrate from v1 to v2.
 The goal of this page is to recapitulate all of these changes, and in particular to give examples,
 feature by feature, of how the configuration looked like in v1, and how it now looks like in v2.
 
 !!! info "Migration Helper"
 
-    We created a tool to help during the migration: [traefik-migration-tool](https://github.com/traefik/traefik-migration-tool)
+    We created a tool to help during the migration: [apache4-migration-tool](https://github.com/apache4/apache4-migration-tool)
 
     This tool allows to:
 
-    - convert `Ingress` to Traefik `IngressRoute` resources.
+    - convert `Ingress` to apache4 `IngressRoute` resources.
     - convert `acme.json` file from v1 to v2 format.
-    - migrate the static configuration contained in the file `traefik.toml` to a Traefik v2 file.
+    - migrate the static configuration contained in the file `apache4.toml` to a apache4 v2 file.
 
 ## Frontends and Backends Are Dead, Long Live Routers, Middlewares, and Services
 
-During the transition from v1 to v2, a number of internal pieces and components of Traefik were rewritten and reorganized.
+During the transition from v1 to v2, a number of internal pieces and components of apache4 were rewritten and reorganized.
 As such, the combination of core notions such as frontends and backends has been replaced with the combination of [routers](../routing/routers/index.md), [services](../routing/services/index.md), and [middlewares](../middlewares/overview.md).
 
 Typically, a router replaces a frontend, and a service assumes the role of a backend, with each router referring to a service.
@@ -40,19 +40,19 @@ Then any router can refer to an instance of the wanted middleware.
 
     ```yaml tab="Docker & Swarm"
     labels:
-      - "traefik.frontend.rule=Host:test.localhost;PathPrefix:/test"
-      - "traefik.frontend.auth.basic.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
+      - "apache4.frontend.rule=Host:test.localhost;PathPrefix:/test"
+      - "apache4.frontend.auth.basic.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
     ```
 
     ```yaml tab="Ingress"
     apiVersion: networking.k8s.io/v1beta1
     kind: Ingress
     metadata:
-      name: traefik
+      name: apache4
       namespace: kube-system
       annotations:
-        kubernetes.io/ingress.class: traefik
-        traefik.ingress.kubernetes.io/rule-type: PathPrefix
+        kubernetes.io/ingress.class: apache4
+        apache4.ingress.kubernetes.io/rule-type: PathPrefix
     spec:
       rules:
       - host: test.localhost
@@ -102,15 +102,15 @@ Then any router can refer to an instance of the wanted middleware.
 
     ```yaml tab="Docker & Swarm"
     labels:
-      - "traefik.http.routers.router0.rule=Host(`test.localhost`) && PathPrefix(`/test`)"
-      - "traefik.http.routers.router0.middlewares=auth"
-      - "traefik.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
+      - "apache4.http.routers.router0.rule=Host(`test.localhost`) && PathPrefix(`/test`)"
+      - "apache4.http.routers.router0.middlewares=auth"
+      - "apache4.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
     ```
 
     ```yaml tab="IngressRoute"
     # The definitions below require the definitions for the Middleware and IngressRoute kinds.
-    # https://doc.traefik.io/traefik/reference/dynamic-configuration/kubernetes-crd/#definitions
-    apiVersion: traefik.io/v1alpha1
+    # https://doc.apache4.io/apache4/reference/dynamic-configuration/kubernetes-crd/#definitions
+    apiVersion: apache4.io/v1alpha1
     kind: Middleware
     metadata:
       name: basicauth
@@ -123,7 +123,7 @@ Then any router can refer to an instance of the wanted middleware.
           - test2:$apr1$d9hr9HBB$4HxwgUir3HP4EsggP/QNo0
 
     ---
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRoute
     metadata:
       name: ingressroutebar
@@ -192,7 +192,7 @@ Then any router can refer to an instance of the wanted middleware.
 ## TLS Configuration is Now Dynamic, per Router.
 
 TLS parameters used to be specified in the static configuration, as an entryPoint field.
-With Traefik v2, a new dynamic TLS section at the root contains all the desired TLS configurations.
+With apache4 v2, a new dynamic TLS section at the root contains all the desired TLS configurations.
 Then, a [router's TLS field](../routing/routers/index.md#tls) can refer to one of the [TLS configurations](../https/tls.md) defined at the root, hence defining the [TLS configuration](../https/tls.md) for that router.
 
 !!! example "TLS on websecure entryPoint becomes TLS option on Router-1"
@@ -280,8 +280,8 @@ Then, a [router's TLS field](../routing/routers/index.md#tls) can refer to one o
 
     ```yaml tab="IngressRoute"
     # The definitions below require the definitions for the TLSOption and IngressRoute kinds.
-    # https://doc.traefik.io/traefik/reference/dynamic-configuration/kubernetes-crd/#definitions
-    apiVersion: traefik.io/v1alpha1
+    # https://doc.apache4.io/apache4/reference/dynamic-configuration/kubernetes-crd/#definitions
+    apiVersion: apache4.io/v1alpha1
     kind: TLSOption
     metadata:
       name: mytlsoption
@@ -297,7 +297,7 @@ Then, a [router's TLS field](../routing/routers/index.md#tls) can refer to one o
 	    - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
 
     ---
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRoute
     metadata:
       name: ingressroutebar
@@ -321,13 +321,13 @@ Then, a [router's TLS field](../routing/routers/index.md#tls) can refer to one o
     labels:
       # myTLSOptions must be defined by another provider, in this instance in the File Provider.
       # see the cross provider section
-      - "traefik.http.routers.router0.tls.options=myTLSOptions@file"
+      - "apache4.http.routers.router0.tls.options=myTLSOptions@file"
     ```
 
 ## HTTP to HTTPS Redirection is Now Configured on Routers
 
-Previously on Traefik v1, the redirection was applied on an entry point or on a frontend.
-With Traefik v2 it is applied on an entry point or a [Router](../routing/routers/index.md).
+Previously on apache4 v1, the redirection was applied on an entry point or on a frontend.
+With apache4 v2 it is applied on an entry point or a [Router](../routing/routers/index.md).
 
 To apply a redirection:
 
@@ -361,7 +361,7 @@ To apply a redirection:
     !!! info "v2"
 
     ```yaml tab="File (YAML)"
-    # traefik.yml
+    # apache4.yml
     ## static configuration
 
     entryPoints:
@@ -378,7 +378,7 @@ To apply a redirection:
     ```
 
     ```toml tab="File (TOML)"
-    # traefik.toml
+    # apache4.toml
     ## static configuration
 
     [entryPoints.web]
@@ -430,20 +430,20 @@ To apply a redirection:
 
     ```yaml tab="Docker & Swarm"
     labels:
-      traefik.http.routers.app.rule: Host(`example.net`)
-      traefik.http.routers.app.entrypoints: web
-      traefik.http.routers.app.middlewares: https_redirect
+      apache4.http.routers.app.rule: Host(`example.net`)
+      apache4.http.routers.app.entrypoints: web
+      apache4.http.routers.app.middlewares: https_redirect
 
-      traefik.http.routers.appsecured.rule: Host(`example.net`)
-      traefik.http.routers.appsecured.entrypoints: websecure
-      traefik.http.routers.appsecured.tls: true
+      apache4.http.routers.appsecured.rule: Host(`example.net`)
+      apache4.http.routers.appsecured.entrypoints: websecure
+      apache4.http.routers.appsecured.tls: true
 
-      traefik.http.middlewares.https_redirect.redirectscheme.scheme: https
-      traefik.http.middlewares.https_redirect.redirectscheme.permanent: true
+      apache4.http.middlewares.https_redirect.redirectscheme.scheme: https
+      apache4.http.middlewares.https_redirect.redirectscheme.permanent: true
     ```
 
     ```yaml tab="IngressRoute"
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRoute
     metadata:
       name: http-redirect-ingressroute
@@ -461,7 +461,7 @@ To apply a redirection:
             - name: https-redirect
 
     ---
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRoute
     metadata:
       name: https-ingressroute
@@ -478,7 +478,7 @@ To apply a redirection:
       tls: {}
 
     ---
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: Middleware
     metadata:
       name: https-redirect
@@ -558,17 +558,17 @@ with the path `/admin` stripped, e.g. to `http://<IP>:<port>/`. In this case, yo
 
     ```yaml tab="Docker & Swarm"
     labels:
-      - "traefik.frontend.rule=Host:example.org;PathPrefixStrip:/admin"
+      - "apache4.frontend.rule=Host:example.org;PathPrefixStrip:/admin"
     ```
 
     ```yaml tab="Ingress"
     apiVersion: networking.k8s.io/v1beta1
     kind: Ingress
     metadata:
-      name: traefik
+      name: apache4
       annotations:
-        kubernetes.io/ingress.class: traefik
-        traefik.ingress.kubernetes.io/rule-type: PathPrefixStrip
+        kubernetes.io/ingress.class: apache4
+        apache4.ingress.kubernetes.io/rule-type: PathPrefixStrip
     spec:
       rules:
       - host: example.org
@@ -590,14 +590,14 @@ with the path `/admin` stripped, e.g. to `http://<IP>:<port>/`. In this case, yo
 
     ```yaml tab="Docker & Swarm"
     labels:
-      - "traefik.http.routers.admin.rule=Host(`example.org`) && PathPrefix(`/admin`)"
-      - "traefik.http.routers.admin.middlewares=admin-stripprefix"
-      - "traefik.http.middlewares.admin-stripprefix.stripprefix.prefixes=/admin"
+      - "apache4.http.routers.admin.rule=Host(`example.org`) && PathPrefix(`/admin`)"
+      - "apache4.http.routers.admin.middlewares=admin-stripprefix"
+      - "apache4.http.middlewares.admin-stripprefix.stripprefix.prefixes=/admin"
     ```
 
     ```yaml tab="IngressRoute"
     ---
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRoute
     metadata:
       name: http-redirect-ingressroute
@@ -614,7 +614,7 @@ with the path `/admin` stripped, e.g. to `http://<IP>:<port>/`. In this case, yo
           middlewares:
             - name: admin-stripprefix
     ---
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: Middleware
     metadata:
       name: admin-stripprefix
@@ -757,7 +757,7 @@ with the path `/admin` stripped, e.g. to `http://<IP>:<port>/`. In this case, yo
     --certificatesresolvers.myresolver.acme.tlschallenge=true
     ```
 
-## Traefik Logs
+## apache4 Logs
 
 In the v2, all the [log configuration](../observability/logs.md) remains in the static part but are unified under a `log` section.
 There is no more log configuration at the root level.
@@ -770,15 +770,15 @@ There is no more log configuration at the root level.
     # static configuration
     logLevel = "DEBUG"
 
-    [traefikLog]
-      filePath = "/path/to/traefik.log"
+    [apache4Log]
+      filePath = "/path/to/apache4.log"
       format   = "json"
     ```
 
     ```bash tab="CLI"
     --logLevel=DEBUG
-    --traefikLog.filePath=/path/to/traefik.log
-    --traefikLog.format=json
+    --apache4Log.filePath=/path/to/apache4.log
+    --apache4Log.format=json
     ```
 
     !!! info "v2"
@@ -801,7 +801,7 @@ There is no more log configuration at the root level.
 
     ```bash tab="CLI"
     --log.level=DEBUG
-    --log.filePath=/path/to/traefik.log
+    --log.filePath=/path/to/apache4.log
     --log.format=json
     ```
 
@@ -809,12 +809,12 @@ There is no more log configuration at the root level.
 
 Access Logs are configured in the same way as before.
 
-But all request headers are now filtered out by default in Traefik v2.
+But all request headers are now filtered out by default in apache4 v2.
 So during migration, you might want to consider enabling some needed fields (see [access log configuration](../observability/access-logs.md)).
 
 ## Tracing
 
-Traefik v2 retains OpenTracing support. The `backend` root option from the v1 is gone, you just have to set your [tracing configuration](../observability/tracing/overview.md).
+apache4 v2 retains OpenTracing support. The `backend` root option from the v1 is gone, you just have to set your [tracing configuration](../observability/tracing/overview.md).
 
 !!! example "Simple Jaeger tracing configuration"
 
@@ -886,12 +886,12 @@ For a basic configuration, the [metrics configuration](../observability/metrics/
     # static configuration
     [metrics.prometheus]
       buckets = [0.1,0.3,1.2,5.0]
-      entryPoint = "traefik"
+      entryPoint = "apache4"
     ```
 
     ```bash tab="CLI"
     --metrics.prometheus.buckets=[0.1,0.3,1.2,5.0]
-    --metrics.prometheus.entrypoint=traefik
+    --metrics.prometheus.entrypoint=apache4
     ```
 
     !!! info "v2"
@@ -1022,7 +1022,7 @@ To activate the dashboard, you can either:
 
     ```toml tab="File (TOML)"
     ## static configuration
-    # traefik.toml
+    # apache4.toml
 
     [entryPoints.websecure]
       address = ":443"
@@ -1047,17 +1047,17 @@ To activate the dashboard, you can either:
     ```yaml tab="Docker & Swarm"
     # dynamic configuration
     labels:
-      - "traefik.http.routers.api.rule=Host(`traefik.docker.localhost`)"
-      - "traefik.http.routers.api.entrypoints=websecure"
-      - "traefik.http.routers.api.service=api@internal"
-      - "traefik.http.routers.api.middlewares=myAuth"
-      - "traefik.http.routers.api.tls"
-      - "traefik.http.middlewares.myAuth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/"
+      - "apache4.http.routers.api.rule=Host(`apache4.docker.localhost`)"
+      - "apache4.http.routers.api.entrypoints=websecure"
+      - "apache4.http.routers.api.service=api@internal"
+      - "apache4.http.routers.api.middlewares=myAuth"
+      - "apache4.http.routers.api.tls"
+      - "apache4.http.middlewares.myAuth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/"
     ```
 
     ```yaml tab="File (YAML)"
     ## static configuration
-    # traefik.yml
+    # apache4.yml
 
     entryPoints:
       websecure:
@@ -1077,7 +1077,7 @@ To activate the dashboard, you can either:
      http:
       routers:
         api:
-          rule: Host(`traefik.docker.localhost`)
+          rule: Host(`apache4.docker.localhost`)
           entryPoints:
             - websecure
           service: api@internal
@@ -1094,7 +1094,7 @@ To activate the dashboard, you can either:
 
     ```toml tab="File (TOML)"
     ## static configuration
-    # traefik.toml
+    # apache4.toml
 
     [entryPoints.websecure]
       address = ":443"
@@ -1110,7 +1110,7 @@ To activate the dashboard, you can either:
     # /path/to/dynamic/config/dynamic-conf.toml
 
     [http.routers.api]
-      rule = "Host(`traefik.docker.localhost`)"
+      rule = "Host(`apache4.docker.localhost`)"
       entrypoints = ["websecure"]
       service = "api@internal"
       middlewares = ["myAuth"]
@@ -1150,4 +1150,4 @@ Supported [providers](../providers/overview.md), for now:
 - Now, configuration elements can be referenced between different providers by using the provider namespace notation: `@<provider>`.
   For instance, a router named `myrouter` in a File Provider can refer to a service named `myservice` defined in Docker Provider with the following notation: `myservice@docker`.
 - Middlewares are applied in the same order as their declaration in router.
-- If you have any questions feel free to join our [community forum](https://community.traefik.io).
+- If you have any questions feel free to join our [community forum](https://community.apache4.io).

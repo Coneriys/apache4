@@ -1,4 +1,4 @@
-package traefik
+package apache4
 
 import (
 	"encoding/json"
@@ -9,10 +9,10 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/traefik/traefik/v3/pkg/config/static"
-	"github.com/traefik/traefik/v3/pkg/ping"
-	"github.com/traefik/traefik/v3/pkg/provider/rest"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/config/static"
+	"github.com/apache4/apache4/v3/pkg/ping"
+	"github.com/apache4/apache4/v3/pkg/provider/rest"
+	"github.com/apache4/apache4/v3/pkg/types"
 )
 
 var updateExpected = flag.Bool("update_expected", false, "Update expected files in fixtures")

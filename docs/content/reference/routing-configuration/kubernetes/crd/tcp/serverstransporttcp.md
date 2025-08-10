@@ -1,13 +1,13 @@
 ---
 title : 'ServersTransportTCP'
-description : 'Understand the service routing configuration for the Kubernetes ServerTransportTCP & Traefik CRD'
+description : 'Understand the service routing configuration for the Kubernetes ServerTransportTCP & apache4 CRD'
 ---
 
 `ServersTransportTCP` is the CRD implementation of [ServersTransportTCP](../../../tcp/serverstransport.md).
 
-Before creating `ServersTransportTCP` objects, you need to apply the [Traefik Kubernetes CRDs](https://doc.traefik.io/traefik/reference/dynamic-configuration/kubernetes-crd/#definitions) to your Kubernetes cluster.
+Before creating `ServersTransportTCP` objects, you need to apply the [apache4 Kubernetes CRDs](https://doc.apache4.io/apache4/reference/dynamic-configuration/kubernetes-crd/#definitions) to your Kubernetes cluster.
 
-This registers the `ServersTransportTCP` kind and other Traefik-specific resources.
+This registers the `ServersTransportTCP` kind and other apache4-specific resources.
 
 !!! tip "Default serversTransportTCP"
     If no `serversTransportTCP` is specified, the `default@internal` will be used. The `default@internal` `serversTransportTCP` is created from the install configuration (formerly known as static configuration).
@@ -22,7 +22,7 @@ This registers the `ServersTransportTCP` kind and other Traefik-specific resourc
 ## Configuration Example
 
 ```yaml tab="ServersTransportTCP"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransportTCP
 metadata:
   name: mytransport

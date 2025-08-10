@@ -1,4 +1,4 @@
-import { Box, Button, Flex, H1, Text } from '@traefiklabs/faency'
+import { Box, Button, Flex, H1, Text } from '@apache4labs/faency'
 import { useNavigate } from 'react-router-dom'
 
 import Page from 'layout/Page'

@@ -1,6 +1,6 @@
 ---
-title: "Traefik Access Logs Documentation"
-description: "Access logs are a key part of observability in Traefik Proxy. Read the technical documentation to learn their configurations, rotations, and time zones."
+title: "apache4 Access Logs Documentation"
+description: "Access logs are a key part of observability in apache4 Proxy. Read the technical documentation to learn their configurations, rotations, and time zones."
 ---
 
 # Access Logs
@@ -76,7 +76,7 @@ If the given format is unsupported, the default (CLF) is used instead.
 !!! info "Common Log Format"
 
     ```html
-    <remote_IP_address> - <client_user_name_if_available> [<timestamp>] "<request_method> <request_path> <request_protocol>" <HTTP_status> <content-length> "<request_referrer>" "<request_user_agent>" <number_of_requests_received_since_Traefik_started> "<Traefik_router_name>" "<Traefik_server_URL>" <request_duration_in_ms>ms
+    <remote_IP_address> - <client_user_name_if_available> [<timestamp>] "<request_method> <request_path> <request_protocol>" <HTTP_status> <content-length> "<request_referrer>" "<request_user_agent>" <number_of_requests_received_since_apache4_started> "<apache4_router_name>" "<apache4_server_URL>" <request_duration_in_ms>ms
     ```
 
 ```yaml tab="File (YAML)"
@@ -96,7 +96,7 @@ accessLog:
 ### `bufferingSize`
 
 To write the logs in an asynchronous fashion, specify a  `bufferingSize` option.
-This option represents the number of log lines Traefik will keep in memory before writing them to the selected output.
+This option represents the number of log lines apache4 will keep in memory before writing them to the selected output.
 In some cases, this option can greatly help performances.
 
 ```yaml tab="File (YAML)"
@@ -236,10 +236,10 @@ accessLog:
     | `StartUTC`              | The time at which request processing started.                                                                                                                       |
     | `StartLocal`            | The local time at which request processing started.                                                                                                                 |
     | `Duration`              | The total time taken (in nanoseconds) by processing the response, including the origin server's time but not the log writing time.                                  |
-    | `RouterName`            | The name of the Traefik  router.                                                                                                                                    |
-    | `ServiceName`           | The name of the Traefik backend.                                                                                                                                    |
-    | `ServiceURL`            | The URL of the Traefik backend.                                                                                                                                     |
-    | `ServiceAddr`           | The IP:port of the Traefik backend (extracted from `ServiceURL`)                                                                                                    |
+    | `RouterName`            | The name of the apache4  router.                                                                                                                                    |
+    | `ServiceName`           | The name of the apache4 backend.                                                                                                                                    |
+    | `ServiceURL`            | The URL of the apache4 backend.                                                                                                                                     |
+    | `ServiceAddr`           | The IP:port of the apache4 backend (extracted from `ServiceURL`)                                                                                                    |
     | `ClientAddr`            | The remote address in its original form (usually IP:port).                                                                                                          |
     | `ClientHost`            | The remote IP address from which the client request was received.                                                                                                   |
     | `ClientPort`            | The remote TCP port from which the client request was received.                                                                                                     |
@@ -255,22 +255,22 @@ accessLog:
     | `RequestContentSize`    | The number of bytes in the request entity (a.k.a. body) sent by the client.                                                                                         |
     | `OriginDuration`        | The time taken (in nanoseconds) by the origin server ('upstream') to return its response.                                                                           |
     | `OriginContentSize`     | The content length specified by the origin server, or 0 if unspecified.                                                                                             |
-    | `OriginStatus`          | The HTTP status code returned by the origin server. If the request was handled by this Traefik instance (e.g. with a redirect), then this value will be absent (0). |
+    | `OriginStatus`          | The HTTP status code returned by the origin server. If the request was handled by this apache4 instance (e.g. with a redirect), then this value will be absent (0). |
     | `DownstreamStatus`      | The HTTP status code returned to the client.                                                                                                                        |
     | `DownstreamContentSize` | The number of bytes in the response entity returned to the client. This is in addition to the "Content-Length" header, which may be present in the origin response. |
-    | `RequestCount`          | The number of requests received since the Traefik instance started.                                                                                                 |
+    | `RequestCount`          | The number of requests received since the apache4 instance started.                                                                                                 |
     | `GzipRatio`             | The response body compression ratio achieved.                                                                                                                       |
-    | `Overhead`              | The processing time overhead (in nanoseconds) caused by Traefik.                                                                                                    |
+    | `Overhead`              | The processing time overhead (in nanoseconds) caused by apache4.                                                                                                    |
     | `RetryAttempts`         | The amount of attempts the request was retried.                                                                                                                     |
     | `TLSVersion`            | The TLS version used by the connection (e.g. `1.2`) (if connection is TLS).                                                                                         |
     | `TLSCipher`             | The TLS cipher used by the connection (e.g. `TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA`) (if connection is TLS)                                                           |
     | `TLSClientSubject`      | The string representation of the TLS client certificate's Subject (e.g. `CN=username,O=organization`)                                                               |
-    | `TraceId`               | A consistent identifier for tracking requests across services, including upstream ones managed by Traefik, shown as a 32-hex digit string                           |
-    | `SpanId`                | A unique identifier for Traefik’s root span (EntryPoint) within a request trace, formatted as a 16-hex digit string.                                                |
+    | `TraceId`               | A consistent identifier for tracking requests across services, including upstream ones managed by apache4, shown as a 32-hex digit string                           |
+    | `SpanId`                | A unique identifier for apache4’s root span (EntryPoint) within a request trace, formatted as a 16-hex digit string.                                                |
 
 ## Log Rotation
 
-Traefik will close and reopen its log files, assuming they're configured, on receipt of a USR1 signal.
+apache4 will close and reopen its log files, assuming they're configured, on receipt of a USR1 signal.
 This allows the logs to be rotated and processed by an external program, such as `logrotate`.
 
 !!! warning
@@ -278,9 +278,9 @@ This allows the logs to be rotated and processed by an external program, such as
 
 ## Time Zones
 
-Traefik will timestamp each log line in UTC time by default.
+apache4 will timestamp each log line in UTC time by default.
 
-It is possible to configure the Traefik to timestamp in a specific timezone by ensuring the following configuration has been made in your environment:
+It is possible to configure the apache4 to timestamp in a specific timezone by ensuring the following configuration has been made in your environment:
 
 1. Provide time zone data to `/etc/localtime` or `/usr/share/zoneinfo` (based on your distribution) or set the environment variable TZ to the desired timezone
 2. Specify the field `StartLocal` by dropping the field named `StartUTC` (available on the default Common Log Format (CLF) as well as JSON)
@@ -289,8 +289,8 @@ Example utilizing Docker Compose:
 
 ```yaml
 services:
-  traefik:
-    image: traefik:v3.5
+  apache4:
+    image: apache4:v3.5
     environment:
       - TZ=US/Alaska
     command:
@@ -342,7 +342,7 @@ accesslog:
 
 ### `serviceName`
 
-_Optional, Default="traefik"_
+_Optional, Default="apache4"_
 
 Defines the service name resource attribute.
 
@@ -764,4 +764,4 @@ accesslog:
 --accesslog.otlp.grpc.tls.insecureSkipVerify=true
 ```
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

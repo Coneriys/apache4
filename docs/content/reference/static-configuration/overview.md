@@ -1,6 +1,6 @@
 ---
-title: "Traefik Static Configuration Overview"
-description: "Read the official Traefik documentation to get started with static configuration in Traefik Proxy."
+title: "apache4 Static Configuration Overview"
+description: "Read the official apache4 documentation to get started with static configuration in apache4 Proxy."
 ---
 
 # Static Configuration

@@ -1,7 +1,7 @@
 package v1alpha1
 
 import (
-	"github.com/traefik/traefik/v3/pkg/tls"
+	"github.com/apache4/apache4/v3/pkg/tls"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -9,10 +9,10 @@ import (
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:storageversion
 
-// TLSStore is the CRD implementation of a Traefik TLS Store.
+// TLSStore is the CRD implementation of a apache4 TLS Store.
 // For the time being, only the TLSStore named default is supported.
 // This means that you cannot have two stores that are named default in different Kubernetes namespaces.
-// More info: https://doc.traefik.io/traefik/v3.5/https/tls/#certificates-stores
+// More info: https://doc.apache4.io/apache4/v3.5/https/tls/#certificates-stores
 type TLSStore struct {
 	metav1.TypeMeta `json:",inline"`
 	// Standard object's metadata.

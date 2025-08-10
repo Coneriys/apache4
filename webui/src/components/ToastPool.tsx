@@ -1,4 +1,4 @@
-import { Flex } from '@traefiklabs/faency'
+import { Flex } from '@apache4labs/faency'
 import { useContext } from 'react'
 
 import { Toast } from './Toast'

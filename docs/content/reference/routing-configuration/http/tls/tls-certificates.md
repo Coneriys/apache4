@@ -1,6 +1,6 @@
 ---
-title: "Traefik TLS Certificates Documentation"
-description: "Learn how to configure the transport layer security (TLS) connection in Traefik Proxy. Read the technical documentation."
+title: "apache4 TLS Certificates Documentation"
+description: "Learn how to configure the transport layer security (TLS) connection in apache4 Proxy. Read the technical documentation."
 ---
 
 !!! info
@@ -14,7 +14,7 @@ See the [Let's Encrypt](../../../install-configuration/tls/certificate-resolvers
 
 ### User defined
 
-To add / remove TLS certificates, even when Traefik is already running, their definition can be added to the [dynamic configuration](../../dynamic-configuration-methods.md#providing-dynamic-routing-configuration-to-traefik), in the `[[tls.certificates]]` section:
+To add / remove TLS certificates, even when apache4 is already running, their definition can be added to the [dynamic configuration](../../dynamic-configuration-methods.md#providing-dynamic-routing-configuration-to-apache4), in the `[[tls.certificates]]` section:
 
 ```yaml tab="Structured (YAML)"
 tls:
@@ -43,7 +43,7 @@ tls:
 
 ## Certificates Stores
 
-In Traefik, certificates are grouped together in certificates stores.
+In apache4, certificates are grouped together in certificates stores.
 
 !!! important "Restriction"
 
@@ -84,7 +84,7 @@ tls:
 
 ### Default Certificate
 
-Traefik can use a default certificate for connections without a SNI, or without a matching domain.
+apache4 can use a default certificate for connections without a SNI, or without a matching domain.
 This default certificate should be defined in a TLS store:
 
 ```yaml tab="Structured (YAML)"
@@ -104,11 +104,11 @@ tls:
       keyFile  = "path/to/cert.key"
 ```
 
-If no `defaultCertificate` is provided, Traefik will use the generated one.
+If no `defaultCertificate` is provided, apache4 will use the generated one.
 
 ### ACME Default Certificate
 
-You can configure Traefik to use an ACME provider (like Let's Encrypt) to generate the default certificate.
+You can configure apache4 to use an ACME provider (like Let's Encrypt) to generate the default certificate.
 The configuration to resolve the default certificate should be defined in a TLS store:
 
 !!! important "Precedence with the `defaultGeneratedCert` option"
@@ -139,20 +139,20 @@ tls:
 
 ```yaml tab="Labels"
 labels:
-  - "traefik.tls.stores.default.defaultgeneratedcert.resolver=myresolver"
-  - "traefik.tls.stores.default.defaultgeneratedcert.domain.main=example.org"
-  - "traefik.tls.stores.default.defaultgeneratedcert.domain.sans=foo.example.org, bar.example.org"
+  - "apache4.tls.stores.default.defaultgeneratedcert.resolver=myresolver"
+  - "apache4.tls.stores.default.defaultgeneratedcert.domain.main=example.org"
+  - "apache4.tls.stores.default.defaultgeneratedcert.domain.sans=foo.example.org, bar.example.org"
 ```
 
 ```json tab="Tags"
 {
   "Name": "default",
   "Tags": [
-    "traefik.tls.stores.default.defaultgeneratedcert.resolver=myresolver",
-    "traefik.tls.stores.default.defaultgeneratedcert.domain.main=example.org",
-    "traefik.tls.stores.default.defaultgeneratedcert.domain.sans=foo.example.org, bar.example.org"
+    "apache4.tls.stores.default.defaultgeneratedcert.resolver=myresolver",
+    "apache4.tls.stores.default.defaultgeneratedcert.domain.main=example.org",
+    "apache4.tls.stores.default.defaultgeneratedcert.domain.sans=foo.example.org, bar.example.org"
   ]
 }
 ```
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

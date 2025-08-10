@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.16.1
-  name: tlsstores.traefik.io
+  name: tlsstores.apache4.io
 spec:
-  group: traefik.io
+  group: apache4.io
   names:
     kind: TLSStore
     listKind: TLSStoreList
@@ -18,10 +18,10 @@ spec:
     schema:
       openAPIV3Schema:
         description: |-
-          TLSStore is the CRD implementation of a Traefik TLS Store.
+          TLSStore is the CRD implementation of a apache4 TLS Store.
           For the time being, only the TLSStore named default is supported.
           This means that you cannot have two stores that are named default in different Kubernetes namespaces.
-          More info: https://doc.traefik.io/traefik/v3.5/https/tls/#certificates-stores
+          More info: https://doc.apache4.io/apache4/v3.5/https/tls/#certificates-stores
         properties:
           apiVersion:
             description: |-

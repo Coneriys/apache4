@@ -1,6 +1,6 @@
 ---
-title: "Traefik Compress Documentation"
-description: "Traefik Proxy's HTTP middleware lets you compress responses before sending them to the client. Read the technical documentation."
+title: "apache4 Compress Documentation"
+description: "apache4 Proxy's HTTP middleware lets you compress responses before sending them to the client. Read the technical documentation."
 ---
 
 # Compress
@@ -18,12 +18,12 @@ The activation of compression, and the compression method choice rely (among oth
 ```yaml tab="Docker & Swarm"
 # Enable compression
 labels:
-  - "traefik.http.middlewares.test-compress.compress=true"
+  - "apache4.http.middlewares.test-compress.compress=true"
 ```
 
 ```yaml tab="Kubernetes"
 # Enable compression
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-compress
@@ -33,7 +33,7 @@ spec:
 
 ```yaml tab="Consul Catalog"
 # Enable compression
-- "traefik.http.middlewares.test-compress.compress=true"
+- "apache4.http.middlewares.test-compress.compress=true"
 ```
 
 ```yaml tab="File (YAML)"
@@ -88,11 +88,11 @@ Content types are compared in a case-insensitive, whitespace-ignored manner.
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-compress.compress.excludedcontenttypes=text/event-stream"
+  - "apache4.http.middlewares.test-compress.compress.excludedcontenttypes=text/event-stream"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-compress
@@ -103,7 +103,7 @@ spec:
 ```
 
 ```yaml tab="Consul Catalog"
-- "traefik.http.middlewares.test-compress.compress.excludedcontenttypes=text/event-stream"
+- "apache4.http.middlewares.test-compress.compress.excludedcontenttypes=text/event-stream"
 ```
 
 ```yaml tab="File (YAML)"
@@ -137,11 +137,11 @@ Content types are compared in a case-insensitive, whitespace-ignored manner.
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-compress.compress.includedcontenttypes=application/json,text/html,text/plain"
+  - "apache4.http.middlewares.test-compress.compress.includedcontenttypes=application/json,text/html,text/plain"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-compress
@@ -154,7 +154,7 @@ spec:
 ```
 
 ```yaml tab="Consul Catalog"
-- "traefik.http.middlewares.test-compress.compress.includedcontenttypes=application/json,text/html,text/plain"
+- "apache4.http.middlewares.test-compress.compress.includedcontenttypes=application/json,text/html,text/plain"
 ```
 
 ```yaml tab="File (YAML)"
@@ -190,11 +190,11 @@ When chunked data is sent to the client on flush, it will be compressed by defau
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-compress.compress.minresponsebodybytes=1200"
+  - "apache4.http.middlewares.test-compress.compress.minresponsebodybytes=1200"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-compress
@@ -204,7 +204,7 @@ spec:
 ```
 
 ```yaml tab="Consul Catalog"
-- "traefik.http.middlewares.test-compress.compress.minresponsebodybytes=1200"
+- "apache4.http.middlewares.test-compress.compress.minresponsebodybytes=1200"
 ```
 
 ```yaml tab="File (YAML)"
@@ -231,11 +231,11 @@ There is no fallback on the `defaultEncoding` when the header value is empty or 
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-compress.compress.defaultEncoding=gzip"
+  - "apache4.http.middlewares.test-compress.compress.defaultEncoding=gzip"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-compress
@@ -245,7 +245,7 @@ spec:
 ```
 
 ```yaml tab="Consul Catalog"
-- "traefik.http.middlewares.test-compress.compress.defaultEncoding=gzip"
+- "apache4.http.middlewares.test-compress.compress.defaultEncoding=gzip"
 ```
 
 ```yaml tab="File (YAML)"
@@ -272,11 +272,11 @@ The order of the list also sets the priority, the top entry has the highest prio
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-compress.compress.encodings=zstd,br"
+  - "apache4.http.middlewares.test-compress.compress.encodings=zstd,br"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-compress
@@ -288,7 +288,7 @@ spec:
 ```
 
 ```yaml tab="Consul Catalog"
-- "traefik.http.middlewares.test-compress.compress.encodings=zstd,br"
+- "apache4.http.middlewares.test-compress.compress.encodings=zstd,br"
 ```
 
 ```yaml tab="File (YAML)"

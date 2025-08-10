@@ -15,11 +15,11 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/middlewares/observability"
-	"github.com/traefik/traefik/v3/pkg/proxy/httputil"
-	"github.com/traefik/traefik/v3/pkg/testhelpers"
-	"github.com/traefik/traefik/v3/pkg/tracing"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/middlewares/observability"
+	"github.com/apache4/apache4/v3/pkg/proxy/httputil"
+	"github.com/apache4/apache4/v3/pkg/testhelpers"
+	"github.com/apache4/apache4/v3/pkg/tracing"
 	"github.com/vulcand/oxy/v2/forward"
 	"go.opentelemetry.io/contrib/propagators/autoprop"
 	"go.opentelemetry.io/otel"
@@ -31,7 +31,7 @@ import (
 
 func TestForwardAuthFail(t *testing.T) {
 	next := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "traefik")
+		fmt.Fprintln(w, "apache4")
 	})
 
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -84,7 +84,7 @@ func TestForwardAuthSuccess(t *testing.T) {
 		w.Header().Add("Set-Cookie", "authCookie=Backend")
 		w.Header().Add("Set-Cookie", "backendCookie=Backend")
 		w.Header().Add("Other-Header", "BackendHeaderValue")
-		fmt.Fprintln(w, "traefik")
+		fmt.Fprintln(w, "apache4")
 	})
 
 	auth := dynamic.ForwardAuth{
@@ -113,7 +113,7 @@ func TestForwardAuthSuccess(t *testing.T) {
 	require.NoError(t, err)
 	err = res.Body.Close()
 	require.NoError(t, err)
-	assert.Equal(t, "traefik\n", string(body))
+	assert.Equal(t, "apache4\n", string(body))
 }
 
 func TestForwardAuthForwardBody(t *testing.T) {
@@ -271,7 +271,7 @@ func TestForwardAuthRedirect(t *testing.T) {
 	t.Cleanup(authTs.Close)
 
 	next := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "traefik")
+		fmt.Fprintln(w, "apache4")
 	})
 
 	auth := dynamic.ForwardAuth{Address: authTs.URL}
@@ -322,7 +322,7 @@ func TestForwardAuthRemoveHopByHopHeaders(t *testing.T) {
 	t.Cleanup(authTs.Close)
 
 	next := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "traefik")
+		fmt.Fprintln(w, "apache4")
 	})
 
 	auth := dynamic.ForwardAuth{Address: authTs.URL}
@@ -367,7 +367,7 @@ func TestForwardAuthFailResponseHeaders(t *testing.T) {
 	t.Cleanup(authTs.Close)
 
 	next := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "traefik")
+		fmt.Fprintln(w, "apache4")
 	})
 
 	auth := dynamic.ForwardAuth{

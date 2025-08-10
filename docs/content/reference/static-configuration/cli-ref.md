@@ -91,7 +91,7 @@ TLS key
 Defines additional resource attributes (key:value).
 
 `--accesslog.otlp.servicename`:  
-Defines the service name resource attribute. (Default: ```traefik```)
+Defines the service name resource attribute. (Default: ```apache4```)
 
 `--api`:  
 Enable api/dashboard. (Default: ```false```)
@@ -109,7 +109,7 @@ Enable additional endpoints for debugging and profiling. (Default: ```false```)
 Disable ad in the dashboard. (Default: ```false```)
 
 `--api.insecure`:  
-Activate API directly on the entryPoint named traefik. (Default: ```false```)
+Activate API directly on the entryPoint named apache4. (Default: ```false```)
 
 `--certificatesresolvers.<name>`:  
 Certificates resolvers configuration. (Default: ```false```)
@@ -313,10 +313,10 @@ Maximum number of requests before closing a keep-alive connection. (Default: ```
 Maximum duration before closing a keep-alive connection. (Default: ```0```)
 
 `--entrypoints.<name>.transport.lifecycle.gracetimeout`:  
-Duration to give active requests a chance to finish before Traefik stops. (Default: ```10```)
+Duration to give active requests a chance to finish before apache4 stops. (Default: ```10```)
 
 `--entrypoints.<name>.transport.lifecycle.requestacceptgracetimeout`:  
-Duration to keep accepting requests before Traefik initiates the graceful shutdown procedure. (Default: ```0```)
+Duration to keep accepting requests before apache4 initiates the graceful shutdown procedure. (Default: ```0```)
 
 `--entrypoints.<name>.transport.respondingtimeouts.idletimeout`:  
 IdleTimeout is the maximum amount duration an idle (keep-alive) connection will remain idle before closing itself. If zero, no timeout is set. (Default: ```180```)
@@ -331,7 +331,7 @@ WriteTimeout is the maximum duration before timing out writes of the response. I
 Timeout defines how long to wait on an idle session before releasing the related resources. (Default: ```3```)
 
 `--experimental.abortonpluginfailure`:  
-Defines whether all plugins must be loaded successfully for Traefik to start. (Default: ```false```)
+Defines whether all plugins must be loaded successfully for apache4 to start. (Default: ```false```)
 
 `--experimental.fastproxy`:  
 Enables the FastProxy implementation. (Default: ```false```)
@@ -403,19 +403,19 @@ resolv.conf used for DNS resolving (Default: ```/etc/resolv.conf```)
 The maximal depth of DNS recursive resolving (Default: ```5```)
 
 `--log`:  
-Traefik log settings. (Default: ```false```)
+apache4 log settings. (Default: ```false```)
 
 `--log.compress`:  
 Determines if the rotated log files should be compressed using gzip. (Default: ```false```)
 
 `--log.filepath`:  
-Traefik log file path. Stdout is used when omitted or empty.
+apache4 log file path. Stdout is used when omitted or empty.
 
 `--log.format`:  
-Traefik log format: json | common (Default: ```common```)
+apache4 log format: json | common (Default: ```common```)
 
 `--log.level`:  
-Log level set to traefik logs. (Default: ```ERROR```)
+Log level set to apache4 logs. (Default: ```ERROR```)
 
 `--log.maxage`:  
 Maximum number of days to retain old log files based on the timestamp encoded in their filename. (Default: ```0```)
@@ -481,7 +481,7 @@ TLS key
 Defines additional resource attributes (key:value).
 
 `--log.otlp.servicename`:  
-Defines the service name resource attribute. (Default: ```traefik```)
+Defines the service name resource attribute. (Default: ```apache4```)
 
 `--metrics.addinternals`:  
 Enables metrics for internal services (ping, dashboard, etc...). (Default: ```false```)
@@ -502,7 +502,7 @@ Enable metrics on routers. (Default: ```false```)
 Enable metrics on services. (Default: ```true```)
 
 `--metrics.datadog.prefix`:  
-Prefix to use for metrics collection. (Default: ```traefik```)
+Prefix to use for metrics collection. (Default: ```apache4```)
 
 `--metrics.datadog.pushinterval`:  
 Datadog push interval. (Default: ```10```)
@@ -604,7 +604,7 @@ Period between calls to collect a checkpoint. (Default: ```10```)
 Defines additional resource attributes (key:value).
 
 `--metrics.otlp.servicename`:  
-Defines the service name resource attribute. (Default: ```traefik```)
+Defines the service name resource attribute. (Default: ```apache4```)
 
 `--metrics.prometheus`:  
 Prometheus metrics exporter type. (Default: ```false```)
@@ -622,7 +622,7 @@ Enable metrics on services. (Default: ```true```)
 Buckets for latency metrics. (Default: ```0.100000, 0.300000, 1.200000, 5.000000```)
 
 `--metrics.prometheus.entrypoint`:  
-EntryPoint (Default: ```traefik```)
+EntryPoint (Default: ```apache4```)
 
 `--metrics.prometheus.headerlabels.<name>`:  
 Defines the extra labels for the requests_total metrics, and for each of them, the request header containing the value for this label.
@@ -646,7 +646,7 @@ Enable metrics on routers. (Default: ```false```)
 Enable metrics on services. (Default: ```true```)
 
 `--metrics.statsd.prefix`:  
-Prefix to use for metrics collection. (Default: ```traefik```)
+Prefix to use for metrics collection. (Default: ```apache4```)
 
 `--metrics.statsd.pushinterval`:  
 StatsD push interval. (Default: ```10```)
@@ -661,7 +661,7 @@ Defines a map of OCSP responders to replace for querying OCSP servers.
 Enable ping. (Default: ```false```)
 
 `--ping.entrypoint`:  
-EntryPoint (Default: ```traefik```)
+EntryPoint (Default: ```apache4```)
 
 `--ping.manualrouting`:  
 Manual routing (Default: ```false```)
@@ -679,7 +679,7 @@ KV store endpoints. (Default: ```127.0.0.1:8500```)
 Sets the namespaces used to discover the configuration (Consul Enterprise only).
 
 `--providers.consul.rootkey`:  
-Root key used for KV store. (Default: ```traefik```)
+Root key used for KV store. (Default: ```apache4```)
 
 `--providers.consul.tls.ca`:  
 TLS CA
@@ -709,7 +709,7 @@ Enable Consul Connect support. (Default: ```false```)
 Consider every service as Connect capable by default. (Default: ```false```)
 
 `--providers.consulcatalog.constraints`:  
-Constraints is an expression that Traefik matches against the container's labels to determine whether to create any route for that container.
+Constraints is an expression that apache4 matches against the container's labels to determine whether to create any route for that container.
 
 `--providers.consulcatalog.defaultrule`:  
 Default rule. (Default: ```Host(`{{ normalize .Name }}`)```)
@@ -754,7 +754,7 @@ Expose containers by default. (Default: ```true```)
 Sets the namespaces used to discover services (Consul Enterprise only).
 
 `--providers.consulcatalog.prefix`:  
-Prefix for consul service tags. (Default: ```traefik```)
+Prefix for consul service tags. (Default: ```apache4```)
 
 `--providers.consulcatalog.refreshinterval`:  
 Interval for check Consul API. (Default: ```15```)
@@ -763,7 +763,7 @@ Interval for check Consul API. (Default: ```15```)
 Forces the read to be fully consistent. (Default: ```false```)
 
 `--providers.consulcatalog.servicename`:  
-Name of the Traefik service in Consul Catalog (needs to be registered via the orchestrator or manually). (Default: ```traefik```)
+Name of the apache4 service in Consul Catalog (needs to be registered via the orchestrator or manually). (Default: ```apache4```)
 
 `--providers.consulcatalog.stale`:  
 Use stale consistency for catalog reads. (Default: ```false```)
@@ -781,7 +781,7 @@ Enable Docker backend with default settings. (Default: ```false```)
 Disregards the Docker containers health checks with respect to the creation or removal of the corresponding services. (Default: ```false```)
 
 `--providers.docker.constraints`:  
-Constraints is an expression that Traefik matches against the container's labels to determine whether to create any route for that container.
+Constraints is an expression that apache4 matches against the container's labels to determine whether to create any route for that container.
 
 `--providers.docker.defaultrule`:  
 Default rule. (Default: ```Host(`{{ normalize .Name }}`)```)
@@ -835,7 +835,7 @@ Auto discover cluster. (Default: ```false```)
 ECS Cluster names. (Default: ```default```)
 
 `--providers.ecs.constraints`:  
-Constraints is an expression that Traefik matches against the container's labels to determine whether to create any route for that container.
+Constraints is an expression that apache4 matches against the container's labels to determine whether to create any route for that container.
 
 `--providers.ecs.defaultrule`:  
 Default rule. (Default: ```Host(`{{ normalize .Name }}`)```)
@@ -868,7 +868,7 @@ KV store endpoints. (Default: ```127.0.0.1:2379```)
 Password for authentication.
 
 `--providers.etcd.rootkey`:  
-Root key used for KV store. (Default: ```traefik```)
+Root key used for KV store. (Default: ```apache4```)
 
 `--providers.etcd.tls.ca`:  
 TLS CA
@@ -1108,7 +1108,7 @@ Enable Nomad backend with default settings. (Default: ```false```)
 Allow the creation of services without endpoints. (Default: ```false```)
 
 `--providers.nomad.constraints`:  
-Constraints is an expression that Traefik matches against the Nomad service's tags to determine whether to create route(s) for that service.
+Constraints is an expression that apache4 matches against the Nomad service's tags to determine whether to create route(s) for that service.
 
 `--providers.nomad.defaultrule`:  
 Default rule. (Default: ```Host(`{{ normalize .Name }}`)```)
@@ -1144,7 +1144,7 @@ Expose Nomad services by default. (Default: ```true```)
 Sets the Nomad namespaces used to discover services.
 
 `--providers.nomad.prefix`:  
-Prefix for nomad service tags. (Default: ```traefik```)
+Prefix for nomad service tags. (Default: ```apache4```)
 
 `--providers.nomad.refreshinterval`:  
 Interval for polling Nomad API. (Default: ```15```)
@@ -1177,7 +1177,7 @@ KV store endpoints. (Default: ```127.0.0.1:6379```)
 Password for authentication.
 
 `--providers.redis.rootkey`:  
-Root key used for KV store. (Default: ```traefik```)
+Root key used for KV store. (Default: ```apache4```)
 
 `--providers.redis.sentinel.latencystrategy`:  
 Defines whether to route commands to the closest master or replica nodes (mutually exclusive with RandomStrategy and ReplicaStrategy). (Default: ```false```)
@@ -1219,7 +1219,7 @@ Username for authentication.
 Enable Rest backend with default settings. (Default: ```false```)
 
 `--providers.rest.insecure`:  
-Activate REST Provider directly on the entryPoint named traefik. (Default: ```false```)
+Activate REST Provider directly on the entryPoint named apache4. (Default: ```false```)
 
 `--providers.swarm`:  
 Enable Docker Swarm backend with default settings. (Default: ```false```)
@@ -1228,7 +1228,7 @@ Enable Docker Swarm backend with default settings. (Default: ```false```)
 Disregards the Docker containers health checks with respect to the creation or removal of the corresponding services. (Default: ```false```)
 
 `--providers.swarm.constraints`:  
-Constraints is an expression that Traefik matches against the container's labels to determine whether to create any route for that container.
+Constraints is an expression that apache4 matches against the container's labels to determine whether to create any route for that container.
 
 `--providers.swarm.defaultrule`:  
 Default rule. (Default: ```Host(`{{ normalize .Name }}`)```)
@@ -1282,7 +1282,7 @@ KV store endpoints. (Default: ```127.0.0.1:2181```)
 Password for authentication.
 
 `--providers.zookeeper.rootkey`:  
-Root key used for KV store. (Default: ```traefik```)
+Root key used for KV store. (Default: ```apache4```)
 
 `--providers.zookeeper.username`:  
 Username for authentication.
@@ -1417,4 +1417,4 @@ Query params to not redact.
 Sets the rate between 0.0 and 1.0 of requests to trace. (Default: ```1.000000```)
 
 `--tracing.servicename`:  
-Defines the service name resource attribute. (Default: ```traefik```)
+Defines the service name resource attribute. (Default: ```apache4```)

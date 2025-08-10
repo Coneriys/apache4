@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016-2020 Containous SAS; 2020-2025 Traefik Labs
+Copyright (c) 2016-2020 Containous SAS; 2020-2025 apache4 Labs
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ THE SOFTWARE.
 package v1alpha1
 
 import (
-	internalinterfaces "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/informers/externalversions/internalinterfaces"
+	internalinterfaces "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/informers/externalversions/internalinterfaces"
 )
 
 // Interface provides access to all the informers in this group version.
@@ -50,8 +50,8 @@ type Interface interface {
 	TLSOptions() TLSOptionInformer
 	// TLSStores returns a TLSStoreInformer.
 	TLSStores() TLSStoreInformer
-	// TraefikServices returns a TraefikServiceInformer.
-	TraefikServices() TraefikServiceInformer
+	// apache4Services returns a apache4ServiceInformer.
+	apache4Services() apache4ServiceInformer
 }
 
 type version struct {
@@ -110,7 +110,7 @@ func (v *version) TLSStores() TLSStoreInformer {
 	return &tLSStoreInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }
 
-// TraefikServices returns a TraefikServiceInformer.
-func (v *version) TraefikServices() TraefikServiceInformer {
-	return &traefikServiceInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+// apache4Services returns a apache4ServiceInformer.
+func (v *version) apache4Services() apache4ServiceInformer {
+	return &apache4ServiceInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }

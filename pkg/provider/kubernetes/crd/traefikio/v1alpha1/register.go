@@ -6,8 +6,8 @@ import (
 	kschema "k8s.io/apimachinery/pkg/runtime/schema"
 )
 
-// GroupName is the group name for Traefik.
-const GroupName = "traefik.io"
+// GroupName is the group name for apache4.
+const GroupName = "apache4.io"
 
 var (
 	// SchemeBuilder collects the scheme builder functions.
@@ -47,8 +47,8 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&TLSOptionList{},
 		&TLSStore{},
 		&TLSStoreList{},
-		&TraefikService{},
-		&TraefikServiceList{},
+		&apache4Service{},
+		&apache4ServiceList{},
 		&ServersTransport{},
 		&ServersTransportList{},
 		&ServersTransportTCP{},

@@ -19,7 +19,7 @@ import (
 
 	"github.com/hashicorp/go-retryablehttp"
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/logs"
 	"golang.org/x/mod/module"
 	"golang.org/x/mod/zip"
 	"gopkg.in/yaml.v3"
@@ -30,21 +30,21 @@ const (
 	archivesFolder = "archives"
 	stateFilename  = "state.json"
 	goPathSrc      = "src"
-	pluginManifest = ".traefik.yml"
+	pluginManifest = ".apache4.yml"
 )
 
-const pluginsURL = "https://plugins.traefik.io/public/"
+const pluginsURL = "https://plugins.apache4.io/public/"
 
 const (
 	hashHeader = "X-Plugin-Hash"
 )
 
-// ClientOptions the options of a Traefik plugins client.
+// ClientOptions the options of a apache4 plugins client.
 type ClientOptions struct {
 	Output string
 }
 
-// Client a Traefik plugins client.
+// Client a apache4 plugins client.
 type Client struct {
 	HTTPClient *http.Client
 	baseURL    *url.URL
@@ -55,7 +55,7 @@ type Client struct {
 	sources   string
 }
 
-// NewClient creates a new Traefik plugins client.
+// NewClient creates a new apache4 plugins client.
 func NewClient(opts ClientOptions) (*Client, error) {
 	baseURL, err := url.Parse(pluginsURL)
 	if err != nil {

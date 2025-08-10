@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016-2020 Containous SAS; 2020-2025 Traefik Labs
+Copyright (c) 2016-2020 Containous SAS; 2020-2025 apache4 Labs
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ package fake
 import (
 	"context"
 
-	v1alpha1 "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/traefikio/v1alpha1"
+	v1alpha1 "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/apache4io/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	labels "k8s.io/apimachinery/pkg/labels"
 	types "k8s.io/apimachinery/pkg/types"
@@ -39,7 +39,7 @@ import (
 
 // FakeIngressRoutes implements IngressRouteInterface
 type FakeIngressRoutes struct {
-	Fake *FakeTraefikV1alpha1
+	Fake *Fakeapache4V1alpha1
 	ns   string
 }
 

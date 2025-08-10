@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/traefik/traefik/v3/pkg/metrics"
-	"github.com/traefik/traefik/v3/pkg/middlewares/observability"
-	"github.com/traefik/traefik/v3/pkg/tracing"
+	"github.com/apache4/apache4/v3/pkg/metrics"
+	"github.com/apache4/apache4/v3/pkg/middlewares/observability"
+	"github.com/apache4/apache4/v3/pkg/tracing"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/metric"
 	semconv "go.opentelemetry.io/otel/semconv/v1.26.0"

@@ -21,46 +21,46 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/sirupsen/logrus"
 	"github.com/spiffe/go-spiffe/v2/workloadapi"
-	"github.com/traefik/paerser/cli"
-	"github.com/traefik/traefik/v3/cmd"
-	"github.com/traefik/traefik/v3/cmd/healthcheck"
-	cmdVersion "github.com/traefik/traefik/v3/cmd/version"
-	tcli "github.com/traefik/traefik/v3/pkg/cli"
-	"github.com/traefik/traefik/v3/pkg/collector"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/config/runtime"
-	"github.com/traefik/traefik/v3/pkg/config/static"
-	"github.com/traefik/traefik/v3/pkg/logs"
-	"github.com/traefik/traefik/v3/pkg/metrics"
-	"github.com/traefik/traefik/v3/pkg/middlewares/accesslog"
-	"github.com/traefik/traefik/v3/pkg/provider/acme"
-	"github.com/traefik/traefik/v3/pkg/provider/aggregator"
-	"github.com/traefik/traefik/v3/pkg/provider/tailscale"
-	"github.com/traefik/traefik/v3/pkg/provider/traefik"
-	"github.com/traefik/traefik/v3/pkg/proxy"
-	"github.com/traefik/traefik/v3/pkg/proxy/httputil"
-	"github.com/traefik/traefik/v3/pkg/redactor"
-	"github.com/traefik/traefik/v3/pkg/safe"
-	"github.com/traefik/traefik/v3/pkg/server"
-	"github.com/traefik/traefik/v3/pkg/server/middleware"
-	"github.com/traefik/traefik/v3/pkg/server/service"
-	"github.com/traefik/traefik/v3/pkg/tcp"
-	traefiktls "github.com/traefik/traefik/v3/pkg/tls"
-	"github.com/traefik/traefik/v3/pkg/tracing"
-	"github.com/traefik/traefik/v3/pkg/types"
-	"github.com/traefik/traefik/v3/pkg/version"
+	"github.com/apache4/paerser/cli"
+	"github.com/apache4/apache4/v3/cmd"
+	"github.com/apache4/apache4/v3/cmd/healthcheck"
+	cmdVersion "github.com/apache4/apache4/v3/cmd/version"
+	tcli "github.com/apache4/apache4/v3/pkg/cli"
+	"github.com/apache4/apache4/v3/pkg/collector"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/config/runtime"
+	"github.com/apache4/apache4/v3/pkg/config/static"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/metrics"
+	"github.com/apache4/apache4/v3/pkg/middlewares/accesslog"
+	"github.com/apache4/apache4/v3/pkg/provider/acme"
+	"github.com/apache4/apache4/v3/pkg/provider/aggregator"
+	"github.com/apache4/apache4/v3/pkg/provider/tailscale"
+	"github.com/apache4/apache4/v3/pkg/provider/apache4"
+	"github.com/apache4/apache4/v3/pkg/proxy"
+	"github.com/apache4/apache4/v3/pkg/proxy/httputil"
+	"github.com/apache4/apache4/v3/pkg/redactor"
+	"github.com/apache4/apache4/v3/pkg/safe"
+	"github.com/apache4/apache4/v3/pkg/server"
+	"github.com/apache4/apache4/v3/pkg/server/middleware"
+	"github.com/apache4/apache4/v3/pkg/server/service"
+	"github.com/apache4/apache4/v3/pkg/tcp"
+	apache4tls "github.com/apache4/apache4/v3/pkg/tls"
+	"github.com/apache4/apache4/v3/pkg/tracing"
+	"github.com/apache4/apache4/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/version"
 )
 
 func main() {
-	// traefik config inits
-	tConfig := cmd.NewTraefikConfiguration()
+	// apache4 config inits
+	tConfig := cmd.Newapache4Configuration()
 
 	loaders := []cli.ResourceLoader{&tcli.DeprecationLoader{}, &tcli.FileLoader{}, &tcli.FlagLoader{}, &tcli.EnvLoader{}}
 
-	cmdTraefik := &cli.Command{
-		Name: "traefik",
-		Description: `Traefik is a modern HTTP reverse proxy and load balancer made to deploy microservices with ease.
-Complete documentation is available at https://traefik.io`,
+	cmdapache4 := &cli.Command{
+		Name: "apache4",
+		Description: `apache4 is a modern HTTP reverse proxy and load balancer made to deploy microservices with ease.
+Complete documentation is available at https://apache4.io`,
 		Configuration: tConfig,
 		Resources:     loaders,
 		Run: func(_ []string) error {
@@ -68,19 +68,19 @@ Complete documentation is available at https://traefik.io`,
 		},
 	}
 
-	err := cmdTraefik.AddCommand(healthcheck.NewCmd(&tConfig.Configuration, loaders))
+	err := cmdapache4.AddCommand(healthcheck.NewCmd(&tConfig.Configuration, loaders))
 	if err != nil {
 		stdlog.Println(err)
 		os.Exit(1)
 	}
 
-	err = cmdTraefik.AddCommand(cmdVersion.NewCmd())
+	err = cmdapache4.AddCommand(cmdVersion.NewCmd())
 	if err != nil {
 		stdlog.Println(err)
 		os.Exit(1)
 	}
 
-	err = cli.Execute(cmdTraefik)
+	err = cli.Execute(cmdapache4)
 	if err != nil {
 		log.Error().Err(err).Msg("Command error")
 		logrus.Exit(1)
@@ -105,7 +105,7 @@ func runCmd(staticConfiguration *static.Configuration) error {
 	}
 
 	log.Info().Str("version", version.Version).
-		Msgf("Traefik version %s built on %s", version.Version, version.BuildDate)
+		Msgf("apache4 version %s built on %s", version.Version, version.BuildDate)
 
 	redactedStaticConfiguration, err := redactor.RemoveCredentials(staticConfiguration)
 	if err != nil {
@@ -175,14 +175,14 @@ func setupServer(staticConfiguration *static.Configuration) (*server.Server, err
 	routinesPool := safe.NewPool(ctx)
 
 	// adds internal provider
-	err := providerAggregator.AddProvider(traefik.New(*staticConfiguration))
+	err := providerAggregator.AddProvider(apache4.New(*staticConfiguration))
 	if err != nil {
 		return nil, err
 	}
 
 	// ACME
 
-	tlsManager := traefiktls.NewManager(staticConfiguration.OCSP)
+	tlsManager := apache4tls.NewManager(staticConfiguration.OCSP)
 	routinesPool.GoCtx(tlsManager.Run)
 
 	httpChallengeProvider := acme.NewChallengeHTTP()
@@ -423,7 +423,7 @@ func getDefaultsEntrypoints(staticConfiguration *static.Configuration) []string 
 
 		protocol, err := cfg.GetProtocol()
 		if err != nil {
-			// Should never happen because Traefik should not start if protocol is invalid.
+			// Should never happen because apache4 should not start if protocol is invalid.
 			log.Error().Err(err).Msg("Invalid protocol")
 		}
 
@@ -448,7 +448,7 @@ func switchRouter(routerFactory *server.RouterFactory, serverEntryPointsTCP serv
 }
 
 // initACMEProvider creates and registers acme.Provider instances corresponding to the configured ACME certificate resolvers.
-func initACMEProvider(c *static.Configuration, providerAggregator *aggregator.ProviderAggregator, tlsManager *traefiktls.Manager, httpChallengeProvider, tlsChallengeProvider challenge.Provider, routinesPool *safe.Pool) []*acme.Provider {
+func initACMEProvider(c *static.Configuration, providerAggregator *aggregator.ProviderAggregator, tlsManager *apache4tls.Manager, httpChallengeProvider, tlsChallengeProvider challenge.Provider, routinesPool *safe.Pool) []*acme.Provider {
 	localStores := map[string]*acme.LocalStore{}
 
 	var resolvers []*acme.Provider
@@ -628,15 +628,15 @@ func stats(staticConfiguration *static.Configuration) {
 
 	if staticConfiguration.Global.SendAnonymousUsage {
 		logger.Info().Msg(`Stats collection is enabled.`)
-		logger.Info().Msg(`Many thanks for contributing to Traefik's improvement by allowing us to receive anonymous information from your configuration.`)
-		logger.Info().Msg(`Help us improve Traefik by leaving this feature on :)`)
-		logger.Info().Msg(`More details on: https://doc.traefik.io/traefik/contributing/data-collection/`)
+		logger.Info().Msg(`Many thanks for contributing to apache4's improvement by allowing us to receive anonymous information from your configuration.`)
+		logger.Info().Msg(`Help us improve apache4 by leaving this feature on :)`)
+		logger.Info().Msg(`More details on: https://doc.apache4.io/apache4/contributing/data-collection/`)
 		collect(staticConfiguration)
 	} else {
 		logger.Info().Msg(`
 Stats collection is disabled.
-Help us improve Traefik by turning this feature on :)
-More details on: https://doc.traefik.io/traefik/contributing/data-collection/
+Help us improve apache4 by turning this feature on :)
+More details on: https://doc.apache4.io/apache4/contributing/data-collection/
 `)
 	}
 }

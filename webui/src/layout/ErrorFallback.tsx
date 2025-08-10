@@ -1,4 +1,4 @@
-import { Box, Button, Text } from '@traefiklabs/faency'
+import { Box, Button, Text } from '@apache4labs/faency'
 import { FallbackProps } from 'react-error-boundary'
 
 const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {

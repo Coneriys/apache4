@@ -1,9 +1,9 @@
 ---
 title: "Kubernetes Ingress Routing Configuration"
-description: "Understand the routing configuration for the Kubernetes Ingress Controller and Traefik Proxy. Read the technical documentation."
+description: "Understand the routing configuration for the Kubernetes Ingress Controller and apache4 Proxy. Read the technical documentation."
 ---
 
-# Traefik & Kubernetes with Ingress
+# apache4 & Kubernetes with Ingress
 
 ## Routing Configuration
 
@@ -19,7 +19,7 @@ kind: Ingress
 metadata:
   name: myingress
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    apache4.ingress.kubernetes.io/router.entrypoints: web
 
 spec:
   rules:
@@ -51,31 +51,31 @@ spec:
 
 ### On Ingress
 
-??? info "`traefik.ingress.kubernetes.io/router.entrypoints`"
+??? info "`apache4.ingress.kubernetes.io/router.entrypoints`"
 
     See [entry points](../../install-configuration/entrypoints.md) for more information.
 
     ```yaml
-    traefik.ingress.kubernetes.io/router.entrypoints: ep1,ep2
+    apache4.ingress.kubernetes.io/router.entrypoints: ep1,ep2
     ```
 
-??? info "`traefik.ingress.kubernetes.io/router.middlewares`"
+??? info "`apache4.ingress.kubernetes.io/router.middlewares`"
 
     See [middlewares overview](../http/middlewares/overview.md) for more information.
 
     ```yaml
-    traefik.ingress.kubernetes.io/router.middlewares: auth@file,default-prefix@kubernetescrd
+    apache4.ingress.kubernetes.io/router.middlewares: auth@file,default-prefix@kubernetescrd
     ```
 
-??? info "`traefik.ingress.kubernetes.io/router.priority`"
+??? info "`apache4.ingress.kubernetes.io/router.priority`"
 
     See [priority](../http/router/rules-and-priority.md#priority-calculation) for more information.
 
     ```yaml
-    traefik.ingress.kubernetes.io/router.priority: "42"
+    apache4.ingress.kubernetes.io/router.priority: "42"
     ```
 
-??? info "`traefik.ingress.kubernetes.io/router.rulesyntax`"
+??? info "`apache4.ingress.kubernetes.io/router.rulesyntax`"
 
     !!! warning
 
@@ -85,10 +85,10 @@ spec:
     See [rule syntax](../http/router/rules-and-priority.md#rulesyntax) for more information.
 
     ```yaml
-    traefik.ingress.kubernetes.io/router.rulesyntax: "v2"
+    apache4.ingress.kubernetes.io/router.rulesyntax: "v2"
     ```
 
-??? info "`traefik.ingress.kubernetes.io/router.pathmatcher`"
+??? info "`apache4.ingress.kubernetes.io/router.pathmatcher`"
 
     Overrides the default router rule type used for a path.
     Only path-related matcher name should be specified: `Path`, `PathPrefix` or `PathRegexp`.
@@ -96,164 +96,164 @@ spec:
     Default `PathPrefix`
 
     ```yaml
-    traefik.ingress.kubernetes.io/router.pathmatcher: Path
+    apache4.ingress.kubernetes.io/router.pathmatcher: Path
     ```
 
-??? info "`traefik.ingress.kubernetes.io/router.tls`"
+??? info "`apache4.ingress.kubernetes.io/router.tls`"
 
     <!-- See [tls](../http/tls/tls-certificates.md) for more information. -->
 
     ```yaml
-    traefik.ingress.kubernetes.io/router.tls: "true"
+    apache4.ingress.kubernetes.io/router.tls: "true"
     ```
 
-??? info "`traefik.ingress.kubernetes.io/router.tls.certresolver`"
+??? info "`apache4.ingress.kubernetes.io/router.tls.certresolver`"
 
     <!-- See [certResolver](.) for more information. -->
 
     ```yaml
-    traefik.ingress.kubernetes.io/router.tls.certresolver: myresolver
+    apache4.ingress.kubernetes.io/router.tls.certresolver: myresolver
     ```
 
-??? info "`traefik.ingress.kubernetes.io/router.tls.domains.n.main`"
+??? info "`apache4.ingress.kubernetes.io/router.tls.domains.n.main`"
 
     <!-- See [domains](.) for more information. -->
 
     ```yaml
-    traefik.ingress.kubernetes.io/router.tls.domains.0.main: example.org
+    apache4.ingress.kubernetes.io/router.tls.domains.0.main: example.org
     ```
 
-??? info "`traefik.ingress.kubernetes.io/router.tls.domains.n.sans`"
+??? info "`apache4.ingress.kubernetes.io/router.tls.domains.n.sans`"
 
     <!-- See [domains](.) for more information. -->
 
     ```yaml
-    traefik.ingress.kubernetes.io/router.tls.domains.0.sans: test.example.org,dev.example.org
+    apache4.ingress.kubernetes.io/router.tls.domains.0.sans: test.example.org,dev.example.org
     ```
 
-??? info "`traefik.ingress.kubernetes.io/router.tls.options`"
+??? info "`apache4.ingress.kubernetes.io/router.tls.options`"
 
     See [options](../kubernetes/crd/http/tlsoption.md) for more information.
 
     ```yaml
-    traefik.ingress.kubernetes.io/router.tls.options: foobar@file
+    apache4.ingress.kubernetes.io/router.tls.options: foobar@file
     ```
 
-??? info "`traefik.ingress.kubernetes.io/router.observability.accesslogs`"
+??? info "`apache4.ingress.kubernetes.io/router.observability.accesslogs`"
 
     See [here](../http/router/observability.md) for more information.
 
     ```yaml
-    traefik.ingress.kubernetes.io/router.observability.accesslogs: true
+    apache4.ingress.kubernetes.io/router.observability.accesslogs: true
     ```
 
-??? info "`traefik.ingress.kubernetes.io/router.observability.metrics`"
+??? info "`apache4.ingress.kubernetes.io/router.observability.metrics`"
 
     See [here](../http/router/observability.md) for more information.
 
     ```yaml
-    traefik.ingress.kubernetes.io/router.observability.metrics: true
+    apache4.ingress.kubernetes.io/router.observability.metrics: true
     ```
 
-??? info "`traefik.ingress.kubernetes.io/router.observability.tracing`"
+??? info "`apache4.ingress.kubernetes.io/router.observability.tracing`"
 
     See [here](../http/router/observability.md) for more information.
 
     ```yaml
-    traefik.ingress.kubernetes.io/router.observability.tracing: true
+    apache4.ingress.kubernetes.io/router.observability.tracing: true
     ```
 
 ### On Service
 
-??? info "`traefik.ingress.kubernetes.io/service.nativelb`"
+??? info "`apache4.ingress.kubernetes.io/service.nativelb`"
 
     Controls, when creating the load-balancer, whether the LB's children are directly the pods IPs or if the only child is the Kubernetes Service clusterIP.
     The Kubernetes Service itself does load-balance to the pods.
-    Please note that, by default, Traefik reuses the established connections to the backends for performance purposes. This can prevent the requests load balancing between the replicas from behaving as one would expect when the option is set.
+    Please note that, by default, apache4 reuses the established connections to the backends for performance purposes. This can prevent the requests load balancing between the replicas from behaving as one would expect when the option is set.
     By default, NativeLB is false.
 
     ```yaml
-    traefik.ingress.kubernetes.io/service.nativelb: "true"
+    apache4.ingress.kubernetes.io/service.nativelb: "true"
     ```
 
-??? info "`traefik.ingress.kubernetes.io/service.nodeportlb`"
+??? info "`apache4.ingress.kubernetes.io/service.nodeportlb`"
 
     Controls, when creating the load-balancer, whether the LB's children are directly the nodes internal IPs using the nodePort when the service type is NodePort.
-    It allows services to be reachable when Traefik runs externally from the Kubernetes cluster but within the same network of the nodes.
+    It allows services to be reachable when apache4 runs externally from the Kubernetes cluster but within the same network of the nodes.
     By default, NodePortLB is false.
 
     ```yaml
-    traefik.ingress.kubernetes.io/service.nodeportlb: "true"
+    apache4.ingress.kubernetes.io/service.nodeportlb: "true"
     ```
 
-??? info "`traefik.ingress.kubernetes.io/service.serversscheme`"
+??? info "`apache4.ingress.kubernetes.io/service.serversscheme`"
 
     Overrides the default scheme.
 
     ```yaml
-    traefik.ingress.kubernetes.io/service.serversscheme: h2c
+    apache4.ingress.kubernetes.io/service.serversscheme: h2c
     ```
 
-??? info "`traefik.ingress.kubernetes.io/service.serverstransport`"
+??? info "`apache4.ingress.kubernetes.io/service.serverstransport`"
 
     See [ServersTransport](../kubernetes/crd/http/serverstransport.md) for more information.
 
     ```yaml
-    traefik.ingress.kubernetes.io/service.serverstransport: foobar@file
+    apache4.ingress.kubernetes.io/service.serverstransport: foobar@file
     ```
 
-??? info "`traefik.ingress.kubernetes.io/service.passhostheader`"
+??? info "`apache4.ingress.kubernetes.io/service.passhostheader`"
 
     ```yaml
-    traefik.ingress.kubernetes.io/service.passhostheader: "true"
+    apache4.ingress.kubernetes.io/service.passhostheader: "true"
     ```
 
-??? info "`traefik.ingress.kubernetes.io/service.sticky.cookie`"
+??? info "`apache4.ingress.kubernetes.io/service.sticky.cookie`"
 
-    See [sticky sessions](../kubernetes/crd/http/traefikservice.md#stickiness-on-multiple-levels) for more information.
+    See [sticky sessions](../kubernetes/crd/http/apache4service.md#stickiness-on-multiple-levels) for more information.
 
     ```yaml
-    traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
+    apache4.ingress.kubernetes.io/service.sticky.cookie: "true"
     ```
 
-??? info "`traefik.ingress.kubernetes.io/service.sticky.cookie.name`"
+??? info "`apache4.ingress.kubernetes.io/service.sticky.cookie.name`"
 
-    See [sticky sessions](../kubernetes/crd/http/traefikservice.md#stickiness-on-multiple-levels) for more information.
+    See [sticky sessions](../kubernetes/crd/http/apache4service.md#stickiness-on-multiple-levels) for more information.
 
     ```yaml
-    traefik.ingress.kubernetes.io/service.sticky.cookie.name: foobar
+    apache4.ingress.kubernetes.io/service.sticky.cookie.name: foobar
     ```
 
-??? info "`traefik.ingress.kubernetes.io/service.sticky.cookie.secure`"
+??? info "`apache4.ingress.kubernetes.io/service.sticky.cookie.secure`"
 
-    See [sticky sessions](../kubernetes/crd/http/traefikservice.md#stickiness-on-multiple-levels) for more information.
+    See [sticky sessions](../kubernetes/crd/http/apache4service.md#stickiness-on-multiple-levels) for more information.
 
     ```yaml
-    traefik.ingress.kubernetes.io/service.sticky.cookie.secure: "true"
+    apache4.ingress.kubernetes.io/service.sticky.cookie.secure: "true"
     ```
 
-??? info "`traefik.ingress.kubernetes.io/service.sticky.cookie.samesite`"
+??? info "`apache4.ingress.kubernetes.io/service.sticky.cookie.samesite`"
 
-    See [sticky sessions](../kubernetes/crd/http/traefikservice.md#stickiness-on-multiple-levels) for more information.
+    See [sticky sessions](../kubernetes/crd/http/apache4service.md#stickiness-on-multiple-levels) for more information.
 
     ```yaml
-    traefik.ingress.kubernetes.io/service.sticky.cookie.samesite: "none"
+    apache4.ingress.kubernetes.io/service.sticky.cookie.samesite: "none"
     ```
 
-??? info "`traefik.ingress.kubernetes.io/service.sticky.cookie.httponly`"
+??? info "`apache4.ingress.kubernetes.io/service.sticky.cookie.httponly`"
 
-    See [sticky sessions](../kubernetes/crd/http/traefikservice.md#stickiness-on-multiple-levels) for more information.
+    See [sticky sessions](../kubernetes/crd/http/apache4service.md#stickiness-on-multiple-levels) for more information.
 
     ```yaml
-    traefik.ingress.kubernetes.io/service.sticky.cookie.httponly: "true"
+    apache4.ingress.kubernetes.io/service.sticky.cookie.httponly: "true"
     ```
 
-??? info "`traefik.ingress.kubernetes.io/service.sticky.cookie.maxage`"
+??? info "`apache4.ingress.kubernetes.io/service.sticky.cookie.maxage`"
 
-    See [sticky sessions](../kubernetes/crd/http/traefikservice.md#stickiness-on-multiple-levels) for more information.
+    See [sticky sessions](../kubernetes/crd/http/apache4service.md#stickiness-on-multiple-levels) for more information.
 
     ```yaml
-    traefik.ingress.kubernetes.io/service.sticky.cookie.maxage: 42
+    apache4.ingress.kubernetes.io/service.sticky.cookie.maxage: 42
     ```
 
 ## TLS
@@ -294,7 +294,7 @@ This way, any Ingress attached to this Entrypoint will have TLS termination by d
     apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRole
     metadata:
-      name: traefik-ingress-controller
+      name: apache4-ingress-controller
     rules:
       - apiGroups:
           - ""
@@ -335,14 +335,14 @@ This way, any Ingress attached to this Entrypoint will have TLS termination by d
     apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRoleBinding
     metadata:
-      name: traefik-ingress-controller
+      name: apache4-ingress-controller
     roleRef:
       apiGroup: rbac.authorization.k8s.io
       kind: ClusterRole
-      name: traefik-ingress-controller
+      name: apache4-ingress-controller
     subjects:
       - kind: ServiceAccount
-        name: traefik-ingress-controller
+        name: apache4-ingress-controller
         namespace: default
     ```
 
@@ -352,7 +352,7 @@ This way, any Ingress attached to this Entrypoint will have TLS termination by d
     metadata:
       name: myingress
       annotations:
-        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        apache4.ingress.kubernetes.io/router.entrypoints: websecure
 
     spec:
       rules:
@@ -375,34 +375,34 @@ This way, any Ingress attached to this Entrypoint will have TLS termination by d
                       number: 80
     ```
 
-    ```yaml tab="Traefik"
+    ```yaml tab="apache4"
     apiVersion: v1
     kind: ServiceAccount
     metadata:
-      name: traefik-ingress-controller
+      name: apache4-ingress-controller
 
     ---
     apiVersion: apps/v1
     kind: Deployment
     metadata:
-      name: traefik
+      name: apache4
       labels:
-        app: traefik
+        app: apache4
 
     spec:
       replicas: 1
       selector:
         matchLabels:
-          app: traefik
+          app: apache4
       template:
         metadata:
           labels:
-            app: traefik
+            app: apache4
         spec:
-          serviceAccountName: traefik-ingress-controller
+          serviceAccountName: apache4-ingress-controller
           containers:
-            - name: traefik
-              image: traefik:v3.5
+            - name: apache4
+              image: apache4:v3.5
               args:
                 - --entryPoints.websecure.address=:443
                 - --entryPoints.websecure.http.tls
@@ -415,11 +415,11 @@ This way, any Ingress attached to this Entrypoint will have TLS termination by d
     apiVersion: v1
     kind: Service
     metadata:
-      name: traefik
+      name: apache4
     spec:
       type: LoadBalancer
       selector:
-        app: traefik
+        app: apache4
       ports:
         - protocol: TCP
           port: 443
@@ -433,24 +433,24 @@ This way, any Ingress attached to this Entrypoint will have TLS termination by d
     metadata:
       name: whoami
       labels:
-        app: traefiklabs
+        app: apache4labs
         name: whoami
 
     spec:
       replicas: 2
       selector:
         matchLabels:
-          app: traefiklabs
+          app: apache4labs
           task: whoami
       template:
         metadata:
           labels:
-            app: traefiklabs
+            app: apache4labs
             task: whoami
         spec:
           containers:
             - name: whoami
-              image: traefik/whoami
+              image: apache4/whoami
               ports:
                 - containerPort: 80
 
@@ -465,7 +465,7 @@ This way, any Ingress attached to this Entrypoint will have TLS termination by d
         - name: http
           port: 80
       selector:
-        app: traefiklabs
+        app: apache4labs
         task: whoami
     ```
 
@@ -474,7 +474,7 @@ This way, any Ingress attached to this Entrypoint will have TLS termination by d
 To enable TLS on the underlying router created from an Ingress, one should configure it through annotations:
 
 ```yaml
-traefik.ingress.kubernetes.io/router.tls: "true"
+apache4.ingress.kubernetes.io/router.tls: "true"
 ```
 
 For more options, please refer to the available [annotations](#on-ingress).
@@ -487,8 +487,8 @@ For more options, please refer to the available [annotations](#on-ingress).
     metadata:
       name: myingress
       annotations:
-        traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        traefik.ingress.kubernetes.io/router.tls: "true"
+        apache4.ingress.kubernetes.io/router.entrypoints: websecure
+        apache4.ingress.kubernetes.io/router.tls: "true"
 
     spec:
       rules:
@@ -559,34 +559,34 @@ TLS certificates can be managed in Secrets objects.
     Only TLS certificates provided by users can be stored in Kubernetes Secrets.
     [Let's Encrypt](../../install-configuration/tls/certificate-resolvers/acme.md) certificates cannot be managed in Kubernetes Secrets yet.
 
-### Communication Between Traefik and Pods
+### Communication Between apache4 and Pods
 
 !!! info "Routing directly to [Kubernetes services](https://kubernetes.io/docs/concepts/services-networking/service/ "Link to Kubernetes service docs")"
 
     To route directly to the Kubernetes service,
-    one can use the `traefik.ingress.kubernetes.io/service.nativelb` annotation on the Kubernetes service.
+    one can use the `apache4.ingress.kubernetes.io/service.nativelb` annotation on the Kubernetes service.
     It controls, when creating the load-balancer,
     whether the LB's children are directly the pods IPs or if the only child is the Kubernetes Service clusterIP.
 
     One alternative is to use an `ExternalName` service to forward requests to the Kubernetes service through DNS.
     To do so, one must allow external name services.
 
-Traefik automatically requests endpoint information based on the service provided in the ingress spec.
-Although Traefik will connect directly to the endpoints (pods),
+apache4 automatically requests endpoint information based on the service provided in the ingress spec.
+Although apache4 will connect directly to the endpoints (pods),
 it still checks the service port to see if TLS communication is required.
 
-There are 3 ways to configure Traefik to use HTTPS to communicate with pods:
+There are 3 ways to configure apache4 to use HTTPS to communicate with pods:
 
 1. If the service port defined in the ingress spec is `443` (note that you can still use `targetPort` to use a different port on your pod).
 1. If the service port defined in the ingress spec has a name that starts with `https` (such as `https-api`, `https-web` or just `https`).
-1. If the service spec includes the annotation `traefik.ingress.kubernetes.io/service.serversscheme: https`.
+1. If the service spec includes the annotation `apache4.ingress.kubernetes.io/service.serversscheme: https`.
 
 If either of those configuration options exist, then the backend communication protocol is assumed to be TLS,
 and will connect via TLS automatically.
 
 !!! info
 
-    Please note that by enabling TLS communication between traefik and your pods,
+    Please note that by enabling TLS communication between apache4 and your pods,
     you will have to have trusted certificates that have the proper trust chain and IP subject name.
     If this is not an option, you may need to skip TLS certificate verification.
     See the [`insecureSkipVerify` TLSOption](../kubernetes/crd/http/tlsoption.md) setting for more details.
@@ -614,9 +614,9 @@ This will allow users to create a "default router" that will match all unmatched
 
 !!! info
 
-    Due to Traefik's use of priorities, you may have to set this ingress priority lower than other ingresses in your environment,
+    Due to apache4's use of priorities, you may have to set this ingress priority lower than other ingresses in your environment,
     to avoid this global ingress from satisfying requests that could match other ingresses.
 
-    To do this, use the `traefik.ingress.kubernetes.io/router.priority` annotation (as seen in [Annotations on Ingress](#on-ingress)) on your ingresses accordingly.
+    To do this, use the `apache4.ingress.kubernetes.io/router.priority` annotation (as seen in [Annotations on Ingress](#on-ingress)) on your ingresses accordingly.
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

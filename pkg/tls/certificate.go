@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/types"
 )
 
 var (
@@ -47,7 +47,7 @@ var (
 	}
 )
 
-// Certificates defines traefik certificates type
+// Certificates defines apache4 certificates type
 // Certs and Keys could be either a file path, or the file content itself.
 type Certificates []Certificate
 

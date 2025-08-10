@@ -7,16 +7,16 @@ import (
 
 	"github.com/containous/alice"
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/config/static"
-	"github.com/traefik/traefik/v3/pkg/logs"
-	"github.com/traefik/traefik/v3/pkg/metrics"
-	"github.com/traefik/traefik/v3/pkg/middlewares/accesslog"
-	"github.com/traefik/traefik/v3/pkg/middlewares/capture"
-	mmetrics "github.com/traefik/traefik/v3/pkg/middlewares/metrics"
-	"github.com/traefik/traefik/v3/pkg/middlewares/observability"
-	"github.com/traefik/traefik/v3/pkg/tracing"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/config/static"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/metrics"
+	"github.com/apache4/apache4/v3/pkg/middlewares/accesslog"
+	"github.com/apache4/apache4/v3/pkg/middlewares/capture"
+	mmetrics "github.com/apache4/apache4/v3/pkg/middlewares/metrics"
+	"github.com/apache4/apache4/v3/pkg/middlewares/observability"
+	"github.com/apache4/apache4/v3/pkg/tracing"
+	"github.com/apache4/apache4/v3/pkg/types"
 )
 
 // ObservabilityMgr is a manager for observability (AccessLogs, Metrics and Tracing) enablement.

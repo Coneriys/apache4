@@ -1,18 +1,18 @@
 ---
-title: "Traefik Kubernetes Gateway"
-description: "The Kubernetes Gateway API can be used as a provider for routing and load balancing in Traefik Proxy. View examples in the technical documentation."
+title: "apache4 Kubernetes Gateway"
+description: "The Kubernetes Gateway API can be used as a provider for routing and load balancing in apache4 Proxy. View examples in the technical documentation."
 ---
 
-# Traefik & Kubernetes with Gateway API
+# apache4 & Kubernetes with Gateway API
 
-When using the Kubernetes Gateway API provider, Traefik leverages the Gateway API Custom Resource Definitions (CRDs) to obtain its routing configuration. 
+When using the Kubernetes Gateway API provider, apache4 leverages the Gateway API Custom Resource Definitions (CRDs) to obtain its routing configuration. 
 For detailed information on the Gateway API concepts and resources, refer to the official [documentation](https://gateway-api.sigs.k8s.io/).
 
 The Kubernetes Gateway API provider supports version [v1.2.1](https://github.com/kubernetes-sigs/gateway-api/releases/tag/v1.2.1) of the specification.
 
 It fully supports all `HTTPRoute` core and some extended features, like `GRPCRoute`, as well as the `TCPRoute` and `TLSRoute` resources from the [Experimental channel](https://gateway-api.sigs.k8s.io/concepts/versioning/?h=#release-channels). 
 
-For more details, check out the conformance [report](https://github.com/kubernetes-sigs/gateway-api/tree/main/conformance/reports/v1.2.1/traefik-traefik).
+For more details, check out the conformance [report](https://github.com/kubernetes-sigs/gateway-api/tree/main/conformance/reports/v1.2.1/apache4-apache4).
 
 ## Deploying a Gateway
 
@@ -20,23 +20,23 @@ A `Gateway` is a core resource in the Gateway API specification that defines the
 It is linked to a `GatewayClass`, which specifies the controller responsible for managing and handling the traffic, ensuring that it is directed to the appropriate Kubernetes backend services.
 
 The `GatewayClass` is a cluster-scoped resource typically defined by the infrastructure provider.
-The following `GatewayClass` defines that gateways attached to it must be managed by the Traefik controller.
+The following `GatewayClass` defines that gateways attached to it must be managed by the apache4 controller.
 
 ```yaml tab="GatewayClass"
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
 metadata:
-  name: traefik
+  name: apache4
 spec:
-  controllerName: traefik.io/gateway-controller
+  controllerName: apache4.io/gateway-controller
 ```
 
-Next, the following `Gateway` manifest configures the running Traefik controller to handle the incoming traffic.
+Next, the following `Gateway` manifest configures the running apache4 controller to handle the incoming traffic.
 
 !!! info "Listener ports"
 
-    Please note that `Gateway` listener ports must match the configured [EntryPoint ports](../../install-configuration/entrypoints.md) of the Traefik deployment. 
+    Please note that `Gateway` listener ports must match the configured [EntryPoint ports](../../install-configuration/entrypoints.md) of the apache4 deployment. 
     In case they do not match, an `ERROR` message is logged, and the resource status is updated accordingly.
 
 ```yaml tab="Gateway"
@@ -44,10 +44,10 @@ Next, the following `Gateway` manifest configures the running Traefik controller
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: traefik
+  name: apache4
   namespace: default
 spec:
-  gatewayClassName: traefik
+  gatewayClassName: apache4
   
   # Only Routes from the same namespace are allowed.
   listeners:
@@ -137,7 +137,7 @@ metadata:
   namespace: default
 spec:
   parentRefs:
-    - name: traefik
+    - name: apache4
       sectionName: http
       kind: Gateway
 
@@ -175,7 +175,7 @@ spec:
     spec:
       containers:
         - name: whoami
-          image: traefik/whoami
+          image: apache4/whoami
 
 ---
 apiVersion: v1
@@ -204,7 +204,7 @@ metadata:
   namespace: default
 spec:
   parentRefs:
-    - name: traefik
+    - name: apache4
       sectionName: http
       kind: Gateway
 
@@ -227,7 +227,7 @@ metadata:
   namespace: default
 spec:
   parentRefs:
-    - name: traefik
+    - name: apache4
       sectionName: https
       kind: Gateway
 
@@ -275,11 +275,11 @@ Once everything is deployed, sending a `GET` request to the HTTP and HTTPS endpo
     X-Forwarded-Host: whoami.localhost
     X-Forwarded-Port: 443
     X-Forwarded-Proto: https
-    X-Forwarded-Server: traefik-6b66d45748-ns8mt
+    X-Forwarded-Server: apache4-6b66d45748-ns8mt
     X-Real-Ip: 10.42.1.0
     ```
 
-#### Using Traefik middleware as HTTPRoute filter
+#### Using apache4 middleware as HTTPRoute filter
 
 An HTTP [filter](https://gateway-api.sigs.k8s.io/api-types/httproute/#filters-optional) is an `HTTPRoute` component which enables the modification of HTTP requests and responses as they traverse the routing infrastructure.
 
@@ -287,13 +287,13 @@ There are three types of filters:
 
 - **Core:** Mandatory filters for every Gateway controller, such as `RequestHeaderModifier` and `RequestRedirect`.
 - **Extended:** Optional filters for Gateway controllers, such as `ResponseHeaderModifier` and `RequestMirror`.
-- **ExtensionRef:** Additional filters provided by the Gateway controller. In Traefik, these are the [HTTP middlewares](../http/middlewares/overview.md) supported through the [Middleware CRD](../kubernetes/crd/http/middleware.md).
+- **ExtensionRef:** Additional filters provided by the Gateway controller. In apache4, these are the [HTTP middlewares](../http/middlewares/overview.md) supported through the [Middleware CRD](../kubernetes/crd/http/middleware.md).
 
 !!! info "ExtensionRef Filters"
 
-    To use Traefik middlewares as `ExtensionRef` filters, the Kubernetes IngressRoute provider must be enabled in the static configuration, as detailed in the [documentation](../../install-configuration/providers/kubernetes/kubernetes-ingress.md). 
+    To use apache4 middlewares as `ExtensionRef` filters, the Kubernetes IngressRoute provider must be enabled in the static configuration, as detailed in the [documentation](../../install-configuration/providers/kubernetes/kubernetes-ingress.md). 
 
-For example, the following manifests configure an `HTTPRoute` using the Traefik `AddPrefix` middleware, 
+For example, the following manifests configure an `HTTPRoute` using the apache4 `AddPrefix` middleware, 
 reachable through the [deployed `Gateway`](#deploying-a-gateway) at the `http://whoami.localhost` address:
 
 ```yaml tab="HTTRoute"
@@ -305,7 +305,7 @@ metadata:
   namespace: default
 spec:
   parentRefs:
-    - name: traefik
+    - name: apache4
       sectionName: http
       kind: Gateway
 
@@ -321,14 +321,14 @@ spec:
       filters:
         - type: ExtensionRef
           extensionRef:
-            group: traefik.io
+            group: apache4.io
             kind: Middleware
             name: add-prefix
 ```
 
 ```yaml tab="AddPrefix middleware"
 ---
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: add-prefix
@@ -357,7 +357,7 @@ spec:
     spec:
       containers:
         - name: whoami
-          image: traefik/whoami
+          image: apache4/whoami
 
 ---
 apiVersion: v1
@@ -394,7 +394,7 @@ Once everything is deployed, sending a `GET` request should return the following
     X-Forwarded-Host: whoami.localhost
     X-Forwarded-Port: 80
     X-Forwarded-Proto: http
-    X-Forwarded-Server: traefik-6b66d45748-ns8mt
+    X-Forwarded-Server: apache4-6b66d45748-ns8mt
     X-Real-Ip: 10.42.2.1
     ```
 
@@ -417,7 +417,7 @@ metadata:
   namespace: default
 spec:
   parentRefs:
-    - name: traefik
+    - name: apache4
       sectionName: http
       kind: Gateway
 
@@ -504,7 +504,7 @@ Once everything is deployed, sending a GRPC request to the HTTP endpoint should 
           },
           {
             "key": "x-forwarded-server",
-            "value": "traefik-74b4cf85d8-nkqqf"
+            "value": "apache4-74b4cf85d8-nkqqf"
           },
           {
             "key": "x-forwarded-port",
@@ -557,7 +557,7 @@ Once everything is deployed, sending a GRPC request to the HTTP endpoint should 
 !!! info "Experimental Channel"
 
     The `TCPRoute` resource described below is currently available only in the Experimental channel of the Gateway API specification. 
-    To use this resource, the [experimentalChannel](../../install-configuration/providers/kubernetes/kubernetes-gateway.md) configuration option must be enabled in the Traefik deployment.
+    To use this resource, the [experimentalChannel](../../install-configuration/providers/kubernetes/kubernetes-gateway.md) configuration option must be enabled in the apache4 deployment.
 
 The `TCPRoute` is a resource in the Gateway API specification designed to define how TCP traffic should be routed within a Kubernetes cluster. 
 
@@ -575,7 +575,7 @@ metadata:
   namespace: default
 spec:
   parentRefs:
-    - name: traefik
+    - name: apache4
       sectionName: tcp
       kind: Gateway
 
@@ -605,7 +605,7 @@ spec:
     spec:
       containers:
         - name: whoami
-          image: traefik/whoamitcp
+          image: apache4/whoamitcp
           args:
             - --port=:3000
 
@@ -661,7 +661,7 @@ metadata:
   namespace: default
 spec:
   parentRefs:
-    - name: traefik
+    - name: apache4
       sectionName: tls
       kind: Gateway
 
@@ -695,7 +695,7 @@ spec:
     spec:
       containers:
         - name: whoami
-          image: traefik/whoamitcp
+          image: apache4/whoamitcp
           args:
             - --port=:3000
 
@@ -719,10 +719,10 @@ Once everything is deployed, sending the WHO command should return the following
     ```shell
     $ openssl s_client -quiet -connect localhost:3443 -servername whoami.localhost
     Connecting to ::1
-    depth=0 C=FR, L=Lyon, O=Traefik Labs, CN=Whoami
+    depth=0 C=FR, L=Lyon, O=apache4 Labs, CN=Whoami
     verify error:num=18:self-signed certificate
     verify return:1
-    depth=0 C=FR, L=Lyon, O=Traefik Labs, CN=Whoami
+    depth=0 C=FR, L=Lyon, O=apache4 Labs, CN=Whoami
     verify return:1
 
     WHO
@@ -735,11 +735,11 @@ Once everything is deployed, sending the WHO command should return the following
 
 ## Native Load Balancing
 
-By default, Traefik sends the traffic directly to the pod IPs and reuses the established connections to the backends for performance purposes.
+By default, apache4 sends the traffic directly to the pod IPs and reuses the established connections to the backends for performance purposes.
 
-It is possible to override this behavior and configure Traefik to send the traffic to the service IP.
+It is possible to override this behavior and configure apache4 to send the traffic to the service IP.
 The Kubernetes service itself does the load balancing to the pods.
-It can be done with the annotation `traefik.io/service.nativelb` on the backend `Service`.
+It can be done with the annotation `apache4.io/service.nativelb` on the backend `Service`.
 
 By default, NativeLB is `false`.
 
@@ -755,9 +755,9 @@ metadata:
   name: myservice
   namespace: default
   annotations:
-    traefik.io/service.nativelb: "true"
+    apache4.io/service.nativelb: "true"
 spec:
 [...]
 ```
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

@@ -1,6 +1,6 @@
 ---
-title: "Traefik Nomad Service Discovery Configuration Documentation"
-description: "View the reference for performing dynamic configurations with Traefik Proxy and Nomad Service Discovery. Read the technical documentation."
+title: "apache4 Nomad Service Discovery Configuration Documentation"
+description: "View the reference for performing dynamic configurations with apache4 Proxy and Nomad Service Discovery. Read the technical documentation."
 ---
 
 # Nomad Service Discovery Configuration Reference

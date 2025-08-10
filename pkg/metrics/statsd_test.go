@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/stvp/go-udp-testing"
-	ptypes "github.com/traefik/paerser/types"
-	"github.com/traefik/traefik/v3/pkg/types"
+	ptypes "github.com/apache4/paerser/types"
+	"github.com/apache4/apache4/v3/pkg/types"
 )
 
 func TestStatsD(t *testing.T) {

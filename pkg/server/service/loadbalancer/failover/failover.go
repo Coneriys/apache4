@@ -7,7 +7,7 @@ import (
 	"sync"
 
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
 )
 
 // Failover is an http.Handler that can forward requests to the fallback handler

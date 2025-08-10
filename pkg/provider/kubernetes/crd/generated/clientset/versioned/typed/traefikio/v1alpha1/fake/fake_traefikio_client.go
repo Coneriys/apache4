@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016-2020 Containous SAS; 2020-2025 Traefik Labs
+Copyright (c) 2016-2020 Containous SAS; 2020-2025 apache4 Labs
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,58 +27,58 @@ THE SOFTWARE.
 package fake
 
 import (
-	v1alpha1 "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned/typed/traefikio/v1alpha1"
+	v1alpha1 "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned/typed/apache4io/v1alpha1"
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
 )
 
-type FakeTraefikV1alpha1 struct {
+type Fakeapache4V1alpha1 struct {
 	*testing.Fake
 }
 
-func (c *FakeTraefikV1alpha1) IngressRoutes(namespace string) v1alpha1.IngressRouteInterface {
+func (c *Fakeapache4V1alpha1) IngressRoutes(namespace string) v1alpha1.IngressRouteInterface {
 	return &FakeIngressRoutes{c, namespace}
 }
 
-func (c *FakeTraefikV1alpha1) IngressRouteTCPs(namespace string) v1alpha1.IngressRouteTCPInterface {
+func (c *Fakeapache4V1alpha1) IngressRouteTCPs(namespace string) v1alpha1.IngressRouteTCPInterface {
 	return &FakeIngressRouteTCPs{c, namespace}
 }
 
-func (c *FakeTraefikV1alpha1) IngressRouteUDPs(namespace string) v1alpha1.IngressRouteUDPInterface {
+func (c *Fakeapache4V1alpha1) IngressRouteUDPs(namespace string) v1alpha1.IngressRouteUDPInterface {
 	return &FakeIngressRouteUDPs{c, namespace}
 }
 
-func (c *FakeTraefikV1alpha1) Middlewares(namespace string) v1alpha1.MiddlewareInterface {
+func (c *Fakeapache4V1alpha1) Middlewares(namespace string) v1alpha1.MiddlewareInterface {
 	return &FakeMiddlewares{c, namespace}
 }
 
-func (c *FakeTraefikV1alpha1) MiddlewareTCPs(namespace string) v1alpha1.MiddlewareTCPInterface {
+func (c *Fakeapache4V1alpha1) MiddlewareTCPs(namespace string) v1alpha1.MiddlewareTCPInterface {
 	return &FakeMiddlewareTCPs{c, namespace}
 }
 
-func (c *FakeTraefikV1alpha1) ServersTransports(namespace string) v1alpha1.ServersTransportInterface {
+func (c *Fakeapache4V1alpha1) ServersTransports(namespace string) v1alpha1.ServersTransportInterface {
 	return &FakeServersTransports{c, namespace}
 }
 
-func (c *FakeTraefikV1alpha1) ServersTransportTCPs(namespace string) v1alpha1.ServersTransportTCPInterface {
+func (c *Fakeapache4V1alpha1) ServersTransportTCPs(namespace string) v1alpha1.ServersTransportTCPInterface {
 	return &FakeServersTransportTCPs{c, namespace}
 }
 
-func (c *FakeTraefikV1alpha1) TLSOptions(namespace string) v1alpha1.TLSOptionInterface {
+func (c *Fakeapache4V1alpha1) TLSOptions(namespace string) v1alpha1.TLSOptionInterface {
 	return &FakeTLSOptions{c, namespace}
 }
 
-func (c *FakeTraefikV1alpha1) TLSStores(namespace string) v1alpha1.TLSStoreInterface {
+func (c *Fakeapache4V1alpha1) TLSStores(namespace string) v1alpha1.TLSStoreInterface {
 	return &FakeTLSStores{c, namespace}
 }
 
-func (c *FakeTraefikV1alpha1) TraefikServices(namespace string) v1alpha1.TraefikServiceInterface {
-	return &FakeTraefikServices{c, namespace}
+func (c *Fakeapache4V1alpha1) apache4Services(namespace string) v1alpha1.apache4ServiceInterface {
+	return &Fakeapache4Services{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *FakeTraefikV1alpha1) RESTClient() rest.Interface {
+func (c *Fakeapache4V1alpha1) RESTClient() rest.Interface {
 	var ret *rest.RESTClient
 	return ret
 }

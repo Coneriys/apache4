@@ -4,8 +4,8 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/middlewares"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/middlewares"
 )
 
 const responseHeaderModifierTypeName = "ResponseHeaderModifier"

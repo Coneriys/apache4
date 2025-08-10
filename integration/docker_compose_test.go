@@ -10,9 +10,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
-	"github.com/traefik/traefik/v3/integration/try"
-	"github.com/traefik/traefik/v3/pkg/api"
-	"github.com/traefik/traefik/v3/pkg/testhelpers"
+	"github.com/apache4/apache4/v3/integration/try"
+	"github.com/apache4/apache4/v3/pkg/api"
+	"github.com/apache4/apache4/v3/pkg/testhelpers"
 )
 
 // Docker tests suite.
@@ -44,7 +44,7 @@ func (s *DockerComposeSuite) TestComposeScale() {
 	}
 	file := s.adaptFile("fixtures/docker/minimal.toml", tempObjects)
 
-	s.traefikCmd(withConfigFile(file))
+	s.apache4Cmd(withConfigFile(file))
 
 	req := testhelpers.MustNewRequest(http.MethodGet, "http://127.0.0.1:8000/whoami", nil)
 	req.Host = "my.super.host"

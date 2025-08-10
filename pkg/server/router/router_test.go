@@ -13,15 +13,15 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	ptypes "github.com/traefik/paerser/types"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/config/runtime"
-	"github.com/traefik/traefik/v3/pkg/middlewares/requestdecorator"
-	httpmuxer "github.com/traefik/traefik/v3/pkg/muxer/http"
-	"github.com/traefik/traefik/v3/pkg/server/middleware"
-	"github.com/traefik/traefik/v3/pkg/server/service"
-	"github.com/traefik/traefik/v3/pkg/testhelpers"
-	traefiktls "github.com/traefik/traefik/v3/pkg/tls"
+	ptypes "github.com/apache4/paerser/types"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/config/runtime"
+	"github.com/apache4/apache4/v3/pkg/middlewares/requestdecorator"
+	httpmuxer "github.com/apache4/apache4/v3/pkg/muxer/http"
+	"github.com/apache4/apache4/v3/pkg/server/middleware"
+	"github.com/apache4/apache4/v3/pkg/server/service"
+	"github.com/apache4/apache4/v3/pkg/testhelpers"
+	apache4tls "github.com/apache4/apache4/v3/pkg/tls"
 )
 
 func TestRouterManager_Get(t *testing.T) {
@@ -325,7 +325,7 @@ func TestRouterManager_Get(t *testing.T) {
 
 			serviceManager := service.NewManager(rtConf.Services, nil, nil, transportManager, proxyBuilderMock{})
 			middlewaresBuilder := middleware.NewBuilder(rtConf.Middlewares, serviceManager, nil)
-			tlsManager := traefiktls.NewManager(nil)
+			tlsManager := apache4tls.NewManager(nil)
 
 			parser, err := httpmuxer.NewSyntaxParser()
 			require.NoError(t, err)
@@ -355,7 +355,7 @@ func TestRuntimeConfiguration(t *testing.T) {
 		serviceConfig    map[string]*dynamic.Service
 		routerConfig     map[string]*dynamic.Router
 		middlewareConfig map[string]*dynamic.Middleware
-		tlsOptions       map[string]traefiktls.Options
+		tlsOptions       map[string]apache4tls.Options
 		expectedError    int
 	}{
 		{
@@ -620,7 +620,7 @@ func TestRuntimeConfiguration(t *testing.T) {
 					TLS:         &dynamic.RouterTLSConfig{},
 				},
 			},
-			tlsOptions:    map[string]traefiktls.Options{},
+			tlsOptions:    map[string]apache4tls.Options{},
 			expectedError: 1,
 		},
 		{
@@ -648,9 +648,9 @@ func TestRuntimeConfiguration(t *testing.T) {
 					},
 				},
 			},
-			tlsOptions: map[string]traefiktls.Options{
+			tlsOptions: map[string]apache4tls.Options{
 				"broken-tlsOption": {
-					ClientAuth: traefiktls.ClientAuth{
+					ClientAuth: apache4tls.ClientAuth{
 						ClientAuthType: "foobar",
 					},
 				},
@@ -680,9 +680,9 @@ func TestRuntimeConfiguration(t *testing.T) {
 					TLS:         &dynamic.RouterTLSConfig{},
 				},
 			},
-			tlsOptions: map[string]traefiktls.Options{
+			tlsOptions: map[string]apache4tls.Options{
 				"default": {
-					ClientAuth: traefiktls.ClientAuth{
+					ClientAuth: apache4tls.ClientAuth{
 						ClientAuthType: "foobar",
 					},
 				},
@@ -712,7 +712,7 @@ func TestRuntimeConfiguration(t *testing.T) {
 
 			serviceManager := service.NewManager(rtConf.Services, nil, nil, transportManager, proxyBuilderMock{})
 			middlewaresBuilder := middleware.NewBuilder(rtConf.Middlewares, serviceManager, nil)
-			tlsManager := traefiktls.NewManager(nil)
+			tlsManager := apache4tls.NewManager(nil)
 			tlsManager.UpdateConfigs(t.Context(), nil, test.tlsOptions, nil)
 
 			parser, err := httpmuxer.NewSyntaxParser()
@@ -794,7 +794,7 @@ func TestProviderOnMiddlewares(t *testing.T) {
 
 	serviceManager := service.NewManager(rtConf.Services, nil, nil, transportManager, nil)
 	middlewaresBuilder := middleware.NewBuilder(rtConf.Middlewares, serviceManager, nil)
-	tlsManager := traefiktls.NewManager(nil)
+	tlsManager := apache4tls.NewManager(nil)
 
 	parser, err := httpmuxer.NewSyntaxParser()
 	require.NoError(t, err)
@@ -873,7 +873,7 @@ func BenchmarkRouterServe(b *testing.B) {
 
 	serviceManager := service.NewManager(rtConf.Services, nil, nil, staticTransportManager{res}, nil)
 	middlewaresBuilder := middleware.NewBuilder(rtConf.Middlewares, serviceManager, nil)
-	tlsManager := traefiktls.NewManager(nil)
+	tlsManager := apache4tls.NewManager(nil)
 
 	parser, err := httpmuxer.NewSyntaxParser()
 	require.NoError(b, err)

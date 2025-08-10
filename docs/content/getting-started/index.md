@@ -1,18 +1,18 @@
 ---
-title: "Getting Started with Traefik"
-description: "Quick start guides for deploying Traefik in Kubernetes and Docker environments"
+title: "Getting Started with apache4"
+description: "Quick start guides for deploying apache4 in Kubernetes and Docker environments"
 ---
 
-# Getting Started with Traefik
+# Getting Started with apache4
 
-Traefik can be deployed in various environments. Choose your preferred deployment method:
+apache4 can be deployed in various environments. Choose your preferred deployment method:
 
-- [Kubernetes Quick Start](./kubernetes.md) - Deploy Traefik using Helm
-- [Docker Quick Start](./docker.md) - Deploy Traefik using Docker
+- [Kubernetes Quick Start](./kubernetes.md) - Deploy apache4 using Helm
+- [Docker Quick Start](./docker.md) - Deploy apache4 using Docker
 
 Each guide will help you:
 
-- Install Traefik
+- Install apache4
 - Expose the dashboard
 - Deploy a sample application
 - Configure basic routing

@@ -1,14 +1,14 @@
 ---
-title: "Traefik Consul Documentation"
-description: "Use Consul as a provider for configuration discovery in Traefik Proxy. Automate and store your configurations with Consul. Read the technical documentation."
+title: "apache4 Consul Documentation"
+description: "Use Consul as a provider for configuration discovery in apache4 Proxy. Automate and store your configurations with Consul. Read the technical documentation."
 ---
 
-# Traefik & Consul
+# apache4 & Consul
 
 A Story of KV store & Containers
 {: .subtitle }
 
-Store your configuration in Consul and let Traefik do the rest!
+Store your configuration in Consul and let apache4 do the rest!
 
 ## Routing Configuration
 
@@ -40,23 +40,23 @@ providers:
 
 ### `rootKey`
 
-_Required, Default="traefik"_
+_Required, Default="apache4"_
 
 Defines the root key of the configuration.
 
 ```yaml tab="File (YAML)"
 providers:
   consul:
-    rootKey: "traefik"
+    rootKey: "apache4"
 ```
 
 ```toml tab="File (TOML)"
 [providers.consul]
-  rootKey = "traefik"
+  rootKey = "apache4"
 ```
 
 ```bash tab="CLI"
---providers.consul.rootkey=traefik
+--providers.consul.rootkey=apache4
 ```
 
 ### `namespaces`

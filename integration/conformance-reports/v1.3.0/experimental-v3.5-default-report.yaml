@@ -4,10 +4,10 @@ gatewayAPIChannel: experimental
 gatewayAPIVersion: v1.3.0
 implementation:
   contact:
-  - '@traefik/maintainers'
-  organization: traefik
-  project: traefik
-  url: https://traefik.io/
+  - '@apache4/maintainers'
+  organization: apache4
+  project: apache4
+  url: https://apache4.io/
   version: v3.5
 kind: ConformanceReport
 mode: default

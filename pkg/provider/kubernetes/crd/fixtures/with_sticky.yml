@@ -1,6 +1,6 @@
 ---
-apiVersion: traefik.io/v1alpha1
-kind: TraefikService
+apiVersion: apache4.io/v1alpha1
+kind: apache4Service
 metadata:
   name: sticky-default
   namespace: default
@@ -18,8 +18,8 @@ spec:
         port: 8443
 
 ---
-apiVersion: traefik.io/v1alpha1
-kind: TraefikService
+apiVersion: apache4.io/v1alpha1
+kind: apache4Service
 metadata:
   name: sticky
   namespace: default
@@ -38,7 +38,7 @@ spec:
         port: 8443
 
 ---
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: test2.route
@@ -49,13 +49,13 @@ spec:
     - web
 
   routes:
-    - match: Host(`traefik-service`)
+    - match: Host(`apache4-service`)
       kind: Rule
       services:
         - name: sticky
-          kind: TraefikService
+          kind: apache4Service
         - name: sticky-default
-          kind: TraefikService
+          kind: apache4Service
 
     - match: Host(`k8s-service`)
       kind: Rule

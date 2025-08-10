@@ -1,6 +1,6 @@
 ---
-title: "Traefik InFlightReq Documentation"
-description: "Traefik Proxy's HTTP middleware lets you limit the number of simultaneous in-flight requests. Read the technical documentation."
+title: "apache4 InFlightReq Documentation"
+description: "apache4 Proxy's HTTP middleware lets you limit the number of simultaneous in-flight requests. Read the technical documentation."
 ---
 
 # InFlightReq
@@ -16,11 +16,11 @@ To proactively prevent services from being overwhelmed with high load, the numbe
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-inflightreq.inflightreq.amount=10"
+  - "apache4.http.middlewares.test-inflightreq.inflightreq.amount=10"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-inflightreq
@@ -31,7 +31,7 @@ spec:
 
 ```yaml tab="Consul Catalog"
 # Limiting to 10 simultaneous connections
-- "traefik.http.middlewares.test-inflightreq.inflightreq.amount=10"
+- "apache4.http.middlewares.test-inflightreq.inflightreq.amount=10"
 ```
 
 ```yaml tab="File (YAML)"
@@ -59,11 +59,11 @@ The middleware responds with `HTTP 429 Too Many Requests` if there are already `
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-inflightreq.inflightreq.amount=10"
+  - "apache4.http.middlewares.test-inflightreq.inflightreq.amount=10"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-inflightreq
@@ -74,7 +74,7 @@ spec:
 
 ```yaml tab="Consul Catalog"
 # Limiting to 10 simultaneous connections
-- "traefik.http.middlewares.test-inflightreq.inflightreq.amount=10"
+- "apache4.http.middlewares.test-inflightreq.inflightreq.amount=10"
 ```
 
 ```yaml tab="File (YAML)"
@@ -101,13 +101,13 @@ If none are set, the default is to use the `requestHost`.
 
 #### `sourceCriterion.ipStrategy`
 
-The `ipStrategy` option defines three parameters that configures how Traefik determines the client IP: `depth`, `excludedIPs` and `ipv6Subnet`.
+The `ipStrategy` option defines three parameters that configures how apache4 determines the client IP: `depth`, `excludedIPs` and `ipv6Subnet`.
 
 !!! important "As a middleware, InFlightReq happens before the actual proxying to the backend takes place. In addition, the previous network hop only gets appended to `X-Forwarded-For` during the last stages of proxying, i.e. after it has already passed through the middleware. Therefore, during InFlightReq, as the previous network hop is not yet present in `X-Forwarded-For`, it cannot be used and/or relied upon."
 
 ##### `ipStrategy.depth`
 
-The `depth` option tells Traefik to use the `X-Forwarded-For` header and select the IP located at the `depth` position (starting from the right).
+The `depth` option tells apache4 to use the `X-Forwarded-For` header and select the IP located at the `depth` position (starting from the right).
 
 - If `depth` is greater than the total number of IPs in `X-Forwarded-For`, then the client IP is empty.
 - `depth` is ignored if its value is less than or equal to 0.
@@ -127,11 +127,11 @@ See [ipStrategy.ipv6Subnet](#ipstrategyipv6subnet) for more details.
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.ipstrategy.depth=2"
+  - "apache4.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.ipstrategy.depth=2"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-inflightreq
@@ -143,7 +143,7 @@ spec:
 ```
 
 ```yaml tab="Consul Catalog"
-- "traefik.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.ipstrategy.depth=2"
+- "apache4.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.ipstrategy.depth=2"
 ```
 
 ```yaml tab="File (YAML)"
@@ -165,7 +165,7 @@ http:
 
 ##### `ipStrategy.excludedIPs`
 
-`excludedIPs` configures Traefik to scan the `X-Forwarded-For` header and select the first IP not in the list.
+`excludedIPs` configures apache4 to scan the `X-Forwarded-For` header and select the first IP not in the list.
 
 !!! important "If `depth` is specified, `excludedIPs` is ignored."
 
@@ -181,11 +181,11 @@ http:
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.ipstrategy.excludedips=127.0.0.1/32, 192.168.1.7"
+  - "apache4.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.ipstrategy.excludedips=127.0.0.1/32, 192.168.1.7"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-inflightreq
@@ -199,7 +199,7 @@ spec:
 ```
 
 ```yaml tab="Consul Catalog"
-- "traefik.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.ipstrategy.excludedips=127.0.0.1/32, 192.168.1.7"
+- "apache4.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.ipstrategy.excludedips=127.0.0.1/32, 192.168.1.7"
 ```
 
 ```yaml tab="File (YAML)"
@@ -242,11 +242,11 @@ This is useful for grouping IPv6 addresses into subnets to prevent bypassing thi
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.ipstrategy.ipv6Subnet=64"
+  - "apache4.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.ipstrategy.ipv6Subnet=64"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-inflightreq
@@ -258,7 +258,7 @@ spec:
 ```
 
 ```yaml tab="Consul Catalog"
-- "traefik.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.ipstrategy.ipv6Subnet=64"
+- "apache4.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.ipstrategy.ipv6Subnet=64"
 ```
 
 ```yaml tab="File (YAML)"
@@ -284,11 +284,11 @@ Name of the header used to group incoming requests.
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.requestheadername=username"
+  - "apache4.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.requestheadername=username"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-inflightreq
@@ -299,7 +299,7 @@ spec:
 ```
 
 ```yaml tab="Consul Catalog"
-- "traefik.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.requestheadername=username"
+- "apache4.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.requestheadername=username"
 ```
 
 ```yaml tab="File (YAML)"
@@ -324,11 +324,11 @@ Whether to consider the request host as the source.
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.requesthost=true"
+  - "apache4.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.requesthost=true"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-inflightreq
@@ -339,7 +339,7 @@ spec:
 ```
 
 ```yaml tab="Consul Catalog"
-- "traefik.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.requesthost=true"
+- "apache4.http.middlewares.test-inflightreq.inflightreq.sourcecriterion.requesthost=true"
 ```
 
 ```yaml tab="File (YAML)"

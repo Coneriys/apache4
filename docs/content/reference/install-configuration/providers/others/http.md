@@ -1,11 +1,11 @@
 ---
-title: "Traefik HTTP Documentation"
-description: "Provide your dynamic configuration via an HTTP(S) endpoint and let Traefik Proxy do the rest. Read the technical documentation."
+title: "apache4 HTTP Documentation"
+description: "Provide your dynamic configuration via an HTTP(S) endpoint and let apache4 Proxy do the rest. Read the technical documentation."
 ---
 
-# Traefik & HTTP
+# apache4 & HTTP
 
-Provide your [install configuration](../overview.md) via an HTTP(S) endpoint and let Traefik do the rest!
+Provide your [install configuration](../overview.md) via an HTTP(S) endpoint and let apache4 do the rest!
 
 ## Configuration Example
 

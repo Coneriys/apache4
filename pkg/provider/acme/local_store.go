@@ -8,8 +8,8 @@ import (
 	"sync"
 
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/logs"
-	"github.com/traefik/traefik/v3/pkg/safe"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/safe"
 )
 
 var _ Store = (*LocalStore)(nil)
@@ -112,7 +112,7 @@ func (s *LocalStore) listenSaveAction(routinesPool *safe.Pool) {
 			case object := <-s.saveDataChan:
 				select {
 				case <-ctx.Done():
-					// Stop handling events because Traefik is shutting down.
+					// Stop handling events because apache4 is shutting down.
 					return
 				default:
 				}

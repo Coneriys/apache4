@@ -13,8 +13,8 @@ import (
 	"github.com/containous/alice"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/traefik/traefik/v3/pkg/config/static"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/config/static"
+	"github.com/apache4/apache4/v3/pkg/types"
 	"go.opentelemetry.io/collector/pdata/ptrace/ptraceotlp"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -82,7 +82,7 @@ func TestTracing(t *testing.T) {
 			assertFn: func(t *testing.T, trace string) {
 				t.Helper()
 
-				assert.Regexp(t, `({"key":"service.name","value":{"stringValue":"traefik"}})`, trace)
+				assert.Regexp(t, `({"key":"service.name","value":{"stringValue":"apache4"}})`, trace)
 				assert.Regexp(t, `({"key":"service.version","value":{"stringValue":"dev"}})`, trace)
 			},
 		},
@@ -340,7 +340,7 @@ func TestTracing(t *testing.T) {
 			})
 
 			tracingConfig := &static.Tracing{
-				ServiceName:        "traefik",
+				ServiceName:        "apache4",
 				SampleRate:         1.0,
 				ResourceAttributes: test.resourceAttributes,
 				OTLP: &types.OTelTracing{
@@ -394,7 +394,7 @@ func TestTracing(t *testing.T) {
 }
 
 // TestTracerProvider ensures that Tracer returns a valid TracerProvider
-// when using the default Traefik Tracer and a custom one.
+// when using the default apache4 Tracer and a custom one.
 func TestTracerProvider(t *testing.T) {
 	t.Parallel()
 
@@ -411,6 +411,6 @@ func TestTracerProvider(t *testing.T) {
 	_, span := tracer.Start(t.Context(), "test")
 	defer span.End()
 
-	span.TracerProvider().Tracer("github.com/traefik/traefik")
+	span.TracerProvider().Tracer("github.com/apache4/apache4")
 	span.TracerProvider().Tracer("other")
 }

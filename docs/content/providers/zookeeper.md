@@ -1,14 +1,14 @@
 ---
-title: "Traefik ZooKeeper Documentation"
-description: "For configuration discovery in Traefik Proxy, you can store your configurations in ZooKeeper. Read the technical documentation."
+title: "apache4 ZooKeeper Documentation"
+description: "For configuration discovery in apache4 Proxy, you can store your configurations in ZooKeeper. Read the technical documentation."
 ---
 
-# Traefik & ZooKeeper
+# apache4 & ZooKeeper
 
 A Story of KV Store & Containers
 {: .subtitle }
 
-Store your configuration in ZooKeeper and let Traefik do the rest!
+Store your configuration in ZooKeeper and let apache4 do the rest!
 
 ## Routing Configuration
 
@@ -40,23 +40,23 @@ providers:
 
 ### `rootKey`
 
-_Required, Default="traefik"_
+_Required, Default="apache4"_
 
 Defines the root key of the configuration.
 
 ```yaml tab="File (YAML)"
 providers:
   zooKeeper:
-    rootKey: "traefik"
+    rootKey: "apache4"
 ```
 
 ```toml tab="File (TOML)"
 [providers.zooKeeper]
-  rootKey = "traefik"
+  rootKey = "apache4"
 ```
 
 ```bash tab="CLI"
---providers.zookeeper.rootkey=traefik
+--providers.zookeeper.rootkey=apache4
 ```
 
 ### `username`

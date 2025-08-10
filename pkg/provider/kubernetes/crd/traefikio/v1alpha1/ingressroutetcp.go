@@ -1,8 +1,8 @@
 package v1alpha1
 
 import (
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/types"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 )
@@ -13,25 +13,25 @@ type IngressRouteTCPSpec struct {
 	Routes []RouteTCP `json:"routes"`
 	// EntryPoints defines the list of entry point names to bind to.
 	// Entry points have to be configured in the static configuration.
-	// More info: https://doc.traefik.io/traefik/v3.5/routing/entrypoints/
+	// More info: https://doc.apache4.io/apache4/v3.5/routing/entrypoints/
 	// Default: all.
 	EntryPoints []string `json:"entryPoints,omitempty"`
 	// TLS defines the TLS configuration on a layer 4 / TCP Route.
-	// More info: https://doc.traefik.io/traefik/v3.5/routing/routers/#tls_1
+	// More info: https://doc.apache4.io/apache4/v3.5/routing/routers/#tls_1
 	TLS *TLSTCP `json:"tls,omitempty"`
 }
 
 // RouteTCP holds the TCP route configuration.
 type RouteTCP struct {
 	// Match defines the router's rule.
-	// More info: https://doc.traefik.io/traefik/v3.5/routing/routers/#rule_1
+	// More info: https://doc.apache4.io/apache4/v3.5/routing/routers/#rule_1
 	Match string `json:"match"`
 	// Priority defines the router's priority.
-	// More info: https://doc.traefik.io/traefik/v3.5/routing/routers/#priority_1
+	// More info: https://doc.apache4.io/apache4/v3.5/routing/routers/#priority_1
 	// +kubebuilder:validation:Maximum=9223372036854774807
 	Priority int `json:"priority,omitempty"`
 	// Syntax defines the router's rule syntax.
-	// More info: https://doc.traefik.io/traefik/v3.5/routing/routers/#rulesyntax_1
+	// More info: https://doc.apache4.io/apache4/v3.5/routing/routers/#rulesyntax_1
 	// +kubebuilder:validation:Enum=v3;v2
 	// Deprecated: Please do not use this field and rewrite the router rules to use the v3 syntax.
 	Syntax string `json:"syntax,omitempty"`
@@ -42,7 +42,7 @@ type RouteTCP struct {
 }
 
 // TLSTCP holds the TLS configuration for an IngressRouteTCP.
-// More info: https://doc.traefik.io/traefik/v3.5/routing/routers/#tls_1
+// More info: https://doc.apache4.io/apache4/v3.5/routing/routers/#tls_1
 type TLSTCP struct {
 	// SecretName is the name of the referenced Kubernetes Secret to specify the certificate details.
 	SecretName string `json:"secretName,omitempty"`
@@ -50,17 +50,17 @@ type TLSTCP struct {
 	Passthrough bool `json:"passthrough,omitempty"`
 	// Options defines the reference to a TLSOption, that specifies the parameters of the TLS connection.
 	// If not defined, the `default` TLSOption is used.
-	// More info: https://doc.traefik.io/traefik/v3.5/https/tls/#tls-options
+	// More info: https://doc.apache4.io/apache4/v3.5/https/tls/#tls-options
 	Options *ObjectReference `json:"options,omitempty"`
 	// Store defines the reference to the TLSStore, that will be used to store certificates.
 	// Please note that only `default` TLSStore can be used.
 	Store *ObjectReference `json:"store,omitempty"`
 	// CertResolver defines the name of the certificate resolver to use.
 	// Cert resolvers have to be configured in the static configuration.
-	// More info: https://doc.traefik.io/traefik/v3.5/https/acme/#certificate-resolvers
+	// More info: https://doc.apache4.io/apache4/v3.5/https/acme/#certificate-resolvers
 	CertResolver string `json:"certResolver,omitempty"`
 	// Domains defines the list of domains that will be used to issue certificates.
-	// More info: https://doc.traefik.io/traefik/v3.5/routing/routers/#domains
+	// More info: https://doc.apache4.io/apache4/v3.5/routing/routers/#domains
 	Domains []types.Domain `json:"domains,omitempty"`
 }
 
@@ -85,10 +85,10 @@ type ServiceTCP struct {
 	// Deprecated: TerminationDelay will not be supported in future APIVersions, please use ServersTransport to configure the TerminationDelay instead.
 	TerminationDelay *int `json:"terminationDelay,omitempty"`
 	// ProxyProtocol defines the PROXY protocol configuration.
-	// More info: https://doc.traefik.io/traefik/v3.5/routing/services/#proxy-protocol
+	// More info: https://doc.apache4.io/apache4/v3.5/routing/services/#proxy-protocol
 	ProxyProtocol *dynamic.ProxyProtocol `json:"proxyProtocol,omitempty"`
 	// ServersTransport defines the name of ServersTransportTCP resource to use.
-	// It allows to configure the transport between Traefik and your servers.
+	// It allows to configure the transport between apache4 and your servers.
 	// Can only be used on a Kubernetes Service.
 	ServersTransport string `json:"serversTransport,omitempty"`
 	// TLS determines whether to use TLS when dialing with the backend.
@@ -100,7 +100,7 @@ type ServiceTCP struct {
 	NativeLB *bool `json:"nativeLB,omitempty"`
 	// NodePortLB controls, when creating the load-balancer,
 	// whether the LB's children are directly the nodes internal IPs using the nodePort when the service type is NodePort.
-	// It allows services to be reachable when Traefik runs externally from the Kubernetes cluster but within the same network of the nodes.
+	// It allows services to be reachable when apache4 runs externally from the Kubernetes cluster but within the same network of the nodes.
 	// By default, NodePortLB is false.
 	NodePortLB bool `json:"nodePortLB,omitempty"`
 }
@@ -109,7 +109,7 @@ type ServiceTCP struct {
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:storageversion
 
-// IngressRouteTCP is the CRD implementation of a Traefik TCP Router.
+// IngressRouteTCP is the CRD implementation of a apache4 TCP Router.
 type IngressRouteTCP struct {
 	metav1.TypeMeta `json:",inline"`
 	// Standard object's metadata.

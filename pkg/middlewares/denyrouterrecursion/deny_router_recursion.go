@@ -8,10 +8,10 @@ import (
 
 	"github.com/containous/alice"
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/logs"
 )
 
-const xTraefikRouter = "X-Traefik-Router"
+const xapache4Router = "X-apache4-Router"
 
 type DenyRouterRecursion struct {
 	routerName     string
@@ -42,7 +42,7 @@ func New(routerName string, next http.Handler) (*DenyRouterRecursion, error) {
 
 // ServeHTTP implements http.Handler.
 func (l *DenyRouterRecursion) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
-	if req.Header.Get(xTraefikRouter) == l.routerNameHash {
+	if req.Header.Get(xapache4Router) == l.routerNameHash {
 		logger := log.With().Str(logs.MiddlewareType, "DenyRouterRecursion").Logger()
 		logger.Debug().Msgf("Rejecting request in provenance of the same router (%q) to stop potential infinite loop.", l.routerName)
 
@@ -51,7 +51,7 @@ func (l *DenyRouterRecursion) ServeHTTP(rw http.ResponseWriter, req *http.Reques
 		return
 	}
 
-	req.Header.Set(xTraefikRouter, l.routerNameHash)
+	req.Header.Set(xapache4Router, l.routerNameHash)
 
 	l.next.ServeHTTP(rw, req)
 }

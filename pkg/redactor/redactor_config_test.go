@@ -9,28 +9,28 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	ptypes "github.com/traefik/paerser/types"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/config/static"
-	"github.com/traefik/traefik/v3/pkg/ping"
-	"github.com/traefik/traefik/v3/pkg/plugins"
-	"github.com/traefik/traefik/v3/pkg/provider/acme"
-	"github.com/traefik/traefik/v3/pkg/provider/consulcatalog"
-	"github.com/traefik/traefik/v3/pkg/provider/docker"
-	"github.com/traefik/traefik/v3/pkg/provider/ecs"
-	"github.com/traefik/traefik/v3/pkg/provider/file"
-	"github.com/traefik/traefik/v3/pkg/provider/http"
-	"github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd"
-	"github.com/traefik/traefik/v3/pkg/provider/kubernetes/gateway"
-	"github.com/traefik/traefik/v3/pkg/provider/kubernetes/ingress"
-	"github.com/traefik/traefik/v3/pkg/provider/kv"
-	"github.com/traefik/traefik/v3/pkg/provider/kv/consul"
-	"github.com/traefik/traefik/v3/pkg/provider/kv/etcd"
-	"github.com/traefik/traefik/v3/pkg/provider/kv/redis"
-	"github.com/traefik/traefik/v3/pkg/provider/kv/zk"
-	"github.com/traefik/traefik/v3/pkg/provider/rest"
-	traefiktls "github.com/traefik/traefik/v3/pkg/tls"
-	"github.com/traefik/traefik/v3/pkg/types"
+	ptypes "github.com/apache4/paerser/types"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/config/static"
+	"github.com/apache4/apache4/v3/pkg/ping"
+	"github.com/apache4/apache4/v3/pkg/plugins"
+	"github.com/apache4/apache4/v3/pkg/provider/acme"
+	"github.com/apache4/apache4/v3/pkg/provider/consulcatalog"
+	"github.com/apache4/apache4/v3/pkg/provider/docker"
+	"github.com/apache4/apache4/v3/pkg/provider/ecs"
+	"github.com/apache4/apache4/v3/pkg/provider/file"
+	"github.com/apache4/apache4/v3/pkg/provider/http"
+	"github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd"
+	"github.com/apache4/apache4/v3/pkg/provider/kubernetes/gateway"
+	"github.com/apache4/apache4/v3/pkg/provider/kubernetes/ingress"
+	"github.com/apache4/apache4/v3/pkg/provider/kv"
+	"github.com/apache4/apache4/v3/pkg/provider/kv/consul"
+	"github.com/apache4/apache4/v3/pkg/provider/kv/etcd"
+	"github.com/apache4/apache4/v3/pkg/provider/kv/redis"
+	"github.com/apache4/apache4/v3/pkg/provider/kv/zk"
+	"github.com/apache4/apache4/v3/pkg/provider/rest"
+	apache4tls "github.com/apache4/apache4/v3/pkg/tls"
+	"github.com/apache4/apache4/v3/pkg/types"
 )
 
 var updateExpected = flag.Bool("update_expected", false, "Update expected files in fixtures")
@@ -135,7 +135,7 @@ func init() {
 				ServerName:         "foo",
 				InsecureSkipVerify: true,
 				RootCAs:            []types.FileOrContent{"rootca.pem"},
-				Certificates: []traefiktls.Certificate{
+				Certificates: []apache4tls.Certificate{
 					{
 						CertFile: "cert.pem",
 						KeyFile:  "key.pem",
@@ -396,7 +396,7 @@ func init() {
 					ServerName:         "foo",
 					InsecureSkipVerify: true,
 					RootCAs:            []types.FileOrContent{"rootca.pem"},
-					Certificates: []traefiktls.Certificate{
+					Certificates: []apache4tls.Certificate{
 						{
 							CertFile: "cert.pem",
 							KeyFile:  "key.pem",
@@ -439,31 +439,31 @@ func init() {
 		},
 	}
 	config.TLS = &dynamic.TLSConfiguration{
-		Options: map[string]traefiktls.Options{
+		Options: map[string]apache4tls.Options{
 			"foo": {
 				MinVersion:       "foo",
 				MaxVersion:       "foo",
 				CipherSuites:     []string{"foo"},
 				CurvePreferences: []string{"foo"},
-				ClientAuth: traefiktls.ClientAuth{
+				ClientAuth: apache4tls.ClientAuth{
 					CAFiles:        []types.FileOrContent{"ca.pem"},
 					ClientAuthType: "RequireAndVerifyClientCert",
 				},
 				SniStrict: true,
 			},
 		},
-		Certificates: []*traefiktls.CertAndStores{
+		Certificates: []*apache4tls.CertAndStores{
 			{
-				Certificate: traefiktls.Certificate{
+				Certificate: apache4tls.Certificate{
 					CertFile: "cert.pem",
 					KeyFile:  "key.pem",
 				},
 				Stores: []string{"foo"},
 			},
 		},
-		Stores: map[string]traefiktls.Store{
+		Stores: map[string]apache4tls.Store{
 			"foo": {
-				DefaultCertificate: &traefiktls.Certificate{
+				DefaultCertificate: &apache4tls.Certificate{
 					CertFile: "cert.pem",
 					KeyFile:  "key.pem",
 				},
@@ -827,7 +827,7 @@ func TestDo_staticConfiguration(t *testing.T) {
 		TerminatingStatusCode: 42,
 	}
 
-	config.Log = &types.TraefikLog{
+	config.Log = &types.apache4Log{
 		Level:      "Level",
 		Format:     "json",
 		FilePath:   "/foo/path",

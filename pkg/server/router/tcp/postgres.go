@@ -9,8 +9,8 @@ import (
 	"sync"
 
 	"github.com/rs/zerolog/log"
-	tcpmuxer "github.com/traefik/traefik/v3/pkg/muxer/tcp"
-	"github.com/traefik/traefik/v3/pkg/tcp"
+	tcpmuxer "github.com/apache4/apache4/v3/pkg/muxer/tcp"
+	"github.com/apache4/apache4/v3/pkg/tcp"
 )
 
 var (
@@ -135,7 +135,7 @@ func (c *postgresConn) Read(p []byte) (n int, err error) {
 // Write writes bytes to the underlying connection (tcp.WriteCloser).
 // On first call, it checks that the bytes to write (the ones provided by the backend)
 // match the PostgresStartTLSReply, and if yes it drops them (as the STARTTLS
-// handshake between the client and traefik has already taken place). Otherwise, an
+// handshake between the client and apache4 has already taken place). Otherwise, an
 // error is transmitted through c.errChan, so that the second Read call gets it and
 // returns it up the stack.
 // Write does not support concurrent calls.

@@ -1,9 +1,9 @@
 ---
-title: "Traefik Kubernetes Ingress NGINX Routing Configuration"
-description: "Understand the routing configuration for the Kubernetes Ingress NGINX Controller and Traefik Proxy. Read the technical documentation."
+title: "apache4 Kubernetes Ingress NGINX Routing Configuration"
+description: "Understand the routing configuration for the Kubernetes Ingress NGINX Controller and apache4 Proxy. Read the technical documentation."
 ---
 
-# Traefik & Ingresses with NGINX Annotations
+# apache4 & Ingresses with NGINX Annotations
 
 The experimental Kubernetes Controller for Ingresses with NGINX annotations.
 {: .subtitle }
@@ -30,7 +30,7 @@ which in turn will create the resulting routers, services, handlers, etc.
       apiVersion: rbac.authorization.k8s.io/v1
       kind: ClusterRole
       metadata:
-        name: traefik-ingress-controller
+        name: apache4-ingress-controller
       rules:
         - apiGroups:
             - ""
@@ -99,46 +99,46 @@ which in turn will create the resulting routers, services, handlers, etc.
           apiVersion: rbac.authorization.k8s.io/v1
           kind: ClusterRoleBinding
           metadata:
-            name: traefik-ingress-controller
+            name: apache4-ingress-controller
           roleRef:
             apiGroup: rbac.authorization.k8s.io
             kind: ClusterRole
-            name: traefik-ingress-controller
+            name: apache4-ingress-controller
           subjects:
             - kind: ServiceAccount
-              name: traefik-ingress-controller
+              name: apache4-ingress-controller
               namespace: default
       ```
 
-      ```yaml tab="Traefik"
+      ```yaml tab="apache4"
       ---
       apiVersion: v1
       kind: ServiceAccount
       metadata:
-        name: traefik-ingress-controller
+        name: apache4-ingress-controller
 
       ---
       apiVersion: apps/v1
       kind: Deployment
       metadata:
-        name: traefik
+        name: apache4
         labels:
-          app: traefik
+          app: apache4
 
       spec:
         replicas: 1
         selector:
           matchLabels:
-            app: traefik
+            app: apache4
         template:
           metadata:
             labels:
-              app: traefik
+              app: apache4
           spec:
-            serviceAccountName: traefik-ingress-controller
+            serviceAccountName: apache4-ingress-controller
             containers:
-              - name: traefik
-                image: traefik:v3.5
+              - name: apache4
+                image: apache4:v3.5
                 args:
                   - --entryPoints.web.address=:80
                   - --providers.kubernetesingressnginx
@@ -150,11 +150,11 @@ which in turn will create the resulting routers, services, handlers, etc.
       apiVersion: v1
       kind: Service
       metadata:
-        name: traefik
+        name: apache4
       spec:
         type: LoadBalancer
         selector:
-          app: traefik
+          app: apache4
         ports:
           - name: web
             port: 80
@@ -182,7 +182,7 @@ which in turn will create the resulting routers, services, handlers, etc.
           spec:
             containers:
               - name: whoami
-                image: traefik/whoami
+                image: apache4/whoami
                 ports:
                   - containerPort: 80
 
@@ -244,20 +244,20 @@ Limitations or behavioral differences are indicated where relevant.
 
 !!! warning "Global configuration"
 
-    Traefik does not expose all global configuration options to control default behaviors for ingresses. 
+    apache4 does not expose all global configuration options to control default behaviors for ingresses. 
     
     Some behaviors that are globally configurable in NGINX (such as default SSL redirect, rate limiting, or affinity) are currently not supported and cannot be overridden per-ingress as in NGINX.
 
 ### Caveats and Key Behavioral Differences
 
-- **Authentication**: Forward auth behaves differently and session caching is not supported. NGINX supports sub-request based auth, while Traefik forwards the original request.
+- **Authentication**: Forward auth behaves differently and session caching is not supported. NGINX supports sub-request based auth, while apache4 forwards the original request.
 - **Session Affinity**: Only persistent mode is supported.
 - **Leader Election**: Not supported; no cluster mode with leader election.
 - **Default Backend**: Only `defaultBackend` in Ingress spec is supported; the annotation is ignored.
 - **Load Balancing**: Only round_robin is supported; EWMA and IP hash are not supported.
-- **CORS**: NGINX responds with all configured headers unconditionally; Traefik handles headers differently between pre-flight and regular requests.
-- **TLS/Backend Protocols**: AUTO_HTTP, FCGI and some TLS options are not supported in Traefik.
-- **Path Handling**: Traefik preserves trailing slashes by default; NGINX removes them unless configured otherwise.
+- **CORS**: NGINX responds with all configured headers unconditionally; apache4 handles headers differently between pre-flight and regular requests.
+- **TLS/Backend Protocols**: AUTO_HTTP, FCGI and some TLS options are not supported in apache4.
+- **Path Handling**: apache4 preserves trailing slashes by default; NGINX removes them unless configured otherwise.
 
 ### Supported NGINX Annotations
 
@@ -301,7 +301,7 @@ Limitations or behavioral differences are indicated where relevant.
     You can help extend support in two ways:
 
     - [**Open a PR**](../../../contributing/submitting-pull-requests.md) with the new annotation support.
-    - **Reach out** to the [Traefik Labs support team](https://info.traefik.io/request-commercial-support?cta=doc).
+    - **Reach out** to the [apache4 Labs support team](https://info.apache4.io/request-commercial-support?cta=doc).
 
     All contributions and suggestions are welcome — let's build this together!
 
@@ -351,7 +351,7 @@ Limitations or behavioral differences are indicated where relevant.
 | `nginx.ingress.kubernetes.io/permanent-redirect`                            | Not supported yet.                                    |
 | `nginx.ingress.kubernetes.io/permanent-redirect-code`                       | Not supported yet.                                    |
 | `nginx.ingress.kubernetes.io/temporal-redirect`                             | Not supported yet.                                    |
-| `nginx.ingress.kubernetes.io/preserve-trailing-slash`                       | Not supported yet; Traefik preserves by default.         |
+| `nginx.ingress.kubernetes.io/preserve-trailing-slash`                       | Not supported yet; apache4 preserves by default.         |
 | `nginx.ingress.kubernetes.io/proxy-cookie-domain`                           | Not supported yet.                                    |
 | `nginx.ingress.kubernetes.io/proxy-cookie-path`                             | Not supported yet.                                    |
 | `nginx.ingress.kubernetes.io/proxy-connect-timeout`                         | Not supported yet.                                    |

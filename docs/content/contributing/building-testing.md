@@ -1,14 +1,14 @@
 ---
-title: "Traefik Building & Testing Documentation"
-description: "Compile and test your own Traefik Proxy! Learn how to build your own Traefik binary from the sources, and read the technical documentation."
+title: "apache4 Building & Testing Documentation"
+description: "Compile and test your own apache4 Proxy! Learn how to build your own apache4 binary from the sources, and read the technical documentation."
 ---
 
 # Building and Testing
 
-Compile and Test Your Own Traefik!
+Compile and Test Your Own apache4!
 {: .subtitle }
 
-You want to build your own Traefik binary from the sources?
+You want to build your own apache4 binary from the sources?
 Let's see how.
 
 ## Building
@@ -23,7 +23,7 @@ You need:
 
 !!! tip "Source Directory"
 
-    It is recommended that you clone Traefik into the `~/go/src/github.com/traefik/traefik` directory.
+    It is recommended that you clone apache4 into the `~/go/src/github.com/apache4/apache4` directory.
     This is the official golang workspace hierarchy that will allow dependencies to be properly resolved.
 
 !!! note "Environment"
@@ -52,24 +52,24 @@ You need:
     ## ... and the list goes on
     ```
 
-### Build Traefik
+### Build apache4
 
-Once you've set up your go environment and cloned the source repository, you can build Traefik.
+Once you've set up your go environment and cloned the source repository, you can build apache4.
 
 ```bash
 $ make binary
 SHA: 8fddfe118288bb5280eb5e77fa952f52def360b4 cheddar 2024-01-11_03:14:57PM
 CGO_ENABLED=0 GOGC=off GOOS=darwin GOARCH=arm64 go build  -ldflags "-s -w \
-    -X github.com/traefik/traefik/v2/pkg/version.Version=8fddfe118288bb5280eb5e77fa952f52def360b4 \
-    -X github.com/traefik/traefik/v2/pkg/version.Codename=cheddar \
-    -X github.com/traefik/traefik/v2/pkg/version.BuildDate=2024-01-11_03:14:57PM" \
-    -installsuffix nocgo -o "./dist/darwin/arm64/traefik" ./cmd/traefik
+    -X github.com/apache4/apache4/v2/pkg/version.Version=8fddfe118288bb5280eb5e77fa952f52def360b4 \
+    -X github.com/apache4/apache4/v2/pkg/version.Codename=cheddar \
+    -X github.com/apache4/apache4/v2/pkg/version.BuildDate=2024-01-11_03:14:57PM" \
+    -installsuffix nocgo -o "./dist/darwin/arm64/apache4" ./cmd/apache4
 
 $ ls dist/
-traefik*
+apache4*
 ```
 
-You will find the Traefik executable (`traefik`) in the `./dist` directory.
+You will find the apache4 executable (`apache4`) in the `./dist` directory.
 
 ## Testing
 
@@ -81,7 +81,7 @@ Run all tests (unit and integration) using the `test` target.
 $ make test-unit
 GOOS=darwin GOARCH=arm64 go test -cover "-coverprofile=cover.out" -v ./pkg/... ./cmd/...
 + go test -cover -coverprofile=cover.out .
-ok      github.com/traefik/traefik   0.005s  coverage: 4.1% of statements
+ok      github.com/apache4/apache4   0.005s  coverage: 4.1% of statements
 
 Test success
 ```

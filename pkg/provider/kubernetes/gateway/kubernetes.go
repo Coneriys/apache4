@@ -16,15 +16,15 @@ import (
 	"github.com/hashicorp/go-multierror"
 	"github.com/mitchellh/hashstructure"
 	"github.com/rs/zerolog/log"
-	ptypes "github.com/traefik/paerser/types"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/job"
-	"github.com/traefik/traefik/v3/pkg/logs"
-	traefikv1alpha1 "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/traefikio/v1alpha1"
-	"github.com/traefik/traefik/v3/pkg/provider/kubernetes/k8s"
-	"github.com/traefik/traefik/v3/pkg/safe"
-	"github.com/traefik/traefik/v3/pkg/tls"
-	"github.com/traefik/traefik/v3/pkg/types"
+	ptypes "github.com/apache4/paerser/types"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/job"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	apache4v1alpha1 "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/apache4io/v1alpha1"
+	"github.com/apache4/apache4/v3/pkg/provider/kubernetes/k8s"
+	"github.com/apache4/apache4/v3/pkg/safe"
+	"github.com/apache4/apache4/v3/pkg/tls"
+	"github.com/apache4/apache4/v3/pkg/types"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
@@ -37,13 +37,13 @@ import (
 const (
 	providerName = "kubernetesgateway"
 
-	controllerName = "traefik.io/gateway-controller"
+	controllerName = "apache4.io/gateway-controller"
 
 	groupCore    = "core"
 	groupGateway = "gateway.networking.k8s.io"
 
 	kindGateway        = "Gateway"
-	kindTraefikService = "TraefikService"
+	kindapache4Service = "apache4Service"
 	kindHTTPRoute      = "HTTPRoute"
 	kindGRPCRoute      = "GRPCRoute"
 	kindTCPRoute       = "TCPRoute"
@@ -221,7 +221,7 @@ func (p *Provider) Init() error {
 	return nil
 }
 
-// Provide allows the k8s provider to provide configurations to traefik using the given configuration channel.
+// Provide allows the k8s provider to provide configurations to apache4 using the given configuration channel.
 func (p *Provider) Provide(configurationChan chan<- dynamic.Message, pool *safe.Pool) error {
 	logger := log.With().Str(logs.ProviderName, providerName).Logger()
 	ctxLog := logger.WithContext(context.Background())
@@ -348,7 +348,7 @@ func (p *Provider) loadConfigurationFromGateways(ctx context.Context) *dynamic.C
 				Status:             metav1.ConditionTrue,
 				ObservedGeneration: gatewayClass.Generation,
 				Reason:             "Handled",
-				Message:            "Handled by Traefik controller",
+				Message:            "Handled by apache4 controller",
 				LastTransitionTime: metav1.Now(),
 			}),
 			SupportedFeatures: supportedFeatures,
@@ -1263,16 +1263,16 @@ func throttleEvents(ctx context.Context, throttleDuration time.Duration, pool *s
 	return eventsChanBuffered
 }
 
-func isTraefikService(ref gatev1.BackendRef) bool {
+func isapache4Service(ref gatev1.BackendRef) bool {
 	if ref.Kind == nil || ref.Group == nil {
 		return false
 	}
 
-	return *ref.Group == traefikv1alpha1.GroupName && *ref.Kind == kindTraefikService
+	return *ref.Group == apache4v1alpha1.GroupName && *ref.Kind == kindapache4Service
 }
 
 func isInternalService(ref gatev1.BackendRef) bool {
-	return isTraefikService(ref) && strings.HasSuffix(string(ref.Name), "@internal")
+	return isapache4Service(ref) && strings.HasSuffix(string(ref.Name), "@internal")
 }
 
 // makeListenerKey joins protocol, hostname, and port of a listener into a string key.

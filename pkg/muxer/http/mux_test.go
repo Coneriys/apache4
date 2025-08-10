@@ -9,8 +9,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/traefik/traefik/v3/pkg/middlewares/requestdecorator"
-	"github.com/traefik/traefik/v3/pkg/testhelpers"
+	"github.com/apache4/apache4/v3/pkg/middlewares/requestdecorator"
+	"github.com/apache4/apache4/v3/pkg/testhelpers"
 )
 
 func TestMuxer(t *testing.T) {
@@ -463,7 +463,7 @@ func TestParseDomains(t *testing.T) {
 }
 
 // TestEmptyHost is a non regression test for
-// https://github.com/traefik/traefik/pull/9131
+// https://github.com/apache4/apache4/pull/9131
 func TestEmptyHost(t *testing.T) {
 	testCases := []struct {
 		desc     string

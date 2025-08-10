@@ -1,8 +1,8 @@
 ################################################################
 #
-# Configuration sample for Traefik v2.
+# Configuration sample for apache4 v2.
 #
-# For Traefik v1: https://github.com/traefik/traefik/blob/v1.7/traefik.sample.toml
+# For apache4 v1: https://github.com/apache4/apache4/blob/v1.7/apache4.sample.toml
 #
 ################################################################
 
@@ -29,10 +29,10 @@
     address = ":443"
 
 ################################################################
-# Traefik logs configuration
+# apache4 logs configuration
 ################################################################
 
-# Traefik logs
+# apache4 logs
 # Enabled by default and log to stdout
 #
 # Optional
@@ -46,13 +46,13 @@
   #
   # level = "DEBUG"
 
-  # Sets the filepath for the traefik log. If not specified, stdout will be used.
+  # Sets the filepath for the apache4 log. If not specified, stdout will be used.
   # Intermediate directories are created if necessary.
   #
   # Optional
   # Default: os.Stdout
   #
-  # filePath = "log/traefik.log"
+  # filePath = "log/apache4.log"
 
   # Format is either "json" or "common".
   #
@@ -119,9 +119,9 @@
   # Name of the related entry point
   #
   # Optional
-  # Default: "traefik"
+  # Default: "apache4"
   #
-  # entryPoint = "traefik"
+  # entryPoint = "apache4"
 
 ################################################################
 # Docker configuration backend
@@ -144,7 +144,7 @@
   #
   # defaultRule = "Host(`{{ normalize .Name }}.docker.localhost`)"
 
-  # Expose containers by default in traefik
+  # Expose containers by default in apache4
   #
   # Optional
   # Default: true

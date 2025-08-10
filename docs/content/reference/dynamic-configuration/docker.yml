@@ -1,2 +1,2 @@
-- "traefik.enable=true"
-- "traefik.docker.network=foobar"
+- "apache4.enable=true"
+- "apache4.docker.network=foobar"

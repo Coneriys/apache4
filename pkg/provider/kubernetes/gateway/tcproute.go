@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/provider"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/provider"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	ktypes "k8s.io/apimachinery/pkg/types"
@@ -298,7 +298,7 @@ func (p *Provider) loadTCPServers(namespace string, route *gatev1alpha2.TCPRoute
 func (p *Provider) loadTCPBackendRef(backendRef gatev1.BackendRef) (string, error) {
 	// Support for cross-provider references (e.g: api@internal).
 	// This provides the same behavior as for IngressRoutes.
-	if *backendRef.Kind == "TraefikService" && strings.Contains(string(backendRef.Name), "@") {
+	if *backendRef.Kind == "apache4Service" && strings.Contains(string(backendRef.Name), "@") {
 		return string(backendRef.Name), nil
 	}
 

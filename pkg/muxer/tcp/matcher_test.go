@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/traefik/traefik/v3/pkg/tcp"
+	"github.com/apache4/apache4/v3/pkg/tcp"
 )
 
 func Test_HostSNICatchAll(t *testing.T) {
@@ -210,7 +210,7 @@ func Test_HostSNIRegexp(t *testing.T) {
 			},
 		},
 		{
-			desc: "valid HostSNIRegexp matcher with Traefik v2 syntax",
+			desc: "valid HostSNIRegexp matcher with apache4 v2 syntax",
 			rule: "HostSNIRegexp(`example.{tld:(com|org)}`)",
 			expected: map[string]bool{
 				"example.com":  false,

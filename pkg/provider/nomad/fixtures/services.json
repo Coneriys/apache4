@@ -5,15 +5,15 @@
       {
         "ServiceName": "redis",
         "Tags": [
-          "traefik.enable=true"
+          "apache4.enable=true"
         ]
       },
       {
         "ServiceName": "hello-nomad",
         "Tags": [
-          "traefik.enable=true",
-          "traefik.http.routers.hellon.entrypoints=web",
-          "traefik.http.routers.hellon.service=hello-nomad"
+          "apache4.enable=true",
+          "apache4.http.routers.hellon.entrypoints=web",
+          "apache4.http.routers.hellon.service=hello-nomad"
         ]
       }
     ]

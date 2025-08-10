@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/traefik/traefik/v3/pkg/config/static"
-	"github.com/traefik/traefik/v3/pkg/plugins"
+	"github.com/apache4/apache4/v3/pkg/config/static"
+	"github.com/apache4/apache4/v3/pkg/plugins"
 )
 
 const outputDir = "./plugins-storage/"

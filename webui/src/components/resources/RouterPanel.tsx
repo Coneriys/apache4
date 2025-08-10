@@ -1,4 +1,4 @@
-import { Badge, Text } from '@traefiklabs/faency'
+import { Badge, Text } from '@apache4labs/faency'
 import { FiInfo } from 'react-icons/fi'
 
 import { DetailSection, ItemBlock, LayoutTwoCols, ProviderName } from './DetailSections'

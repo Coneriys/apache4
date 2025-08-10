@@ -1,4 +1,4 @@
-import { AriaTr, VariantProps, styled } from '@traefiklabs/faency'
+import { AriaTr, VariantProps, styled } from '@apache4labs/faency'
 import { ComponentProps, forwardRef, ReactNode } from 'react'
 import { useHref } from 'react-router-dom'
 

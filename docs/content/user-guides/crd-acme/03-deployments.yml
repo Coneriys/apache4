@@ -2,31 +2,31 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   namespace: default
-  name: traefik-ingress-controller
+  name: apache4-ingress-controller
 
 ---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
   namespace: default
-  name: traefik
+  name: apache4
   labels:
-    app: traefik
+    app: apache4
 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: traefik
+      app: apache4
   template:
     metadata:
       labels:
-        app: traefik
+        app: apache4
     spec:
-      serviceAccountName: traefik-ingress-controller
+      serviceAccountName: apache4-ingress-controller
       containers:
-        - name: traefik
-          image: traefik:v3.5
+        - name: apache4
+          image: apache4:v3.5
           args:
             - --api.insecure
             - --accesslog
@@ -68,7 +68,7 @@ spec:
     spec:
       containers:
         - name: whoami
-          image: traefik/whoami
+          image: apache4/whoami
           ports:
             - name: web
               containerPort: 80

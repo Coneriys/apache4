@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016-2020 Containous SAS; 2020-2025 Traefik Labs
+Copyright (c) 2016-2020 Containous SAS; 2020-2025 apache4 Labs
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,9 @@ import (
 	sync "sync"
 	time "time"
 
-	versioned "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned"
-	internalinterfaces "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/informers/externalversions/internalinterfaces"
-	traefikio "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/informers/externalversions/traefikio"
+	versioned "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned"
+	internalinterfaces "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/informers/externalversions/internalinterfaces"
+	apache4io "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/informers/externalversions/apache4io"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -261,9 +261,9 @@ type SharedInformerFactory interface {
 	// client.
 	InformerFor(obj runtime.Object, newFunc internalinterfaces.NewInformerFunc) cache.SharedIndexInformer
 
-	Traefik() traefikio.Interface
+	apache4() apache4io.Interface
 }
 
-func (f *sharedInformerFactory) Traefik() traefikio.Interface {
-	return traefikio.New(f, f.namespace, f.tweakListOptions)
+func (f *sharedInformerFactory) apache4() apache4io.Interface {
+	return apache4io.New(f, f.namespace, f.tweakListOptions)
 }

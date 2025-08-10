@@ -1,5 +1,5 @@
 ---
-title: "Traefik TCP Services Documentation"
+title: "apache4 TCP Services Documentation"
 description: "A service is in charge of connecting incoming requests to the Servers that can handle them. Read the technical documentation."
 --- 
 
@@ -41,12 +41,12 @@ tcp:
 | `servers` |  Servers declare a single instance of your program.  | "" |
 | `servers.address` |   The address option (IP:Port) point to a specific instance. | "" |
 | `servers.tls` | The `tls` option determines whether to use TLS when dialing with the backend. | false |
-| `servers.serversTransport` | `serversTransport` allows to reference a TCP [ServersTransport](./serverstransport.md configuration for the communication between Traefik and your servers. If no serversTransport is specified, the default@internal will be used. |  "" |
-| `servers.proxyProtocol.version` | Traefik supports PROXY Protocol version 1 and 2 on TCP Services. More Information [here](#serversproxyprotocolversion) |  2 |
+| `servers.serversTransport` | `serversTransport` allows to reference a TCP [ServersTransport](./serverstransport.md configuration for the communication between apache4 and your servers. If no serversTransport is specified, the default@internal will be used. |  "" |
+| `servers.proxyProtocol.version` | apache4 supports PROXY Protocol version 1 and 2 on TCP Services. More Information [here](#serversproxyprotocolversion) |  2 |
 
 ### servers.proxyProtocol.version
 
-Traefik supports [PROXY Protocol](https://www.haproxy.org/download/2.0/doc/proxy-protocol.txt) version 1 and 2 on TCP Services. It can be enabled by setting `proxyProtocol` on the load balancer.
+apache4 supports [PROXY Protocol](https://www.haproxy.org/download/2.0/doc/proxy-protocol.txt) version 1 and 2 on TCP Services. It can be enabled by setting `proxyProtocol` on the load balancer.
 The option specifies the version of the protocol to be used. Either 1 or 2.
 
 ## Weighted Round Robin

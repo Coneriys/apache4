@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/rs/zerolog/log"
-	ptypes "github.com/traefik/paerser/types"
+	ptypes "github.com/apache4/paerser/types"
 )
 
 func newKeepAliveMiddleware(next http.Handler, maxRequests int, maxTime ptypes.Duration) http.Handler {

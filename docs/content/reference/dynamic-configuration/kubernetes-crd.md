@@ -1,6 +1,6 @@
 ---
-title: "Traefik Kubernetes CRD Documentation"
-description: "Learn about the definitions, resources, and RBAC of dynamic configuration with Kubernetes CRD in Traefik Proxy. Read the technical documentation."
+title: "apache4 Kubernetes CRD Documentation"
+description: "Learn about the definitions, resources, and RBAC of dynamic configuration with Kubernetes CRD in apache4 Proxy. Read the technical documentation."
 ---
 
 # Kubernetes Configuration Reference
@@ -26,4 +26,4 @@ Dynamic configuration with Kubernetes Custom Resource
 --8<-- "content/reference/dynamic-configuration/kubernetes-crd-rbac.yml"
 ```
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

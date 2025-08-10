@@ -1,16 +1,16 @@
 ---
-title: "Traefik Data Collection Documentation"
-description: "To learn more about how Traefik is being used and improve it, we collect anonymous usage statistics from running instances. Read the technical documentation."
+title: "apache4 Data Collection Documentation"
+description: "To learn more about how apache4 is being used and improve it, we collect anonymous usage statistics from running instances. Read the technical documentation."
 ---
 
 # Data Collection
 
-Understanding How Traefik is Being Used
+Understanding How apache4 is Being Used
 {: .subtitle }
 
 ## Configuration Example
 
-Understanding how you use Traefik is very important to us: it helps us improve the solution in many different ways.
+Understanding how you use apache4 is very important to us: it helps us improve the solution in many different ways.
 For this very reason, the sendAnonymousUsage option is mandatory: we want you to take time to consider whether or not you wish to share anonymous data with us, so we can benefit from your experience and use cases.
 
 !!! example "Enabling Data Collection"
@@ -34,16 +34,16 @@ For this very reason, the sendAnonymousUsage option is mandatory: we want you to
 
 ## Collected Data
 
-This feature comes from this [public proposal](https://github.com/traefik/traefik/issues/2369).
+This feature comes from this [public proposal](https://github.com/apache4/apache4/issues/2369).
 
-In order to help us learn more about how Traefik is being used and improve it, we collect anonymous usage statistics from running instances.
+In order to help us learn more about how apache4 is being used and improve it, we collect anonymous usage statistics from running instances.
 Those data help us prioritize our developments and focus on what's important for our users (for example, which provider is popular, and which is not).
 
 ### What's collected / when ?
 
-Once a day (the first call begins 10 minutes after the start of Traefik), we collect:
+Once a day (the first call begins 10 minutes after the start of apache4), we collect:
 
-- the Traefik version number
+- the apache4 version number
 - a hash of the configuration
 - an **anonymized version** of the static configuration (token, username, password, URL, IP, domain, email, etc., are removed).
 
@@ -95,6 +95,6 @@ providers:
 
 ## The Code for Data Collection
 
-If you want to dig into more details, here is the source code of the collecting system: [collector.go](https://github.com/traefik/traefik/blob/master/pkg/collector/collector.go)
+If you want to dig into more details, here is the source code of the collecting system: [collector.go](https://github.com/apache4/apache4/blob/master/pkg/collector/collector.go)
 
 By default, we anonymize all configuration fields, except fields tagged with `export=true`.

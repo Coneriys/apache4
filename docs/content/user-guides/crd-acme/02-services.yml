@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: traefik
+  name: apache4
 
 spec:
   ports:
@@ -15,7 +15,7 @@ spec:
       name: websecure
       port: 4443
   selector:
-    app: traefik
+    app: apache4
 
 ---
 apiVersion: v1

@@ -1,20 +1,20 @@
 ---
 title: "Kubernetes IngressRoute"
-description: "An IngressRoute is a Traefik CRD is in charge of connecting incoming requests to the Services that can handle them in HTTP."
+description: "An IngressRoute is a apache4 CRD is in charge of connecting incoming requests to the Services that can handle them in HTTP."
 ---
 
-`IngressRoute` is the CRD implementation of a [Traefik HTTP router](../../../http/router/rules-and-priority.md).
+`IngressRoute` is the CRD implementation of a [apache4 HTTP router](../../../http/router/rules-and-priority.md).
 
-Before creating `IngressRoute` objects, you need to apply the [Traefik Kubernetes CRDs](https://doc.traefik.io/traefik/reference/dynamic-configuration/kubernetes-crd/#definitions) to your Kubernetes cluster.
+Before creating `IngressRoute` objects, you need to apply the [apache4 Kubernetes CRDs](https://doc.apache4.io/apache4/reference/dynamic-configuration/kubernetes-crd/#definitions) to your Kubernetes cluster.
 
-This registers the `IngressRoute` kind and other Traefik-specific resources.
+This registers the `IngressRoute` kind and other apache4-specific resources.
 
 ## Configuration Example
 
 You can declare an `IngressRoute` as detailed below:
 
 ```yaml tab="IngressRoute"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: test-name
@@ -43,7 +43,7 @@ spec:
     - kind: Service
       name: foo
       namespace: apps
-      # Customize the connection between Traefik and the backend
+      # Customize the connection between apache4 and the backend
       passHostHeader: true
       port: 80
       responseForwarding:
@@ -87,14 +87,14 @@ spec:
 | `routes[n].`<br />`observability.`<br />`accesslogs`                             | Defines whether the route will produce [access-logs](../../../../install-configuration/observability/logs-and-accesslogs.md). See [here](../../../http/router/observability.md) for more information.                                                                                                                                                                                                                                                                                                                                                                                                          | false                                                                | No       |
 | `routes[n].`<br />`observability.`<br />`metrics`                                | Defines whether the route will produce [metrics](../../../../install-configuration/observability/metrics.md). See [here](../../../http/router/observability.md) for more information.                                                                                                                                                                                                                                                                                                                                                                                                                          | false                                                                | No       |
 | `routes[n].`<br />`observability.`<br />`tracing`                                | Defines whether the route will produce [traces](../../../../install-configuration/observability/tracing.md). See [here](../../../http/router/observability.md) for more information.                                                                                                                                                                                                                                                                                                                                                                                                                           | false                                                                | No       |
-| `routes[n].`<br />`services`                                                     | List of any combination of TraefikService and [Kubernetes service](https://kubernetes.io/docs/concepts/services-networking/service/). <br />More information [here](#externalname-service).                                                                                                                                                                                                                                                                                                                                                                                                                    |                                                                      | No       |
-| `routes[n].`<br />`services[m].`<br />`kind`                                     | Kind of the service targeted.<br />Two values allowed:<br />- **Service**: Kubernetes Service<br /> **TraefikService**: Traefik Service.<br />More information [here](#externalname-service).                                                                                                                                                                                                                                                                                                                                                                                                                  | "Service"                                                            | No       |
+| `routes[n].`<br />`services`                                                     | List of any combination of apache4Service and [Kubernetes service](https://kubernetes.io/docs/concepts/services-networking/service/). <br />More information [here](#externalname-service).                                                                                                                                                                                                                                                                                                                                                                                                                    |                                                                      | No       |
+| `routes[n].`<br />`services[m].`<br />`kind`                                     | Kind of the service targeted.<br />Two values allowed:<br />- **Service**: Kubernetes Service<br /> **apache4Service**: apache4 Service.<br />More information [here](#externalname-service).                                                                                                                                                                                                                                                                                                                                                                                                                  | "Service"                                                            | No       |
 | `routes[n].`<br />`services[m].`<br />`name`                                     | Service name.<br />The character `@` is not authorized. <br />More information [here](#middleware).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |                                                                      | Yes      |
 | `routes[n].`<br />`services[m].`<br />`namespace`                                | Service namespace.<br />Can be empty if the service belongs to the same namespace as the IngressRoute. <br />More information [here](#externalname-service).                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                                                      | No       |
 | `routes[n].`<br />`services[m].`<br />`port`                                     | Service port (number or port name).<br />Evaluated only if the kind is **Service**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |                                                                      | No       |
 | `routes[n].`<br />`services[m].`<br />`responseForwarding.`<br />`flushInterval` | Interval, in milliseconds, in between flushes to the client while copying the response body.<br />A negative value means to flush immediately after each write to the client.<br />This configuration is ignored when a response is a streaming response; for such responses, writes are flushed to the client immediately.<br />Evaluated only if the kind is **Service**.                                                                                                                                                                                                                                    | 100ms                                                                | No       |
 | `routes[n].`<br />`services[m].`<br />`scheme`                                   | Scheme to use for the request to the upstream Kubernetes Service.<br />Evaluated only if the kind is **Service**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | "http"<br />"https" if `port` is 443 or contains the string *https*. | No       |
-| `routes[n].`<br />`services[m].`<br />`serversTransport`                         | Name of ServersTransport resource to use to configure the transport between Traefik and your servers.<br />Evaluated only if the kind is **Service**.                                                                                                                                                                                                                                                                                                                                                                                                                                                          | ""                                                                   | No       |
+| `routes[n].`<br />`services[m].`<br />`serversTransport`                         | Name of ServersTransport resource to use to configure the transport between apache4 and your servers.<br />Evaluated only if the kind is **Service**.                                                                                                                                                                                                                                                                                                                                                                                                                                                          | ""                                                                   | No       |
 | `routes[n].`<br />`services[m].`<br />`passHostHeader`                           | Forward client Host header to server.<br />Evaluated only if the kind is **Service**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | true                                                                 | No       |
 | `routes[n].`<br />`services[m].`<br />`healthCheck.scheme`                       | Server URL scheme for the health check endpoint.<br />Evaluated only if the kind is **Service**.<br />Only for [Kubernetes service](https://kubernetes.io/docs/concepts/services-networking/service/) of type [ExternalName](#externalname-service).                                                                                                                                                                                                                                                                                                                                                           | ""                                                                   | No       |
 | `routes[n].`<br />`services[m].`<br />`healthCheck.mode`                         | Health check mode.<br /> If defined to grpc, will use the gRPC health check protocol to probe the server.<br />Evaluated only if the kind is **Service**.<br />Only for [Kubernetes service](https://kubernetes.io/docs/concepts/services-networking/service/) of type [ExternalName](#externalname-service).                                                                                                                                                                                                                                                                                                  | "http"                                                               | No       |
@@ -114,9 +114,9 @@ spec:
 | `routes[n].`<br />`services[m].`<br />`sticky.`<br />`cookie.sameSite`           | [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) policy<br />Allowed values:<br />-`none`<br />-`lax`<br />`strict`<br />Evaluated only if the kind is **Service**.                                                                                                                                                                                                                                                                                                                                                                                                   | ""                                                                   | No       |
 | `routes[n].`<br />`services[m].`<br />`sticky.`<br />`cookie.maxAge`             | Number of seconds until the cookie expires.<br />Negative number, the cookie expires immediately.<br />0, the cookie never expires.<br />Evaluated only if the kind is **Service**.                                                                                                                                                                                                                                                                                                                                                                                                                            | 0                                                                    | No       |
 | `routes[n].`<br />`services[m].`<br />`strategy`                                 | Load balancing strategy between the servers.<br />RoundRobin is the only supported value yet.<br />Evaluated only if the kind is **Service**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | "RoundRobin"                                                         | No       |
-| `routes[n].`<br />`services[m].`<br />`weight`                                   | Service weight.<br />To use only to refer to WRR TraefikService                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | ""                                                                   | No       |
-| `routes[n].`<br />`services[m].`<br />`nativeLB`                                 | Allow using the Kubernetes Service load balancing between the pods instead of the one provided by Traefik.<br /> Evaluated only if the kind is **Service**.                                                                                                                                                                                                                                                                                                                                                                                                                                                    | false                                                                | No       |
-| `routes[n].`<br />`services[m].`<br />`nodePortLB`                               | Use the nodePort IP address when the service type is NodePort.<br />It allows services to be reachable when Traefik runs externally from the Kubernetes cluster but within the same network of the nodes.<br />Evaluated only if the kind is **Service**.                                                                                                                                                                                                                                                                                                                                                      | false                                                                | No       |
+| `routes[n].`<br />`services[m].`<br />`weight`                                   | Service weight.<br />To use only to refer to WRR apache4Service                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | ""                                                                   | No       |
+| `routes[n].`<br />`services[m].`<br />`nativeLB`                                 | Allow using the Kubernetes Service load balancing between the pods instead of the one provided by apache4.<br /> Evaluated only if the kind is **Service**.                                                                                                                                                                                                                                                                                                                                                                                                                                                    | false                                                                | No       |
+| `routes[n].`<br />`services[m].`<br />`nodePortLB`                               | Use the nodePort IP address when the service type is NodePort.<br />It allows services to be reachable when apache4 runs externally from the Kubernetes cluster but within the same network of the nodes.<br />Evaluated only if the kind is **Service**.                                                                                                                                                                                                                                                                                                                                                      | false                                                                | No       |
 | `tls`                                                                            | TLS configuration.<br />Can be an empty value(`{}`):<br />A self signed is generated in such a case<br />(or the [default certificate](tlsstore.md) is used if it is defined.)                                                                                                                                                                                                                                                                                                                                                                                                                                 |                                                                      | No       |
 | `tls.secretName`                                                                 | [Secret](https://kubernetes.io/docs/concepts/configuration/secret/) name used to store the certificate (in the same namesapce as the `IngressRoute`)                                                                                                                                                                                                                                                                                                                                                                                                                                                           | ""                                                                   | No       |
 | `tls.`<br />`options.name`                                                       | Name of the [`TLSOption`](tlsoption.md) to use.<br />More information [here](#tls-options).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | ""                                                                   | No       |
@@ -128,17 +128,17 @@ spec:
 
 ### ExternalName Service
 
-Traefik backends creation needs a port to be set, however Kubernetes [ExternalName Service](https://kubernetes.io/docs/concepts/services-networking/service/#externalname) could be defined without any port. Accordingly, Traefik supports defining a port in two ways:
+apache4 backends creation needs a port to be set, however Kubernetes [ExternalName Service](https://kubernetes.io/docs/concepts/services-networking/service/#externalname) could be defined without any port. Accordingly, apache4 supports defining a port in two ways:
 
 - only on `IngressRoute` service
 - on both sides, you'll be warned if the ports don't match, and the `IngressRoute` service port is used
 
-Thus, in case of two sides port definition, Traefik expects a match between ports.
+Thus, in case of two sides port definition, apache4 expects a match between ports.
 
 === "Ports defined on Resource"
 
     ```yaml tab="IngressRoute"
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRoute
     metadata:
       name: test.route
@@ -170,7 +170,7 @@ Thus, in case of two sides port definition, Traefik expects a match between port
 === "Port defined on the Service"
 
     ```yaml tab="IngressRoute"
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRoute
     metadata:
       name: test.route
@@ -203,7 +203,7 @@ Thus, in case of two sides port definition, Traefik expects a match between port
 === "Port defined on both sides"
 
     ```yaml tab="IngressRoute"
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRoute
     metadata:
       name: test.route
@@ -248,7 +248,7 @@ same namespace as the IngressRoute)
 ??? example "IngressRoute attached to a few middlewares"
 
     ```yaml 
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRoute
     metadata:
       name: my-app
@@ -280,22 +280,22 @@ same namespace as the IngressRoute)
     The field `kind` allows the following values:
 
     - `Service` (default value): to reference a [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/)
-    - `TraefikService`: to reference an object [`TraefikService`](../http/traefikservice.md)
+    - `apache4Service`: to reference an object [`apache4Service`](../http/apache4service.md)
 
 ### Port Definition
 
-Traefik backends creation needs a port to be set, however Kubernetes [ExternalName Service](https://kubernetes.io/docs/concepts/services-networking/service/#externalname) could be defined without any port. Accordingly, Traefik supports defining a port in two ways:
+apache4 backends creation needs a port to be set, however Kubernetes [ExternalName Service](https://kubernetes.io/docs/concepts/services-networking/service/#externalname) could be defined without any port. Accordingly, apache4 supports defining a port in two ways:
 
 - only on `IngressRoute` service
 - on both sides, you'll be warned if the ports don't match, and the `IngressRoute` service port is used
 
-Thus, in case of two sides port definition, Traefik expects a match between ports.
+Thus, in case of two sides port definition, apache4 expects a match between ports.
 
 ??? example   
 
     ```yaml tab="IngressRoute"
     ---
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRoute
     metadata:
       name: test.route
@@ -325,7 +325,7 @@ Thus, in case of two sides port definition, Traefik expects a match between port
 
     ```yaml tab="ExternalName Service"
     ---
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRoute
     metadata:
       name: test.route
@@ -356,7 +356,7 @@ Thus, in case of two sides port definition, Traefik expects a match between port
 
     ```yaml tab="Both sides"
     ---
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRoute
     metadata:
       name: test.route
@@ -405,7 +405,7 @@ and it all happens before routing actually occurs.
 
 In the case of domain fronting,
 if the TLS options associated with the Host Header and the SNI are different then
-Traefik will respond with a status code `421`.
+apache4 will respond with a status code `421`.
 
 #### Conflicting TLS Options
 
@@ -416,7 +416,7 @@ TLS options references, a conflict occurs, such as in the example below.
 ??? example
 
     ```yaml tab="IngressRoute01"
-      apiVersion: traefik.io/v1alpha1
+      apiVersion: apache4.io/v1alpha1
       kind: IngressRoute
       metadata:
         name: IngressRoute01
@@ -435,7 +435,7 @@ TLS options references, a conflict occurs, such as in the example below.
     ```
 
     ```yaml tab="IngressRoute02"
-      apiVersion: traefik.io/v1alpha1
+      apiVersion: apache4.io/v1alpha1
       kind: IngressRoute
       metadata:
         name: IngressRoute02
@@ -461,7 +461,7 @@ If that happens, both mappings are discarded, and the host name
 You can declare and use Kubernetes Service load balancing as detailed below:
 
 ```yaml tab="IngressRoute"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: ingressroutebar
@@ -492,7 +492,7 @@ spec:
     - name: http
       port: 80
   selector:
-    app: traefiklabs
+    app: apache4labs
     task: app1
 ---
 apiVersion: v1
@@ -506,7 +506,7 @@ spec:
     - name: http
       port: 80
   selector:
-    app: traefiklabs
+    app: apache4labs
     task: app2
 ```
 
@@ -514,14 +514,14 @@ spec:
 
     To avoid creating the server load-balancer with the pod IPs and use Kubernetes Service clusterIP directly,
     one should set the service `NativeLB` option to true.
-    Please note that, by default, Traefik reuses the established connections to the backends for performance purposes. This can prevent the requests load balancing between the replicas from behaving as one would expect when the option is set.
+    Please note that, by default, apache4 reuses the established connections to the backends for performance purposes. This can prevent the requests load balancing between the replicas from behaving as one would expect when the option is set.
     By default, `NativeLB` is false.
 
     ??? example "Example"
 
         ```yaml
         ---
-        apiVersion: traefik.io/v1alpha1
+        apiVersion: apache4.io/v1alpha1
         kind: IngressRoute
         metadata:
           name: test.route
@@ -553,10 +553,10 @@ spec:
 
 ### Configuring Backend Protocol
 
-There are 3 ways to configure the backend protocol for communication between Traefik and your pods:
+There are 3 ways to configure the backend protocol for communication between apache4 and your pods:
 
 - Setting the scheme explicitly (http/https/h2c)
 - Configuring the name of the kubernetes service port to start with https (https)
 - Setting the kubernetes service port to use port 443 (https)
 
-If you do not configure the above, Traefik will assume an http connection.
+If you do not configure the above, apache4 will assume an http connection.

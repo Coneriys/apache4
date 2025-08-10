@@ -11,7 +11,7 @@ jobs:
     permissions:
       packages: write
       contents: read
-    if: github.repository == 'traefik/traefik'
+    if: github.repository == 'apache4/apache4'
 
     steps:
       - uses: actions/checkout@v4
@@ -22,5 +22,5 @@ jobs:
         run: |
           EXCLUDED_TAGS="1.7.9-alpine v1.0.0-beta.392 v1.0.0-beta.404 v1.0.0-beta.704 v1.0.0-rc1 v1.7.9-alpine"
           EXCLUDED_REGEX=$(echo $EXCLUDED_TAGS | sed 's/ /|/g')
-          diff <(crane ls traefik) <(crane ls ghcr.io/traefik/traefik) | grep '^<' | awk '{print $2}' | while read -r tag; do [[ "$tag" =~ ^($EXCLUDED_REGEX)$ ]] || (echo "Processing image: traefik:$tag"; crane cp "traefik:$tag" "ghcr.io/traefik/traefik:$tag"); done
-          crane cp traefik:latest ghcr.io/traefik/traefik:latest
+          diff <(crane ls apache4) <(crane ls ghcr.io/apache4/apache4) | grep '^<' | awk '{print $2}' | while read -r tag; do [[ "$tag" =~ ^($EXCLUDED_REGEX)$ ]] || (echo "Processing image: apache4:$tag"; crane cp "apache4:$tag" "ghcr.io/apache4/apache4:$tag"); done
+          crane cp apache4:latest ghcr.io/apache4/apache4:latest

@@ -1,8 +1,8 @@
 package testhelpers
 
 import (
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/types"
 )
 
 // BuildConfiguration is a helper to create a configuration.

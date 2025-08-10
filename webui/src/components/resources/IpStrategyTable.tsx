@@ -1,4 +1,4 @@
-import { AriaTable, AriaTbody, AriaTd, AriaTr, Badge, Flex, Text } from '@traefiklabs/faency'
+import { AriaTable, AriaTbody, AriaTd, AriaTr, Badge, Flex, Text } from '@apache4labs/faency'
 
 import Tooltip from 'components/Tooltip'
 

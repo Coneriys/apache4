@@ -1,40 +1,40 @@
 ```yaml tab="Docker & Swarm"
 # Dynamic Configuration
 labels:
-  - "traefik.http.routers.api.rule=Host(`traefik.example.com`)"
-  - "traefik.http.routers.api.service=api@internal"
-  - "traefik.http.routers.api.middlewares=auth"
-  - "traefik.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
+  - "apache4.http.routers.api.rule=Host(`apache4.example.com`)"
+  - "apache4.http.routers.api.service=api@internal"
+  - "apache4.http.routers.api.middlewares=auth"
+  - "apache4.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
 ```
 
 ```yaml tab="Docker (Swarm)"
 # Dynamic Configuration
 deploy:
   labels:
-    - "traefik.http.routers.api.rule=Host(`traefik.example.com`)"
-    - "traefik.http.routers.api.service=api@internal"
-    - "traefik.http.routers.api.middlewares=auth"
-    - "traefik.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
+    - "apache4.http.routers.api.rule=Host(`apache4.example.com`)"
+    - "apache4.http.routers.api.service=api@internal"
+    - "apache4.http.routers.api.middlewares=auth"
+    - "apache4.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
     # Dummy service for Swarm port detection. The port can be any valid integer value.
-    - "traefik.http.services.dummy-svc.loadbalancer.server.port=9999"
+    - "apache4.http.services.dummy-svc.loadbalancer.server.port=9999"
 ```
 
 ```yaml tab="Kubernetes CRD"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: traefik-dashboard
+  name: apache4-dashboard
 spec:
   routes:
-  - match: Host(`traefik.example.com`)
+  - match: Host(`apache4.example.com`)
     kind: Rule
     services:
     - name: api@internal
-      kind: TraefikService
+      kind: apache4Service
     middlewares:
       - name: auth
 ---
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: auth
@@ -45,10 +45,10 @@ spec:
 
 ```yaml tab="Consul Catalog"
 # Dynamic Configuration
-- "traefik.http.routers.api.rule=Host(`traefik.example.com`)"
-- "traefik.http.routers.api.service=api@internal"
-- "traefik.http.routers.api.middlewares=auth"
-- "traefik.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
+- "apache4.http.routers.api.rule=Host(`apache4.example.com`)"
+- "apache4.http.routers.api.service=api@internal"
+- "apache4.http.routers.api.middlewares=auth"
+- "apache4.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
 ```
 
 ```yaml tab="File (YAML)"
@@ -56,7 +56,7 @@ spec:
 http:
   routers:
     api:
-      rule: Host(`traefik.example.com`)
+      rule: Host(`apache4.example.com`)
       service: api@internal
       middlewares:
         - auth
@@ -71,7 +71,7 @@ http:
 ```toml tab="File (TOML)"
 # Dynamic Configuration
 [http.routers.my-api]
-  rule = "Host(`traefik.example.com`)"
+  rule = "Host(`apache4.example.com`)"
   service = "api@internal"
   middlewares = ["auth"]
 

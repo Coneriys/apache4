@@ -14,9 +14,9 @@ import (
 	"github.com/spiffe/go-spiffe/v2/spiffeid"
 	"github.com/spiffe/go-spiffe/v2/spiffetls/tlsconfig"
 	"github.com/spiffe/go-spiffe/v2/svid/x509svid"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	traefiktls "github.com/traefik/traefik/v3/pkg/tls"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	apache4tls "github.com/apache4/apache4/v3/pkg/tls"
+	"github.com/apache4/apache4/v3/pkg/types"
 	"golang.org/x/net/proxy"
 )
 
@@ -140,7 +140,7 @@ func (d *DialerManager) createDialers(name string, cfg *dynamic.TCPServersTransp
 
 			if cfg.TLS.PeerCertURI != "" {
 				tlsConfig.VerifyPeerCertificate = func(rawCerts [][]byte, _ [][]*x509.Certificate) error {
-					return traefiktls.VerifyPeerCertificate(cfg.TLS.PeerCertURI, tlsConfig, rawCerts)
+					return apache4tls.VerifyPeerCertificate(cfg.TLS.PeerCertURI, tlsConfig, rawCerts)
 				}
 			}
 		}

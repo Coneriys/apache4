@@ -14,14 +14,14 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/paerser/env"
-	"github.com/traefik/paerser/flag"
-	"github.com/traefik/paerser/generator"
-	"github.com/traefik/paerser/parser"
-	"github.com/traefik/traefik/v3/cmd"
-	"github.com/traefik/traefik/v3/pkg/collector/hydratation"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/config/static"
+	"github.com/apache4/paerser/env"
+	"github.com/apache4/paerser/flag"
+	"github.com/apache4/paerser/generator"
+	"github.com/apache4/paerser/parser"
+	"github.com/apache4/apache4/v3/cmd"
+	"github.com/apache4/apache4/v3/pkg/collector/hydratation"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/config/static"
 	"gopkg.in/yaml.v3"
 )
 
@@ -232,7 +232,7 @@ func clean(element any) {
 func genStaticConfDoc(outputFile, prefix string, encodeFn func(interface{}) ([]parser.Flat, error)) {
 	logger := log.With().Str("file", outputFile).Logger()
 
-	element := &cmd.NewTraefikConfiguration().Configuration
+	element := &cmd.Newapache4Configuration().Configuration
 
 	generator.Generate(element)
 
@@ -263,11 +263,11 @@ THIS FILE MUST NOT BE EDITED BY HAND
 
 	for i, flat := range flats {
 		// TODO must be move into the flats creation.
-		if flat.Name == "experimental.plugins.<name>" || flat.Name == "TRAEFIK_EXPERIMENTAL_PLUGINS_<NAME>" {
+		if flat.Name == "experimental.plugins.<name>" || flat.Name == "apache4_EXPERIMENTAL_PLUGINS_<NAME>" {
 			continue
 		}
 
-		if strings.HasPrefix(flat.Name, "pilot.") || strings.HasPrefix(flat.Name, "TRAEFIK_PILOT_") {
+		if strings.HasPrefix(flat.Name, "pilot.") || strings.HasPrefix(flat.Name, "apache4_PILOT_") {
 			continue
 		}
 
@@ -322,7 +322,7 @@ func genKVDynConfDoc(outputFile string) {
 	store := storeWriter{data: map[string]string{}}
 
 	c := client{store: store}
-	err = c.load("traefik", conf)
+	err = c.load("apache4", conf)
 	if err != nil {
 		log.Fatal().Err(err).Send()
 	}

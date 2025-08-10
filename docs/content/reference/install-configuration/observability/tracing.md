@@ -1,6 +1,6 @@
 ---
-title: "Traefik Tracing Overview"
-description: "The Traefik Proxy tracing system allows developers to visualize call flows in their infrastructure. Read the full documentation."
+title: "apache4 Tracing Overview"
+description: "The apache4 Proxy tracing system allows developers to visualize call flows in their infrastructure. Read the full documentation."
 ---
 
 # Tracing
@@ -10,7 +10,7 @@ Visualize the Requests Flow
 
 The tracing system allows developers to visualize call flows in their infrastructure.
 
-Traefik uses [OpenTelemetry](https://opentelemetry.io/ "Link to website of OTel"), an open standard designed for distributed tracing.
+apache4 uses [OpenTelemetry](https://opentelemetry.io/ "Link to website of OTel"), an open standard designed for distributed tracing.
 
 ## Configuration Example
 
@@ -39,7 +39,7 @@ tracing: {}
 | Field                                      | Description                                                                                                                                                                 | Default                            | Required |
 |:-------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------------------------|:---------|
 | `tracing.addInternals`                     | Enables tracing for internal resources (e.g.: `ping@internal`).                                                                                                             | false                              | No       |
-| `tracing.serviceName`                      | Defines the service name resource attribute.                                                                                                                                | "traefik"                          | No       |
+| `tracing.serviceName`                      | Defines the service name resource attribute.                                                                                                                                | "apache4"                          | No       |
 | `tracing.resourceAttributes`               | Defines additional resource attributes to be sent to the collector.                                                                                                         | []                                 | No       |
 | `tracing.sampleRate`                       | The proportion of requests to trace, specified between 0.0 and 1.0.                                                                                                         | 1.0                                | No       |
 | `tracing.capturedRequestHeaders`           | Defines the list of request headers to add as attributes.<br />It applies to client and server kind spans.                                                                  | []                                 | No       |

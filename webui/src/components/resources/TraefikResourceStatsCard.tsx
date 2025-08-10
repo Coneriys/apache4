@@ -1,4 +1,4 @@
-import { Box, Card, Flex, H3, Skeleton, styled, Text } from '@traefiklabs/faency'
+import { Box, Card, Flex, H3, Skeleton, styled, Text } from '@apache4labs/faency'
 import { Chart as ChartJs, ArcElement, Tooltip } from 'chart.js'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { Doughnut } from 'react-chartjs-2'
@@ -37,14 +37,14 @@ const StatsCard = ({ children, ...props }: StatsCardType) => (
   </Card>
 )
 
-export type TraefikResourceStatsType = {
+export type apache4ResourceStatsType = {
   title?: string
   errors: number
   total: number
   warnings: number
 }
 
-export type TraefikResourceStatsCardProps = TraefikResourceStatsType & {
+export type apache4ResourceStatsCardProps = apache4ResourceStatsType & {
   linkTo: string
 }
 
@@ -104,7 +104,7 @@ const CustomLegend = ({
   )
 }
 
-const TraefikResourceStatsCard = ({ title, errors, total, warnings, linkTo }: TraefikResourceStatsCardProps) => {
+const apache4ResourceStatsCard = ({ title, errors, total, warnings, linkTo }: apache4ResourceStatsCardProps) => {
   const navigate = useNavigate()
 
   const defaultData = {
@@ -213,4 +213,4 @@ export const StatsCardSkeleton = () => {
   )
 }
 
-export default TraefikResourceStatsCard
+export default apache4ResourceStatsCard

@@ -1,6 +1,6 @@
 ---
-title: "Traefik StatsD Documentation"
-description: "Traefik supports several metrics backends, including StatsD. Learn how to implement it for observability in Traefik Proxy. Read the technical documentation."
+title: "apache4 StatsD Documentation"
+description: "apache4 supports several metrics backends, including StatsD. Learn how to implement it for observability in apache4 Proxy. Read the technical documentation."
 ---
 
 # StatsD
@@ -133,22 +133,22 @@ metrics:
 
 #### `prefix`
 
-_Optional, Default="traefik"_
+_Optional, Default="apache4"_
 
 The prefix to use for metrics collection.
 
 ```yaml tab="File (YAML)"
 metrics:
   statsD:
-    prefix: traefik
+    prefix: apache4
 ```
 
 ```toml tab="File (TOML)"
 [metrics]
   [metrics.statsD]
-    prefix = "traefik"
+    prefix = "apache4"
 ```
 
 ```bash tab="CLI"
---metrics.statsd.prefix=traefik
+--metrics.statsd.prefix=apache4
 ```

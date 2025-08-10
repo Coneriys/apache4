@@ -3,9 +3,9 @@ package consulcatalog
 import (
 	"fmt"
 
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	traefiktls "github.com/traefik/traefik/v3/pkg/tls"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	apache4tls "github.com/apache4/apache4/v3/pkg/tls"
+	"github.com/apache4/apache4/v3/pkg/types"
 )
 
 // connectCert holds our certificates as a client of the Consul Connect protocol.
@@ -22,8 +22,8 @@ func (c *connectCert) getRoot() []types.FileOrContent {
 	return result
 }
 
-func (c *connectCert) getLeaf() traefiktls.Certificate {
-	return traefiktls.Certificate{
+func (c *connectCert) getLeaf() apache4tls.Certificate {
+	return apache4tls.Certificate{
 		CertFile: types.FileOrContent(c.leaf.cert),
 		KeyFile:  types.FileOrContent(c.leaf.key),
 	}
@@ -64,7 +64,7 @@ func (c *connectCert) serversTransport(item itemData) *dynamic.ServersTransport 
 		// InsecureSkipVerify is needed because Go wants to verify a hostname otherwise
 		InsecureSkipVerify: true,
 		RootCAs:            c.getRoot(),
-		Certificates: traefiktls.Certificates{
+		Certificates: apache4tls.Certificates{
 			c.getLeaf(),
 		},
 		PeerCertURI: spiffeID,
@@ -85,7 +85,7 @@ func (c *connectCert) tcpServersTransport(item itemData) *dynamic.TCPServersTran
 			// InsecureSkipVerify is needed because Go wants to verify a hostname otherwise
 			InsecureSkipVerify: true,
 			RootCAs:            c.getRoot(),
-			Certificates: traefiktls.Certificates{
+			Certificates: apache4tls.Certificates{
 				c.getLeaf(),
 			},
 			PeerCertURI: spiffeID,

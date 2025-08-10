@@ -23,10 +23,10 @@ import (
 	"github.com/containous/alice"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	ptypes "github.com/traefik/paerser/types"
-	"github.com/traefik/traefik/v3/pkg/middlewares/capture"
-	"github.com/traefik/traefik/v3/pkg/middlewares/observability"
-	"github.com/traefik/traefik/v3/pkg/types"
+	ptypes "github.com/apache4/paerser/types"
+	"github.com/apache4/apache4/v3/pkg/middlewares/capture"
+	"github.com/apache4/apache4/v3/pkg/middlewares/observability"
+	"github.com/apache4/apache4/v3/pkg/types"
 	"go.opentelemetry.io/collector/pdata/plog/plogotlp"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
@@ -37,7 +37,7 @@ import (
 const delta float64 = 1e-10
 
 var (
-	logFileNameSuffix       = "/traefik/logger/test.log"
+	logFileNameSuffix       = "/apache4/logger/test.log"
 	testContent             = "Hello, World"
 	testServiceName         = "http://127.0.0.1/testService"
 	testRouterName          = "testRouter"
@@ -175,7 +175,7 @@ func TestOTelAccessLogWithBody(t *testing.T) {
 }
 
 func TestLogRotation(t *testing.T) {
-	fileName := filepath.Join(t.TempDir(), "traefik.log")
+	fileName := filepath.Join(t.TempDir(), "apache4.log")
 	rotatedFileName := fileName + ".rotated"
 
 	config := &types.AccessLog{FilePath: fileName, Format: CommonFormat}

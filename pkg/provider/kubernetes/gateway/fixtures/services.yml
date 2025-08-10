@@ -437,7 +437,7 @@ metadata:
   name: whoami-native
   namespace: default
   annotations:
-    traefik.io/service.nativelb: "true"
+    apache4.io/service.nativelb: "true"
 spec:
   clusterIP: 10.10.10.1
   ports:
@@ -460,7 +460,7 @@ metadata:
   name: whoamitcp-native
   namespace: default
   annotations:
-    traefik.io/service.nativelb: "true"
+    apache4.io/service.nativelb: "true"
 
 spec:
   clusterIP: 10.10.10.1
@@ -479,7 +479,7 @@ metadata:
   name: whoami-native-disabled
   namespace: default
   annotations:
-    traefik.io/service.nativelb: "false"
+    apache4.io/service.nativelb: "false"
 spec:
   clusterIP: 10.10.10.2
   ports:
@@ -517,7 +517,7 @@ metadata:
   name: whoamitcp-native-disabled
   namespace: default
   annotations:
-    traefik.io/service.nativelb: "false"
+    apache4.io/service.nativelb: "false"
 spec:
   clusterIP: 10.10.10.3
   ports:

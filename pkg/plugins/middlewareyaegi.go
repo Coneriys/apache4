@@ -13,10 +13,10 @@ import (
 	"github.com/mitchellh/mapstructure"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/logs"
-	"github.com/traefik/yaegi/interp"
-	"github.com/traefik/yaegi/stdlib"
-	"github.com/traefik/yaegi/stdlib/unsafe"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	"github.com/apache4/yaegi/interp"
+	"github.com/apache4/yaegi/stdlib"
+	"github.com/apache4/yaegi/stdlib/unsafe"
 )
 
 type yaegiMiddlewareBuilder struct {

@@ -1,4 +1,4 @@
-import { Flex, styled, Text } from '@traefiklabs/faency'
+import { Flex, styled, Text } from '@apache4labs/faency'
 import { ReactNode } from 'react'
 
 import { colorByStatus, iconByStatus, StatusType } from 'components/resources/Status'

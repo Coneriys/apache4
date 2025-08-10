@@ -1,11 +1,11 @@
 ---
-title: "Traefik WebSocket Documentation"
-description: "How to configure WebSocket and WebSocket Secure (WSS) connections with Traefik Proxy."
+title: "apache4 WebSocket Documentation"
+description: "How to configure WebSocket and WebSocket Secure (WSS) connections with apache4 Proxy."
 ---
 
 # WebSocket
 
-Configuring Traefik to handle WebSocket and WebSocket Secure (WSS) connections.
+Configuring apache4 to handle WebSocket and WebSocket Secure (WSS) connections.
 {: .subtitle }
 
 ## Overview
@@ -13,7 +13,7 @@ Configuring Traefik to handle WebSocket and WebSocket Secure (WSS) connections.
 WebSocket is a communication protocol that provides full-duplex communication channels over a single TCP connection.
 WebSocket Secure (WSS) is the encrypted version of WebSocket, using TLS/SSL encryption.
 
-Traefik supports WebSocket and WebSocket Secure (WSS) out of the box. This guide will walk through examples of how to configure Traefik for different WebSocket scenarios.
+apache4 supports WebSocket and WebSocket Secure (WSS) out of the box. This guide will walk through examples of how to configure apache4 for different WebSocket scenarios.
 
 ## Basic WebSocket Configuration
 
@@ -21,13 +21,13 @@ A basic WebSocket configuration only requires defining a router and a service th
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.routers.my-websocket.rule=Host(`ws.example.com`)"
-  - "traefik.http.routers.my-websocket.service=my-websocket-service"
-  - "traefik.http.services.my-websocket-service.loadbalancer.server.port=8000"
+  - "apache4.http.routers.my-websocket.rule=Host(`ws.example.com`)"
+  - "apache4.http.routers.my-websocket.service=my-websocket-service"
+  - "apache4.http.services.my-websocket-service.loadbalancer.server.port=8000"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: my-websocket-route
@@ -76,14 +76,14 @@ The client connects using the `wss://` protocol instead of `ws://`.
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.routers.my-websocket-secure.rule=Host(`wss.example.com`)"
-  - "traefik.http.routers.my-websocket-secure.service=my-websocket-service"
-  - "traefik.http.routers.my-websocket-secure.tls=true"
-  - "traefik.http.services.my-websocket-service.loadbalancer.server.port=8000"
+  - "apache4.http.routers.my-websocket-secure.rule=Host(`wss.example.com`)"
+  - "apache4.http.routers.my-websocket-secure.service=my-websocket-service"
+  - "apache4.http.routers.my-websocket-secure.tls=true"
+  - "apache4.http.services.my-websocket-service.loadbalancer.server.port=8000"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: my-websocket-secure-route
@@ -130,19 +130,19 @@ http:
 
 ## SSL Termination for WebSockets
 
-In this scenario, clients connect to Traefik using WSS (encrypted), but Traefik connects to your backend server using WS (unencrypted).
+In this scenario, clients connect to apache4 using WSS (encrypted), but apache4 connects to your backend server using WS (unencrypted).
 This is called SSL termination.
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.routers.my-wss-termination.rule=Host(`wss.example.com`)"
-  - "traefik.http.routers.my-wss-termination.service=my-ws-service"
-  - "traefik.http.routers.my-wss-termination.tls=true"
-  - "traefik.http.services.my-ws-service.loadbalancer.server.port=8000"
+  - "apache4.http.routers.my-wss-termination.rule=Host(`wss.example.com`)"
+  - "apache4.http.routers.my-wss-termination.service=my-ws-service"
+  - "apache4.http.routers.my-wss-termination.tls=true"
+  - "apache4.http.services.my-ws-service.loadbalancer.server.port=8000"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: my-wss-termination-route
@@ -189,21 +189,21 @@ http:
 
 ## End-to-End WebSocket Secure (WSS)
 
-For end-to-end encryption, Traefik can be configured to connect to your backend using HTTPS.
+For end-to-end encryption, apache4 can be configured to connect to your backend using HTTPS.
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.routers.my-wss-e2e.rule=Host(`wss.example.com`)"
-  - "traefik.http.routers.my-wss-e2e.service=my-wss-service"
-  - "traefik.http.routers.my-wss-e2e.tls=true"
-  - "traefik.http.services.my-wss-service.loadbalancer.server.port=8443"
+  - "apache4.http.routers.my-wss-e2e.rule=Host(`wss.example.com`)"
+  - "apache4.http.routers.my-wss-e2e.service=my-wss-service"
+  - "apache4.http.routers.my-wss-e2e.tls=true"
+  - "apache4.http.services.my-wss-service.loadbalancer.server.port=8443"
   # If the backend uses a self-signed certificate
-  - "traefik.http.serversTransports.insecureTransport.insecureSkipVerify=true"
-  - "traefik.http.services.my-wss-service.loadBalancer.serversTransport=insecureTransport"
+  - "apache4.http.serversTransports.insecureTransport.insecureSkipVerify=true"
+  - "apache4.http.services.my-wss-service.loadBalancer.serversTransport=insecureTransport"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: insecure-transport
@@ -211,7 +211,7 @@ spec:
   insecureSkipVerify: true
 
 ---
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: my-wss-e2e-route
@@ -269,7 +269,7 @@ http:
 
 ## EntryPoints Configuration for WebSockets
 
-In your Traefik static configuration, you'll need to define entryPoints for both WS and WSS:
+In your apache4 static configuration, you'll need to define entryPoints for both WS and WSS:
 
 ```yaml tab="File (YAML)"
 entryPoints:
@@ -308,18 +308,18 @@ wscat -c wss://wss.example.com
 
 ### Headers and Origin Checks
 
-Some WebSocket servers implement origin checking. Traefik passes the original headers to your backend, including the `Origin` header.
+Some WebSocket servers implement origin checking. apache4 passes the original headers to your backend, including the `Origin` header.
 
-If you need to manipulate headers for WebSocket connections, you can use Traefik's Headers middleware:
+If you need to manipulate headers for WebSocket connections, you can use apache4's Headers middleware:
 
 ```yaml tab="Docker & Swarm"
 labels:
-  - "traefik.http.middlewares.my-headers.headers.customrequestheaders.Origin=https://allowed-origin.com"
-  - "traefik.http.routers.my-websocket.middlewares=my-headers"
+  - "apache4.http.middlewares.my-headers.headers.customrequestheaders.Origin=https://allowed-origin.com"
+  - "apache4.http.routers.my-websocket.middlewares=my-headers"
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: my-headers
@@ -329,7 +329,7 @@ spec:
       Origin: "https://allowed-origin.com"
 
 ---
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: my-websocket-route

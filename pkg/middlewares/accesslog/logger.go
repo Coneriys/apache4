@@ -18,12 +18,12 @@ import (
 	"github.com/containous/alice"
 	"github.com/rs/zerolog/log"
 	"github.com/sirupsen/logrus"
-	ptypes "github.com/traefik/paerser/types"
-	"github.com/traefik/traefik/v3/pkg/logs"
-	"github.com/traefik/traefik/v3/pkg/middlewares/capture"
-	"github.com/traefik/traefik/v3/pkg/middlewares/observability"
-	traefiktls "github.com/traefik/traefik/v3/pkg/tls"
-	"github.com/traefik/traefik/v3/pkg/types"
+	ptypes "github.com/apache4/paerser/types"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/middlewares/capture"
+	"github.com/apache4/apache4/v3/pkg/middlewares/observability"
+	apache4tls "github.com/apache4/apache4/v3/pkg/tls"
+	"github.com/apache4/apache4/v3/pkg/types"
 	"go.opentelemetry.io/contrib/bridges/otellogrus"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -121,7 +121,7 @@ func NewHandler(ctx context.Context, config *types.AccessLog) (*Handler, error) 
 			return nil, fmt.Errorf("setting up OpenTelemetry logger provider: %w", err)
 		}
 
-		logger.Hooks.Add(otellogrus.NewHook("traefik", otellogrus.WithLoggerProvider(otelLoggerProvider)))
+		logger.Hooks.Add(otellogrus.NewHook("apache4", otellogrus.WithLoggerProvider(otelLoggerProvider)))
 		logger.Out = io.Discard
 	}
 
@@ -253,8 +253,8 @@ func (h *Handler) ServeHTTP(rw http.ResponseWriter, req *http.Request, next http
 	core[RequestScheme] = "http"
 	if req.TLS != nil {
 		core[RequestScheme] = "https"
-		core[TLSVersion] = traefiktls.GetVersion(req.TLS)
-		core[TLSCipher] = traefiktls.GetCipherName(req.TLS)
+		core[TLSVersion] = apache4tls.GetVersion(req.TLS)
+		core[TLSCipher] = apache4tls.GetCipherName(req.TLS)
 		if len(req.TLS.PeerCertificates) > 0 && req.TLS.PeerCertificates[0] != nil {
 			core[TLSClientSubject] = req.TLS.PeerCertificates[0].Subject.String()
 		}

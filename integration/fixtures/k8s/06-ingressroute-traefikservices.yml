@@ -1,6 +1,6 @@
 ---
-apiVersion: traefik.io/v1alpha1
-kind: TraefikService
+apiVersion: apache4.io/v1alpha1
+kind: apache4Service
 metadata:
   name: mirror1
   namespace: default
@@ -14,8 +14,8 @@ spec:
         port: 80
 
 ---
-apiVersion: traefik.io/v1alpha1
-kind: TraefikService
+apiVersion: apache4.io/v1alpha1
+kind: apache4Service
 metadata:
   name: wrr1
   namespace: default
@@ -24,12 +24,12 @@ spec:
   weighted:
     services:
       - name: mirror1
-        kind: TraefikService
+        kind: apache4Service
       - name: whoami
         port: 80
 
 ---
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: test3.route
@@ -43,15 +43,15 @@ spec:
       kind: Rule
       services:
         - name: wrr1
-          kind: TraefikService
+          kind: apache4Service
 ---
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: api.route
   namespace: default
   labels:
-    app: traefik
+    app: apache4
 
 spec:
   entryPoints:
@@ -61,4 +61,4 @@ spec:
       kind: Rule
       services:
         - name: api@internal
-          kind: TraefikService
+          kind: apache4Service

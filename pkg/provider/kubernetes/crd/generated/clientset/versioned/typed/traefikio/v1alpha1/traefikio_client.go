@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016-2020 Containous SAS; 2020-2025 Traefik Labs
+Copyright (c) 2016-2020 Containous SAS; 2020-2025 apache4 Labs
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,12 @@ package v1alpha1
 import (
 	"net/http"
 
-	"github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned/scheme"
-	v1alpha1 "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/traefikio/v1alpha1"
+	"github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned/scheme"
+	v1alpha1 "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/apache4io/v1alpha1"
 	rest "k8s.io/client-go/rest"
 )
 
-type TraefikV1alpha1Interface interface {
+type apache4V1alpha1Interface interface {
 	RESTClient() rest.Interface
 	IngressRoutesGetter
 	IngressRouteTCPsGetter
@@ -45,58 +45,58 @@ type TraefikV1alpha1Interface interface {
 	ServersTransportTCPsGetter
 	TLSOptionsGetter
 	TLSStoresGetter
-	TraefikServicesGetter
+	apache4ServicesGetter
 }
 
-// TraefikV1alpha1Client is used to interact with features provided by the traefik.io group.
-type TraefikV1alpha1Client struct {
+// apache4V1alpha1Client is used to interact with features provided by the apache4.io group.
+type apache4V1alpha1Client struct {
 	restClient rest.Interface
 }
 
-func (c *TraefikV1alpha1Client) IngressRoutes(namespace string) IngressRouteInterface {
+func (c *apache4V1alpha1Client) IngressRoutes(namespace string) IngressRouteInterface {
 	return newIngressRoutes(c, namespace)
 }
 
-func (c *TraefikV1alpha1Client) IngressRouteTCPs(namespace string) IngressRouteTCPInterface {
+func (c *apache4V1alpha1Client) IngressRouteTCPs(namespace string) IngressRouteTCPInterface {
 	return newIngressRouteTCPs(c, namespace)
 }
 
-func (c *TraefikV1alpha1Client) IngressRouteUDPs(namespace string) IngressRouteUDPInterface {
+func (c *apache4V1alpha1Client) IngressRouteUDPs(namespace string) IngressRouteUDPInterface {
 	return newIngressRouteUDPs(c, namespace)
 }
 
-func (c *TraefikV1alpha1Client) Middlewares(namespace string) MiddlewareInterface {
+func (c *apache4V1alpha1Client) Middlewares(namespace string) MiddlewareInterface {
 	return newMiddlewares(c, namespace)
 }
 
-func (c *TraefikV1alpha1Client) MiddlewareTCPs(namespace string) MiddlewareTCPInterface {
+func (c *apache4V1alpha1Client) MiddlewareTCPs(namespace string) MiddlewareTCPInterface {
 	return newMiddlewareTCPs(c, namespace)
 }
 
-func (c *TraefikV1alpha1Client) ServersTransports(namespace string) ServersTransportInterface {
+func (c *apache4V1alpha1Client) ServersTransports(namespace string) ServersTransportInterface {
 	return newServersTransports(c, namespace)
 }
 
-func (c *TraefikV1alpha1Client) ServersTransportTCPs(namespace string) ServersTransportTCPInterface {
+func (c *apache4V1alpha1Client) ServersTransportTCPs(namespace string) ServersTransportTCPInterface {
 	return newServersTransportTCPs(c, namespace)
 }
 
-func (c *TraefikV1alpha1Client) TLSOptions(namespace string) TLSOptionInterface {
+func (c *apache4V1alpha1Client) TLSOptions(namespace string) TLSOptionInterface {
 	return newTLSOptions(c, namespace)
 }
 
-func (c *TraefikV1alpha1Client) TLSStores(namespace string) TLSStoreInterface {
+func (c *apache4V1alpha1Client) TLSStores(namespace string) TLSStoreInterface {
 	return newTLSStores(c, namespace)
 }
 
-func (c *TraefikV1alpha1Client) TraefikServices(namespace string) TraefikServiceInterface {
-	return newTraefikServices(c, namespace)
+func (c *apache4V1alpha1Client) apache4Services(namespace string) apache4ServiceInterface {
+	return newapache4Services(c, namespace)
 }
 
-// NewForConfig creates a new TraefikV1alpha1Client for the given config.
+// NewForConfig creates a new apache4V1alpha1Client for the given config.
 // NewForConfig is equivalent to NewForConfigAndClient(c, httpClient),
 // where httpClient was generated with rest.HTTPClientFor(c).
-func NewForConfig(c *rest.Config) (*TraefikV1alpha1Client, error) {
+func NewForConfig(c *rest.Config) (*apache4V1alpha1Client, error) {
 	config := *c
 	if err := setConfigDefaults(&config); err != nil {
 		return nil, err
@@ -108,9 +108,9 @@ func NewForConfig(c *rest.Config) (*TraefikV1alpha1Client, error) {
 	return NewForConfigAndClient(&config, httpClient)
 }
 
-// NewForConfigAndClient creates a new TraefikV1alpha1Client for the given config and http client.
+// NewForConfigAndClient creates a new apache4V1alpha1Client for the given config and http client.
 // Note the http client provided takes precedence over the configured transport values.
-func NewForConfigAndClient(c *rest.Config, h *http.Client) (*TraefikV1alpha1Client, error) {
+func NewForConfigAndClient(c *rest.Config, h *http.Client) (*apache4V1alpha1Client, error) {
 	config := *c
 	if err := setConfigDefaults(&config); err != nil {
 		return nil, err
@@ -119,12 +119,12 @@ func NewForConfigAndClient(c *rest.Config, h *http.Client) (*TraefikV1alpha1Clie
 	if err != nil {
 		return nil, err
 	}
-	return &TraefikV1alpha1Client{client}, nil
+	return &apache4V1alpha1Client{client}, nil
 }
 
-// NewForConfigOrDie creates a new TraefikV1alpha1Client for the given config and
+// NewForConfigOrDie creates a new apache4V1alpha1Client for the given config and
 // panics if there is an error in the config.
-func NewForConfigOrDie(c *rest.Config) *TraefikV1alpha1Client {
+func NewForConfigOrDie(c *rest.Config) *apache4V1alpha1Client {
 	client, err := NewForConfig(c)
 	if err != nil {
 		panic(err)
@@ -132,9 +132,9 @@ func NewForConfigOrDie(c *rest.Config) *TraefikV1alpha1Client {
 	return client
 }
 
-// New creates a new TraefikV1alpha1Client for the given RESTClient.
-func New(c rest.Interface) *TraefikV1alpha1Client {
-	return &TraefikV1alpha1Client{c}
+// New creates a new apache4V1alpha1Client for the given RESTClient.
+func New(c rest.Interface) *apache4V1alpha1Client {
+	return &apache4V1alpha1Client{c}
 }
 
 func setConfigDefaults(config *rest.Config) error {
@@ -152,7 +152,7 @@ func setConfigDefaults(config *rest.Config) error {
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *TraefikV1alpha1Client) RESTClient() rest.Interface {
+func (c *apache4V1alpha1Client) RESTClient() rest.Interface {
 	if c == nil {
 		return nil
 	}

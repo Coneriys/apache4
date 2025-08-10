@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/traefik/paerser/types"
+	"github.com/apache4/paerser/types"
 )
 
 const (

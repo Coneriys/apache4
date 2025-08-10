@@ -1,4 +1,4 @@
-import { Flex, styled } from '@traefiklabs/faency'
+import { Flex, styled } from '@apache4labs/faency'
 
 import breakpoints from 'utils/breakpoints'
 

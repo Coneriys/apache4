@@ -1,4 +1,4 @@
-import { config, Flex } from '@traefiklabs/faency'
+import { config, Flex } from '@apache4labs/faency'
 import { useEffect, useState } from 'react'
 
 import { CustomIconProps } from 'components/icons'

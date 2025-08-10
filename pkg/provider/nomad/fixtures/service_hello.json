@@ -12,9 +12,9 @@
     "Port": 20627,
     "ServiceName": "hello-nomad",
     "Tags": [
-      "traefik.enable=true",
-      "traefik.http.routers.hellon.entrypoints=web",
-      "traefik.http.routers.hellon.service=hello-nomad"
+      "apache4.enable=true",
+      "apache4.http.routers.hellon.entrypoints=web",
+      "apache4.http.routers.hellon.service=hello-nomad"
     ]
   }
 ]

@@ -8,11 +8,11 @@ import (
 
 	"github.com/go-acme/lego/v4/challenge/tlsalpn01"
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/logs"
-	"github.com/traefik/traefik/v3/pkg/safe"
-	traefiktls "github.com/traefik/traefik/v3/pkg/tls"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/safe"
+	apache4tls "github.com/apache4/apache4/v3/pkg/tls"
+	"github.com/apache4/apache4/v3/pkg/types"
 )
 
 const providerNameALPN = "tlsalpn.acme"
@@ -60,7 +60,7 @@ func (c *ChallengeTLSALPN) Present(domain, _, keyAuth string) error {
 
 	c.configurationChan <- conf
 
-	// Present should return when its dynamic configuration has been received and applied by Traefik.
+	// Present should return when its dynamic configuration has been received and applied by apache4.
 	// The timer exists in case the above does not happen, to ensure the challenge cleanup.
 	timer := time.NewTimer(time.Minute)
 	defer timer.Stop()
@@ -108,7 +108,7 @@ func (c *ChallengeTLSALPN) ThrottleDuration() time.Duration {
 	return 0
 }
 
-// Provide allows the provider to provide configurations to traefik using the given configuration channel.
+// Provide allows the provider to provide configurations to apache4 using the given configuration channel.
 func (c *ChallengeTLSALPN) Provide(configurationChan chan<- dynamic.Message, _ *safe.Pool) error {
 	c.configurationChan = configurationChan
 
@@ -151,8 +151,8 @@ func createMessage(certs map[string]*Certificate) dynamic.Message {
 	}
 
 	for _, cert := range certs {
-		certConf := &traefiktls.CertAndStores{
-			Certificate: traefiktls.Certificate{
+		certConf := &apache4tls.CertAndStores{
+			Certificate: apache4tls.Certificate{
 				CertFile: types.FileOrContent(cert.Certificate),
 				KeyFile:  types.FileOrContent(cert.Key),
 			},

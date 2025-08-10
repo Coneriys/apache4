@@ -10,7 +10,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/traefik/traefik/v3/pkg/testhelpers"
+	"github.com/apache4/apache4/v3/pkg/testhelpers"
 )
 
 func Test_directorBuilder(t *testing.T) {

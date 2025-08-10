@@ -1,4 +1,4 @@
-import { AriaTable, AriaTbody, AriaTd, AriaTr, Flex, Text } from '@traefiklabs/faency'
+import { AriaTable, AriaTbody, AriaTd, AriaTr, Flex, Text } from '@apache4labs/faency'
 import { useMemo } from 'react'
 
 import Status, { StatusType } from './Status'

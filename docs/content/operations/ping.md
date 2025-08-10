@@ -1,11 +1,11 @@
 ---
-title: "Traefik Ping Documentation"
-description: "In Traefik Proxy, Ping lets you check the health of your Traefik instances. Read the technical documentation for configuration examples and options."
+title: "apache4 Ping Documentation"
+description: "In apache4 Proxy, Ping lets you check the health of your apache4 instances. Read the technical documentation for configuration examples and options."
 ---
 
 # Ping
 
-Checking the Health of Your Traefik Instances
+Checking the Health of Your apache4 Instances
 {: .subtitle }
 
 ## Configuration Examples
@@ -29,18 +29,18 @@ ping: {}
 The `/ping` health-check URL is enabled with the command-line `--ping` or config file option `[ping]`.
 
 The `entryPoint` where the `/ping` is active can be customized with the `entryPoint` option,
-whose default value is `traefik` (port `8080`).
+whose default value is `apache4` (port `8080`).
 
 | Path    | Method        | Description                                                                                         |
 |---------|---------------|-----------------------------------------------------------------------------------------------------|
-| `/ping` | `GET`, `HEAD` | An endpoint to check for Traefik process liveness. Return a code `200` with the content: `OK` |
+| `/ping` | `GET`, `HEAD` | An endpoint to check for apache4 process liveness. Return a code `200` with the content: `OK` |
 
 !!! note
     The `cli` comes with a [`healthcheck`](./cli.md#healthcheck) command which can be used for calling this endpoint.
 
 ### `entryPoint`
 
-_Optional, Default="traefik"_
+_Optional, Default="apache4"_
 
 Enabling /ping on a dedicated EntryPoint.
 
@@ -91,9 +91,9 @@ ping:
 
 _Optional, Default=503_
 
-During the period in which Traefik is gracefully shutting down, the ping handler
+During the period in which apache4 is gracefully shutting down, the ping handler
 returns a `503` status code by default.  
-If Traefik is behind, for example a load-balancer
+If apache4 is behind, for example a load-balancer
 doing health checks (such as the Kubernetes LivenessProbe), another code might
 be expected as the signal for graceful termination.  
 In that case, the terminatingStatusCode can be used to set the code returned by the ping

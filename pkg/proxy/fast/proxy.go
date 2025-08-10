@@ -14,7 +14,7 @@ import (
 	"sync"
 
 	"github.com/rs/zerolog/log"
-	proxyhttputil "github.com/traefik/traefik/v3/pkg/proxy/httputil"
+	proxyhttputil "github.com/apache4/apache4/v3/pkg/proxy/httputil"
 	"github.com/valyala/fasthttp"
 	"golang.org/x/net/http/httpguts"
 )
@@ -159,7 +159,7 @@ func (p *ReverseProxy) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	if p.debug {
-		outReq.Header.Set("X-Traefik-Fast-Proxy", "enabled")
+		outReq.Header.Set("X-apache4-Fast-Proxy", "enabled")
 	}
 
 	reqUpType := upgradeType(req.Header)

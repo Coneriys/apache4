@@ -6,8 +6,8 @@ import (
 	"reflect"
 
 	"github.com/mitchellh/copystructure"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/types"
 	"mvdan.cc/xurls/v2"
 )
 

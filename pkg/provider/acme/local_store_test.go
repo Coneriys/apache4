@@ -9,7 +9,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/traefik/traefik/v3/pkg/safe"
+	"github.com/apache4/apache4/v3/pkg/safe"
 )
 
 func TestLocalStore_GetAccount(t *testing.T) {

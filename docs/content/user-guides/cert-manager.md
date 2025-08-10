@@ -1,19 +1,19 @@
 ---
 title: "Integration with cert-manager"
-description: "Learn how to use cert-manager certificates with Traefik Proxy for your routers. Read the technical documentation."
+description: "Learn how to use cert-manager certificates with apache4 Proxy for your routers. Read the technical documentation."
 ---
 
 # cert-manager
 
-Provision TLS Certificate for Traefik Proxy with cert-manager on Kubernetes
+Provision TLS Certificate for apache4 Proxy with cert-manager on Kubernetes
 {: .subtitle }
 
 ## Pre-requisites
 
-To obtain certificates from cert-manager that can be used in Traefik Proxy, you will need to:
+To obtain certificates from cert-manager that can be used in apache4 Proxy, you will need to:
 
 1. Have cert-manager properly configured
-2. Have Traefik Proxy configured
+2. Have apache4 Proxy configured
 
 The certificates can then be used in an Ingress / IngressRoute / HTTPRoute.
 
@@ -37,7 +37,7 @@ The certificates can then be used in an Ingress / IngressRoute / HTTPRoute.
         solvers:
           - http01:
               ingress:
-                ingressClassName: traefik
+                ingressClassName: apache4
     ```
 
     ```yaml tab="Certificate"
@@ -45,7 +45,7 @@ The certificates can then be used in an Ingress / IngressRoute / HTTPRoute.
     kind: Certificate
     metadata:
       name: whoami
-      namespace: traefik
+      namespace: apache4
     spec:
       secretName: domain-tls        # <===  Name of secret where the generated certificate will be stored.
       dnsNames:
@@ -55,16 +55,16 @@ The certificates can then be used in an Ingress / IngressRoute / HTTPRoute.
         kind: Issuer
     ```
 
-Let's see now how to use it with the various Kubernetes providers of Traefik Proxy.
-The enabled providers can be seen on the [dashboard](../../operations/dashboard/) of Traefik Proxy and also in the INFO logs when Traefik Proxy starts.
+Let's see now how to use it with the various Kubernetes providers of apache4 Proxy.
+The enabled providers can be seen on the [dashboard](../../operations/dashboard/) of apache4 Proxy and also in the INFO logs when apache4 Proxy starts.
 
 ### With an Ingress
 
 To use this certificate with an Ingress, the [Kubernetes Ingress](../../providers/kubernetes-ingress/) provider has to be enabled.
 
-!!! info Traefik Helm Chart
+!!! info apache4 Helm Chart
 
-    This provider is enabled by default in the Traefik Helm Chart.
+    This provider is enabled by default in the apache4 Helm Chart.
 
 !!! example "Route with this Certificate"
 
@@ -74,7 +74,7 @@ To use this certificate with an Ingress, the [Kubernetes Ingress](../../provider
     metadata:
       name: domain
       annotations:
-        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        apache4.ingress.kubernetes.io/router.entrypoints: websecure
 
     spec:
       rules:
@@ -96,14 +96,14 @@ To use this certificate with an Ingress, the [Kubernetes Ingress](../../provider
 
 To use this certificate with an IngressRoute, the [Kubernetes CRD](../../providers/kubernetes-crd) provider has to be enabled.
 
-!!! info Traefik Helm Chart
+!!! info apache4 Helm Chart
 
-    This provider is enabled by default in the Traefik Helm Chart.
+    This provider is enabled by default in the apache4 Helm Chart.
 
 !!! example "Route with this Certificate"
 
     ```yaml tab="IngressRoute"
-    apiVersion: traefik.io/v1alpha1
+    apiVersion: apache4.io/v1alpha1
     kind: IngressRoute
     metadata:
       name: domain
@@ -126,9 +126,9 @@ To use this certificate with an IngressRoute, the [Kubernetes CRD](../../provide
 
 To use this certificate with an HTTPRoute, the [Kubernetes Gateway](../../routing/providers/kubernetes-gateway) provider has to be enabled.
 
-!!! info Traefik Helm Chart
+!!! info apache4 Helm Chart
 
-    This provider is disabled by default in the Traefik Helm Chart.
+    This provider is disabled by default in the apache4 Helm Chart.
 
 !!! example "Route with this Certificate"
 
@@ -139,7 +139,7 @@ To use this certificate with an HTTPRoute, the [Kubernetes Gateway](../../routin
     metadata:
       name: domain-gateway
     spec:
-      gatewayClassName: traefik
+      gatewayClassName: apache4
       listeners:
         - name: websecure
           port: 8443
@@ -176,8 +176,8 @@ There are multiple event sources available to investigate when using cert-manage
 
 1. Kubernetes events in `Certificate` and `CertificateRequest` resources
 2. cert-manager logs
-3. Dashboard and/or (debug) logs from Traefik Proxy
+3. Dashboard and/or (debug) logs from apache4 Proxy
 
 cert-manager documentation provides a [detailed guide](https://cert-manager.io/docs/troubleshooting/) on how to troubleshoot a certificate request.
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

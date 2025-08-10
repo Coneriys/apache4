@@ -10,8 +10,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
-	"github.com/traefik/traefik/v3/integration/try"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/integration/try"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
 )
 
 type HTTPSuite struct{ BaseSuite }
@@ -21,13 +21,13 @@ func TestHTTPSuite(t *testing.T) {
 }
 
 func (s *HTTPSuite) TestSimpleConfiguration() {
-	s.traefikCmd(withConfigFile("fixtures/http/simple.toml"))
+	s.apache4Cmd(withConfigFile("fixtures/http/simple.toml"))
 
 	// Expect a 404 as we configured nothing.
 	err := try.GetRequest("http://127.0.0.1:8000/", time.Second, try.StatusCodeIs(http.StatusNotFound))
 	require.NoError(s.T(), err)
 
-	// Provide a configuration, fetched by Traefik provider.
+	// Provide a configuration, fetched by apache4 provider.
 	configuration := &dynamic.Configuration{
 		HTTP: &dynamic.HTTPConfiguration{
 			Routers: map[string]*dynamic.Router{

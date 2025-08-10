@@ -7,10 +7,10 @@ import (
 	"net/http"
 
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/ip"
-	"github.com/traefik/traefik/v3/pkg/middlewares"
-	"github.com/traefik/traefik/v3/pkg/middlewares/observability"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/ip"
+	"github.com/apache4/apache4/v3/pkg/middlewares"
+	"github.com/apache4/apache4/v3/pkg/middlewares/observability"
 )
 
 const (

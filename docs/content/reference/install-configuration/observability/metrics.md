@@ -1,18 +1,18 @@
 ---
-title: "Traefik Metrics Overview"
-description: "Traefik Proxy supports these metrics backend systems: OpenTelemetry, Datadog, InfluxDB 2.X, Prometheus, and StatsD. Read the full documentation to get started."
+title: "apache4 Metrics Overview"
+description: "apache4 Proxy supports these metrics backend systems: OpenTelemetry, Datadog, InfluxDB 2.X, Prometheus, and StatsD. Read the full documentation to get started."
 ---
 
 # Metrics
 
-Traefik provides metrics in the [OpenTelemetry](#open-telemetry) format as well as the following vendor specific backends:
+apache4 provides metrics in the [OpenTelemetry](#open-telemetry) format as well as the following vendor specific backends:
 
 - [Datadog](#datadog)
 - [InfluxDB2](#influxdb-v2)
 - [Prometheus](#prometheus)
 - [StatsD](#statsd)
 
-Traefik Proxy has an official Grafana dashboard for both [on-premises](https://grafana.com/grafana/dashboards/17346)
+apache4 Proxy has an official Grafana dashboard for both [on-premises](https://grafana.com/grafana/dashboards/17346)
 and [Kubernetes](https://grafana.com/grafana/dashboards/17347) deployments.
 
 ---
@@ -55,15 +55,15 @@ metrics:
 
 !!! tip "Helm Chart Configuration"
 
-    Traefik can be configured to provide metrics in the OpenTelemetry format using the Helm Chart values.
-    To know more about the Helm Chart options, refer to the [Helm Chart](https://github.com/traefik/traefik-helm-chart/blob/master/traefik/VALUES.md) (Find options `metrics.otlp`).
+    apache4 can be configured to provide metrics in the OpenTelemetry format using the Helm Chart values.
+    To know more about the Helm Chart options, refer to the [Helm Chart](https://github.com/apache4/apache4-helm-chart/blob/master/apache4/VALUES.md) (Find options `metrics.otlp`).
 
 ### Configuration Options
 
 | Field                                      | Description                                                                                                                                                      | Default                                            | Required |
 |:-------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------|:---------|
 | `metrics.addInternals`                     | Enables metrics for internal resources (e.g.: `ping@internal`).                                                                                                  | false                                              | No       |
-| `metrics.otlp.serviceName`                 | Defines the service name resource attribute.                                                                                                                     | "traefik"                                          | No       |
+| `metrics.otlp.serviceName`                 | Defines the service name resource attribute.                                                                                                                     | "apache4"                                          | No       |
 | `metrics.otlp.resourceAttributes`          | Defines additional resource attributes to be sent to the collector.                                                                                              | []                                                 | No       |
 | `metrics.otlp.addEntryPointsLabels`        | Enable metrics on entry points.                                                                                                                                  | true                                               | No       |
 | `metrics.otlp.addRoutersLabels`            | Enable metrics on routers.                                                                                                                                       | false                                              | No       |
@@ -118,7 +118,7 @@ metrics:
 | `datadog.addRoutersLabels` | Enable metrics on routers. |  false   | No   |
 | `datadog.addServicesLabels` | Enable metrics on services. |  true   | No   |
 | `datadog.pushInterval` | Defines the interval used by the exporter to push metrics to datadog-agent. |  10s   | No   |
-| `datadog.prefix` | Defines the prefix to use for metrics collection. |  "traefik"   | No   |
+| `datadog.prefix` | Defines the prefix to use for metrics collection. |  "apache4"   | No   |
 
 ##### `address`
 
@@ -221,14 +221,14 @@ metrics:
 | `metrics.prometheus.addServicesLabels` | Enable metrics on services.| true      | No      |
 | `metrics.prometheus.buckets` | Buckets for latency metrics. |"0.100000, 0.300000, 1.200000, 5.000000"  | No      |
 | `metrics.prometheus.manualRouting` | Set to _true_, it disables the default internal router in order to allow creating a custom router for the `prometheus@internal` service. | false    | No      |
-| `metrics.prometheus.entryPoint` | Traefik Entrypoint name used to expose metrics. | "traefik"     | No      |
+| `metrics.prometheus.entryPoint` | apache4 Entrypoint name used to expose metrics. | "apache4"     | No      |
 | `metrics.prometheus.headerLabels` | Defines extra labels extracted from request headers for the `requests_total` metrics.<br />More information [here](#headerlabels). |       | Yes      |
 
 ##### headerLabels
 
 Defines the extra labels for the `requests_total` metrics, and for each of them, the request header containing the value for this label.
 If the header is not present in the request it will be added nonetheless with an empty value.
-The label must be a valid label name for Prometheus metrics, otherwise, the Prometheus metrics provider will fail to serve any Traefik-related metric.
+The label must be a valid label name for Prometheus metrics, otherwise, the Prometheus metrics provider will fail to serve any apache4-related metric.
 
 !!! note "How to provide the `Host` header value"
       The `Host` header is never present in the Header map of a request, as per go documentation says:
@@ -259,7 +259,7 @@ curl -H "User-Agent: foobar" http://localhost
 ```
 
 ```bash tab="Metric"
-traefik_entrypoint_requests_total\{code="200",entrypoint="web",method="GET",protocol="http",useragent="foobar"\} 1
+apache4_entrypoint_requests_total\{code="200",entrypoint="web",method="GET",protocol="http",useragent="foobar"\} 1
 ```
 
 ### StatsD
@@ -294,7 +294,7 @@ metrics:
 | `metrics.statsD.addServicesLabels` | Enable metrics on services.| true      | No      |
 | `metrics.statsD.pushInterval` | The interval used by the exporter to push metrics to DataDog server. | 10s      | No      |
 | `metrics.statsD.address` | Address instructs exporter to send metrics to statsd at this address.  | "127.0.0.1:8125"     | Yes      |
-| `metrics.statsD.prefix` | The prefix to use for metrics collection. | "traefik"      | No      |
+| `metrics.statsD.prefix` | The prefix to use for metrics collection. | "apache4"      | No      |
 
 ## Metrics Provided
 
@@ -303,18 +303,18 @@ metrics:
 === "OpenTelemetry"
     | Metric                     | Type  | [Labels](#labels)        | Description                                                        |
     |----------------------------|-------|--------------------------|--------------------------------------------------------------------|
-    | `traefik_config_reloads_total`        | Count |                          | The total count of configuration reloads.                          |
-    | `traefik_config_last_reload_success` | Gauge |                          | The timestamp of the last configuration reload success.            |
-    | `traefik_open_connections`           | Gauge | `entrypoint`, `protocol` | The current count of open connections, by entrypoint and protocol. |
-    | `traefik_tls_certs_not_after` | Gauge |                          | The expiration date of certificates.                               |
+    | `apache4_config_reloads_total`        | Count |                          | The total count of configuration reloads.                          |
+    | `apache4_config_last_reload_success` | Gauge |                          | The timestamp of the last configuration reload success.            |
+    | `apache4_open_connections`           | Gauge | `entrypoint`, `protocol` | The current count of open connections, by entrypoint and protocol. |
+    | `apache4_tls_certs_not_after` | Gauge |                          | The expiration date of certificates.                               |
     
 === "Prometheus"
     | Metric                     | Type  | [Labels](#labels)        | Description                                                        |
     |----------------------------|-------|--------------------------|--------------------------------------------------------------------|
-    | `traefik_config_reloads_total`        | Count |                          | The total count of configuration reloads.                          |
-    | `traefik_config_last_reload_success` | Gauge |                          | The timestamp of the last configuration reload success.            |
-    | `traefik_open_connections`           | Gauge | `entrypoint`, `protocol` | The current count of open connections, by entrypoint and protocol. |
-    | `traefik_tls_certs_not_after` | Gauge |      | The expiration date of certificates. |
+    | `apache4_config_reloads_total`        | Count |                          | The total count of configuration reloads.                          |
+    | `apache4_config_last_reload_success` | Gauge |                          | The timestamp of the last configuration reload success.            |
+    | `apache4_open_connections`           | Gauge | `entrypoint`, `protocol` | The current count of open connections, by entrypoint and protocol. |
+    | `apache4_tls_certs_not_after` | Gauge |      | The expiration date of certificates. |
 
 === "Datadog"
     | Metric                     | Type  | [Labels](#labels)        | Description                                                        |
@@ -327,10 +327,10 @@ metrics:
 === "InfluxDB2"
     | Metric                     | Type  | [Labels](#labels)        | Description                                                        |
     |----------------------------|-------|--------------------------|--------------------------------------------------------------------|
-    | `traefik.config.reload.total`        | Count |                          | The total count of configuration reloads.                          |
-    | `traefik.config.reload.lastSuccessTimestamp` | Gauge |                          | The timestamp of the last configuration reload success.            |
-    | `traefik.open.connections`           | Gauge | `entrypoint`, `protocol` | The current count of open connections, by entrypoint and protocol. |
-    | `traefik.tls.certs.notAfterTimestamp` | Gauge |                          | The expiration date of certificates.                               |
+    | `apache4.config.reload.total`        | Count |                          | The total count of configuration reloads.                          |
+    | `apache4.config.reload.lastSuccessTimestamp` | Gauge |                          | The timestamp of the last configuration reload success.            |
+    | `apache4.open.connections`           | Gauge | `entrypoint`, `protocol` | The current count of open connections, by entrypoint and protocol. |
+    | `apache4.tls.certs.notAfterTimestamp` | Gauge |                          | The expiration date of certificates.                               |
 
 === "StatsD"
     | Metric       | Type  | [Labels](#labels)        | Description                                                        |
@@ -341,7 +341,7 @@ metrics:
     | `{prefix}.tls.certs.notAfterTimestamp` | Gauge |    | The expiration date of certificates.   |
 
 !!! note "\{prefix\} Default Value"
-        By default, \{prefix\} value is `traefik`.
+        By default, \{prefix\} value is `apache4`.
 
 #### Labels
 
@@ -354,7 +354,7 @@ Here is a comprehensive list of labels that are provided by the global metrics:
 
 ### OpenTelemetry Semantic Conventions
 
-Traefik Proxy follows [official OpenTelemetry semantic conventions v1.23.1](https://github.com/open-telemetry/semantic-conventions/blob/v1.23.1/docs/http/http-metrics.md).
+apache4 Proxy follows [official OpenTelemetry semantic conventions v1.23.1](https://github.com/open-telemetry/semantic-conventions/blob/v1.23.1/docs/http/http-metrics.md).
 
 #### HTTP Server
 
@@ -400,7 +400,7 @@ Here is a comprehensive list of labels that are provided by the metrics:
 
 ### HTTP Metrics
 
-On top of the official OpenTelemetry semantic conventions, Traefik provides its own metrics to monitor the incoming traffic.
+On top of the official OpenTelemetry semantic conventions, apache4 provides its own metrics to monitor the incoming traffic.
 
 #### EntryPoint Metrics
 
@@ -408,21 +408,21 @@ On top of the official OpenTelemetry semantic conventions, Traefik provides its 
 
     | Metric   | Type      | [Labels](#labels)         | Description   |
     |-----------------------|-----------|--------------------|--------------------------|
-    | `traefik_entrypoint_requests_total`        | Count     | `code`, `method`, `protocol`, `entrypoint` | The total count of HTTP requests received by an entrypoint.         |
-    | `traefik_entrypoint_requests_tls_total`    | Count     | `tls_version`, `tls_cipher`, `entrypoint`  | The total count of HTTPS requests received by an entrypoint.        |
-    | `traefik_entrypoint_request_duration_seconds`     | Histogram | `code`, `method`, `protocol`, `entrypoint` | Request processing duration histogram on an entrypoint.             |
-    | `traefik_entrypoint_requests_bytes_total`  | Count     | `code`, `method`, `protocol`, `entrypoint` | The total size of HTTP requests in bytes handled by an entrypoint.  |
-    | `traefik_entrypoint_responses_bytes_total` | Count     | `code`, `method`, `protocol`, `entrypoint` | The total size of HTTP responses in bytes handled by an entrypoint. |
+    | `apache4_entrypoint_requests_total`        | Count     | `code`, `method`, `protocol`, `entrypoint` | The total count of HTTP requests received by an entrypoint.         |
+    | `apache4_entrypoint_requests_tls_total`    | Count     | `tls_version`, `tls_cipher`, `entrypoint`  | The total count of HTTPS requests received by an entrypoint.        |
+    | `apache4_entrypoint_request_duration_seconds`     | Histogram | `code`, `method`, `protocol`, `entrypoint` | Request processing duration histogram on an entrypoint.             |
+    | `apache4_entrypoint_requests_bytes_total`  | Count     | `code`, `method`, `protocol`, `entrypoint` | The total size of HTTP requests in bytes handled by an entrypoint.  |
+    | `apache4_entrypoint_responses_bytes_total` | Count     | `code`, `method`, `protocol`, `entrypoint` | The total size of HTTP responses in bytes handled by an entrypoint. |
     
 === "Prometheus"
 
     | Metric     | Type      | [Labels](#labels)      | Description      |
     |-----------------------|-----------|------------------------|-------------------------|
-    | `traefik_entrypoint_requests_total`        | Count     | `code`, `method`, `protocol`, `entrypoint` | The total count of HTTP requests received by an entrypoint.         |
-    | `traefik_entrypoint_requests_tls_total`    | Count     | `tls_version`, `tls_cipher`, `entrypoint`  | The total count of HTTPS requests received by an entrypoint.        |
-    | `traefik_entrypoint_request_duration_seconds`     | Histogram | `code`, `method`, `protocol`, `entrypoint` | Request processing duration histogram on an entrypoint.             |
-    | `traefik_entrypoint_requests_bytes_total`  | Count     | `code`, `method`, `protocol`, `entrypoint` | The total size of HTTP requests in bytes handled by an entrypoint.  |
-    | `traefik_entrypoint_responses_bytes_total` | Count     | `code`, `method`, `protocol`, `entrypoint` | The total size of HTTP responses in bytes handled by an entrypoint. |
+    | `apache4_entrypoint_requests_total`        | Count     | `code`, `method`, `protocol`, `entrypoint` | The total count of HTTP requests received by an entrypoint.         |
+    | `apache4_entrypoint_requests_tls_total`    | Count     | `tls_version`, `tls_cipher`, `entrypoint`  | The total count of HTTPS requests received by an entrypoint.        |
+    | `apache4_entrypoint_request_duration_seconds`     | Histogram | `code`, `method`, `protocol`, `entrypoint` | Request processing duration histogram on an entrypoint.             |
+    | `apache4_entrypoint_requests_bytes_total`  | Count     | `code`, `method`, `protocol`, `entrypoint` | The total size of HTTP requests in bytes handled by an entrypoint.  |
+    | `apache4_entrypoint_responses_bytes_total` | Count     | `code`, `method`, `protocol`, `entrypoint` | The total size of HTTP responses in bytes handled by an entrypoint. |
 
 === "Datadog"
 
@@ -438,11 +438,11 @@ On top of the official OpenTelemetry semantic conventions, Traefik provides its 
 
     | Metric    | Type      | [Labels](#labels)   | Description     |
     |------------|-----------|-------------------|-----------------|
-    | `traefik.entrypoint.requests.total`        | Count     | `code`, `method`, `protocol`, `entrypoint` | The total count of HTTP requests received by an entrypoint.         |
-    | `traefik.entrypoint.requests.tls.total`    | Count     | `tls_version`, `tls_cipher`, `entrypoint`  | The total count of HTTPS requests received by an entrypoint.        |
-    | `traefik.entrypoint.request.duration.seconds`     | Histogram | `code`, `method`, `protocol`, `entrypoint` | Request processing duration histogram on an entrypoint.             |
-    | `traefik.entrypoint.requests.bytes.total`  | Count     | `code`, `method`, `protocol`, `entrypoint` | The total size of HTTP requests in bytes handled by an entrypoint.  |
-    | `traefik.entrypoint.responses.bytes.total` | Count     | `code`, `method`, `protocol`, `entrypoint` | The total size of HTTP responses in bytes handled by an entrypoint. |
+    | `apache4.entrypoint.requests.total`        | Count     | `code`, `method`, `protocol`, `entrypoint` | The total count of HTTP requests received by an entrypoint.         |
+    | `apache4.entrypoint.requests.tls.total`    | Count     | `tls_version`, `tls_cipher`, `entrypoint`  | The total count of HTTPS requests received by an entrypoint.        |
+    | `apache4.entrypoint.request.duration.seconds`     | Histogram | `code`, `method`, `protocol`, `entrypoint` | Request processing duration histogram on an entrypoint.             |
+    | `apache4.entrypoint.requests.bytes.total`  | Count     | `code`, `method`, `protocol`, `entrypoint` | The total size of HTTP requests in bytes handled by an entrypoint.  |
+    | `apache4.entrypoint.responses.bytes.total` | Count     | `code`, `method`, `protocol`, `entrypoint` | The total size of HTTP responses in bytes handled by an entrypoint. |
 
 === "StatsD"
 
@@ -455,7 +455,7 @@ On top of the official OpenTelemetry semantic conventions, Traefik provides its 
     | `{prefix}.entrypoint.responses.bytes.total` | Count     | `code`, `method`, `protocol`, `entrypoint` | The total size of HTTP responses in bytes handled by an entrypoint. |
 
 !!! note "\{prefix\} Default Value"
-        By default, \{prefix\} value is `traefik`.
+        By default, \{prefix\} value is `apache4`.
 
 #### Router Metrics
 
@@ -463,21 +463,21 @@ On top of the official OpenTelemetry semantic conventions, Traefik provides its 
 
     | Metric    | Type      | [Labels](#labels)         | Description           |
     |-----------------------|-----------|----------------------|--------------------------------|
-    | `traefik_router_requests_total`        | Count     | `code`, `method`, `protocol`, `router`, `service` | The total count of HTTP requests handled by a router.          |
-    | `traefik_router_requests_tls_total`    | Count     | `tls_version`, `tls_cipher`, `router`, `service`  | The total count of HTTPS requests handled by a router.         |
-    | `traefik_router_request_duration_seconds`      | Histogram | `code`, `method`, `protocol`, `router`, `service` | Request processing duration histogram on a router.             |
-    | `traefik_router_requests_bytes_total`  | Count     | `code`, `method`, `protocol`, `router`, `service` | The total size of HTTP requests in bytes handled by a router.  |
-    | `traefik_router_responses_bytes_total` | Count     | `code`, `method`, `protocol`, `router`, `service` | The total size of HTTP responses in bytes handled by a router. |
+    | `apache4_router_requests_total`        | Count     | `code`, `method`, `protocol`, `router`, `service` | The total count of HTTP requests handled by a router.          |
+    | `apache4_router_requests_tls_total`    | Count     | `tls_version`, `tls_cipher`, `router`, `service`  | The total count of HTTPS requests handled by a router.         |
+    | `apache4_router_request_duration_seconds`      | Histogram | `code`, `method`, `protocol`, `router`, `service` | Request processing duration histogram on a router.             |
+    | `apache4_router_requests_bytes_total`  | Count     | `code`, `method`, `protocol`, `router`, `service` | The total size of HTTP requests in bytes handled by a router.  |
+    | `apache4_router_responses_bytes_total` | Count     | `code`, `method`, `protocol`, `router`, `service` | The total size of HTTP responses in bytes handled by a router. |
     
 === "Prometheus"
 
     | Metric                | Type      | [Labels](#labels)                                 | Description                                                    |
     |-----------------------|-----------|---------------------------------------------------|----------------------------------------------------------------|
-    | `traefik_router_requests_total`        | Count     | `code`, `method`, `protocol`, `router`, `service` | The total count of HTTP requests handled by a router.          |
-    | `traefik_router_requests_tls_total`    | Count     | `tls_version`, `tls_cipher`, `router`, `service`  | The total count of HTTPS requests handled by a router.         |
-    | `traefik_router_request_duration_seconds`      | Histogram | `code`, `method`, `protocol`, `router`, `service` | Request processing duration histogram on a router.             |
-    | `traefik_router_requests_bytes_total`  | Count     | `code`, `method`, `protocol`, `router`, `service` | The total size of HTTP requests in bytes handled by a router.  |
-    | `traefik_router_responses_bytes_total` | Count     | `code`, `method`, `protocol`, `router`, `service` | The total size of HTTP responses in bytes handled by a router. |
+    | `apache4_router_requests_total`        | Count     | `code`, `method`, `protocol`, `router`, `service` | The total count of HTTP requests handled by a router.          |
+    | `apache4_router_requests_tls_total`    | Count     | `tls_version`, `tls_cipher`, `router`, `service`  | The total count of HTTPS requests handled by a router.         |
+    | `apache4_router_request_duration_seconds`      | Histogram | `code`, `method`, `protocol`, `router`, `service` | Request processing duration histogram on a router.             |
+    | `apache4_router_requests_bytes_total`  | Count     | `code`, `method`, `protocol`, `router`, `service` | The total size of HTTP requests in bytes handled by a router.  |
+    | `apache4_router_responses_bytes_total` | Count     | `code`, `method`, `protocol`, `router`, `service` | The total size of HTTP responses in bytes handled by a router. |
 
 === "Datadog"
 
@@ -493,11 +493,11 @@ On top of the official OpenTelemetry semantic conventions, Traefik provides its 
 
     | Metric                | Type      | [Labels](#labels)                                 | Description                                                    |
     |-----------------------|-----------|---------------------------------------------------|----------------------------------------------------------------|
-    | `traefik.router.requests.total`        | Count     | `code`, `method`, `protocol`, `router`, `service` | The total count of HTTP requests handled by a router.          |
-    | `traefik.router.requests.tls.total`    | Count     | `tls_version`, `tls_cipher`, `router`, `service`  | The total count of HTTPS requests handled by a router.         |
-    | `traefik.router.request.duration.seconds`      | Histogram | `code`, `method`, `protocol`, `router`, `service` | Request processing duration histogram on a router.             |
-    | `traefik.router.requests.bytes.total`  | Count     | `code`, `method`, `protocol`, `router`, `service` | The total size of HTTP requests in bytes handled by a router.  |
-    | `traefik.router.responses.bytes.total` | Count     | `code`, `method`, `protocol`, `router`, `service` | The total size of HTTP responses in bytes handled by a router. |
+    | `apache4.router.requests.total`        | Count     | `code`, `method`, `protocol`, `router`, `service` | The total count of HTTP requests handled by a router.          |
+    | `apache4.router.requests.tls.total`    | Count     | `tls_version`, `tls_cipher`, `router`, `service`  | The total count of HTTPS requests handled by a router.         |
+    | `apache4.router.request.duration.seconds`      | Histogram | `code`, `method`, `protocol`, `router`, `service` | Request processing duration histogram on a router.             |
+    | `apache4.router.requests.bytes.total`  | Count     | `code`, `method`, `protocol`, `router`, `service` | The total size of HTTP requests in bytes handled by a router.  |
+    | `apache4.router.responses.bytes.total` | Count     | `code`, `method`, `protocol`, `router`, `service` | The total size of HTTP responses in bytes handled by a router. |
 
 === "StatsD"
 
@@ -510,7 +510,7 @@ On top of the official OpenTelemetry semantic conventions, Traefik provides its 
     | `{prefix}.router.responses.bytes.total` | Count     | `code`, `method`, `protocol`, `router`, `service` | The total size of HTTP responses in bytes handled by a router. |
 
 !!! note "\{prefix\} Default Value"
-        By default, \{prefix\} value is `traefik`.
+        By default, \{prefix\} value is `apache4`.
 
 #### Service Metrics
 
@@ -518,25 +518,25 @@ On top of the official OpenTelemetry semantic conventions, Traefik provides its 
 
     | Metric    | Type      | Labels      | Description     |
     |-----------------------|-----------|------------|------------|
-    | `traefik_service_requests_total`        | Count     | `code`, `method`, `protocol`, `service` | The total count of HTTP requests processed on a service.    |
-    | `traefik_service_requests_tls_total`    | Count     | `tls_version`, `tls_cipher`, `service`  | The total count of HTTPS requests processed on a service.   |
-    | `traefik_service_request_duration_seconds`      | Histogram | `code`, `method`, `protocol`, `service` | Request processing duration histogram on a service.         |
-    | `traefik_service_retries_total`         | Count     | `service`                               | The count of requests retries on a service.                 |
-    | `traefik_service_server_up`             | Gauge     | `service`, `url`                        | Current service's server status, 0 for a down or 1 for up.  |
-    | `traefik_service_requests_bytes_total`  | Count     | `code`, `method`, `protocol`, `service` | The total size of requests in bytes received by a service.  |
-    | `traefik_service_responses_bytes_total` | Count     | `code`, `method`, `protocol`, `service` | The total size of responses in bytes returned by a service. |
+    | `apache4_service_requests_total`        | Count     | `code`, `method`, `protocol`, `service` | The total count of HTTP requests processed on a service.    |
+    | `apache4_service_requests_tls_total`    | Count     | `tls_version`, `tls_cipher`, `service`  | The total count of HTTPS requests processed on a service.   |
+    | `apache4_service_request_duration_seconds`      | Histogram | `code`, `method`, `protocol`, `service` | Request processing duration histogram on a service.         |
+    | `apache4_service_retries_total`         | Count     | `service`                               | The count of requests retries on a service.                 |
+    | `apache4_service_server_up`             | Gauge     | `service`, `url`                        | Current service's server status, 0 for a down or 1 for up.  |
+    | `apache4_service_requests_bytes_total`  | Count     | `code`, `method`, `protocol`, `service` | The total size of requests in bytes received by a service.  |
+    | `apache4_service_responses_bytes_total` | Count     | `code`, `method`, `protocol`, `service` | The total size of responses in bytes returned by a service. |
     
 === "Prometheus"
 
     | Metric    | Type      | Labels    | Description    |
     |-----------------------|-----------|-------|------------|
-    | `traefik_service_requests_total`        | Count     | `code`, `method`, `protocol`, `service` | The total count of HTTP requests processed on a service.    |
-    | `traefik_service_requests_tls_total`    | Count     | `tls_version`, `tls_cipher`, `service`  | The total count of HTTPS requests processed on a service.   |
-    | `traefik_service_request_duration_seconds`      | Histogram | `code`, `method`, `protocol`, `service` | Request processing duration histogram on a service.         |
-    | `traefik_service_retries_total`         | Count     | `service`                               | The count of requests retries on a service.                 |
-    | `traefik_service_server_up`             | Gauge     | `service`, `url`                        | Current service's server status, 0 for a down or 1 for up.  |
-    | `traefik_service_requests_bytes_total`  | Count     | `code`, `method`, `protocol`, `service` | The total size of requests in bytes received by a service.  |
-    | `traefik_service_responses_bytes_total` | Count     | `code`, `method`, `protocol`, `service` | The total size of responses in bytes returned by a service. |
+    | `apache4_service_requests_total`        | Count     | `code`, `method`, `protocol`, `service` | The total count of HTTP requests processed on a service.    |
+    | `apache4_service_requests_tls_total`    | Count     | `tls_version`, `tls_cipher`, `service`  | The total count of HTTPS requests processed on a service.   |
+    | `apache4_service_request_duration_seconds`      | Histogram | `code`, `method`, `protocol`, `service` | Request processing duration histogram on a service.         |
+    | `apache4_service_retries_total`         | Count     | `service`                               | The count of requests retries on a service.                 |
+    | `apache4_service_server_up`             | Gauge     | `service`, `url`                        | Current service's server status, 0 for a down or 1 for up.  |
+    | `apache4_service_requests_bytes_total`  | Count     | `code`, `method`, `protocol`, `service` | The total size of requests in bytes received by a service.  |
+    | `apache4_service_responses_bytes_total` | Count     | `code`, `method`, `protocol`, `service` | The total size of responses in bytes returned by a service. |
 
 === "Datadog"
 
@@ -554,13 +554,13 @@ On top of the official OpenTelemetry semantic conventions, Traefik provides its 
 
     | Metric                | Type      | Labels                                  | Description                                                 |
     |-----------------------|-----------|-----------------------------------------|-------------------------------------------------------------|
-    | `traefik.service.requests.total`        | Count     | `code`, `method`, `protocol`, `service` | The total count of HTTP requests processed on a service.    |
-    | `traefik.service.requests.tls.total`    | Count     | `tls_version`, `tls_cipher`, `service`  | The total count of HTTPS requests processed on a service.   |
-    | `traefik.service.request.duration.seconds`      | Histogram | `code`, `method`, `protocol`, `service` | Request processing duration histogram on a service.         |
-    | `traefik.service.retries.total`         | Count     | `service`                               | The count of requests retries on a service.                 |
-    | `traefik.service.server.up`             | Gauge     | `service`, `url`                        | Current service's server status, 0 for a down or 1 for up.  |
-    | `traefik.service.requests.bytes.total`  | Count     | `code`, `method`, `protocol`, `service` | The total size of requests in bytes received by a service.  |
-    | `traefik.service.responses.bytes.total` | Count     | `code`, `method`, `protocol`, `service` | The total size of responses in bytes returned by a service. |
+    | `apache4.service.requests.total`        | Count     | `code`, `method`, `protocol`, `service` | The total count of HTTP requests processed on a service.    |
+    | `apache4.service.requests.tls.total`    | Count     | `tls_version`, `tls_cipher`, `service`  | The total count of HTTPS requests processed on a service.   |
+    | `apache4.service.request.duration.seconds`      | Histogram | `code`, `method`, `protocol`, `service` | Request processing duration histogram on a service.         |
+    | `apache4.service.retries.total`         | Count     | `service`                               | The count of requests retries on a service.                 |
+    | `apache4.service.server.up`             | Gauge     | `service`, `url`                        | Current service's server status, 0 for a down or 1 for up.  |
+    | `apache4.service.requests.bytes.total`  | Count     | `code`, `method`, `protocol`, `service` | The total size of requests in bytes received by a service.  |
+    | `apache4.service.responses.bytes.total` | Count     | `code`, `method`, `protocol`, `service` | The total size of responses in bytes returned by a service. |
 
 === "StatsD"
 
@@ -575,7 +575,7 @@ On top of the official OpenTelemetry semantic conventions, Traefik provides its 
     | `{prefix}.service.responses.bytes.total` | Count     | `code`, `method`, `protocol`, `service` | The total size of responses in bytes returned by a service. |
 
 !!! note "\{prefix\} Default Value"
-        By default, \{prefix\} value is `traefik`.
+        By default, \{prefix\} value is `apache4`.
 
 ##### Labels
 

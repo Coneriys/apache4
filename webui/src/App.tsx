@@ -1,4 +1,4 @@
-import { Box, darkTheme, FaencyProvider, lightTheme } from '@traefiklabs/faency'
+import { Box, darkTheme, FaencyProvider, lightTheme } from '@apache4labs/faency'
 import { Suspense, useEffect } from 'react'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { HashRouter, Navigate, Route, Routes as RouterRoutes, useLocation } from 'react-router-dom'
@@ -39,7 +39,7 @@ export const Routes = () => {
     <Suspense fallback={<PageLoader />}>
       {showHubButton && (
         <Helmet>
-          <script src="https://traefik.github.io/traefiklabs-hub-button-app/main-v1.js"></script>
+          <script src="https://apache4.github.io/apache4labs-hub-button-app/main-v1.js"></script>
         </Helmet>
       )}
       <RouterRoutes>

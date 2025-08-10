@@ -7,7 +7,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/traefik/traefik/v3/pkg/rules"
+	"github.com/apache4/apache4/v3/pkg/rules"
 	"github.com/vulcand/predicate"
 )
 

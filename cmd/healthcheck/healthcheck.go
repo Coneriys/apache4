@@ -7,26 +7,26 @@ import (
 	"os"
 	"time"
 
-	"github.com/traefik/paerser/cli"
-	"github.com/traefik/traefik/v3/pkg/config/static"
+	"github.com/apache4/paerser/cli"
+	"github.com/apache4/apache4/v3/pkg/config/static"
 )
 
 // NewCmd builds a new HealthCheck command.
-func NewCmd(traefikConfiguration *static.Configuration, loaders []cli.ResourceLoader) *cli.Command {
+func NewCmd(apache4Configuration *static.Configuration, loaders []cli.ResourceLoader) *cli.Command {
 	return &cli.Command{
 		Name:          "healthcheck",
-		Description:   `Calls Traefik /ping endpoint (disabled by default) to check the health of Traefik.`,
-		Configuration: traefikConfiguration,
-		Run:           runCmd(traefikConfiguration),
+		Description:   `Calls apache4 /ping endpoint (disabled by default) to check the health of apache4.`,
+		Configuration: apache4Configuration,
+		Run:           runCmd(apache4Configuration),
 		Resources:     loaders,
 	}
 }
 
-func runCmd(traefikConfiguration *static.Configuration) func(_ []string) error {
+func runCmd(apache4Configuration *static.Configuration) func(_ []string) error {
 	return func(_ []string) error {
-		traefikConfiguration.SetEffectiveConfiguration()
+		apache4Configuration.SetEffectiveConfiguration()
 
-		resp, errPing := Do(*traefikConfiguration)
+		resp, errPing := Do(*apache4Configuration)
 		if resp != nil {
 			resp.Body.Close()
 		}
@@ -53,7 +53,7 @@ func Do(staticConfiguration static.Configuration) (*http.Response, error) {
 
 	ep := staticConfiguration.Ping.EntryPoint
 	if ep == "" {
-		ep = "traefik"
+		ep = "apache4"
 	}
 
 	pingEntryPoint, ok := staticConfiguration.EntryPoints[ep]

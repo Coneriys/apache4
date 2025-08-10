@@ -6,11 +6,11 @@ import (
 	"strings"
 
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/paerser/cli"
-	"github.com/traefik/paerser/env"
+	"github.com/apache4/paerser/cli"
+	"github.com/apache4/paerser/env"
 )
 
-// EnvLoader loads a configuration from all the environment variables prefixed with "TRAEFIK_".
+// EnvLoader loads a configuration from all the environment variables prefixed with "apache4_".
 type EnvLoader struct{}
 
 // Load loads the command's configuration from the environment variables.

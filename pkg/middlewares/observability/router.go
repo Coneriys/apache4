@@ -5,9 +5,9 @@ import (
 	"net/http"
 
 	"github.com/containous/alice"
-	"github.com/traefik/traefik/v3/pkg/logs"
-	"github.com/traefik/traefik/v3/pkg/middlewares"
-	"github.com/traefik/traefik/v3/pkg/tracing"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/middlewares"
+	"github.com/apache4/apache4/v3/pkg/tracing"
 	"go.opentelemetry.io/otel/attribute"
 	semconv "go.opentelemetry.io/otel/semconv/v1.26.0"
 	"go.opentelemetry.io/otel/trace"
@@ -51,8 +51,8 @@ func (f *routerTracing) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 
 		req = req.WithContext(tracingCtx)
 
-		span.SetAttributes(attribute.String("traefik.service.name", f.service))
-		span.SetAttributes(attribute.String("traefik.router.name", f.router))
+		span.SetAttributes(attribute.String("apache4.service.name", f.service))
+		span.SetAttributes(attribute.String("apache4.router.name", f.router))
 		span.SetAttributes(semconv.HTTPRoute(f.routerRule))
 	}
 

@@ -142,17 +142,17 @@ linters:
         - pkg: sigs.k8s.io/gateway-api/apis/v1alpha2
           alias: gatev1alpha2
 
-        # Traefik Kubernetes rewrites:
-        - pkg: github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/traefikio/v1alpha1
-          alias: traefikv1alpha1
-        - pkg: github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned
-          alias: traefikclientset
-        - pkg: github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/informers/externalversions
-          alias: traefikinformers
-        - pkg: github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned/scheme
-          alias: traefikscheme
-        - pkg: github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned/fake
-          alias: traefikcrdfake
+        # apache4 Kubernetes rewrites:
+        - pkg: github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/apache4io/v1alpha1
+          alias: apache4v1alpha1
+        - pkg: github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned
+          alias: apache4clientset
+        - pkg: github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/informers/externalversions
+          alias: apache4informers
+        - pkg: github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned/scheme
+          alias: apache4scheme
+        - pkg: github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned/fake
+          alias: apache4crdfake
     misspell:
       locale: US
     revive:

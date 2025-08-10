@@ -4,13 +4,13 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/config/label"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/config/label"
 )
 
 const (
 	// https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/#syntax-and-character-set
-	annotationsPrefix = "traefik.ingress.kubernetes.io/"
+	annotationsPrefix = "apache4.ingress.kubernetes.io/"
 )
 
 var annotationsRegex = regexp.MustCompile(`(.+)\.(\w+)\.(\d+)\.(.+)`)
@@ -64,7 +64,7 @@ func parseRouterConfig(annotations map[string]string) (*RouterConfig, error) {
 
 	cfg := &RouterConfig{}
 
-	err := label.Decode(labels, cfg, "traefik.router.")
+	err := label.Decode(labels, cfg, "apache4.router.")
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func parseServiceConfig(annotations map[string]string) (*ServiceConfig, error) {
 
 	cfg := &ServiceConfig{}
 
-	err := label.Decode(labels, cfg, "traefik.service.")
+	err := label.Decode(labels, cfg, "apache4.service.")
 	if err != nil {
 		return nil, err
 	}

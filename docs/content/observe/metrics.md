@@ -1,15 +1,15 @@
 ---
 title: "Metrics"
-description: "Metrics in Traefik Proxy offer a comprehensive view of your infrastructure's health. They allow you to monitor critical indicators like incoming traffic volume. Metrics graphs and visualizations are helpful during incident triage in understanding the causes and implementing proactive measures."
+description: "Metrics in apache4 Proxy offer a comprehensive view of your infrastructure's health. They allow you to monitor critical indicators like incoming traffic volume. Metrics graphs and visualizations are helpful during incident triage in understanding the causes and implementing proactive measures."
 ---
 
 # Metrics
 
-Metrics in Traefik Proxy offer a comprehensive view of your infrastructure's health. They allow you to monitor critical indicators like incoming traffic volume. Metrics graphs and visualizations are helpful during incident triage in understanding the causes and implementing proactive measures.
+Metrics in apache4 Proxy offer a comprehensive view of your infrastructure's health. They allow you to monitor critical indicators like incoming traffic volume. Metrics graphs and visualizations are helpful during incident triage in understanding the causes and implementing proactive measures.
 
 ## Available Metrics Providers
 
-Traefik Proxy supports the following metrics providers:
+apache4 Proxy supports the following metrics providers:
 
 - OpenTelemetry
 - Prometheus
@@ -19,7 +19,7 @@ Traefik Proxy supports the following metrics providers:
 
 ## Configuration
 
-To enable metrics in Traefik Proxy, you need to configure the metrics provider in your static configuration file or helm values if you are using the [Helm chart](https://github.com/traefik/traefik-helm-chart). The following example shows how to configure the OpenTelemetry provider to send metrics to a collector.
+To enable metrics in apache4 Proxy, you need to configure the metrics provider in your static configuration file or helm values if you are using the [Helm chart](https://github.com/apache4/apache4-helm-chart). The following example shows how to configure the OpenTelemetry provider to send metrics to a collector.
 
 ```yaml tab="Structured (YAML)"
 metrics:
@@ -69,7 +69,7 @@ http:
 
 ```yaml tab="Kubernetes"
 # ingressroute.yaml
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: my-router
@@ -86,14 +86,14 @@ spec:
 
 ```bash tab="Labels"
 labels:
-  - "traefik.http.routers.my-router.observability.metrics=false"
+  - "apache4.http.routers.my-router.observability.metrics=false"
 ```
 
 ```json tab="Tags"
 {
   // ...
   "Tags": [
-    "traefik.http.routers.my-router.observability.metrics=false"
+    "apache4.http.routers.my-router.observability.metrics=false"
   ]
 }
 ```

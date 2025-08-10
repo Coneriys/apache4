@@ -11,27 +11,27 @@ import (
 
 	"github.com/rs/zerolog/log"
 	"github.com/tailscale/tscert"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/logs"
-	"github.com/traefik/traefik/v3/pkg/muxer/http"
-	"github.com/traefik/traefik/v3/pkg/muxer/tcp"
-	"github.com/traefik/traefik/v3/pkg/safe"
-	traefiktls "github.com/traefik/traefik/v3/pkg/tls"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/muxer/http"
+	"github.com/apache4/apache4/v3/pkg/muxer/tcp"
+	"github.com/apache4/apache4/v3/pkg/safe"
+	apache4tls "github.com/apache4/apache4/v3/pkg/tls"
+	"github.com/apache4/apache4/v3/pkg/types"
 )
 
 // Provider is the Tailscale certificates provider implementation. It receives
-// configuration updates (e.g. new router, with new domain) from Traefik core,
+// configuration updates (e.g. new router, with new domain) from apache4 core,
 // fetches the corresponding TLS certificates from the Tailscale daemon, and
-// sends back to Traefik core a configuration updated with the certificates.
+// sends back to apache4 core a configuration updated with the certificates.
 type Provider struct {
 	ResolverName string
 
-	dynConfigs  chan dynamic.Configuration // updates from Traefik core
-	dynMessages chan<- dynamic.Message     // update to Traefik core
+	dynConfigs  chan dynamic.Configuration // updates from apache4 core
+	dynMessages chan<- dynamic.Message     // update to apache4 core
 
 	certByDomainMu sync.RWMutex
-	certByDomain   map[string]traefiktls.Certificate
+	certByDomain   map[string]apache4tls.Certificate
 }
 
 // ThrottleDuration implements the aggregator.throttled interface, in order to
@@ -43,7 +43,7 @@ func (p *Provider) ThrottleDuration() time.Duration {
 // Init implements the provider.Provider interface.
 func (p *Provider) Init() error {
 	p.dynConfigs = make(chan dynamic.Configuration)
-	p.certByDomain = make(map[string]traefiktls.Certificate)
+	p.certByDomain = make(map[string]apache4tls.Certificate)
 
 	return nil
 }
@@ -225,7 +225,7 @@ func (p *Provider) purgeUnusedCerts(domains []string) bool {
 	p.certByDomainMu.Lock()
 	defer p.certByDomainMu.Unlock()
 
-	newCertByDomain := make(map[string]traefiktls.Certificate)
+	newCertByDomain := make(map[string]apache4tls.Certificate)
 	for _, domain := range domains {
 		if cert, ok := p.certByDomain[domain]; ok {
 			newCertByDomain[domain] = cert
@@ -254,7 +254,7 @@ func (p *Provider) fetchCerts(ctx context.Context, domains []string) {
 		logger.Debug().Msgf("Fetched certificate for domain %q", domain)
 
 		p.certByDomainMu.Lock()
-		p.certByDomain[domain] = traefiktls.Certificate{
+		p.certByDomain[domain] = apache4tls.Certificate{
 			CertFile: types.FileOrContent(cert),
 			KeyFile:  types.FileOrContent(key),
 		}
@@ -268,7 +268,7 @@ func (p *Provider) sendDynamicConfig() {
 	p.certByDomainMu.RLock()
 	defer p.certByDomainMu.RUnlock()
 
-	// TODO: we always send back to traefik core the set of certificates
+	// TODO: we always send back to apache4 core the set of certificates
 	// sorted, to make sure that two identical sets, that would be sorted
 	// differently, do not trigger another configuration update because of the
 	// mismatch. But in reality we should not end up sending a certificates
@@ -281,11 +281,11 @@ func (p *Provider) sendDynamicConfig() {
 	}
 	sort.Strings(sortedDomains)
 
-	var certs []*traefiktls.CertAndStores
+	var certs []*apache4tls.CertAndStores
 	for _, domain := range sortedDomains {
 		// Only the default store is supported.
-		certs = append(certs, &traefiktls.CertAndStores{
-			Stores:      []string{traefiktls.DefaultTLSStoreName},
+		certs = append(certs, &apache4tls.CertAndStores{
+			Stores:      []string{apache4tls.DefaultTLSStoreName},
 			Certificate: p.certByDomain[domain],
 		})
 	}

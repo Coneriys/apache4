@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/traefik/traefik/v3/pkg/tracing"
+	"github.com/apache4/apache4/v3/pkg/tracing"
 	"go.opentelemetry.io/otel/attribute"
 )
 

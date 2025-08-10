@@ -10,12 +10,12 @@ import (
 	"time"
 
 	"github.com/rs/zerolog/log"
-	traefikclientset "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned"
-	traefikinformers "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/informers/externalversions"
-	traefikv1alpha1 "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/traefikio/v1alpha1"
-	"github.com/traefik/traefik/v3/pkg/provider/kubernetes/k8s"
-	"github.com/traefik/traefik/v3/pkg/types"
-	"github.com/traefik/traefik/v3/pkg/version"
+	apache4clientset "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned"
+	apache4informers "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/informers/externalversions"
+	apache4v1alpha1 "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/apache4io/v1alpha1"
+	"github.com/apache4/apache4/v3/pkg/provider/kubernetes/k8s"
+	"github.com/apache4/apache4/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/version"
 	corev1 "k8s.io/api/core/v1"
 	discoveryv1 "k8s.io/api/discovery/v1"
 	kerror "k8s.io/apimachinery/pkg/api/errors"
@@ -35,17 +35,17 @@ const resyncPeriod = 10 * time.Minute
 // The stores can then be accessed via the Get* functions.
 type Client interface {
 	WatchAll(namespaces []string, stopCh <-chan struct{}) (<-chan interface{}, error)
-	GetIngressRoutes() []*traefikv1alpha1.IngressRoute
-	GetIngressRouteTCPs() []*traefikv1alpha1.IngressRouteTCP
-	GetIngressRouteUDPs() []*traefikv1alpha1.IngressRouteUDP
-	GetMiddlewares() []*traefikv1alpha1.Middleware
-	GetMiddlewareTCPs() []*traefikv1alpha1.MiddlewareTCP
-	GetTraefikService(namespace, name string) (*traefikv1alpha1.TraefikService, bool, error)
-	GetTraefikServices() []*traefikv1alpha1.TraefikService
-	GetTLSOptions() []*traefikv1alpha1.TLSOption
-	GetServersTransports() []*traefikv1alpha1.ServersTransport
-	GetServersTransportTCPs() []*traefikv1alpha1.ServersTransportTCP
-	GetTLSStores() []*traefikv1alpha1.TLSStore
+	GetIngressRoutes() []*apache4v1alpha1.IngressRoute
+	GetIngressRouteTCPs() []*apache4v1alpha1.IngressRouteTCP
+	GetIngressRouteUDPs() []*apache4v1alpha1.IngressRouteUDP
+	GetMiddlewares() []*apache4v1alpha1.Middleware
+	GetMiddlewareTCPs() []*apache4v1alpha1.MiddlewareTCP
+	Getapache4Service(namespace, name string) (*apache4v1alpha1.apache4Service, bool, error)
+	Getapache4Services() []*apache4v1alpha1.apache4Service
+	GetTLSOptions() []*apache4v1alpha1.TLSOption
+	GetServersTransports() []*apache4v1alpha1.ServersTransport
+	GetServersTransportTCPs() []*apache4v1alpha1.ServersTransportTCP
+	GetTLSStores() []*apache4v1alpha1.TLSStore
 	GetService(namespace, name string) (*corev1.Service, bool, error)
 	GetSecret(namespace, name string) (*corev1.Secret, bool, error)
 	GetEndpointSlicesForService(namespace, serviceName string) ([]*discoveryv1.EndpointSlice, error)
@@ -55,13 +55,13 @@ type Client interface {
 
 // TODO: add tests for the clientWrapper (and its methods) itself.
 type clientWrapper struct {
-	csCrd  traefikclientset.Interface
+	csCrd  apache4clientset.Interface
 	csKube kclientset.Interface
 
 	clusterScopeFactory         kinformers.SharedInformerFactory
 	disableClusterScopeInformer bool
 
-	factoriesCrd    map[string]traefikinformers.SharedInformerFactory
+	factoriesCrd    map[string]apache4informers.SharedInformerFactory
 	factoriesKube   map[string]kinformers.SharedInformerFactory
 	factoriesSecret map[string]kinformers.SharedInformerFactory
 
@@ -80,7 +80,7 @@ func createClientFromConfig(c *rest.Config) (*clientWrapper, error) {
 		runtime.GOARCH,
 	)
 
-	csCrd, err := traefikclientset.NewForConfig(c)
+	csCrd, err := apache4clientset.NewForConfig(c)
 	if err != nil {
 		return nil, err
 	}
@@ -93,11 +93,11 @@ func createClientFromConfig(c *rest.Config) (*clientWrapper, error) {
 	return newClientImpl(csKube, csCrd), nil
 }
 
-func newClientImpl(csKube kclientset.Interface, csCrd traefikclientset.Interface) *clientWrapper {
+func newClientImpl(csKube kclientset.Interface, csCrd apache4clientset.Interface) *clientWrapper {
 	return &clientWrapper{
 		csCrd:           csCrd,
 		csKube:          csKube,
-		factoriesCrd:    make(map[string]traefikinformers.SharedInformerFactory),
+		factoriesCrd:    make(map[string]apache4informers.SharedInformerFactory),
 		factoriesKube:   make(map[string]kinformers.SharedInformerFactory),
 		factoriesSecret: make(map[string]kinformers.SharedInformerFactory),
 	}
@@ -177,44 +177,44 @@ func (c *clientWrapper) WatchAll(namespaces []string, stopCh <-chan struct{}) (<
 	}
 
 	for _, ns := range namespaces {
-		factoryCrd := traefikinformers.NewSharedInformerFactoryWithOptions(c.csCrd, resyncPeriod, traefikinformers.WithNamespace(ns), traefikinformers.WithTweakListOptions(matchesLabelSelector))
-		_, err := factoryCrd.Traefik().V1alpha1().IngressRoutes().Informer().AddEventHandler(eventHandler)
+		factoryCrd := apache4informers.NewSharedInformerFactoryWithOptions(c.csCrd, resyncPeriod, apache4informers.WithNamespace(ns), apache4informers.WithTweakListOptions(matchesLabelSelector))
+		_, err := factoryCrd.apache4().V1alpha1().IngressRoutes().Informer().AddEventHandler(eventHandler)
 		if err != nil {
 			return nil, err
 		}
-		_, err = factoryCrd.Traefik().V1alpha1().Middlewares().Informer().AddEventHandler(eventHandler)
+		_, err = factoryCrd.apache4().V1alpha1().Middlewares().Informer().AddEventHandler(eventHandler)
 		if err != nil {
 			return nil, err
 		}
-		_, err = factoryCrd.Traefik().V1alpha1().MiddlewareTCPs().Informer().AddEventHandler(eventHandler)
+		_, err = factoryCrd.apache4().V1alpha1().MiddlewareTCPs().Informer().AddEventHandler(eventHandler)
 		if err != nil {
 			return nil, err
 		}
-		_, err = factoryCrd.Traefik().V1alpha1().IngressRouteTCPs().Informer().AddEventHandler(eventHandler)
+		_, err = factoryCrd.apache4().V1alpha1().IngressRouteTCPs().Informer().AddEventHandler(eventHandler)
 		if err != nil {
 			return nil, err
 		}
-		_, err = factoryCrd.Traefik().V1alpha1().IngressRouteUDPs().Informer().AddEventHandler(eventHandler)
+		_, err = factoryCrd.apache4().V1alpha1().IngressRouteUDPs().Informer().AddEventHandler(eventHandler)
 		if err != nil {
 			return nil, err
 		}
-		_, err = factoryCrd.Traefik().V1alpha1().TLSOptions().Informer().AddEventHandler(eventHandler)
+		_, err = factoryCrd.apache4().V1alpha1().TLSOptions().Informer().AddEventHandler(eventHandler)
 		if err != nil {
 			return nil, err
 		}
-		_, err = factoryCrd.Traefik().V1alpha1().ServersTransports().Informer().AddEventHandler(eventHandler)
+		_, err = factoryCrd.apache4().V1alpha1().ServersTransports().Informer().AddEventHandler(eventHandler)
 		if err != nil {
 			return nil, err
 		}
-		_, err = factoryCrd.Traefik().V1alpha1().ServersTransportTCPs().Informer().AddEventHandler(eventHandler)
+		_, err = factoryCrd.apache4().V1alpha1().ServersTransportTCPs().Informer().AddEventHandler(eventHandler)
 		if err != nil {
 			return nil, err
 		}
-		_, err = factoryCrd.Traefik().V1alpha1().TLSStores().Informer().AddEventHandler(eventHandler)
+		_, err = factoryCrd.apache4().V1alpha1().TLSStores().Informer().AddEventHandler(eventHandler)
 		if err != nil {
 			return nil, err
 		}
-		_, err = factoryCrd.Traefik().V1alpha1().TraefikServices().Informer().AddEventHandler(eventHandler)
+		_, err = factoryCrd.apache4().V1alpha1().apache4Services().Informer().AddEventHandler(eventHandler)
 		if err != nil {
 			return nil, err
 		}
@@ -289,11 +289,11 @@ func (c *clientWrapper) WatchAll(namespaces []string, stopCh <-chan struct{}) (<
 	return eventCh, nil
 }
 
-func (c *clientWrapper) GetIngressRoutes() []*traefikv1alpha1.IngressRoute {
-	var result []*traefikv1alpha1.IngressRoute
+func (c *clientWrapper) GetIngressRoutes() []*apache4v1alpha1.IngressRoute {
+	var result []*apache4v1alpha1.IngressRoute
 
 	for ns, factory := range c.factoriesCrd {
-		ings, err := factory.Traefik().V1alpha1().IngressRoutes().Lister().List(labels.Everything())
+		ings, err := factory.apache4().V1alpha1().IngressRoutes().Lister().List(labels.Everything())
 		if err != nil {
 			log.Error().Err(err).Msgf("Failed to list ingress routes in namespace %s", ns)
 		}
@@ -303,11 +303,11 @@ func (c *clientWrapper) GetIngressRoutes() []*traefikv1alpha1.IngressRoute {
 	return result
 }
 
-func (c *clientWrapper) GetIngressRouteTCPs() []*traefikv1alpha1.IngressRouteTCP {
-	var result []*traefikv1alpha1.IngressRouteTCP
+func (c *clientWrapper) GetIngressRouteTCPs() []*apache4v1alpha1.IngressRouteTCP {
+	var result []*apache4v1alpha1.IngressRouteTCP
 
 	for ns, factory := range c.factoriesCrd {
-		ings, err := factory.Traefik().V1alpha1().IngressRouteTCPs().Lister().List(labels.Everything())
+		ings, err := factory.apache4().V1alpha1().IngressRouteTCPs().Lister().List(labels.Everything())
 		if err != nil {
 			log.Error().Err(err).Msgf("Failed to list tcp ingress routes in namespace %s", ns)
 		}
@@ -317,11 +317,11 @@ func (c *clientWrapper) GetIngressRouteTCPs() []*traefikv1alpha1.IngressRouteTCP
 	return result
 }
 
-func (c *clientWrapper) GetIngressRouteUDPs() []*traefikv1alpha1.IngressRouteUDP {
-	var result []*traefikv1alpha1.IngressRouteUDP
+func (c *clientWrapper) GetIngressRouteUDPs() []*apache4v1alpha1.IngressRouteUDP {
+	var result []*apache4v1alpha1.IngressRouteUDP
 
 	for ns, factory := range c.factoriesCrd {
-		ings, err := factory.Traefik().V1alpha1().IngressRouteUDPs().Lister().List(labels.Everything())
+		ings, err := factory.apache4().V1alpha1().IngressRouteUDPs().Lister().List(labels.Everything())
 		if err != nil {
 			log.Error().Err(err).Msgf("Failed to list udp ingress routes in namespace %s", ns)
 		}
@@ -331,11 +331,11 @@ func (c *clientWrapper) GetIngressRouteUDPs() []*traefikv1alpha1.IngressRouteUDP
 	return result
 }
 
-func (c *clientWrapper) GetMiddlewares() []*traefikv1alpha1.Middleware {
-	var result []*traefikv1alpha1.Middleware
+func (c *clientWrapper) GetMiddlewares() []*apache4v1alpha1.Middleware {
+	var result []*apache4v1alpha1.Middleware
 
 	for ns, factory := range c.factoriesCrd {
-		middlewares, err := factory.Traefik().V1alpha1().Middlewares().Lister().List(labels.Everything())
+		middlewares, err := factory.apache4().V1alpha1().Middlewares().Lister().List(labels.Everything())
 		if err != nil {
 			log.Error().Err(err).Msgf("Failed to list middlewares in namespace %s", ns)
 		}
@@ -345,11 +345,11 @@ func (c *clientWrapper) GetMiddlewares() []*traefikv1alpha1.Middleware {
 	return result
 }
 
-func (c *clientWrapper) GetMiddlewareTCPs() []*traefikv1alpha1.MiddlewareTCP {
-	var result []*traefikv1alpha1.MiddlewareTCP
+func (c *clientWrapper) GetMiddlewareTCPs() []*apache4v1alpha1.MiddlewareTCP {
+	var result []*apache4v1alpha1.MiddlewareTCP
 
 	for ns, factory := range c.factoriesCrd {
-		middlewares, err := factory.Traefik().V1alpha1().MiddlewareTCPs().Lister().List(labels.Everything())
+		middlewares, err := factory.apache4().V1alpha1().MiddlewareTCPs().Lister().List(labels.Everything())
 		if err != nil {
 			log.Error().Err(err).Msgf("Failed to list TCP middlewares in namespace %s", ns)
 		}
@@ -359,38 +359,38 @@ func (c *clientWrapper) GetMiddlewareTCPs() []*traefikv1alpha1.MiddlewareTCP {
 	return result
 }
 
-// GetTraefikService returns the named service from the given namespace.
-func (c *clientWrapper) GetTraefikService(namespace, name string) (*traefikv1alpha1.TraefikService, bool, error) {
+// Getapache4Service returns the named service from the given namespace.
+func (c *clientWrapper) Getapache4Service(namespace, name string) (*apache4v1alpha1.apache4Service, bool, error) {
 	if !c.isWatchedNamespace(namespace) {
 		return nil, false, fmt.Errorf("failed to get service %s/%s: namespace is not within watched namespaces", namespace, name)
 	}
 
-	service, err := c.factoriesCrd[c.lookupNamespace(namespace)].Traefik().V1alpha1().TraefikServices().Lister().TraefikServices(namespace).Get(name)
+	service, err := c.factoriesCrd[c.lookupNamespace(namespace)].apache4().V1alpha1().apache4Services().Lister().apache4Services(namespace).Get(name)
 	exist, err := translateNotFoundError(err)
 
 	return service, exist, err
 }
 
-func (c *clientWrapper) GetTraefikServices() []*traefikv1alpha1.TraefikService {
-	var result []*traefikv1alpha1.TraefikService
+func (c *clientWrapper) Getapache4Services() []*apache4v1alpha1.apache4Service {
+	var result []*apache4v1alpha1.apache4Service
 
 	for ns, factory := range c.factoriesCrd {
-		traefikServices, err := factory.Traefik().V1alpha1().TraefikServices().Lister().List(labels.Everything())
+		apache4Services, err := factory.apache4().V1alpha1().apache4Services().Lister().List(labels.Everything())
 		if err != nil {
-			log.Error().Err(err).Msgf("Failed to list Traefik services in namespace %s", ns)
+			log.Error().Err(err).Msgf("Failed to list apache4 services in namespace %s", ns)
 		}
-		result = append(result, traefikServices...)
+		result = append(result, apache4Services...)
 	}
 
 	return result
 }
 
 // GetServersTransports returns all ServersTransport.
-func (c *clientWrapper) GetServersTransports() []*traefikv1alpha1.ServersTransport {
-	var result []*traefikv1alpha1.ServersTransport
+func (c *clientWrapper) GetServersTransports() []*apache4v1alpha1.ServersTransport {
+	var result []*apache4v1alpha1.ServersTransport
 
 	for ns, factory := range c.factoriesCrd {
-		serversTransports, err := factory.Traefik().V1alpha1().ServersTransports().Lister().List(labels.Everything())
+		serversTransports, err := factory.apache4().V1alpha1().ServersTransports().Lister().List(labels.Everything())
 		if err != nil {
 			log.Error().Err(err).Str("namespace", ns).Msg("Failed to list servers transport in namespace")
 		}
@@ -401,11 +401,11 @@ func (c *clientWrapper) GetServersTransports() []*traefikv1alpha1.ServersTranspo
 }
 
 // GetServersTransportTCPs returns all ServersTransportTCP.
-func (c *clientWrapper) GetServersTransportTCPs() []*traefikv1alpha1.ServersTransportTCP {
-	var result []*traefikv1alpha1.ServersTransportTCP
+func (c *clientWrapper) GetServersTransportTCPs() []*apache4v1alpha1.ServersTransportTCP {
+	var result []*apache4v1alpha1.ServersTransportTCP
 
 	for ns, factory := range c.factoriesCrd {
-		serversTransports, err := factory.Traefik().V1alpha1().ServersTransportTCPs().Lister().List(labels.Everything())
+		serversTransports, err := factory.apache4().V1alpha1().ServersTransportTCPs().Lister().List(labels.Everything())
 		if err != nil {
 			log.Error().Err(err).Str("namespace", ns).Msg("Failed to list servers transport TCP in namespace")
 		}
@@ -416,11 +416,11 @@ func (c *clientWrapper) GetServersTransportTCPs() []*traefikv1alpha1.ServersTran
 }
 
 // GetTLSOptions returns all TLS options.
-func (c *clientWrapper) GetTLSOptions() []*traefikv1alpha1.TLSOption {
-	var result []*traefikv1alpha1.TLSOption
+func (c *clientWrapper) GetTLSOptions() []*apache4v1alpha1.TLSOption {
+	var result []*apache4v1alpha1.TLSOption
 
 	for ns, factory := range c.factoriesCrd {
-		options, err := factory.Traefik().V1alpha1().TLSOptions().Lister().List(labels.Everything())
+		options, err := factory.apache4().V1alpha1().TLSOptions().Lister().List(labels.Everything())
 		if err != nil {
 			log.Error().Err(err).Msgf("Failed to list tls options in namespace %s", ns)
 		}
@@ -431,11 +431,11 @@ func (c *clientWrapper) GetTLSOptions() []*traefikv1alpha1.TLSOption {
 }
 
 // GetTLSStores returns all TLS stores.
-func (c *clientWrapper) GetTLSStores() []*traefikv1alpha1.TLSStore {
-	var result []*traefikv1alpha1.TLSStore
+func (c *clientWrapper) GetTLSStores() []*apache4v1alpha1.TLSStore {
+	var result []*apache4v1alpha1.TLSStore
 
 	for ns, factory := range c.factoriesCrd {
-		stores, err := factory.Traefik().V1alpha1().TLSStores().Lister().List(labels.Everything())
+		stores, err := factory.apache4().V1alpha1().TLSStores().Lister().List(labels.Everything())
 		if err != nil {
 			log.Error().Err(err).Msgf("Failed to list tls stores in namespace %s", ns)
 		}

@@ -1,6 +1,6 @@
 ---
-title: "Traefik Compress Documentation"
-description: "Traefik Proxy's HTTP middleware lets you compress responses before sending them to the client. Read the technical documentation."
+title: "apache4 Compress Documentation"
+description: "apache4 Proxy's HTTP middleware lets you compress responses before sending them to the client. Read the technical documentation."
 ---
 
 The `compress` middleware compresses response. It supports Gzip, Brotli and Zstandard compression
@@ -24,7 +24,7 @@ http:
 ```yaml tab="Labels"
 # Enable compression
 labels:
-  - "traefik.http.middlewares.test-compress.compress=true"
+  - "apache4.http.middlewares.test-compress.compress=true"
 ```
 
 ```json tab="Tags"
@@ -32,14 +32,14 @@ labels:
 {
   //...
   "Tags": [
-    "traefik.http.middlewares.test-compress.compress=true"
+    "apache4.http.middlewares.test-compress.compress=true"
   ]
 }
 ```
 
 ```yaml tab="Kubernetes"
 # Enable compression
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-compress

@@ -12,12 +12,12 @@ import (
 	"github.com/containous/alice"
 	gokitmetrics "github.com/go-kit/kit/metrics"
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/metrics"
-	"github.com/traefik/traefik/v3/pkg/middlewares"
-	"github.com/traefik/traefik/v3/pkg/middlewares/capture"
-	"github.com/traefik/traefik/v3/pkg/middlewares/observability"
-	"github.com/traefik/traefik/v3/pkg/middlewares/retry"
-	traefiktls "github.com/traefik/traefik/v3/pkg/tls"
+	"github.com/apache4/apache4/v3/pkg/metrics"
+	"github.com/apache4/apache4/v3/pkg/middlewares"
+	"github.com/apache4/apache4/v3/pkg/middlewares/capture"
+	"github.com/apache4/apache4/v3/pkg/middlewares/observability"
+	"github.com/apache4/apache4/v3/pkg/middlewares/retry"
+	apache4tls "github.com/apache4/apache4/v3/pkg/tls"
 	"google.golang.org/grpc/codes"
 )
 
@@ -146,7 +146,7 @@ func (m *metricsMiddleware) ServeHTTP(rw http.ResponseWriter, req *http.Request)
 	if req.TLS != nil {
 		var tlsLabels []string
 		tlsLabels = append(tlsLabels, m.baseLabels...)
-		tlsLabels = append(tlsLabels, "tls_version", traefiktls.GetVersion(req.TLS), "tls_cipher", traefiktls.GetCipherName(req.TLS))
+		tlsLabels = append(tlsLabels, "tls_version", apache4tls.GetVersion(req.TLS), "tls_cipher", apache4tls.GetCipherName(req.TLS))
 
 		m.reqsTLSCounter.With(tlsLabels...).Add(1)
 	}

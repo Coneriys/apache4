@@ -8,7 +8,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
 )
 
 func TestRedirectRegexHandler(t *testing.T) {
@@ -157,7 +157,7 @@ func TestRedirectRegexHandler(t *testing.T) {
 			t.Parallel()
 
 			next := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {})
-			handler, err := NewRedirectRegex(t.Context(), next, test.config, "traefikTest")
+			handler, err := NewRedirectRegex(t.Context(), next, test.config, "apache4Test")
 
 			if test.errorExpected {
 				require.Error(t, err)

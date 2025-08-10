@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016-2020 Containous SAS; 2020-2025 Traefik Labs
+Copyright (c) 2016-2020 Containous SAS; 2020-2025 apache4 Labs
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,81 +27,81 @@ THE SOFTWARE.
 package v1alpha1
 
 import (
-	v1alpha1 "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/traefikio/v1alpha1"
+	v1alpha1 "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/apache4io/v1alpha1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/tools/cache"
 )
 
-// TraefikServiceLister helps list TraefikServices.
+// apache4ServiceLister helps list apache4Services.
 // All objects returned here must be treated as read-only.
-type TraefikServiceLister interface {
-	// List lists all TraefikServices in the indexer.
+type apache4ServiceLister interface {
+	// List lists all apache4Services in the indexer.
 	// Objects returned here must be treated as read-only.
-	List(selector labels.Selector) (ret []*v1alpha1.TraefikService, err error)
-	// TraefikServices returns an object that can list and get TraefikServices.
-	TraefikServices(namespace string) TraefikServiceNamespaceLister
-	TraefikServiceListerExpansion
+	List(selector labels.Selector) (ret []*v1alpha1.apache4Service, err error)
+	// apache4Services returns an object that can list and get apache4Services.
+	apache4Services(namespace string) apache4ServiceNamespaceLister
+	apache4ServiceListerExpansion
 }
 
-// traefikServiceLister implements the TraefikServiceLister interface.
-type traefikServiceLister struct {
+// apache4ServiceLister implements the apache4ServiceLister interface.
+type apache4ServiceLister struct {
 	indexer cache.Indexer
 }
 
-// NewTraefikServiceLister returns a new TraefikServiceLister.
-func NewTraefikServiceLister(indexer cache.Indexer) TraefikServiceLister {
-	return &traefikServiceLister{indexer: indexer}
+// Newapache4ServiceLister returns a new apache4ServiceLister.
+func Newapache4ServiceLister(indexer cache.Indexer) apache4ServiceLister {
+	return &apache4ServiceLister{indexer: indexer}
 }
 
-// List lists all TraefikServices in the indexer.
-func (s *traefikServiceLister) List(selector labels.Selector) (ret []*v1alpha1.TraefikService, err error) {
+// List lists all apache4Services in the indexer.
+func (s *apache4ServiceLister) List(selector labels.Selector) (ret []*v1alpha1.apache4Service, err error) {
 	err = cache.ListAll(s.indexer, selector, func(m interface{}) {
-		ret = append(ret, m.(*v1alpha1.TraefikService))
+		ret = append(ret, m.(*v1alpha1.apache4Service))
 	})
 	return ret, err
 }
 
-// TraefikServices returns an object that can list and get TraefikServices.
-func (s *traefikServiceLister) TraefikServices(namespace string) TraefikServiceNamespaceLister {
-	return traefikServiceNamespaceLister{indexer: s.indexer, namespace: namespace}
+// apache4Services returns an object that can list and get apache4Services.
+func (s *apache4ServiceLister) apache4Services(namespace string) apache4ServiceNamespaceLister {
+	return apache4ServiceNamespaceLister{indexer: s.indexer, namespace: namespace}
 }
 
-// TraefikServiceNamespaceLister helps list and get TraefikServices.
+// apache4ServiceNamespaceLister helps list and get apache4Services.
 // All objects returned here must be treated as read-only.
-type TraefikServiceNamespaceLister interface {
-	// List lists all TraefikServices in the indexer for a given namespace.
+type apache4ServiceNamespaceLister interface {
+	// List lists all apache4Services in the indexer for a given namespace.
 	// Objects returned here must be treated as read-only.
-	List(selector labels.Selector) (ret []*v1alpha1.TraefikService, err error)
-	// Get retrieves the TraefikService from the indexer for a given namespace and name.
+	List(selector labels.Selector) (ret []*v1alpha1.apache4Service, err error)
+	// Get retrieves the apache4Service from the indexer for a given namespace and name.
 	// Objects returned here must be treated as read-only.
-	Get(name string) (*v1alpha1.TraefikService, error)
-	TraefikServiceNamespaceListerExpansion
+	Get(name string) (*v1alpha1.apache4Service, error)
+	apache4ServiceNamespaceListerExpansion
 }
 
-// traefikServiceNamespaceLister implements the TraefikServiceNamespaceLister
+// apache4ServiceNamespaceLister implements the apache4ServiceNamespaceLister
 // interface.
-type traefikServiceNamespaceLister struct {
+type apache4ServiceNamespaceLister struct {
 	indexer   cache.Indexer
 	namespace string
 }
 
-// List lists all TraefikServices in the indexer for a given namespace.
-func (s traefikServiceNamespaceLister) List(selector labels.Selector) (ret []*v1alpha1.TraefikService, err error) {
+// List lists all apache4Services in the indexer for a given namespace.
+func (s apache4ServiceNamespaceLister) List(selector labels.Selector) (ret []*v1alpha1.apache4Service, err error) {
 	err = cache.ListAllByNamespace(s.indexer, s.namespace, selector, func(m interface{}) {
-		ret = append(ret, m.(*v1alpha1.TraefikService))
+		ret = append(ret, m.(*v1alpha1.apache4Service))
 	})
 	return ret, err
 }
 
-// Get retrieves the TraefikService from the indexer for a given namespace and name.
-func (s traefikServiceNamespaceLister) Get(name string) (*v1alpha1.TraefikService, error) {
+// Get retrieves the apache4Service from the indexer for a given namespace and name.
+func (s apache4ServiceNamespaceLister) Get(name string) (*v1alpha1.apache4Service, error) {
 	obj, exists, err := s.indexer.GetByKey(s.namespace + "/" + name)
 	if err != nil {
 		return nil, err
 	}
 	if !exists {
-		return nil, errors.NewNotFound(v1alpha1.Resource("traefikservice"), name)
+		return nil, errors.NewNotFound(v1alpha1.Resource("apache4service"), name)
 	}
-	return obj.(*v1alpha1.TraefikService), nil
+	return obj.(*v1alpha1.apache4Service), nil
 }

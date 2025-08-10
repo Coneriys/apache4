@@ -1,4 +1,4 @@
-import { AriaTd, AriaTr } from '@traefiklabs/faency'
+import { AriaTd, AriaTr } from '@apache4labs/faency'
 import { stringify } from 'query-string'
 import { ReactNode } from 'react'
 import useSWRInfinite, { SWRInfiniteConfiguration } from 'swr/infinite'

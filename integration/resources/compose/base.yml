@@ -1,12 +1,12 @@
 services:
   whoami1:
-    image: traefik/whoami
+    image: apache4/whoami
     labels:
-      traefik.enable: true
-      traefik.http.routers.router1.rule: PathPrefix(`/whoami`)
-      traefik.http.routers.router2.rule: PathPrefix(`/whoami2`)
+      apache4.enable: true
+      apache4.http.routers.router1.rule: PathPrefix(`/whoami`)
+      apache4.http.routers.router2.rule: PathPrefix(`/whoami2`)
 
   whoami2:
-    image: traefik/whoami
+    image: apache4/whoami
     labels:
-      traefik.enable: false
+      apache4.enable: false

@@ -16,8 +16,8 @@ import (
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/modules/k3s"
 	"github.com/testcontainers/testcontainers-go/network"
-	"github.com/traefik/traefik/v3/integration/try"
-	"github.com/traefik/traefik/v3/pkg/provider/kubernetes/gateway"
+	"github.com/apache4/apache4/v3/integration/try"
+	"github.com/apache4/apache4/v3/pkg/provider/kubernetes/gateway"
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apimachinery/pkg/util/sets"
 	kclientset "k8s.io/client-go/kubernetes"
@@ -39,9 +39,9 @@ import (
 
 const (
 	k3sImage          = "docker.io/rancher/k3s:v1.29.3-k3s1"
-	traefikImage      = "traefik/traefik:latest"
-	traefikDeployment = "deployments/traefik"
-	traefikNamespace  = "traefik"
+	apache4Image      = "apache4/apache4:latest"
+	apache4Deployment = "deployments/apache4"
+	apache4Namespace  = "apache4"
 )
 
 // K8sConformanceSuite tests suite.
@@ -82,29 +82,29 @@ func (s *K8sConformanceSuite) SetupSuite() {
 	}
 
 	if !slices.ContainsFunc(images, func(img testcontainers.ImageInfo) bool {
-		return img.Name == traefikImage
+		return img.Name == apache4Image
 	}) {
-		s.T().Fatal("Traefik image is not present")
+		s.T().Fatal("apache4 image is not present")
 	}
 
 	s.k3sContainer, err = k3s.Run(ctx,
 		k3sImage,
 		k3s.WithManifest("./fixtures/k8s-conformance/00-experimental-v1.3.0.yml"),
 		k3s.WithManifest("./fixtures/k8s-conformance/01-rbac.yml"),
-		k3s.WithManifest("./fixtures/k8s-conformance/02-traefik.yml"),
+		k3s.WithManifest("./fixtures/k8s-conformance/02-apache4.yml"),
 		network.WithNetwork(nil, s.network),
 	)
 	if err != nil {
 		s.T().Fatal(err)
 	}
 
-	if err = s.k3sContainer.LoadImages(ctx, traefikImage); err != nil {
+	if err = s.k3sContainer.LoadImages(ctx, apache4Image); err != nil {
 		s.T().Fatal(err)
 	}
 
-	exitCode, _, err := s.k3sContainer.Exec(ctx, []string{"kubectl", "wait", "-n", traefikNamespace, traefikDeployment, "--for=condition=Available", "--timeout=30s"})
+	exitCode, _, err := s.k3sContainer.Exec(ctx, []string{"kubectl", "wait", "-n", apache4Namespace, apache4Deployment, "--for=condition=Available", "--timeout=30s"})
 	if err != nil || exitCode > 0 {
-		s.T().Fatalf("Traefik pod is not ready: %v", err)
+		s.T().Fatalf("apache4 pod is not ready: %v", err)
 	}
 
 	kubeConfigYaml, err := s.k3sContainer.GetKubeConfig(ctx)
@@ -155,7 +155,7 @@ func (s *K8sConformanceSuite) TearDownSuite() {
 			}
 		}
 
-		exitCode, result, err := s.k3sContainer.Exec(ctx, []string{"kubectl", "logs", "-n", traefikNamespace, traefikDeployment})
+		exitCode, result, err := s.k3sContainer.Exec(ctx, []string{"kubectl", "logs", "-n", apache4Namespace, apache4Deployment})
 		if err == nil || exitCode == 0 {
 			if res, err := io.ReadAll(result); err == nil {
 				s.T().Log(string(res))
@@ -171,7 +171,7 @@ func (s *K8sConformanceSuite) TearDownSuite() {
 }
 
 func (s *K8sConformanceSuite) TestK8sGatewayAPIConformance() {
-	// Wait for traefik to start
+	// Wait for apache4 to start
 	k3sContainerIP, err := s.k3sContainer.ContainerIP(s.T().Context())
 	require.NoError(s.T(), err)
 
@@ -181,7 +181,7 @@ func (s *K8sConformanceSuite) TestK8sGatewayAPIConformance() {
 	cSuite, err := ksuite.NewConformanceTestSuite(ksuite.ConformanceOptions{
 		Client:                     s.kubeClient,
 		Clientset:                  s.clientSet,
-		GatewayClassName:           "traefik",
+		GatewayClassName:           "apache4",
 		Debug:                      true,
 		CleanupBaseResources:       true,
 		RestConfig:                 s.restConfig,
@@ -190,11 +190,11 @@ func (s *K8sConformanceSuite) TestK8sGatewayAPIConformance() {
 		EnableAllSupportedFeatures: false,
 		RunTest:                    *k8sConformanceRunTest,
 		Implementation: v1.Implementation{
-			Organization: "traefik",
-			Project:      "traefik",
-			URL:          "https://traefik.io/",
-			Version:      *k8sConformanceTraefikVersion,
-			Contact:      []string{"@traefik/maintainers"},
+			Organization: "apache4",
+			Project:      "apache4",
+			URL:          "https://apache4.io/",
+			Version:      *k8sConformanceapache4Version,
+			Contact:      []string{"@apache4/maintainers"},
 		},
 		ConformanceProfiles: sets.New(
 			ksuite.GatewayHTTPConformanceProfileName,

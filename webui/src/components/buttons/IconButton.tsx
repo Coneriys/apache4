@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2022-2024 Traefik Labs
+Copyright (C) 2022-2024 apache4 Labs
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
 by the Free Software Foundation, either version 3 of the License, or
@@ -12,7 +12,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Button, Flex, Text } from '@traefiklabs/faency'
+import { Button, Flex, Text } from '@apache4labs/faency'
 import { ComponentProps, ReactNode } from 'react'
 
 type IconButtonProps = ComponentProps<typeof Button> & {

@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
-	"github.com/traefik/traefik/v3/integration/try"
+	"github.com/apache4/apache4/v3/integration/try"
 )
 
 type HostResolverSuite struct{ BaseSuite }
@@ -28,7 +28,7 @@ func (s *HostResolverSuite) TearDownSuite() {
 }
 
 func (s *HostResolverSuite) TestSimpleConfig() {
-	s.traefikCmd(withConfigFile("fixtures/simple_hostresolver.toml"))
+	s.apache4Cmd(withConfigFile("fixtures/simple_hostresolver.toml"))
 
 	testCase := []struct {
 		desc   string

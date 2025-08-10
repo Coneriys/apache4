@@ -15,9 +15,9 @@ import (
 	"github.com/go-acme/lego/v4/challenge/dns01"
 	"github.com/go-acme/lego/v4/challenge/tlsalpn01"
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/logs"
-	"github.com/traefik/traefik/v3/pkg/tls/generate"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/tls/generate"
+	"github.com/apache4/apache4/v3/pkg/types"
 )
 
 const (
@@ -322,7 +322,7 @@ func (m *Manager) GetServerCertificates() []*x509.Certificate {
 			return certificates
 		}
 
-		// Excluding the generated Traefik default certificate.
+		// Excluding the generated apache4 default certificate.
 		if x509Cert.Subject.CommonName == generate.DefaultDomain {
 			return certificates
 		}

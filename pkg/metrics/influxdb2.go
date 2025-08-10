@@ -12,9 +12,9 @@ import (
 	influxdb2log "github.com/influxdata/influxdb-client-go/v2/log"
 	influxdb "github.com/influxdata/influxdb1-client/v2"
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/logs"
-	"github.com/traefik/traefik/v3/pkg/safe"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/safe"
+	"github.com/apache4/apache4/v3/pkg/types"
 )
 
 var (
@@ -24,31 +24,31 @@ var (
 )
 
 const (
-	influxDBConfigReloadsName           = "traefik.config.reload.total"
-	influxDBLastConfigReloadSuccessName = "traefik.config.reload.lastSuccessTimestamp"
-	influxDBOpenConnsName               = "traefik.open.connections"
+	influxDBConfigReloadsName           = "apache4.config.reload.total"
+	influxDBLastConfigReloadSuccessName = "apache4.config.reload.lastSuccessTimestamp"
+	influxDBOpenConnsName               = "apache4.open.connections"
 
-	influxDBTLSCertsNotAfterTimestampName = "traefik.tls.certs.notAfterTimestamp"
+	influxDBTLSCertsNotAfterTimestampName = "apache4.tls.certs.notAfterTimestamp"
 
-	influxDBEntryPointReqsName        = "traefik.entrypoint.requests.total"
-	influxDBEntryPointReqsTLSName     = "traefik.entrypoint.requests.tls.total"
-	influxDBEntryPointReqDurationName = "traefik.entrypoint.request.duration"
-	influxDBEntryPointReqsBytesName   = "traefik.entrypoint.requests.bytes.total"
-	influxDBEntryPointRespsBytesName  = "traefik.entrypoint.responses.bytes.total"
+	influxDBEntryPointReqsName        = "apache4.entrypoint.requests.total"
+	influxDBEntryPointReqsTLSName     = "apache4.entrypoint.requests.tls.total"
+	influxDBEntryPointReqDurationName = "apache4.entrypoint.request.duration"
+	influxDBEntryPointReqsBytesName   = "apache4.entrypoint.requests.bytes.total"
+	influxDBEntryPointRespsBytesName  = "apache4.entrypoint.responses.bytes.total"
 
-	influxDBRouterReqsName         = "traefik.router.requests.total"
-	influxDBRouterReqsTLSName      = "traefik.router.requests.tls.total"
-	influxDBRouterReqsDurationName = "traefik.router.request.duration"
-	influxDBRouterReqsBytesName    = "traefik.router.requests.bytes.total"
-	influxDBRouterRespsBytesName   = "traefik.router.responses.bytes.total"
+	influxDBRouterReqsName         = "apache4.router.requests.total"
+	influxDBRouterReqsTLSName      = "apache4.router.requests.tls.total"
+	influxDBRouterReqsDurationName = "apache4.router.request.duration"
+	influxDBRouterReqsBytesName    = "apache4.router.requests.bytes.total"
+	influxDBRouterRespsBytesName   = "apache4.router.responses.bytes.total"
 
-	influxDBServiceReqsName         = "traefik.service.requests.total"
-	influxDBServiceReqsTLSName      = "traefik.service.requests.tls.total"
-	influxDBServiceReqsDurationName = "traefik.service.request.duration"
-	influxDBServiceRetriesTotalName = "traefik.service.retries.total"
-	influxDBServiceServerUpName     = "traefik.service.server.up"
-	influxDBServiceReqsBytesName    = "traefik.service.requests.bytes.total"
-	influxDBServiceRespsBytesName   = "traefik.service.responses.bytes.total"
+	influxDBServiceReqsName         = "apache4.service.requests.total"
+	influxDBServiceReqsTLSName      = "apache4.service.requests.tls.total"
+	influxDBServiceReqsDurationName = "apache4.service.request.duration"
+	influxDBServiceRetriesTotalName = "apache4.service.retries.total"
+	influxDBServiceServerUpName     = "apache4.service.server.up"
+	influxDBServiceReqsBytesName    = "apache4.service.requests.bytes.total"
+	influxDBServiceRespsBytesName   = "apache4.service.responses.bytes.total"
 )
 
 // RegisterInfluxDB2 creates metrics exporter for InfluxDB2.

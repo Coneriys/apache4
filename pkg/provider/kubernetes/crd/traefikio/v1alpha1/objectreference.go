@@ -1,9 +1,9 @@
 package v1alpha1
 
-// ObjectReference is a generic reference to a Traefik resource.
+// ObjectReference is a generic reference to a apache4 resource.
 type ObjectReference struct {
-	// Name defines the name of the referenced Traefik resource.
+	// Name defines the name of the referenced apache4 resource.
 	Name string `json:"name"`
-	// Namespace defines the namespace of the referenced Traefik resource.
+	// Namespace defines the namespace of the referenced apache4 resource.
 	Namespace string `json:"namespace,omitempty"`
 }

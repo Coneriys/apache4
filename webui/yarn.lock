@@ -4967,9 +4967,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@traefiklabs/faency@npm:11.1.4":
+"@apache4labs/faency@npm:11.1.4":
   version: 11.1.4
-  resolution: "@traefiklabs/faency@npm:11.1.4"
+  resolution: "@apache4labs/faency@npm:11.1.4"
   dependencies:
     "@babel/core": "npm:^7.15.4"
     "@babel/plugin-transform-react-pure-annotations": "npm:^7.16.7"
@@ -16750,16 +16750,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"traefik-proxy-dashboard@workspace:.":
+"apache4-proxy-dashboard@workspace:.":
   version: 0.0.0-use.local
-  resolution: "traefik-proxy-dashboard@workspace:."
+  resolution: "apache4-proxy-dashboard@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.32.0"
     "@testing-library/dom": "npm:^10.4.1"
     "@testing-library/jest-dom": "npm:^6.4.2"
     "@testing-library/react": "npm:^14.2.1"
     "@testing-library/user-event": "npm:^14.5.2"
-    "@traefiklabs/faency": "npm:11.1.4"
+    "@apache4labs/faency": "npm:11.1.4"
     "@types/lodash": "npm:^4.17.16"
     "@types/node": "npm:^22.15.18"
     "@types/react": "npm:^18.2.0"

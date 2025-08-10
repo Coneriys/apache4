@@ -1,6 +1,6 @@
 ---
-title: "Traefik Headers Documentation"
-description: "In Traefik Proxy, the HTTP headers middleware manages the headers of requests and responses. Read the technical documentation."
+title: "apache4 Headers Documentation"
+description: "In apache4 Proxy, the HTTP headers middleware manages the headers of requests and responses. Read the technical documentation."
 ---
 
 ![Headers](../../../../assets/img/middleware/headers.png)
@@ -45,23 +45,23 @@ http:
 
 ```yaml tab="Labels"
 labels:
-  - "traefik.http.middlewares.testHeader.headers.customrequestheaders.X-Script-Name=test"
-  - "traefik.http.middlewares.testHeader.headers.customresponseheaders.X-Custom-Response-Header=value"
+  - "apache4.http.middlewares.testHeader.headers.customrequestheaders.X-Script-Name=test"
+  - "apache4.http.middlewares.testHeader.headers.customresponseheaders.X-Custom-Response-Header=value"
 ```
 
 ```json tab="Tags"
 {
   //...
   "Tags": [
-    "traefik.http.middlewares.testheader.headers.customrequestheaders.X-Script-Name=test",
-    "traefik.http.middlewares.testheader.headers.customresponseheaders.X-Custom-Response-Header=value"
+    "apache4.http.middlewares.testheader.headers.customrequestheaders.X-Script-Name=test",
+    "apache4.http.middlewares.testheader.headers.customresponseheaders.X-Custom-Response-Header=value"
   ]
 }
 
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-header
@@ -102,23 +102,23 @@ http:
 
 ```yaml tab="Labels"
 labels:
-  - "traefik.http.middlewares.testheader.headers.customrequestheaders.X-Script-Name=test"
-  - "traefik.http.middlewares.testheader.headers.customrequestheaders.X-Custom-Request-Header="
-  - "traefik.http.middlewares.testheader.headers.customresponseheaders.X-Custom-Response-Header="
+  - "apache4.http.middlewares.testheader.headers.customrequestheaders.X-Script-Name=test"
+  - "apache4.http.middlewares.testheader.headers.customrequestheaders.X-Custom-Request-Header="
+  - "apache4.http.middlewares.testheader.headers.customresponseheaders.X-Custom-Response-Header="
 ```
 
 ```json tab="Tags"
 {
   "Tags" : [
-    "traefik.http.middlewares.testheader.headers.customrequestheaders.X-Script-Name=test",
-    "traefik.http.middlewares.testheader.headers.customrequestheaders.X-Custom-Request-Header=",
-    "traefik.http.middlewares.testheader.headers.customresponseheaders.X-Custom-Response-Header="
+    "apache4.http.middlewares.testheader.headers.customrequestheaders.X-Script-Name=test",
+    "apache4.http.middlewares.testheader.headers.customrequestheaders.X-Custom-Request-Header=",
+    "apache4.http.middlewares.testheader.headers.customresponseheaders.X-Custom-Response-Header="
   ]
 }
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-header
@@ -154,22 +154,22 @@ http:
 
 ```yaml tab="Labels"
 labels:
-  - "traefik.http.middlewares.testHeader.headers.framedeny=true"
-  - "traefik.http.middlewares.testHeader.headers.browserxssfilter=true"
+  - "apache4.http.middlewares.testHeader.headers.framedeny=true"
+  - "apache4.http.middlewares.testHeader.headers.browserxssfilter=true"
 ```
 
 ```json tab="Tags"
 {
   "Tags" : [
-    "traefik.http.middlewares.testheader.headers.framedeny=true",
-    "traefik.http.middlewares.testheader.headers.browserxssfilter=true"
+    "apache4.http.middlewares.testheader.headers.framedeny=true",
+    "apache4.http.middlewares.testheader.headers.browserxssfilter=true"
   ]
 }
 
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-header
@@ -217,27 +217,27 @@ http:
 
 ```yaml tab="Labels"
 labels:
-  - "traefik.http.middlewares.testheader.headers.accesscontrolallowmethods=GET,OPTIONS,PUT"
-  - "traefik.http.middlewares.testheader.headers.accesscontrolallowheaders=*"
-  - "traefik.http.middlewares.testheader.headers.accesscontrolalloworiginlist=https://foo.bar.org,https://example.org"
-  - "traefik.http.middlewares.testheader.headers.accesscontrolmaxage=100"
-  - "traefik.http.middlewares.testheader.headers.addvaryheader=true"
+  - "apache4.http.middlewares.testheader.headers.accesscontrolallowmethods=GET,OPTIONS,PUT"
+  - "apache4.http.middlewares.testheader.headers.accesscontrolallowheaders=*"
+  - "apache4.http.middlewares.testheader.headers.accesscontrolalloworiginlist=https://foo.bar.org,https://example.org"
+  - "apache4.http.middlewares.testheader.headers.accesscontrolmaxage=100"
+  - "apache4.http.middlewares.testheader.headers.addvaryheader=true"
 ```
 
 ```json tab="Tags"
 {
   "Tags" : [
-    "traefik.http.middlewares.testheader.headers.accesscontrolallowmethods=GET,OPTIONS,PUT",
-     "traefik.http.middlewares.testheader.headers.accesscontrolallowheaders=*",
-    "traefik.http.middlewares.testheader.headers.accesscontrolalloworiginlist=https://foo.bar.org,https://example.org",
-    "traefik.http.middlewares.testheader.headers.accesscontrolmaxage=100",
-    "traefik.http.middlewares.testheader.headers.addvaryheader=true"
+    "apache4.http.middlewares.testheader.headers.accesscontrolallowmethods=GET,OPTIONS,PUT",
+     "apache4.http.middlewares.testheader.headers.accesscontrolallowheaders=*",
+    "apache4.http.middlewares.testheader.headers.accesscontrolalloworiginlist=https://foo.bar.org,https://example.org",
+    "apache4.http.middlewares.testheader.headers.accesscontrolmaxage=100",
+    "apache4.http.middlewares.testheader.headers.addvaryheader=true"
   ]
 }
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-header
@@ -302,7 +302,7 @@ spec:
 The `accessControlAllowOriginList` indicates whether a resource can be shared by returning different values.
 
 A wildcard origin `*` can also be configured, and matches all requests.
-If this value is set by a backend service, it will be overwritten by Traefik.
+If this value is set by a backend service, it will be overwritten by apache4.
 
 This value can contain a list of allowed origins.
 
@@ -312,7 +312,7 @@ More information including how to use the settings can be found at:
 - [w3](https://fetch.spec.whatwg.org/#http-access-control-allow-origin)
 - [IETF](https://tools.ietf.org/html/rfc6454#section-7.1)
 
-Traefik no longer supports the `null` value, as it is [no longer recommended as a return value](https://w3c.github.io/webappsec-cors-for-developers/#avoid-returning-access-control-allow-origin-null).
+apache4 no longer supports the `null` value, as it is [no longer recommended as a return value](https://w3c.github.io/webappsec-cors-for-developers/#avoid-returning-access-control-allow-origin-null).
 
 ### `accessControlAllowOriginListRegex`
 
@@ -325,4 +325,4 @@ It allows all origins that contain any match of a regular expression in the `acc
 
     When defining a regular expression within YAML, any escaped character needs to be escaped twice: `example\.com` needs to be written as `example\\.com`.
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

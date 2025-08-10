@@ -1,7 +1,7 @@
 services:
   server1:
-    image: traefik/whoami
+    image: apache4/whoami
     labels:
-      traefik.enable: true
-      traefik.http.services.service1.loadbalancer.server.port: 80
-      traefik.http.routers.router1.rule: Host(`github.com`)
+      apache4.enable: true
+      apache4.http.services.service1.loadbalancer.server.port: 80
+      apache4.http.routers.router1.rule: Host(`github.com`)

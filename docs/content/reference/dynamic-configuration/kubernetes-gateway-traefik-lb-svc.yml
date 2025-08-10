@@ -2,30 +2,30 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: traefik-controller
+  name: apache4-controller
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: traefik
+  name: apache4
 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: traefik-lb
+      app: apache4-lb
 
   template:
     metadata:
       labels:
-        app: traefik-lb
+        app: apache4-lb
 
     spec:
-      serviceAccountName: traefik-controller
+      serviceAccountName: apache4-controller
       containers:
-        - name: traefik
-          image: traefik:v3.5
+        - name: apache4
+          image: apache4:v3.5
           args:
             - --entryPoints.web.address=:80
             - --entryPoints.websecure.address=:443
@@ -43,12 +43,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: traefik
+  name: apache4
 
 spec:
   type: LoadBalancer
   selector:
-    app: traefik-lb
+    app: apache4-lb
 
   ports:
     - protocol: TCP

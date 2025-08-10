@@ -1,6 +1,6 @@
 ---
-title: "Traefik Services Documentation"
-description: "Learn how to configure routing and load balancing in Traefik Proxy to reach Services, which handle incoming requests. Read the technical documentation."
+title: "apache4 Services Documentation"
+description: "Learn how to configure routing and load balancing in apache4 Proxy to reach Services, which handle incoming requests. Read the technical documentation."
 ---
 
 # Services
@@ -403,8 +403,8 @@ On subsequent requests, to keep the session alive with the same server, the clie
 #### Health Check
 
 Configure health check to remove unhealthy servers from the load balancing rotation.
-Traefik will consider HTTP(s) servers healthy as long as they return a status code to the health check request (carried out every `interval`) between `2XX` and `3XX`, or matching the configured status.
-For gRPC servers, Traefik will consider them healthy as long as they return `SERVING` to [gRPC health check v1](https://github.com/grpc/grpc/blob/master/doc/health-checking.md) requests.
+apache4 will consider HTTP(s) servers healthy as long as they return a status code to the health check request (carried out every `interval`) between `2XX` and `3XX`, or matching the configured status.
+For gRPC servers, apache4 will consider them healthy as long as they return `SERVING` to [gRPC health check v1](https://github.com/grpc/grpc/blob/master/doc/health-checking.md) requests.
 
 To propagate status changes (e.g. all servers of this service are down) upwards, HealthCheck must also be enabled on the parent(s) of this service.
 
@@ -417,7 +417,7 @@ Below are the available options for the health check mechanism:
 - `port` (optional), replaces the server URL `port` for the health check endpoint.
 - `interval` (default: 30s), defines the frequency of the health check calls for healthy targets.
 - `unhealthyInterval` (default: 30s), defines the frequency of the health check calls for unhealthy targets.  When not defined, it defaults to the `interval` value.
-- `timeout` (default: 5s), defines the maximum duration Traefik will wait for a health check request before considering the server unhealthy.
+- `timeout` (default: 5s), defines the maximum duration apache4 will wait for a health check request before considering the server unhealthy.
 - `headers` (optional), defines custom headers to be sent to the health check endpoint.
 - `followRedirects` (default: true), defines whether redirects should be followed during the health check calls.
 - `method` (default: GET), defines the HTTP method that will be used while connecting to the endpoint.
@@ -429,14 +429,14 @@ Below are the available options for the health check mechanism:
 
 !!! info "Recovering Servers"
 
-    Traefik keeps monitoring the health of unhealthy servers.
+    apache4 keeps monitoring the health of unhealthy servers.
     If a server has recovered (returning `2xx` -> `3xx` responses again), it will be added back to the load balancer rotation pool.
 
 !!! warning "Health check with Kubernetes"
 
     Kubernetes has an health check mechanism to remove unhealthy pods from Kubernetes services (cf [readiness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-readiness-probes)).
-    As unhealthy pods have no Kubernetes endpoints, Traefik will not forward traffic to them.
-    Therefore, Traefik health check is not available for `kubernetesCRD` and `kubernetesIngress` providers.
+    As unhealthy pods have no Kubernetes endpoints, apache4 will not forward traffic to them.
+    Therefore, apache4 health check is not available for `kubernetesCRD` and `kubernetesIngress` providers.
 
 ??? example "Custom Interval & Timeout -- Using the [File Provider](../../providers/file.md)"
 
@@ -560,7 +560,7 @@ By default, `passHostHeader` is true.
 
 #### ServersTransport
 
-`serversTransport` allows to reference an [HTTP ServersTransport](./index.md#serverstransport_1) configuration for the communication between Traefik and your servers.
+`serversTransport` allows to reference an [HTTP ServersTransport](./index.md#serverstransport_1) configuration for the communication between apache4 and your servers.
 
 ??? example "Specify an HTTP transport -- Using the [File Provider](../../providers/file.md)"
 
@@ -587,7 +587,7 @@ By default, `passHostHeader` is true.
 
 #### Response Forwarding
 
-This section is about configuring how Traefik forwards the response from the backend server to the client.
+This section is about configuring how apache4 forwards the response from the backend server to the client.
 
 Below are the available options for the Response Forwarding mechanism:
 
@@ -619,7 +619,7 @@ Below are the available options for the Response Forwarding mechanism:
 
 ### ServersTransport
 
-ServersTransport allows to configure the transport between Traefik and your HTTP servers.
+ServersTransport allows to configure the transport between apache4 and your HTTP servers.
 
 #### `serverName`
 
@@ -642,7 +642,7 @@ http:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: mytransport
@@ -677,7 +677,7 @@ http:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: mytransport
@@ -719,7 +719,7 @@ http:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: mytransport
@@ -752,7 +752,7 @@ http:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: mytransport
@@ -792,7 +792,7 @@ http:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: mytransport
@@ -823,7 +823,7 @@ http:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: mytransport
@@ -854,7 +854,7 @@ http:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: mytransport
@@ -867,7 +867,7 @@ spec:
 #### `spiffe`
 
 Please note that [SPIFFE](../../https/spiffe.md) must be enabled in the static configuration
-before using it to secure the connection between Traefik and the backends.
+before using it to secure the connection between apache4 and the backends.
 
 ##### `spiffe.ids`
 
@@ -894,7 +894,7 @@ http:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: mytransport
@@ -929,7 +929,7 @@ http:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: mytransport
@@ -967,7 +967,7 @@ http:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: mytransport
@@ -1003,7 +1003,7 @@ http:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: mytransport
@@ -1037,7 +1037,7 @@ http:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: mytransport
@@ -1075,7 +1075,7 @@ http:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: mytransport
@@ -1109,7 +1109,7 @@ http:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransport
 metadata:
   name: mytransport
@@ -1622,7 +1622,7 @@ The `tls` determines whether to use TLS when dialing with the backend.
 
 #### ServersTransport
 
-`serversTransport` allows to reference a [TCP ServersTransport](./index.md#serverstransport_3) configuration for the communication between Traefik and your servers.
+`serversTransport` allows to reference a [TCP ServersTransport](./index.md#serverstransport_3) configuration for the communication between apache4 and your servers.
 
 ??? example "Specify a TCP transport -- Using the [File Provider](../../providers/file.md)"
 
@@ -1650,7 +1650,7 @@ The `tls` determines whether to use TLS when dialing with the backend.
 
 #### PROXY Protocol
 
-Traefik supports [PROXY Protocol](https://www.haproxy.org/download/2.0/doc/proxy-protocol.txt) version 1 and 2 on TCP Services.
+apache4 supports [PROXY Protocol](https://www.haproxy.org/download/2.0/doc/proxy-protocol.txt) version 1 and 2 on TCP Services.
 It can be enabled by setting `proxyProtocol` on the load balancer.
 
 Below are the available options for the PROXY protocol:
@@ -1778,7 +1778,7 @@ tcp:
 
 ### ServersTransport
 
-ServersTransport allows to configure the transport between Traefik and your TCP servers.
+ServersTransport allows to configure the transport between apache4 and your TCP servers.
 
 #### `dialTimeout`
 
@@ -1801,7 +1801,7 @@ tcp:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransportTCP
 metadata:
   name: mytransport
@@ -1835,7 +1835,7 @@ tcp:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransportTCP
 metadata:
   name: mytransport
@@ -1875,7 +1875,7 @@ tcp:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransportTCP
 metadata:
   name: mytransport
@@ -1907,7 +1907,7 @@ tcp:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransportTCP
 metadata:
   name: mytransport
@@ -1939,7 +1939,7 @@ tcp:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransportTCP
 metadata:
   name: mytransport
@@ -1976,7 +1976,7 @@ tcp:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransportTCP
 metadata:
   name: mytransport
@@ -2020,7 +2020,7 @@ tcp:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransportTCP
 metadata:
   name: mytransport
@@ -2055,7 +2055,7 @@ tcp:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransportTCP
 metadata:
   name: mytransport
@@ -2097,7 +2097,7 @@ tcp:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransportTCP
 metadata:
   name: mytransport
@@ -2111,7 +2111,7 @@ spec:
 #### `spiffe`
 
 Please note that [SPIFFE](../../https/spiffe.md) must be enabled in the static configuration
-before using it to secure the connection between Traefik and the backends.
+before using it to secure the connection between apache4 and the backends.
 
 ##### `spiffe.ids`
 
@@ -2138,7 +2138,7 @@ tcp:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransportTCP
 metadata:
   name: mytransport
@@ -2173,7 +2173,7 @@ tcp:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: ServersTransportTCP
 metadata:
   name: mytransport
@@ -2298,4 +2298,4 @@ udp:
         address = "private-ip-server-2:8080/"
 ```
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

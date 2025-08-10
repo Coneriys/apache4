@@ -12,13 +12,13 @@ import (
 	"github.com/prometheus/client_golang/prometheus/collectors"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/types"
 )
 
 const (
 	// MetricNamePrefix prefix of all metric names.
-	MetricNamePrefix = "traefik_"
+	MetricNamePrefix = "apache4_"
 
 	// server meta information.
 	metricConfigPrefix          = MetricNamePrefix + "config_"
@@ -60,12 +60,12 @@ const (
 // promState holds all metric state internally and acts as the only Collector we register for Prometheus.
 //
 // This enables control to remove metrics that belong to outdated configuration.
-// As an example why this is required, consider Traefik learns about a new service.
-// It populates the 'traefik_server_service_up' metric for it with a value of 1 (alive).
+// As an example why this is required, consider apache4 learns about a new service.
+// It populates the 'apache4_server_service_up' metric for it with a value of 1 (alive).
 // When the service is undeployed now the metric is still there in the client library
-// and will be returned on the metrics endpoint until Traefik would be restarted.
+// and will be returned on the metrics endpoint until apache4 would be restarted.
 //
-// To solve this problem promState keeps track of Traefik's dynamic configuration.
+// To solve this problem promState keeps track of apache4's dynamic configuration.
 // Metrics that "belong" to a dynamic configuration part like services or entryPoints
 // are removed after they were scraped at least once when the corresponding object
 // doesn't exist anymore.
@@ -286,11 +286,11 @@ func registerPromState(ctx context.Context) bool {
 		return true
 	}
 
-	logger.Error().Err(err).Msg("Unable to register Traefik to Prometheus")
+	logger.Error().Err(err).Msg("Unable to register apache4 to Prometheus")
 	return false
 }
 
-// OnConfigurationUpdate receives the current configuration from Traefik.
+// OnConfigurationUpdate receives the current configuration from apache4.
 // It then converts the configuration to the optimized package internal format
 // and sets it to the promState.
 func OnConfigurationUpdate(conf dynamic.Configuration, entryPoints []string) {

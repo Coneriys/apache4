@@ -10,7 +10,7 @@
       }
     },
     "forwardedHeaders": {},
-    "name": "traefik"
+    "name": "apache4"
   },
   {
     "address": ":8000",

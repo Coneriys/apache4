@@ -1,4 +1,4 @@
-import { Flex, Text } from '@traefiklabs/faency'
+import { Flex, Text } from '@apache4labs/faency'
 import { FiAlertTriangle } from 'react-icons/fi'
 
 export const EmptyPlaceholder = ({ message = 'No data available' }: { message?: string }) => (

@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
-	"github.com/traefik/traefik/v3/integration/try"
+	"github.com/apache4/apache4/v3/integration/try"
 )
 
 type ProxyProtocolSuite struct {
@@ -41,7 +41,7 @@ func (s *ProxyProtocolSuite) TestProxyProtocolTrusted() {
 		WhoamiIP  string
 	}{WhoamiIP: s.whoamiIP})
 
-	s.traefikCmd(withConfigFile(file))
+	s.apache4Cmd(withConfigFile(file))
 
 	err := try.GetRequest("http://127.0.0.1:8000/whoami", 10*time.Second)
 	require.NoError(s.T(), err)
@@ -61,7 +61,7 @@ func (s *ProxyProtocolSuite) TestProxyProtocolNotTrusted() {
 		WhoamiIP  string
 	}{WhoamiIP: s.whoamiIP})
 
-	s.traefikCmd(withConfigFile(file))
+	s.apache4Cmd(withConfigFile(file))
 
 	err := try.GetRequest("http://127.0.0.1:9000/whoami", 10*time.Second)
 	require.NoError(s.T(), err)

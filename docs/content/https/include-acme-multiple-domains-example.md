@@ -2,15 +2,15 @@
 ```yaml tab="Docker & Swarm"
 ## Dynamic configuration
 labels:
-  - traefik.http.routers.blog.rule=Host(`example.com`) && Path(`/blog`)
-  - traefik.http.routers.blog.tls=true
-  - traefik.http.routers.blog.tls.certresolver=myresolver
-  - traefik.http.routers.blog.tls.domains[0].main=example.com
-  - traefik.http.routers.blog.tls.domains[0].sans=*.example.org
+  - apache4.http.routers.blog.rule=Host(`example.com`) && Path(`/blog`)
+  - apache4.http.routers.blog.tls=true
+  - apache4.http.routers.blog.tls.certresolver=myresolver
+  - apache4.http.routers.blog.tls.domains[0].main=example.com
+  - apache4.http.routers.blog.tls.domains[0].sans=*.example.org
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: blogtls

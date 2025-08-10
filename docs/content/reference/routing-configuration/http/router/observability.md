@@ -3,7 +3,7 @@ title: "Per-Router Observability"
 description: "You can disable access logs, metrics, and tracing for a specific entrypoint attached to a HTTP Router. Read the technical documentation."
 ---
 
-Traefik's observability features include logs, access logs, metrics, and tracing. You can configure these options globally or at more specific levels, such as per router or per entry point.
+apache4's observability features include logs, access logs, metrics, and tracing. You can configure these options globally or at more specific levels, such as per router or per entry point.
 
 By default, the router observability configuration is inherited from the attached EntryPoints and can be configured with the observability [options](../../../install-configuration/entrypoints.md#configuration-options)).
 However, a router defining its own observability configuration will opt-out from these defaults.
@@ -17,7 +17,7 @@ However, a router defining its own observability configuration will opt-out from
 !!! warning "AddInternals option"
 
     By default, and for any type of signal (access-logs, metrics and tracing),
-    Traefik disables observability for internal resources.
+    apache4 disables observability for internal resources.
     The observability options described below cannot interfere with the `AddInternals` ones,
     and will be ignored.
 
@@ -53,24 +53,24 @@ http:
 
 ```yaml tab="Labels"
 labels:
-  - "traefik.http.routers.my-router.rule=Path(`/foo`)"
-  - "traefik.http.routers.my-router.service=service-foo"
-  - "traefik.http.routers.my-router.observability.metrics=false"
-  - "traefik.http.routers.my-router.observability.accessLogs=false"
-  - "traefik.http.routers.my-router.observability.tracing=false"
-  - "traefik.http.routers.my-router.observability.traceVerbosity=detailed"
+  - "apache4.http.routers.my-router.rule=Path(`/foo`)"
+  - "apache4.http.routers.my-router.service=service-foo"
+  - "apache4.http.routers.my-router.observability.metrics=false"
+  - "apache4.http.routers.my-router.observability.accessLogs=false"
+  - "apache4.http.routers.my-router.observability.tracing=false"
+  - "apache4.http.routers.my-router.observability.traceVerbosity=detailed"
 ```
 
 ```json tab="Tags"
 {
   // ...
   "Tags": [
-    "traefik.http.routers.my-router.rule=Path(`/foo`)",
-    "traefik.http.routers.my-router.service=service-foo",
-    "traefik.http.routers.my-router.observability.metrics=false",
-    "traefik.http.routers.my-router.observability.accessLogs=false",
-    "traefik.http.routers.my-router.observability.tracing=false",
-    "traefik.http.routers.my-router.observability.traceVerbosity=detailed"
+    "apache4.http.routers.my-router.rule=Path(`/foo`)",
+    "apache4.http.routers.my-router.service=service-foo",
+    "apache4.http.routers.my-router.observability.metrics=false",
+    "apache4.http.routers.my-router.observability.accessLogs=false",
+    "apache4.http.routers.my-router.observability.tracing=false",
+    "apache4.http.routers.my-router.observability.traceVerbosity=detailed"
   ]
 }
 ```

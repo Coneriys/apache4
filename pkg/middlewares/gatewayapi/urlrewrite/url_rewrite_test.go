@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
 	"k8s.io/utils/ptr"
 )
 
@@ -112,7 +112,7 @@ func TestURLRewriteHandler(t *testing.T) {
 
 			next := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {})
 
-			handler := NewURLRewrite(t.Context(), next, test.config, "traefikTest")
+			handler := NewURLRewrite(t.Context(), next, test.config, "apache4Test")
 
 			recorder := httptest.NewRecorder()
 			req := httptest.NewRequest(http.MethodGet, test.url, nil)

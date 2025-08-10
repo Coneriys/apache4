@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016-2020 Containous SAS; 2020-2025 Traefik Labs
+Copyright (c) 2016-2020 Containous SAS; 2020-2025 apache4 Labs
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,8 +30,8 @@ import (
 	"context"
 	"time"
 
-	scheme "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned/scheme"
-	v1alpha1 "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/traefikio/v1alpha1"
+	scheme "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned/scheme"
+	v1alpha1 "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/apache4io/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	watch "k8s.io/apimachinery/pkg/watch"
@@ -64,7 +64,7 @@ type tLSOptions struct {
 }
 
 // newTLSOptions returns a TLSOptions
-func newTLSOptions(c *TraefikV1alpha1Client, namespace string) *tLSOptions {
+func newTLSOptions(c *apache4V1alpha1Client, namespace string) *tLSOptions {
 	return &tLSOptions{
 		client: c.RESTClient(),
 		ns:     namespace,

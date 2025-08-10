@@ -1,11 +1,11 @@
-site_name: Traefik
-site_description: Traefik Documentation
-site_author: traefik.io
-site_url: https://doc.traefik.io/traefik
+site_name: apache4
+site_description: apache4 Documentation
+site_author: apache4.io
+site_url: https://doc.apache4.io/apache4
 dev_addr: 0.0.0.0:8000
 
 repo_name: 'GitHub'
-repo_url: 'https://github.com/traefik/traefik'
+repo_url: 'https://github.com/apache4/apache4'
 
 docs_dir: 'content'
 
@@ -13,11 +13,11 @@ product: proxy
 
 # https://squidfunk.github.io/mkdocs-material/
 theme:
-  name: 'traefik-labs'
+  name: 'apache4-labs'
   language: en
   include_sidebar: true
-  favicon: assets/img/traefikproxy-icon-color.png
-  logo: assets/img/traefikproxy-vertical-logo-color.svg
+  favicon: assets/img/apache4proxy-icon-color.png
+  logo: assets/img/apache4proxy-vertical-logo-color.svg
   feature:
     tabs: false
   palette:
@@ -27,7 +27,7 @@ theme:
     prev: 'Previous'
     next: 'Next'
 
-copyright: 'Traefik Labs • Copyright &copy; 2016-2025'
+copyright: 'apache4 Labs • Copyright &copy; 2016-2025'
 
 extra_javascript:
   - assets/js/hljs/highlight.pack.js # Download from https://highlightjs.org/download/ and enable YAML, TOML and Dockerfile
@@ -68,7 +68,7 @@ markdown_extensions:
 
 # Page tree
 nav:
-  - 'What is Traefik': 'index.md'
+  - 'What is apache4': 'index.md'
   - 'Getting Started':
       - 'Overview': 'getting-started/index.md'
       - 'Quick Start':
@@ -90,14 +90,14 @@ nav:
       - 'Logs & Access Logs': 'observe/logs-and-access-logs.md'
       - 'Metrics': 'observe/metrics.md'
       - 'Tracing': 'observe/tracing.md'
-  - 'Extend': 'extend/extend-traefik.md'
+  - 'Extend': 'extend/extend-apache4.md'
   - 'Migrate':
-      - 'Traefik v3': 'migrate/v3.md'
-      - 'Traefik v2 to v3':
+      - 'apache4 v3': 'migrate/v3.md'
+      - 'apache4 v2 to v3':
         - 'Migration guide': 'migrate/v2-to-v3.md'
         - 'Configuration changes for v3': 'migrate/v2-to-v3-details.md'
-      - 'Traefik v2': 'migrate/v2.md'
-      - 'Traefik v1 to v2': 'migrate/v1-to-v2.md'
+      - 'apache4 v2': 'migrate/v2.md'
+      - 'apache4 v1 to v2': 'migrate/v1-to-v2.md'
   - 'Configuration Discovery':
       - 'Overview': 'providers/overview.md'
       - 'Docker': 'providers/docker.md'
@@ -273,7 +273,7 @@ nav:
             - 'Middlewares' :
               - 'Overview' : 'reference/routing-configuration/http/middlewares/overview.md'
               - 'AddPrefix' : 'reference/routing-configuration/http/middlewares/addprefix.md'
-              - '<span class="nav-link-with-icon">APIKey <img src="https://doc.traefik.io/traefik-hub/img/ps-traefik-hub-logo-light.svg" class="menu-icon" alt="Traefik Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/apikey.md'
+              - '<span class="nav-link-with-icon">APIKey <img src="https://doc.apache4.io/apache4-hub/img/ps-apache4-hub-logo-light.svg" class="menu-icon" alt="apache4 Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/apikey.md'
               - 'BasicAuth' : 'reference/routing-configuration/http/middlewares/basicauth.md'
               - 'Buffering': 'reference/routing-configuration/http/middlewares/buffering.md'
               - 'Chain': 'reference/routing-configuration/http/middlewares/chain.md'
@@ -285,15 +285,15 @@ nav:
               - 'ForwardAuth': 'reference/routing-configuration/http/middlewares/forwardauth.md'
               - 'GrpcWeb': 'reference/routing-configuration/http/middlewares/grpcweb.md'
               - 'Headers': 'reference/routing-configuration/http/middlewares/headers.md'
-              - '<span class="nav-link-with-icon">HMAC <img src="https://doc.traefik.io/traefik-hub/img/ps-traefik-hub-logo-light.svg" class="menu-icon" alt="Traefik Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/hmac.md'
+              - '<span class="nav-link-with-icon">HMAC <img src="https://doc.apache4.io/apache4-hub/img/ps-apache4-hub-logo-light.svg" class="menu-icon" alt="apache4 Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/hmac.md'
               - 'IPAllowList': 'reference/routing-configuration/http/middlewares/ipallowlist.md'
               - 'InFlightReq': 'reference/routing-configuration/http/middlewares/inflightreq.md'
-              - '<span class="nav-link-with-icon">JWT <img src="https://doc.traefik.io/traefik-hub/img/ps-traefik-hub-logo-light.svg" class="menu-icon" alt="Traefik Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/jwt.md'
-              - '<span class="nav-link-with-icon">LDAP <img src="https://doc.traefik.io/traefik-hub/img/ps-traefik-hub-logo-light.svg" class="menu-icon" alt="Traefik Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/ldap.md'
-              - '<span class="nav-link-with-icon">Token Introspection <img src="https://doc.traefik.io/traefik-hub/img/ps-traefik-hub-logo-light.svg" class="menu-icon" alt="Traefik Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/oauth2-token-introspection.md'
-              - '<span class="nav-link-with-icon">Client Credentials <img src="https://doc.traefik.io/traefik-hub/img/ps-traefik-hub-logo-light.svg" class="menu-icon" alt="Traefik Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/oauth2-client-credentials.md'
-              - '<span class="nav-link-with-icon">OIDC <img src="https://doc.traefik.io/traefik-hub/img/ps-traefik-hub-logo-light.svg" class="menu-icon" alt="Traefik Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/oidc.md'
-              - '<span class="nav-link-with-icon">OPA <img src="https://doc.traefik.io/traefik-hub/img/ps-traefik-hub-logo-light.svg" class="menu-icon" alt="Traefik Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/opa.md'
+              - '<span class="nav-link-with-icon">JWT <img src="https://doc.apache4.io/apache4-hub/img/ps-apache4-hub-logo-light.svg" class="menu-icon" alt="apache4 Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/jwt.md'
+              - '<span class="nav-link-with-icon">LDAP <img src="https://doc.apache4.io/apache4-hub/img/ps-apache4-hub-logo-light.svg" class="menu-icon" alt="apache4 Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/ldap.md'
+              - '<span class="nav-link-with-icon">Token Introspection <img src="https://doc.apache4.io/apache4-hub/img/ps-apache4-hub-logo-light.svg" class="menu-icon" alt="apache4 Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/oauth2-token-introspection.md'
+              - '<span class="nav-link-with-icon">Client Credentials <img src="https://doc.apache4.io/apache4-hub/img/ps-apache4-hub-logo-light.svg" class="menu-icon" alt="apache4 Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/oauth2-client-credentials.md'
+              - '<span class="nav-link-with-icon">OIDC <img src="https://doc.apache4.io/apache4-hub/img/ps-apache4-hub-logo-light.svg" class="menu-icon" alt="apache4 Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/oidc.md'
+              - '<span class="nav-link-with-icon">OPA <img src="https://doc.apache4.io/apache4-hub/img/ps-apache4-hub-logo-light.svg" class="menu-icon" alt="apache4 Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/opa.md'
               - 'PassTLSClientCert': 'reference/routing-configuration/http/middlewares/passtlsclientcert.md'
               - 'RateLimit': 'reference/routing-configuration/http/middlewares/ratelimit.md'
               - 'RedirectRegex': 'reference/routing-configuration/http/middlewares/redirectregex.md'
@@ -303,7 +303,7 @@ nav:
               - 'Retry': 'reference/routing-configuration/http/middlewares/retry.md'
               - 'StripPrefix': 'reference/routing-configuration/http/middlewares/stripprefix.md'
               - 'StripPrefixRegex': 'reference/routing-configuration/http/middlewares/stripprefixregex.md'
-              - '<span class="nav-link-with-icon">WAF <img src="https://doc.traefik.io/traefik-hub/img/ps-traefik-hub-logo-light.svg" class="menu-icon" alt="Traefik Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/waf.md'
+              - '<span class="nav-link-with-icon">WAF <img src="https://doc.apache4.io/apache4-hub/img/ps-apache4-hub-logo-light.svg" class="menu-icon" alt="apache4 Hub API Gateway"></span>' : 'reference/routing-configuration/http/middlewares/waf.md'
           - 'TCP' :
               - 'Router' :
                 - 'Rules & Priority' : 'reference/routing-configuration/tcp/router/rules-and-priority.md'
@@ -323,7 +323,7 @@ nav:
           - 'Kubernetes CRD' :
             - 'HTTP' :
               - 'IngressRoute' : 'reference/routing-configuration/kubernetes/crd/http/ingressroute.md'
-              - 'TraefikService' : 'reference/routing-configuration/kubernetes/crd/http/traefikservice.md'
+              - 'apache4Service' : 'reference/routing-configuration/kubernetes/crd/http/apache4service.md'
               - 'ServersTransport' : 'reference/routing-configuration/kubernetes/crd/http/serverstransport.md'
               - 'Middleware' : 'reference/routing-configuration/kubernetes/crd/http/middleware.md'
               - 'TLSOption' : 'reference/routing-configuration/kubernetes/crd/http/tlsoption.md'

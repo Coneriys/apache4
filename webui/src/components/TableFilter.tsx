@@ -1,6 +1,6 @@
-import { Box, Button, Flex, TextField } from '@traefiklabs/faency'
+import { Box, Button, Flex, TextField } from '@apache4labs/faency'
 // eslint-disable-next-line import/no-unresolved
-import { InputHandle } from '@traefiklabs/faency/dist/components/Input'
+import { InputHandle } from '@apache4labs/faency/dist/components/Input'
 import { isUndefined, omitBy } from 'lodash'
 import { useCallback, useRef, useState } from 'react'
 import { FiSearch, FiXCircle } from 'react-icons/fi'

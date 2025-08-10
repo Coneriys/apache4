@@ -30,12 +30,12 @@ spec:
     - name: web
       port: 8080
   selector:
-    app: traefiklabs
+    app: apache4labs
     task: whoami5
 
 ---
-apiVersion: traefik.io/v1alpha1
-kind: TraefikService
+apiVersion: apache4.io/v1alpha1
+kind: apache4Service
 metadata:
   name: wrr1
   namespace: default

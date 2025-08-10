@@ -14,8 +14,8 @@ import (
 	"time"
 )
 
-// DefaultDomain Traefik domain for the default certificate.
-const DefaultDomain = "TRAEFIK DEFAULT CERT"
+// DefaultDomain apache4 domain for the default certificate.
+const DefaultDomain = "apache4 DEFAULT CERT"
 
 // DefaultCertificate generates random TLS certificates.
 func DefaultCertificate() (*tls.Certificate, error) {
@@ -26,7 +26,7 @@ func DefaultCertificate() (*tls.Certificate, error) {
 	}
 	zBytes := sha256.Sum256(randomBytes)
 	z := hex.EncodeToString(zBytes[:sha256.Size])
-	domain := fmt.Sprintf("%s.%s.traefik.default", z[:32], z[32:])
+	domain := fmt.Sprintf("%s.%s.apache4.default", z[:32], z[32:])
 
 	certPEM, keyPEM, err := KeyPair(domain, time.Time{})
 	if err != nil {

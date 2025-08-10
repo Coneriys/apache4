@@ -1,6 +1,6 @@
 ---
-title: "Traefik Proxy TCP Middleware Overview"
-description: "Read the official Traefik Proxy documentation for an overview of the available TCP middleware."
+title: "apache4 Proxy TCP Middleware Overview"
+description: "Read the official apache4 Proxy documentation for an overview of the available TCP middleware."
 ---
 
 # TCP Middlewares
@@ -16,18 +16,18 @@ Controlling connections
 # As a Docker Label
 whoami:
   #  A container that exposes an API to show its IP address
-  image: traefik/whoami
+  image: apache4/whoami
   labels:
     # Create a middleware named `foo-ip-allowlist`
-    - "traefik.tcp.middlewares.foo-ip-allowlist.ipallowlist.sourcerange=127.0.0.1/32, 192.168.1.7"
+    - "apache4.tcp.middlewares.foo-ip-allowlist.ipallowlist.sourcerange=127.0.0.1/32, 192.168.1.7"
     # Apply the middleware named `foo-ip-allowlist` to the router named `router1`
-    - "traefik.tcp.routers.router1.middlewares=foo-ip-allowlist@docker"
+    - "apache4.tcp.routers.router1.middlewares=foo-ip-allowlist@docker"
 ```
 
 ```yaml tab="IngressRoute"
-# As a Kubernetes Traefik IngressRoute
+# As a Kubernetes apache4 IngressRoute
 ---
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: MiddlewareTCP
 metadata:
   name: foo-ip-allowlist
@@ -38,7 +38,7 @@ spec:
       - 192.168.1.7
 
 ---
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: IngressRouteTCP
 metadata:
   name: ingressroute
@@ -52,9 +52,9 @@ spec:
 
 ```yaml tab="Consul Catalog"
 # Create a middleware named `foo-ip-allowlist`
-- "traefik.tcp.middlewares.foo-ip-allowlist.ipallowlist.sourcerange=127.0.0.1/32, 192.168.1.7"
+- "apache4.tcp.middlewares.foo-ip-allowlist.ipallowlist.sourcerange=127.0.0.1/32, 192.168.1.7"
 # Apply the middleware named `foo-ip-allowlist` to the router named `router1`
-- "traefik.tcp.routers.router1.middlewares=foo-ip-allowlist@consulcatalog"
+- "apache4.tcp.routers.router1.middlewares=foo-ip-allowlist@consulcatalog"
 ```
 
 ```toml tab="File (TOML)"

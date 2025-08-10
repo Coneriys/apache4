@@ -8,12 +8,12 @@ import (
 	"net/http"
 	"runtime"
 
-	"github.com/traefik/traefik/v3/pkg/middlewares"
+	"github.com/apache4/apache4/v3/pkg/middlewares"
 )
 
 const (
 	typeName       = "Recovery"
-	middlewareName = "traefik-internal-recovery"
+	middlewareName = "apache4-internal-recovery"
 )
 
 type recovery struct {

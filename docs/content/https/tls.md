@@ -1,6 +1,6 @@
 ---
-title: "Traefik TLS Documentation"
-description: "Learn how to configure the transport layer security (TLS) connection in Traefik Proxy. Read the technical documentation."
+title: "apache4 TLS Documentation"
+description: "Learn how to configure the transport layer security (TLS) connection in apache4 Proxy. Read the technical documentation."
 ---
 
 # TLS
@@ -16,7 +16,7 @@ See the [Let's Encrypt](./acme.md) page.
 
 ### User defined
 
-To add / remove TLS certificates, even when Traefik is already running, their definition can be added to the [dynamic configuration](../getting-started/configuration-overview.md), in the `[[tls.certificates]]` section:
+To add / remove TLS certificates, even when apache4 is already running, their definition can be added to the [dynamic configuration](../getting-started/configuration-overview.md), in the `[[tls.certificates]]` section:
 
 ```yaml tab="File (YAML)"
 # Dynamic configuration
@@ -49,7 +49,7 @@ tls:
 
 ## Certificates Stores
 
-In Traefik, certificates are grouped together in certificates stores, which are defined as such:
+In apache4, certificates are grouped together in certificates stores, which are defined as such:
 
 ```yaml tab="File (YAML)"
 # Dynamic configuration
@@ -109,7 +109,7 @@ tls:
 
 ### Default Certificate
 
-Traefik can use a default certificate for connections without a SNI, or without a matching domain.
+apache4 can use a default certificate for connections without a SNI, or without a matching domain.
 This default certificate should be defined in a TLS store:
 
 ```yaml tab="File (YAML)"
@@ -134,7 +134,7 @@ tls:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: TLSStore
 metadata:
   name: default
@@ -157,11 +157,11 @@ data:
   tls.key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCi0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0=
 ```
 
-If no `defaultCertificate` is provided, Traefik will use the generated one.
+If no `defaultCertificate` is provided, apache4 will use the generated one.
 
 ### ACME Default Certificate
 
-You can configure Traefik to use an ACME provider (like Let's Encrypt) to generate the default certificate.
+You can configure apache4 to use an ACME provider (like Let's Encrypt) to generate the default certificate.
 The configuration to resolve the default certificate should be defined in a TLS store:
 
 !!! important "Precedence with the `defaultGeneratedCert` option"
@@ -195,7 +195,7 @@ tls:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: TLSStore
 metadata:
   name: default
@@ -214,9 +214,9 @@ spec:
 ```yaml tab="Docker & Swarm"
 ## Dynamic configuration
 labels:
-  - "traefik.tls.stores.default.defaultgeneratedcert.resolver=myresolver"
-  - "traefik.tls.stores.default.defaultgeneratedcert.domain.main=example.org"
-  - "traefik.tls.stores.default.defaultgeneratedcert.domain.sans=foo.example.org, bar.example.org"
+  - "apache4.tls.stores.default.defaultgeneratedcert.resolver=myresolver"
+  - "apache4.tls.stores.default.defaultgeneratedcert.domain.main=example.org"
+  - "apache4.tls.stores.default.defaultgeneratedcert.domain.sans=foo.example.org, bar.example.org"
 ```
 
 ## TLS Options
@@ -230,7 +230,7 @@ The TLS options allow one to configure some parameters of the TLS connection.
     When specifying the `default` option explicitly, make sure not to specify provider namespace as the `default` option does not have one.  
     Conversely, for cross-provider references, for example, when referencing the file provider from a docker label,
     you must specify the provider namespace, for example:  
-    `traefik.http.routers.myrouter.tls.options=myoptions@file`
+    `apache4.http.routers.myrouter.tls.options=myoptions@file`
 
 !!! important "TLSOption in Kubernetes"
 
@@ -240,7 +240,7 @@ The TLS options allow one to configure some parameters of the TLS connection.
     There may exist only one TLSOption with the name `default` (across all namespaces) - otherwise they will be dropped.  
     To explicitly use a different TLSOption (and using the Kubernetes Ingress resources)
     you'll have to add an annotation to the Ingress in the following form:
-    `traefik.ingress.kubernetes.io/router.tls.options: <resource-namespace>-<resource-name>@kubernetescrd`
+    `apache4.ingress.kubernetes.io/router.tls.options: <resource-namespace>-<resource-name>@kubernetescrd`
 
 ### Minimum TLS Version
 
@@ -269,7 +269,7 @@ tls:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: TLSOption
 metadata:
   name: default
@@ -279,7 +279,7 @@ spec:
   minVersion: VersionTLS12
 
 ---
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: TLSOption
 metadata:
   name: mintls13
@@ -320,7 +320,7 @@ tls:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: TLSOption
 metadata:
   name: default
@@ -330,7 +330,7 @@ spec:
   maxVersion: VersionTLS13
 
 ---
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: TLSOption
 metadata:
   name: maxtls12
@@ -365,7 +365,7 @@ tls:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: TLSOption
 metadata:
   name: default
@@ -410,7 +410,7 @@ tls:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: TLSOption
 metadata:
   name: default
@@ -424,7 +424,7 @@ spec:
 
 ### Strict SNI Checking
 
-With strict SNI checking enabled, Traefik won't allow connections from clients that do not specify a server_name extension
+With strict SNI checking enabled, apache4 won't allow connections from clients that do not specify a server_name extension
 or don't match any of the configured certificates.
 The default certificate is irrelevant on that matter.
 
@@ -446,7 +446,7 @@ tls:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: TLSOption
 metadata:
   name: default
@@ -485,7 +485,7 @@ tls:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: TLSOption
 metadata:
   name: default
@@ -499,7 +499,7 @@ spec:
 
 ### Client Authentication (mTLS)
 
-Traefik supports mutual authentication, through the `clientAuth` section.
+apache4 supports mutual authentication, through the `clientAuth` section.
 
 For authentication policies that require verification of the client certificate, the certificate authority for the certificates should be set in `clientAuth.caFiles`.
 
@@ -539,7 +539,7 @@ tls:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: TLSOption
 metadata:
   name: default
@@ -557,7 +557,7 @@ spec:
 
 _Optional, Default="false"_
 
-When set to true, Traefik disables the use of session tickets, forcing every client to perform a full TLS handshake instead of resuming sessions.
+When set to true, apache4 disables the use of session tickets, forcing every client to perform a full TLS handshake instead of resuming sessions.
 
 ```yaml tab="File (YAML)"
 # Dynamic configuration
@@ -577,7 +577,7 @@ tls:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: TLSOption
 metadata:
   name: default
@@ -587,4 +587,4 @@ spec:
   disableSessionTickets: true
 ```
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

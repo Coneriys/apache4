@@ -11,7 +11,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/types"
 )
 
 var responses = map[string][]byte{}
@@ -35,29 +35,29 @@ func Test_globalConfig(t *testing.T) {
 	}{
 		{
 			Name:             "expose_by_default_no_tags",
-			Prefix:           "traefik",
+			Prefix:           "apache4",
 			Tags:             nil,
 			ExposedByDefault: true,
 			exp:              configuration{Enable: true},
 		},
 		{
 			Name:             "not_expose_by_default_no_tags",
-			Prefix:           "traefik",
+			Prefix:           "apache4",
 			Tags:             nil,
 			ExposedByDefault: false,
 			exp:              configuration{Enable: false},
 		},
 		{
 			Name:             "expose_by_default_tags_enable",
-			Prefix:           "traefik",
-			Tags:             []string{"traefik.enable=true"},
+			Prefix:           "apache4",
+			Tags:             []string{"apache4.enable=true"},
 			ExposedByDefault: true,
 			exp:              configuration{Enable: true},
 		},
 		{
 			Name:             "expose_by_default_tags_disable",
-			Prefix:           "traefik",
-			Tags:             []string{"traefik.enable=false"},
+			Prefix:           "apache4",
+			Tags:             []string{"apache4.enable=false"},
 			ExposedByDefault: true,
 			exp:              configuration{Enable: false},
 		},

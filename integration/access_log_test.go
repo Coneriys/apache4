@@ -18,13 +18,13 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
-	"github.com/traefik/traefik/v3/integration/try"
-	"github.com/traefik/traefik/v3/pkg/middlewares/accesslog"
+	"github.com/apache4/apache4/v3/integration/try"
+	"github.com/apache4/apache4/v3/pkg/middlewares/accesslog"
 )
 
 const (
-	traefikTestLogFile       = "traefik.log"
-	traefikTestAccessLogFile = "access.log"
+	apache4TestLogFile       = "apache4.log"
+	apache4TestAccessLogFile = "access.log"
 )
 
 // AccessLogSuite tests suite.
@@ -53,28 +53,28 @@ func (s *AccessLogSuite) TearDownSuite() {
 }
 
 func (s *AccessLogSuite) TearDownTest() {
-	s.displayTraefikLogFile(traefikTestLogFile)
-	_ = os.Remove(traefikTestAccessLogFile)
+	s.displayapache4LogFile(apache4TestLogFile)
+	_ = os.Remove(apache4TestAccessLogFile)
 }
 
 func (s *AccessLogSuite) TestAccessLog() {
 	ensureWorkingDirectoryIsClean()
 
-	// Start Traefik
-	s.traefikCmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
+	// Start apache4
+	s.apache4Cmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
 
 	defer func() {
-		traefikLog, err := os.ReadFile(traefikTestLogFile)
+		apache4Log, err := os.ReadFile(apache4TestLogFile)
 		require.NoError(s.T(), err)
-		log.Info().Msg(string(traefikLog))
+		log.Info().Msg(string(apache4Log))
 	}()
 
-	s.waitForTraefik("server1")
+	s.waitForapache4("server1")
 
 	s.checkStatsForLogFile()
 
-	// Verify Traefik started OK
-	s.checkTraefikStarted()
+	// Verify apache4 started OK
+	s.checkapache4Started()
 
 	// Make some requests
 	req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1:8000/", nil)
@@ -98,8 +98,8 @@ func (s *AccessLogSuite) TestAccessLog() {
 
 	assert.Equal(s.T(), 3, count)
 
-	// Verify no other Traefik problems
-	s.checkNoOtherTraefikProblems()
+	// Verify no other apache4 problems
+	s.checkNoOtherapache4Problems()
 }
 
 func (s *AccessLogSuite) TestAccessLogAuthFrontend() {
@@ -129,15 +129,15 @@ func (s *AccessLogSuite) TestAccessLogAuthFrontend() {
 		},
 	}
 
-	// Start Traefik
-	s.traefikCmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
+	// Start apache4
+	s.apache4Cmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
 
 	s.checkStatsForLogFile()
 
-	s.waitForTraefik("authFrontend")
+	s.waitForapache4("authFrontend")
 
-	// Verify Traefik started OK
-	s.checkTraefikStarted()
+	// Verify apache4 started OK
+	s.checkapache4Started()
 
 	// Test auth entrypoint
 	req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1:8006/", nil)
@@ -162,8 +162,8 @@ func (s *AccessLogSuite) TestAccessLogAuthFrontend() {
 
 	assert.GreaterOrEqual(s.T(), count, len(expected))
 
-	// Verify no other Traefik problems
-	s.checkNoOtherTraefikProblems()
+	// Verify no other apache4 problems
+	s.checkNoOtherapache4Problems()
 }
 
 func (s *AccessLogSuite) TestAccessLogDigestAuthMiddleware() {
@@ -193,15 +193,15 @@ func (s *AccessLogSuite) TestAccessLogDigestAuthMiddleware() {
 		},
 	}
 
-	// Start Traefik
-	s.traefikCmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
+	// Start apache4
+	s.apache4Cmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
 
 	s.checkStatsForLogFile()
 
-	s.waitForTraefik("digestAuthMiddleware")
+	s.waitForapache4("digestAuthMiddleware")
 
-	// Verify Traefik started OK
-	s.checkTraefikStarted()
+	// Verify apache4 started OK
+	s.checkapache4Started()
 
 	// Test auth entrypoint
 	req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1:8008/", nil)
@@ -235,8 +235,8 @@ func (s *AccessLogSuite) TestAccessLogDigestAuthMiddleware() {
 
 	assert.GreaterOrEqual(s.T(), count, len(expected))
 
-	// Verify no other Traefik problems
-	s.checkNoOtherTraefikProblems()
+	// Verify no other apache4 problems
+	s.checkNoOtherapache4Problems()
 }
 
 // Thanks to mvndaai for digest authentication
@@ -303,15 +303,15 @@ func (s *AccessLogSuite) TestAccessLogFrontendRedirect() {
 		},
 	}
 
-	// Start Traefik
-	s.traefikCmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
+	// Start apache4
+	s.apache4Cmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
 
 	s.checkStatsForLogFile()
 
-	s.waitForTraefik("frontendRedirect")
+	s.waitForapache4("frontendRedirect")
 
-	// Verify Traefik started OK
-	s.checkTraefikStarted()
+	// Verify apache4 started OK
+	s.checkapache4Started()
 
 	// Test frontend redirect
 	req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1:8005/test", nil)
@@ -326,8 +326,8 @@ func (s *AccessLogSuite) TestAccessLogFrontendRedirect() {
 
 	assert.GreaterOrEqual(s.T(), count, len(expected))
 
-	// Verify no other Traefik problems
-	s.checkNoOtherTraefikProblems()
+	// Verify no other apache4 problems
+	s.checkNoOtherapache4Problems()
 }
 
 func (s *AccessLogSuite) TestAccessLogJSONFrontendRedirect() {
@@ -355,15 +355,15 @@ func (s *AccessLogSuite) TestAccessLogJSONFrontendRedirect() {
 		},
 	}
 
-	// Start Traefik
-	s.traefikCmd(withConfigFile("fixtures/access_log_json_config.toml"))
+	// Start apache4
+	s.apache4Cmd(withConfigFile("fixtures/access_log_json_config.toml"))
 
 	s.checkStatsForLogFile()
 
-	s.waitForTraefik("frontendRedirect")
+	s.waitForapache4("frontendRedirect")
 
-	// Verify Traefik started OK
-	s.checkTraefikStarted()
+	// Verify apache4 started OK
+	s.checkapache4Started()
 
 	// Test frontend redirect
 	req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1:8005/test", nil)
@@ -409,15 +409,15 @@ func (s *AccessLogSuite) TestAccessLogRateLimit() {
 		},
 	}
 
-	// Start Traefik
-	s.traefikCmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
+	// Start apache4
+	s.apache4Cmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
 
 	s.checkStatsForLogFile()
 
-	s.waitForTraefik("rateLimit")
+	s.waitForapache4("rateLimit")
 
-	// Verify Traefik started OK
-	s.checkTraefikStarted()
+	// Verify apache4 started OK
+	s.checkapache4Started()
 
 	// Test rate limit
 	req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1:8007/", nil)
@@ -436,8 +436,8 @@ func (s *AccessLogSuite) TestAccessLogRateLimit() {
 
 	assert.GreaterOrEqual(s.T(), count, len(expected))
 
-	// Verify no other Traefik problems
-	s.checkNoOtherTraefikProblems()
+	// Verify no other apache4 problems
+	s.checkNoOtherapache4Problems()
 }
 
 func (s *AccessLogSuite) TestAccessLogBackendNotFound() {
@@ -453,15 +453,15 @@ func (s *AccessLogSuite) TestAccessLogBackendNotFound() {
 		},
 	}
 
-	// Start Traefik
-	s.traefikCmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
+	// Start apache4
+	s.apache4Cmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
 
-	s.waitForTraefik("server1")
+	s.waitForapache4("server1")
 
 	s.checkStatsForLogFile()
 
-	// Verify Traefik started OK
-	s.checkTraefikStarted()
+	// Verify apache4 started OK
+	s.checkapache4Started()
 
 	// Test rate limit
 	req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1:8000/", nil)
@@ -476,8 +476,8 @@ func (s *AccessLogSuite) TestAccessLogBackendNotFound() {
 
 	assert.GreaterOrEqual(s.T(), count, len(expected))
 
-	// Verify no other Traefik problems
-	s.checkNoOtherTraefikProblems()
+	// Verify no other apache4 problems
+	s.checkNoOtherapache4Problems()
 }
 
 func (s *AccessLogSuite) TestAccessLogFrontendAllowlist() {
@@ -493,15 +493,15 @@ func (s *AccessLogSuite) TestAccessLogFrontendAllowlist() {
 		},
 	}
 
-	// Start Traefik
-	s.traefikCmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
+	// Start apache4
+	s.apache4Cmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
 
 	s.checkStatsForLogFile()
 
-	s.waitForTraefik("frontendAllowlist")
+	s.waitForapache4("frontendAllowlist")
 
-	// Verify Traefik started OK
-	s.checkTraefikStarted()
+	// Verify apache4 started OK
+	s.checkapache4Started()
 
 	// Test rate limit
 	req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1:8000/", nil)
@@ -516,8 +516,8 @@ func (s *AccessLogSuite) TestAccessLogFrontendAllowlist() {
 
 	assert.GreaterOrEqual(s.T(), count, len(expected))
 
-	// Verify no other Traefik problems
-	s.checkNoOtherTraefikProblems()
+	// Verify no other apache4 problems
+	s.checkNoOtherapache4Problems()
 }
 
 func (s *AccessLogSuite) TestAccessLogAuthFrontendSuccess() {
@@ -533,15 +533,15 @@ func (s *AccessLogSuite) TestAccessLogAuthFrontendSuccess() {
 		},
 	}
 
-	// Start Traefik
-	s.traefikCmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
+	// Start apache4
+	s.apache4Cmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
 
 	s.checkStatsForLogFile()
 
-	s.waitForTraefik("authFrontend")
+	s.waitForapache4("authFrontend")
 
-	// Verify Traefik started OK
-	s.checkTraefikStarted()
+	// Verify apache4 started OK
+	s.checkapache4Started()
 
 	// Test auth entrypoint
 	req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1:8006/", nil)
@@ -557,8 +557,8 @@ func (s *AccessLogSuite) TestAccessLogAuthFrontendSuccess() {
 
 	assert.GreaterOrEqual(s.T(), count, len(expected))
 
-	// Verify no other Traefik problems
-	s.checkNoOtherTraefikProblems()
+	// Verify no other apache4 problems
+	s.checkNoOtherapache4Problems()
 }
 
 func (s *AccessLogSuite) TestAccessLogPreflightHeadersMiddleware() {
@@ -574,15 +574,15 @@ func (s *AccessLogSuite) TestAccessLogPreflightHeadersMiddleware() {
 		},
 	}
 
-	// Start Traefik
-	s.traefikCmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
+	// Start apache4
+	s.apache4Cmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
 
 	s.checkStatsForLogFile()
 
-	s.waitForTraefik("preflightCORS")
+	s.waitForapache4("preflightCORS")
 
-	// Verify Traefik started OK
-	s.checkTraefikStarted()
+	// Verify apache4 started OK
+	s.checkapache4Started()
 
 	// Test preflight response
 	req, err := http.NewRequest(http.MethodOptions, "http://127.0.0.1:8009/", nil)
@@ -599,30 +599,30 @@ func (s *AccessLogSuite) TestAccessLogPreflightHeadersMiddleware() {
 
 	assert.GreaterOrEqual(s.T(), count, len(expected))
 
-	// Verify no other Traefik problems
-	s.checkNoOtherTraefikProblems()
+	// Verify no other apache4 problems
+	s.checkNoOtherapache4Problems()
 }
 
 func (s *AccessLogSuite) TestAccessLogDisabledForInternals() {
 	ensureWorkingDirectoryIsClean()
 
-	// Start Traefik.
-	s.traefikCmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
+	// Start apache4.
+	s.apache4Cmd(withConfigFile("fixtures/access_log/access_log_base.toml"))
 
 	defer func() {
-		traefikLog, err := os.ReadFile(traefikTestLogFile)
+		apache4Log, err := os.ReadFile(apache4TestLogFile)
 		require.NoError(s.T(), err)
-		log.Info().Msg(string(traefikLog))
+		log.Info().Msg(string(apache4Log))
 	}()
 
-	// waitForTraefik makes at least one call to the rawdata api endpoint,
+	// waitForapache4 makes at least one call to the rawdata api endpoint,
 	// but the logs for this endpoint are ignored in checkAccessLogOutput.
-	s.waitForTraefik("service3")
+	s.waitForapache4("service3")
 
 	s.checkStatsForLogFile()
 
-	// Verify Traefik started OK.
-	s.checkTraefikStarted()
+	// Verify apache4 started OK.
+	s.checkapache4Started()
 
 	// Make some requests on the internal ping router.
 	req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1:8080/ping", nil)
@@ -648,15 +648,15 @@ func (s *AccessLogSuite) TestAccessLogDisabledForInternals() {
 
 	require.Equal(s.T(), 0, count)
 
-	// Verify no other Traefik problems.
-	s.checkNoOtherTraefikProblems()
+	// Verify no other apache4 problems.
+	s.checkNoOtherapache4Problems()
 }
 
-func (s *AccessLogSuite) checkNoOtherTraefikProblems() {
-	traefikLog, err := os.ReadFile(traefikTestLogFile)
+func (s *AccessLogSuite) checkNoOtherapache4Problems() {
+	apache4Log, err := os.ReadFile(apache4TestLogFile)
 	require.NoError(s.T(), err)
-	if len(traefikLog) > 0 {
-		fmt.Printf("%s\n", string(traefikLog))
+	if len(apache4Log) > 0 {
+		fmt.Printf("%s\n", string(apache4Log))
 	}
 }
 
@@ -696,7 +696,7 @@ func (s *AccessLogSuite) checkAccessLogExactValuesOutput(values []accessLogValue
 func (s *AccessLogSuite) extractLines() []string {
 	s.T().Helper()
 
-	accessLog, err := os.ReadFile(traefikTestAccessLogFile)
+	accessLog, err := os.ReadFile(apache4TestAccessLogFile)
 	require.NoError(s.T(), err)
 
 	lines := strings.Split(string(accessLog), "\n")
@@ -714,7 +714,7 @@ func (s *AccessLogSuite) checkStatsForLogFile() {
 	s.T().Helper()
 
 	err := try.Do(1*time.Second, func() error {
-		if _, errStat := os.Stat(traefikTestLogFile); errStat != nil {
+		if _, errStat := os.Stat(apache4TestLogFile); errStat != nil {
 			return fmt.Errorf("could not get stats for log file: %w", errStat)
 		}
 		return nil
@@ -723,19 +723,19 @@ func (s *AccessLogSuite) checkStatsForLogFile() {
 }
 
 func ensureWorkingDirectoryIsClean() {
-	os.Remove(traefikTestAccessLogFile)
-	os.Remove(traefikTestLogFile)
+	os.Remove(apache4TestAccessLogFile)
+	os.Remove(apache4TestLogFile)
 }
 
-func (s *AccessLogSuite) checkTraefikStarted() []byte {
+func (s *AccessLogSuite) checkapache4Started() []byte {
 	s.T().Helper()
 
-	traefikLog, err := os.ReadFile(traefikTestLogFile)
+	apache4Log, err := os.ReadFile(apache4TestLogFile)
 	require.NoError(s.T(), err)
-	if len(traefikLog) > 0 {
-		fmt.Printf("%s\n", string(traefikLog))
+	if len(apache4Log) > 0 {
+		fmt.Printf("%s\n", string(apache4Log))
 	}
-	return traefikLog
+	return apache4Log
 }
 
 func (s *BaseSuite) CheckAccessLogFormat(line string, i int) {

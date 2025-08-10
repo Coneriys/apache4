@@ -1,6 +1,6 @@
 ---
-title: "Traefik DigestAuth Documentation"
-description: "Traefik Proxy's HTTP DigestAuth middleware restricts access to your services to known users. Read the technical documentation."
+title: "apache4 DigestAuth Documentation"
+description: "apache4 Proxy's HTTP DigestAuth middleware restricts access to your services to known users. Read the technical documentation."
 ---
 
 ![DigestAuth](../../../../assets/img/middleware/digestauth.png)
@@ -16,8 +16,8 @@ http:
     test-auth:
       digestAuth:
         users:
-          - "test:traefik:a2688e031edb4be6a3797f3882655c05"
-          - "test2:traefik:518845800f9e2bfb1f1f740ec24f074e"
+          - "test:apache4:a2688e031edb4be6a3797f3882655c05"
+          - "test2:apache4:518845800f9e2bfb1f1f740ec24f074e"
 ```
 
 ```toml tab="Structured (TOML)"
@@ -25,15 +25,15 @@ http:
 [http.middlewares]
   [http.middlewares.test-auth.digestAuth]
     users = [
-      "test:traefik:a2688e031edb4be6a3797f3882655c05",
-      "test2:traefik:518845800f9e2bfb1f1f740ec24f074e",
+      "test:apache4:a2688e031edb4be6a3797f3882655c05",
+      "test2:apache4:518845800f9e2bfb1f1f740ec24f074e",
     ]
 ```
 
 ```yaml tab="Labels"
 # Declaring the user list
 labels:
-  - "traefik.http.middlewares.test-auth.digestauth.users=test:traefik:a2688e031edb4be6a3797f3882655c05,test2:traefik:518845800f9e2bfb1f1f740ec24f074e"
+  - "apache4.http.middlewares.test-auth.digestauth.users=test:apache4:a2688e031edb4be6a3797f3882655c05,test2:apache4:518845800f9e2bfb1f1f740ec24f074e"
 ```
 
 ```json tab="Tags"
@@ -41,14 +41,14 @@ labels:
 {
   //...
   "Tags" : [
-    "traefik.http.middlewares.test-auth.digestauth.users=test:traefik:a2688e031edb4be6a3797f3882655c05,test2:traefik:518845800f9e2bfb1f1f740ec24f074e"
+    "apache4.http.middlewares.test-auth.digestauth.users=test:apache4:a2688e031edb4be6a3797f3882655c05,test2:apache4:518845800f9e2bfb1f1f740ec24f074e"
   ]
 }
 ```
 
 ```yaml tab="Kubernetes"
 # Declaring the user list
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-auth
@@ -63,7 +63,7 @@ spec:
 |:-----------|:---------------------------------------------------------------------------------|:--------|:---------|
 | `users` | Array of authorized users. Each user must be declared using the `name:realm:encoded-password` format.<br /> The option `users` supports Kubernetes secrets.<br />(More information [here](#users--usersfile))| []  | No      |
 | `usersFile` | Path to an external file that contains the authorized users for the middleware. <br />The file content is a list of `name:realm:encoded-password`. (More information [here](#users--usersfile)) | ""      | No      |
-| `realm` | Allow customizing the realm for the authentication.| "traefik"      | No      |
+| `realm` | Allow customizing the realm for the authentication.| "apache4"      | No      |
 | `headerField` | Allow defining a header field to store the authenticated user.| ""      | No      |
 | `removeHeader` | Allow removing the authorization header before forwarding the request to your service. | false      | No      |
 
@@ -84,4 +84,4 @@ On Kubernetes, you don’t use the `users` or `usersFile` fields. Instead, you r
 - `kubernetes.io/basic-auth secret`: This secret type contains two keys—`username` and `password`—but is generally suited for a smaller number of users. Please note that these keys are not hashed or encrypted in any way, and therefore is less secure than the other method.
 - Opaque secret with a users field: Here, the secret contains a single string field (often called `users`) where each line represents a user. This approach allows you to store multiple users in one secret.
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

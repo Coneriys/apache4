@@ -4,9 +4,9 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/traefik/traefik/v3/pkg/logs"
-	"github.com/traefik/traefik/v3/pkg/middlewares"
-	"github.com/traefik/traefik/v3/pkg/tracing"
+	"github.com/apache4/apache4/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/middlewares"
+	"github.com/apache4/apache4/v3/pkg/tracing"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -38,7 +38,7 @@ func (t *serviceTracing) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 
 		req = req.WithContext(tracingCtx)
 
-		span.SetAttributes(attribute.String("traefik.service.name", t.service))
+		span.SetAttributes(attribute.String("apache4.service.name", t.service))
 	}
 
 	t.next.ServeHTTP(rw, req)

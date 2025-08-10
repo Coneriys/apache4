@@ -12,10 +12,10 @@ import (
 	"time"
 
 	"github.com/cenkalti/backoff/v4"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/middlewares"
-	"github.com/traefik/traefik/v3/pkg/middlewares/observability"
-	"github.com/traefik/traefik/v3/pkg/tracing"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/middlewares"
+	"github.com/apache4/apache4/v3/pkg/middlewares/observability"
+	"github.com/apache4/apache4/v3/pkg/tracing"
 	"go.opentelemetry.io/otel/attribute"
 	semconv "go.opentelemetry.io/otel/semconv/v1.26.0"
 	"go.opentelemetry.io/otel/trace"
@@ -115,7 +115,7 @@ func (r *retry) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	defer closableBody.Close()
 
 	// if we might make multiple attempts, swap the body for an io.NopCloser
-	// cf https://github.com/traefik/traefik/issues/1008
+	// cf https://github.com/apache4/apache4/issues/1008
 	req.Body = io.NopCloser(closableBody)
 
 	attempts := 1
@@ -135,7 +135,7 @@ func (r *retry) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 			var tracingCtx context.Context
 			tracingCtx, currentSpan = tracer.Start(initialCtx, typeName, trace.WithSpanKind(trace.SpanKindInternal))
 
-			currentSpan.SetAttributes(attribute.String("traefik.middleware.name", r.name))
+			currentSpan.SetAttributes(attribute.String("apache4.middleware.name", r.name))
 			// Only add the attribute "http.resend_count" defined by semantic conventions starting from second attempt.
 			if attempts > 1 {
 				currentSpan.SetAttributes(semconv.HTTPRequestResendCount(attempts - 1))

@@ -11,9 +11,9 @@ import (
 	"time"
 
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/provider/kubernetes/k8s"
-	"github.com/traefik/traefik/v3/pkg/types"
-	traefikversion "github.com/traefik/traefik/v3/pkg/version"
+	"github.com/apache4/apache4/v3/pkg/provider/kubernetes/k8s"
+	"github.com/apache4/apache4/v3/pkg/types"
+	apache4version "github.com/apache4/apache4/v3/pkg/version"
 	corev1 "k8s.io/api/core/v1"
 	discoveryv1 "k8s.io/api/discovery/v1"
 	netv1 "k8s.io/api/networking/v1"
@@ -100,7 +100,7 @@ func createClientFromConfig(c *rest.Config) (*clientWrapper, error) {
 	c.UserAgent = fmt.Sprintf(
 		"%s/%s (%s/%s) kubernetes/ingress",
 		filepath.Base(os.Args[0]),
-		traefikversion.Version,
+		apache4version.Version,
 		runtime.GOOS,
 		runtime.GOARCH,
 	)

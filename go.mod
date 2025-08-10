@@ -1,4 +1,4 @@
-module github.com/traefik/traefik/v3
+module github.com/apache4/apache4/v3
 
 go 1.24.0
 
@@ -69,9 +69,9 @@ require (
 	github.com/testcontainers/testcontainers-go/modules/k3s v0.32.0
 	github.com/tetratelabs/wazero v1.8.0
 	github.com/tidwall/gjson v1.17.0
-	github.com/traefik/grpc-web v0.16.0
-	github.com/traefik/paerser v0.2.2
-	github.com/traefik/yaegi v0.16.1
+	github.com/apache4/grpc-web v0.16.0
+	github.com/apache4/paerser v0.2.2
+	github.com/apache4/yaegi v0.16.1
 	github.com/unrolled/render v1.0.2
 	github.com/unrolled/secure v1.0.9
 	github.com/valyala/fasthttp v1.58.0

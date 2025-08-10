@@ -1,10 +1,10 @@
 ---
 title: "HMAC"
-description: "Traefik Hub API Gateway - The HMAC Middleware allows you secure your APIs using the HMAC mechanism."
+description: "apache4 Hub API Gateway - The HMAC Middleware allows you secure your APIs using the HMAC mechanism."
 ---
 
-!!! info "Traefik Hub Feature"
-    This middleware is available exclusively in [Traefik Hub](https://traefik.io/traefik-hub/). Learn more about [Traefik Hub's advanced features](https://doc.traefik.io/traefik-hub/api-gateway/intro).
+!!! info "apache4 Hub Feature"
+    This middleware is available exclusively in [apache4 Hub](https://apache4.io/apache4-hub/). Learn more about [apache4 Hub's advanced features](https://doc.apache4.io/apache4-hub/api-gateway/intro).
 
 This middleware validates a digital signature computed using the content of an HTTP request and a shared secret that is
 sent to the proxy using the `Authorization` or `Proxy-Authorization` header.
@@ -29,7 +29,7 @@ request body is validated and ensures that the given headers must be included in
 request.
 
 ```yaml tab="Middleware HMAC"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: hmac-auth
@@ -204,4 +204,4 @@ Only SHA-256 and SHA-512 checksums are supported for checksum computation.
 
     To disable this feature and only perform authentication, set the `validateDigest` option to `false` in the middleware configuration.
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

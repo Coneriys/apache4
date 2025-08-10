@@ -9,7 +9,7 @@ import (
 	"github.com/go-kit/kit/metrics"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/traefik/traefik/v3/pkg/config/static"
+	"github.com/apache4/apache4/v3/pkg/config/static"
 )
 
 // FooCert is a PEM-encoded TLS cert.
@@ -127,7 +127,7 @@ func TestGetDefaultsEntrypoints(t *testing.T) {
 				"web": {
 					Address: ":80",
 				},
-				"traefik": {
+				"apache4": {
 					Address: ":8080",
 				},
 			},

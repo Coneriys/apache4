@@ -1,4 +1,4 @@
-import { Badge, Box, Flex, H1, Skeleton, styled, Text } from '@traefiklabs/faency'
+import { Badge, Box, Flex, H1, Skeleton, styled, Text } from '@apache4labs/faency'
 import { useMemo } from 'react'
 import { FiGlobe, FiInfo, FiShield } from 'react-icons/fi'
 import { useParams } from 'react-router-dom'

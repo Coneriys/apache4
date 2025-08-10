@@ -1,6 +1,6 @@
 ---
-title: "Traefik InFlightReq Documentation"
-description: "Traefik Proxy's HTTP middleware lets you limit the number of simultaneous in-flight requests. Read the technical documentation."
+title: "apache4 InFlightReq Documentation"
+description: "apache4 Proxy's HTTP middleware lets you limit the number of simultaneous in-flight requests. Read the technical documentation."
 ---
 
 The `inFlightReq` middleware proactively prevents services from being overwhelmed with high load.
@@ -25,21 +25,21 @@ http:
 
 ```yaml tab="Labels"
 labels:
-  - "traefik.http.middlewares.test-inflightreq.inflightreq.amount=10"
+  - "apache4.http.middlewares.test-inflightreq.inflightreq.amount=10"
 ```
 
 ```json tab="Consul Catalog"
 // Limiting to 10 simultaneous connections
 {
   "Tags" : [
-    "traefik.http.middlewares.test-inflightreq.inflightreq.amount=10"
+    "apache4.http.middlewares.test-inflightreq.inflightreq.amount=10"
   ]
 }
 
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: Middleware
 metadata:
   name: test-inflightreq
@@ -58,7 +58,7 @@ spec:
 | `sourceCriterion.requestHost` | Whether to consider the request host as the source.<br /> More information about `sourceCriterion`[here](#sourcecriterion). | false      | No      |
 | `sourceCriterion.requestHeaderName` | Name of the header used to group incoming requests.<br /> More information about `sourceCriterion`[here](#sourcecriterion). | ""      | No      |
 | `sourceCriterion.ipStrategy.depth` | Depth position of the IP to select in the `X-Forwarded-For` header (starting from the right).<br />0 means no depth.<br />If greater than the total number of IPs in `X-Forwarded-For`, then the client IP is empty<br />If higher than 0, the `excludedIPs` options is not evaluated.<br /> More information about [`sourceCriterion`](#sourcecriterion), [`ipStrategy](#ipstrategy), and [`depth`](#example-of-depth--x-forwarded-for) below. | 0      | No      |
-| `sourceCriterion.ipStrategy.excludedIPs` | Allows Traefik to scan the `X-Forwarded-For` header and select the first IP not in the list.<br />If `depth` is specified, `excludedIPs` is ignored.<br /> More information about [`sourceCriterion`](#sourcecriterion), [`ipStrategy](#ipstrategy), and [`excludedIPs`](#example-of-excludedips--x-forwarded-for) below. | | No      |
+| `sourceCriterion.ipStrategy.excludedIPs` | Allows apache4 to scan the `X-Forwarded-For` header and select the first IP not in the list.<br />If `depth` is specified, `excludedIPs` is ignored.<br /> More information about [`sourceCriterion`](#sourcecriterion), [`ipStrategy](#ipstrategy), and [`excludedIPs`](#example-of-excludedips--x-forwarded-for) below. | | No      |
 | `sourceCriterion.ipStrategy.ipv6Subnet` |  If `ipv6Subnet` is provided and the selected IP is IPv6, the IP is transformed into the first IP of the subnet it belongs to. <br /> More information about [`sourceCriterion`](#sourcecriterion), [`ipStrategy.ipv6Subnet`](#ipstrategyipv6subnet), and [`excludedIPs`](#example-of-excludedips--x-forwarded-for) below. |  | No      |
 
 ### sourceCriterion
@@ -69,7 +69,7 @@ If none are set, the default is to use the `requestHost`.
 
 ### ipStrategy
 
-The `ipStrategy` option defines three parameters that configures how Traefik determines the client IP: `depth`, `excludedIPs` and `ipv6Subnet`.
+The `ipStrategy` option defines three parameters that configures how apache4 determines the client IP: `depth`, `excludedIPs` and `ipv6Subnet`.
 
 As a middleware, `inFlightReq` happens before the actual proxying to the backend takes place.
 In addition, the previous network hop only gets appended to `X-Forwarded-For` during the last stages of proxying, that is after it has already passed through the middleware.

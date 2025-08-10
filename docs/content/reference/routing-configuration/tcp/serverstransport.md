@@ -1,9 +1,9 @@
 ---
 title: "ServersTransport TCP"
-description: "The ServersTransport allows configuring the connection between Traefik and the TCP servers in Kubernetes."
+description: "The ServersTransport allows configuring the connection between apache4 and the TCP servers in Kubernetes."
 ---
 
-ServersTransport allows to configure the transport between Traefik and your TCP servers.
+ServersTransport allows to configure the transport between apache4 and your TCP servers.
 
 ## Configuration Example
 
@@ -70,14 +70,14 @@ tcp:
 
 ```yaml tab="Labels"
 labels:
-  - "traefik.tcp.services.Service01.loadBalancer.serversTransport=mytransport"
+  - "apache4.tcp.services.Service01.loadBalancer.serversTransport=mytransport"
 ```
 
 ```json tab="Tags"
 {
   // ...
   "Tags": [
-    "traefik.tcp.services.Service01.loadBalancer.serversTransport=mytransport"
+    "apache4.tcp.services.Service01.loadBalancer.serversTransport=mytransport"
   ]
 }
 ```
@@ -100,7 +100,7 @@ labels:
 
 !!! note "SPIFFE"
 
-    Please note that SPIFFE must be enabled in the [install configuration](../../install-configuration/tls/spiffe.md) (formerly known as static configuration) before using it to secure the connection between Traefik and the backends.
+    Please note that SPIFFE must be enabled in the [install configuration](../../install-configuration/tls/spiffe.md) (formerly known as static configuration) before using it to secure the connection between apache4 and the backends.
 
 ### `terminationDelay`
 

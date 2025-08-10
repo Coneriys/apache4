@@ -1,11 +1,11 @@
 ---
-title: "Traefik Logs Documentation"
-description: "Logs are a key part of observability in Traefik Proxy. Read the technical documentation to learn their configurations, rotations, and time zones."
+title: "apache4 Logs Documentation"
+description: "Logs are a key part of observability in apache4 Proxy. Read the technical documentation to learn their configurations, rotations, and time zones."
 ---
 
 ## Logs
 
-Logs concern everything that happens to Traefik itself (startup, configuration, events, shutdown, and so on).
+Logs concern everything that happens to apache4 itself (startup, configuration, events, shutdown, and so on).
 
 ### Configuration Example
 
@@ -31,7 +31,7 @@ log:
 
 ### Configuration Options
 
-The section below describe how to configure Traefik logs using the static configuration.
+The section below describe how to configure apache4 logs using the static configuration.
 
 | Field      | Description  | Default | Required |
 |:-----------|:----------------------------|:--------|:---------|
@@ -46,7 +46,7 @@ The section below describe how to configure Traefik logs using the static config
 
 ### OpenTelemetry
 
-Traefik supports OpenTelemetry for logging. To enable OpenTelemetry, you need to set the following in the static configuration:
+apache4 supports OpenTelemetry for logging. To enable OpenTelemetry, you need to set the following in the static configuration:
 
 ```yaml tab="File (YAML)"
 experimental:
@@ -98,7 +98,7 @@ log:
 
 | Field                                  | Description                                                                                                                            | Default                          | Required |
 |:---------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------|:---------|
-| `log.otlp.serviceName`                 | Service name used in selected backend.                                                                                                 | "traefik"                        | No       |
+| `log.otlp.serviceName`                 | Service name used in selected backend.                                                                                                 | "apache4"                        | No       |
 | `log.otlp.resourceAttributes`          | Defines additional resource attributes to be sent to the collector.                                                                    | []                               | No       |
 | `log.otlp.http`                        | This instructs the exporter to send logs to the OpenTelemetry Collector using HTTP.                                                    |                                  | No       |
 | `log.otlp.http.endpoint`               | The endpoint of the OpenTelemetry Collector. (format=`<scheme>://<host>:<port><path>`)                                                 | `https://localhost:4318/v1/logs` | No       |
@@ -120,7 +120,7 @@ log:
 
 ## AccessLogs
 
-Access logs concern everything that happens to the requests handled by Traefik.
+Access logs concern everything that happens to the requests handled by apache4.
 
 ### Configuration Example
 
@@ -190,13 +190,13 @@ accessLog:
 
 ### Configuration Options
 
-The section below describes how to configure Traefik access logs using the static configuration.
+The section below describes how to configure apache4 access logs using the static configuration.
 
 | Field      | Description    | Default | Required |
 |:-----------|:--------------------------|:--------|:---------|
 | `accesslog.filePath` | By default, the access logs are written to the standard output.<br />You can configure a file path instead using the `filePath` option.|  | No      |
 | `accesslog.format` | By default, logs are written using the Common Log Format (CLF).<br />To write logs in JSON, use `json` in the `format` option.<br />If the given format is unsupported, the default (CLF) is used instead.<br />More information about CLF fields [here](#clf-format-fields). | "common" | No      |
-| `accesslog.bufferingSize` | To write the logs in an asynchronous fashion, specify a  `bufferingSize` option.<br />This option represents the number of log lines Traefik will keep in memory before writing them to the selected output.<br />In some cases, this option can greatly help performances.| 0 | No      |
+| `accesslog.bufferingSize` | To write the logs in an asynchronous fashion, specify a  `bufferingSize` option.<br />This option represents the number of log lines apache4 will keep in memory before writing them to the selected output.<br />In some cases, this option can greatly help performances.| 0 | No      |
 | `accesslog.addInternals` | Enables access logs for internal resources (e.g.: `ping@internal`). | false  | No      |
 | `accesslog.filters.statusCodes` | Limit the access logs to requests with a status codes in the specified range. | [ ]      | No      |
 | `accesslog.filters.retryAttempts` | Keep the access logs when at least one retry has happened. | false      | No      |
@@ -208,7 +208,7 @@ The section below describes how to configure Traefik access logs using the stati
 
 ### OpenTelemetry
 
-Traefik supports OpenTelemetry for access logs. To enable OpenTelemetry, you need to set the following in the static configuration:
+apache4 supports OpenTelemetry for access logs. To enable OpenTelemetry, you need to set the following in the static configuration:
 
 ```yaml tab="File (YAML)"
 experimental:
@@ -260,7 +260,7 @@ accesslog:
 
 | Field                                        | Description                                                                                                                            | Default                          | Required |
 |:---------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------|:---------|
-| `accesslog.otlp.serviceName`                 | Defines the service name resource attribute.                                                                                           | "traefik"                        | No       |
+| `accesslog.otlp.serviceName`                 | Defines the service name resource attribute.                                                                                           | "apache4"                        | No       |
 | `accesslog.otlp.resourceAttributes`          | Defines additional resource attributes to be sent to the collector.                                                                    | []                               | No       |
 | `accesslog.otlp.http`                        | This instructs the exporter to send access logs to the OpenTelemetry Collector using HTTP.                                             |                                  | No       |
 | `accesslog.otlp.http.endpoint`               | The endpoint of the OpenTelemetry Collector. (format=`<scheme>://<host>:<port><path>`)                                                 | `https://localhost:4318/v1/logs` | No       |
@@ -287,8 +287,8 @@ Below the fields displayed with the CLF format:
 ```html
 <remote_IP_address> - <client_user_name_if_available> [<timestamp>] 
 "<request_method> <request_path> <request_protocol>" <HTTP_status> <content-length> 
-"<request_referrer>" "<request_user_agent>" <number_of_requests_received_since_Traefik_started>
-"<Traefik_router_name>" "<Traefik_server_URL>" <request_duration_in_ms>ms
+"<request_referrer>" "<request_user_agent>" <number_of_requests_received_since_apache4_started>
+"<apache4_router_name>" "<apache4_server_URL>" <request_duration_in_ms>ms
 ```
 
 ### Available Fields
@@ -298,10 +298,10 @@ Below the fields displayed with the CLF format:
 | `StartUTC`    | The time at which request processing started.                                                                                                                       |
 | `StartLocal`  | The local time at which request processing started.                                                                                                                 |
 | `Duration`    | The total time taken (in nanoseconds) by processing the response, including the origin server's time but not the log writing time.                                  |
-| `RouterName`  | The name of the Traefik  router.                                                                                                                                    |
-| `ServiceName`    | The name of the Traefik backend.          |
-| `ServiceURL`   | The URL of the Traefik backend.       |
-| `ServiceAddr`    | The IP:port of the Traefik backend (extracted from `ServiceURL`). |
+| `RouterName`  | The name of the apache4  router.                                                                                                                                    |
+| `ServiceName`    | The name of the apache4 backend.          |
+| `ServiceURL`   | The URL of the apache4 backend.       |
+| `ServiceAddr`    | The IP:port of the apache4 backend (extracted from `ServiceURL`). |
 | `ClientAddr`    | The remote address in its original form (usually IP:port).     |
 | `ClientHost`   | The remote IP address from which the client request was received.     |
 | `ClientPort`            | The remote TCP port from which the client request was received.   |
@@ -317,14 +317,14 @@ Below the fields displayed with the CLF format:
 | `RequestContentSize`    | The number of bytes in the request entity (a.k.a. body) sent by the client.   |
 | `OriginDuration`        | The time taken (in nanoseconds) by the origin server ('upstream') to return its response. |
 | `OriginContentSize`     | The content length specified by the origin server, or 0 if unspecified.    |
-| `OriginStatus`          | The HTTP status code returned by the origin server. If the request was handled by this Traefik instance (e.g. with a redirect), then this value will be absent (0). |
+| `OriginStatus`          | The HTTP status code returned by the origin server. If the request was handled by this apache4 instance (e.g. with a redirect), then this value will be absent (0). |
 | `OriginStatusLine`      | `OriginStatus` + Status code explanation   |
 | `DownstreamStatus`      | The HTTP status code returned to the client.    |
 | `DownstreamStatusLine`  | The `DownstreamStatus` and status code explanation.     |
 | `DownstreamContentSize` | The number of bytes in the response entity returned to the client. This is in addition to the "Content-Length" header, which may be present in the origin response. |
-| `RequestCount`          | The number of requests received since the Traefik instance started.    |
+| `RequestCount`          | The number of requests received since the apache4 instance started.    |
 | `GzipRatio`             | The response body compression ratio achieved.   |
-| `Overhead`              | The processing time overhead (in nanoseconds) caused by Traefik.    |
+| `Overhead`              | The processing time overhead (in nanoseconds) caused by apache4.    |
 | `RetryAttempts`         | The amount of attempts the request was retried.   |
 | `TLSVersion`            | The TLS version used by the connection (e.g. `1.2`) (if connection is TLS).   |
 | `TLSCipher`             | The TLS cipher used by the connection (e.g. `TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA`) (if connection is TLS).      |
@@ -332,7 +332,7 @@ Below the fields displayed with the CLF format:
 
 ### Log Rotation
 
-Traefik close and reopen its log files, assuming they're configured, on receipt of a USR1 signal.
+apache4 close and reopen its log files, assuming they're configured, on receipt of a USR1 signal.
 This allows the logs to be rotated and processed by an external program, such as `logrotate`.
 
 !!! warning
@@ -340,9 +340,9 @@ This allows the logs to be rotated and processed by an external program, such as
 
 ### Time Zones
 
-Traefik will timestamp each log line in UTC time by default.
+apache4 will timestamp each log line in UTC time by default.
 
-It is possible to configure the Traefik to timestamp in a specific timezone by ensuring the following configuration has been made in your environment:
+It is possible to configure the apache4 to timestamp in a specific timezone by ensuring the following configuration has been made in your environment:
 
 1. Provide time zone data to `/etc/localtime` or `/usr/share/zoneinfo` (based on your distribution) or set the environment variable TZ to the desired timezone.
 2. Specify the field `StartLocal` by dropping the field named `StartUTC` (available on the default Common Log Format (CLF) as well as JSON): `accesslog.fields.names.StartUTC=drop`.
@@ -351,8 +351,8 @@ Example utilizing Docker Compose:
 
 ```yaml
 services:
-  traefik:
-    image: traefik:v3.5
+  apache4:
+    image: apache4:v3.5
     environment:
       - TZ=US/Alaska
     command:
@@ -364,4 +364,4 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 ```
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

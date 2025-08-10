@@ -1,4 +1,4 @@
-import { CSS, Text } from '@traefiklabs/faency'
+import { CSS, Text } from '@apache4labs/faency'
 import { useMemo } from 'react'
 
 import Tooltip from 'components/Tooltip'

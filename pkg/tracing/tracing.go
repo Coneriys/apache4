@@ -12,8 +12,8 @@ import (
 	"strings"
 
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/config/static"
-	"github.com/traefik/traefik/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/config/static"
+	"github.com/apache4/apache4/v3/pkg/types"
 	"go.opentelemetry.io/contrib/propagators/autoprop"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
@@ -61,7 +61,7 @@ func TracerFromContext(ctx context.Context) *Tracer {
 
 	span := trace.SpanFromContext(ctx)
 	if span != nil && span.TracerProvider() != nil {
-		tracer := span.TracerProvider().Tracer("github.com/traefik/traefik")
+		tracer := span.TracerProvider().Tracer("github.com/apache4/apache4")
 		if tracer, ok := tracer.(*Tracer); ok {
 			return tracer
 		}
@@ -84,7 +84,7 @@ func InjectContextIntoCarrier(req *http.Request) {
 	propagator.Inject(req.Context(), propagation.HeaderCarrier(req.Header))
 }
 
-// Span is trace.Span wrapping the Traefik TracerProvider.
+// Span is trace.Span wrapping the apache4 TracerProvider.
 type Span struct {
 	trace.Span
 
@@ -96,7 +96,7 @@ func (s Span) TracerProvider() trace.TracerProvider {
 	return s.tracerProvider
 }
 
-// TracerProvider is trace.TracerProvider wrapping the Traefik Tracer implementation.
+// TracerProvider is trace.TracerProvider wrapping the apache4 Tracer implementation.
 type TracerProvider struct {
 	trace.TracerProvider
 
@@ -104,9 +104,9 @@ type TracerProvider struct {
 }
 
 // Tracer returns the trace.Tracer for the given options.
-// It returns specifically the Traefik Tracer when requested.
+// It returns specifically the apache4 Tracer when requested.
 func (t TracerProvider) Tracer(name string, options ...trace.TracerOption) trace.Tracer {
-	if name == "github.com/traefik/traefik" {
+	if name == "github.com/apache4/apache4" {
 		return t.tracer
 	}
 

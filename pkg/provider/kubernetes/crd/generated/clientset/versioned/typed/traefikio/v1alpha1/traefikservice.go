@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2016-2020 Containous SAS; 2020-2025 Traefik Labs
+Copyright (c) 2016-2020 Containous SAS; 2020-2025 apache4 Labs
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,53 +30,53 @@ import (
 	"context"
 	"time"
 
-	scheme "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned/scheme"
-	v1alpha1 "github.com/traefik/traefik/v3/pkg/provider/kubernetes/crd/traefikio/v1alpha1"
+	scheme "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/generated/clientset/versioned/scheme"
+	v1alpha1 "github.com/apache4/apache4/v3/pkg/provider/kubernetes/crd/apache4io/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	watch "k8s.io/apimachinery/pkg/watch"
 	rest "k8s.io/client-go/rest"
 )
 
-// TraefikServicesGetter has a method to return a TraefikServiceInterface.
+// apache4ServicesGetter has a method to return a apache4ServiceInterface.
 // A group's client should implement this interface.
-type TraefikServicesGetter interface {
-	TraefikServices(namespace string) TraefikServiceInterface
+type apache4ServicesGetter interface {
+	apache4Services(namespace string) apache4ServiceInterface
 }
 
-// TraefikServiceInterface has methods to work with TraefikService resources.
-type TraefikServiceInterface interface {
-	Create(ctx context.Context, traefikService *v1alpha1.TraefikService, opts v1.CreateOptions) (*v1alpha1.TraefikService, error)
-	Update(ctx context.Context, traefikService *v1alpha1.TraefikService, opts v1.UpdateOptions) (*v1alpha1.TraefikService, error)
+// apache4ServiceInterface has methods to work with apache4Service resources.
+type apache4ServiceInterface interface {
+	Create(ctx context.Context, apache4Service *v1alpha1.apache4Service, opts v1.CreateOptions) (*v1alpha1.apache4Service, error)
+	Update(ctx context.Context, apache4Service *v1alpha1.apache4Service, opts v1.UpdateOptions) (*v1alpha1.apache4Service, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.TraefikService, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.TraefikServiceList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.apache4Service, error)
+	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.apache4ServiceList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.TraefikService, err error)
-	TraefikServiceExpansion
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.apache4Service, err error)
+	apache4ServiceExpansion
 }
 
-// traefikServices implements TraefikServiceInterface
-type traefikServices struct {
+// apache4Services implements apache4ServiceInterface
+type apache4Services struct {
 	client rest.Interface
 	ns     string
 }
 
-// newTraefikServices returns a TraefikServices
-func newTraefikServices(c *TraefikV1alpha1Client, namespace string) *traefikServices {
-	return &traefikServices{
+// newapache4Services returns a apache4Services
+func newapache4Services(c *apache4V1alpha1Client, namespace string) *apache4Services {
+	return &apache4Services{
 		client: c.RESTClient(),
 		ns:     namespace,
 	}
 }
 
-// Get takes name of the traefikService, and returns the corresponding traefikService object, and an error if there is any.
-func (c *traefikServices) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.TraefikService, err error) {
-	result = &v1alpha1.TraefikService{}
+// Get takes name of the apache4Service, and returns the corresponding apache4Service object, and an error if there is any.
+func (c *apache4Services) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.apache4Service, err error) {
+	result = &v1alpha1.apache4Service{}
 	err = c.client.Get().
 		Namespace(c.ns).
-		Resource("traefikservices").
+		Resource("apache4services").
 		Name(name).
 		VersionedParams(&options, scheme.ParameterCodec).
 		Do(ctx).
@@ -84,16 +84,16 @@ func (c *traefikServices) Get(ctx context.Context, name string, options v1.GetOp
 	return
 }
 
-// List takes label and field selectors, and returns the list of TraefikServices that match those selectors.
-func (c *traefikServices) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.TraefikServiceList, err error) {
+// List takes label and field selectors, and returns the list of apache4Services that match those selectors.
+func (c *apache4Services) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.apache4ServiceList, err error) {
 	var timeout time.Duration
 	if opts.TimeoutSeconds != nil {
 		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
 	}
-	result = &v1alpha1.TraefikServiceList{}
+	result = &v1alpha1.apache4ServiceList{}
 	err = c.client.Get().
 		Namespace(c.ns).
-		Resource("traefikservices").
+		Resource("apache4services").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
 		Do(ctx).
@@ -101,8 +101,8 @@ func (c *traefikServices) List(ctx context.Context, opts v1.ListOptions) (result
 	return
 }
 
-// Watch returns a watch.Interface that watches the requested traefikServices.
-func (c *traefikServices) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
+// Watch returns a watch.Interface that watches the requested apache4Services.
+func (c *apache4Services) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	var timeout time.Duration
 	if opts.TimeoutSeconds != nil {
 		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
@@ -110,44 +110,44 @@ func (c *traefikServices) Watch(ctx context.Context, opts v1.ListOptions) (watch
 	opts.Watch = true
 	return c.client.Get().
 		Namespace(c.ns).
-		Resource("traefikservices").
+		Resource("apache4services").
 		VersionedParams(&opts, scheme.ParameterCodec).
 		Timeout(timeout).
 		Watch(ctx)
 }
 
-// Create takes the representation of a traefikService and creates it.  Returns the server's representation of the traefikService, and an error, if there is any.
-func (c *traefikServices) Create(ctx context.Context, traefikService *v1alpha1.TraefikService, opts v1.CreateOptions) (result *v1alpha1.TraefikService, err error) {
-	result = &v1alpha1.TraefikService{}
+// Create takes the representation of a apache4Service and creates it.  Returns the server's representation of the apache4Service, and an error, if there is any.
+func (c *apache4Services) Create(ctx context.Context, apache4Service *v1alpha1.apache4Service, opts v1.CreateOptions) (result *v1alpha1.apache4Service, err error) {
+	result = &v1alpha1.apache4Service{}
 	err = c.client.Post().
 		Namespace(c.ns).
-		Resource("traefikservices").
+		Resource("apache4services").
 		VersionedParams(&opts, scheme.ParameterCodec).
-		Body(traefikService).
+		Body(apache4Service).
 		Do(ctx).
 		Into(result)
 	return
 }
 
-// Update takes the representation of a traefikService and updates it. Returns the server's representation of the traefikService, and an error, if there is any.
-func (c *traefikServices) Update(ctx context.Context, traefikService *v1alpha1.TraefikService, opts v1.UpdateOptions) (result *v1alpha1.TraefikService, err error) {
-	result = &v1alpha1.TraefikService{}
+// Update takes the representation of a apache4Service and updates it. Returns the server's representation of the apache4Service, and an error, if there is any.
+func (c *apache4Services) Update(ctx context.Context, apache4Service *v1alpha1.apache4Service, opts v1.UpdateOptions) (result *v1alpha1.apache4Service, err error) {
+	result = &v1alpha1.apache4Service{}
 	err = c.client.Put().
 		Namespace(c.ns).
-		Resource("traefikservices").
-		Name(traefikService.Name).
+		Resource("apache4services").
+		Name(apache4Service.Name).
 		VersionedParams(&opts, scheme.ParameterCodec).
-		Body(traefikService).
+		Body(apache4Service).
 		Do(ctx).
 		Into(result)
 	return
 }
 
-// Delete takes name of the traefikService and deletes it. Returns an error if one occurs.
-func (c *traefikServices) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
+// Delete takes name of the apache4Service and deletes it. Returns an error if one occurs.
+func (c *apache4Services) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	return c.client.Delete().
 		Namespace(c.ns).
-		Resource("traefikservices").
+		Resource("apache4services").
 		Name(name).
 		Body(&opts).
 		Do(ctx).
@@ -155,14 +155,14 @@ func (c *traefikServices) Delete(ctx context.Context, name string, opts v1.Delet
 }
 
 // DeleteCollection deletes a collection of objects.
-func (c *traefikServices) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
+func (c *apache4Services) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
 	var timeout time.Duration
 	if listOpts.TimeoutSeconds != nil {
 		timeout = time.Duration(*listOpts.TimeoutSeconds) * time.Second
 	}
 	return c.client.Delete().
 		Namespace(c.ns).
-		Resource("traefikservices").
+		Resource("apache4services").
 		VersionedParams(&listOpts, scheme.ParameterCodec).
 		Timeout(timeout).
 		Body(&opts).
@@ -170,12 +170,12 @@ func (c *traefikServices) DeleteCollection(ctx context.Context, opts v1.DeleteOp
 		Error()
 }
 
-// Patch applies the patch and returns the patched traefikService.
-func (c *traefikServices) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.TraefikService, err error) {
-	result = &v1alpha1.TraefikService{}
+// Patch applies the patch and returns the patched apache4Service.
+func (c *apache4Services) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.apache4Service, err error) {
+	result = &v1alpha1.apache4Service{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
-		Resource("traefikservices").
+		Resource("apache4services").
 		Name(name).
 		SubResource(subresources...).
 		VersionedParams(&opts, scheme.ParameterCodec).

@@ -7,8 +7,8 @@ import (
 	"slices"
 
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
-	"github.com/traefik/traefik/v3/pkg/logs"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/logs"
 )
 
 // GetTCPRoutersByEntryPoints returns all the tcp routers by entry points name and routers name.

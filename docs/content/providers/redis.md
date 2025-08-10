@@ -1,14 +1,14 @@
 ---
-title: "Traefik Redis Documentation"
-description: "For configuration discovery in Traefik Proxy, you can store your configurations in Redis. Read the technical documentation."
+title: "apache4 Redis Documentation"
+description: "For configuration discovery in apache4 Proxy, you can store your configurations in Redis. Read the technical documentation."
 ---
 
-# Traefik & Redis
+# apache4 & Redis
 
 A Story of KV store & Containers
 {: .subtitle }
 
-Store your configuration in Redis and let Traefik do the rest!
+Store your configuration in Redis and let apache4 do the rest!
 
 !!! tip "Dynamic configuration updates"
 
@@ -46,23 +46,23 @@ providers:
 
 ### `rootKey`
 
-_Required, Default="traefik"_
+_Required, Default="apache4"_
 
 Defines the root key of the configuration.
 
 ```yaml tab="File (YAML)"
 providers:
   redis:
-    rootKey: "traefik"
+    rootKey: "apache4"
 ```
 
 ```toml tab="File (TOML)"
 [providers.redis]
-  rootKey = "traefik"
+  rootKey = "apache4"
 ```
 
 ```bash tab="CLI"
---providers.redis.rootkey=traefik
+--providers.redis.rootkey=apache4
 ```
 
 ### `username`

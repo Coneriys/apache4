@@ -4,25 +4,25 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.16.1
-  name: traefikservices.traefik.io
+  name: apache4services.apache4.io
 spec:
-  group: traefik.io
+  group: apache4.io
   names:
-    kind: TraefikService
-    listKind: TraefikServiceList
-    plural: traefikservices
-    singular: traefikservice
+    kind: apache4Service
+    listKind: apache4ServiceList
+    plural: apache4services
+    singular: apache4service
   scope: Namespaced
   versions:
   - name: v1alpha1
     schema:
       openAPIV3Schema:
         description: |-
-          TraefikService is the CRD implementation of a Traefik Service.
-          TraefikService object allows to:
+          apache4Service is the CRD implementation of a apache4 Service.
+          apache4Service object allows to:
           - Apply weight to Services on load-balancing
           - Mirror traffic on services
-          More info: https://doc.traefik.io/traefik/v3.5/routing/providers/kubernetes-crd/#kind-traefikservice
+          More info: https://doc.apache4.io/apache4/v3.5/routing/providers/kubernetes-crd/#kind-apache4service
         properties:
           apiVersion:
             description: |-
@@ -42,7 +42,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: TraefikServiceSpec defines the desired state of a TraefikService.
+            description: apache4ServiceSpec defines the desired state of a apache4Service.
             properties:
               mirroring:
                 description: Mirroring defines the Mirroring service configuration.
@@ -104,7 +104,7 @@ spec:
                         - type: integer
                         - type: string
                         description: |-
-                          Timeout defines the maximum duration Traefik will wait for a health check request before considering the server unhealthy.
+                          Timeout defines the maximum duration apache4 will wait for a health check request before considering the server unhealthy.
                           Default: 5s
                         x-kubernetes-int-or-string: true
                       unhealthyInterval:
@@ -121,7 +121,7 @@ spec:
                     description: Kind defines the kind of the Service.
                     enum:
                     - Service
-                    - TraefikService
+                    - apache4Service
                     type: string
                   maxBodySize:
                     description: |-
@@ -136,7 +136,7 @@ spec:
                       Default value is true.
                     type: boolean
                   mirrors:
-                    description: Mirrors defines the list of mirrors where Traefik
+                    description: Mirrors defines the list of mirrors where apache4
                       will duplicate the traffic.
                     items:
                       description: MirrorService holds the mirror configuration.
@@ -198,7 +198,7 @@ spec:
                               - type: integer
                               - type: string
                               description: |-
-                                Timeout defines the maximum duration Traefik will wait for a health check request before considering the server unhealthy.
+                                Timeout defines the maximum duration apache4 will wait for a health check request before considering the server unhealthy.
                                 Default: 5s
                               x-kubernetes-int-or-string: true
                             unhealthyInterval:
@@ -215,16 +215,16 @@ spec:
                           description: Kind defines the kind of the Service.
                           enum:
                           - Service
-                          - TraefikService
+                          - apache4Service
                           type: string
                         name:
                           description: |-
-                            Name defines the name of the referenced Kubernetes Service or TraefikService.
+                            Name defines the name of the referenced Kubernetes Service or apache4Service.
                             The differentiation between the two is specified in the Kind field.
                           type: string
                         namespace:
                           description: Namespace defines the namespace of the referenced
-                            Kubernetes Service or TraefikService.
+                            Kubernetes Service or apache4Service.
                           type: string
                         nativeLB:
                           description: |-
@@ -237,7 +237,7 @@ spec:
                           description: |-
                             NodePortLB controls, when creating the load-balancer,
                             whether the LB's children are directly the nodes internal IPs using the nodePort when the service type is NodePort.
-                            It allows services to be reachable when Traefik runs externally from the Kubernetes cluster but within the same network of the nodes.
+                            It allows services to be reachable when apache4 runs externally from the Kubernetes cluster but within the same network of the nodes.
                             By default, NodePortLB is false.
                           type: boolean
                         passHostHeader:
@@ -259,7 +259,7 @@ spec:
                             This can be a reference to a named port.
                           x-kubernetes-int-or-string: true
                         responseForwarding:
-                          description: ResponseForwarding defines how Traefik forwards
+                          description: ResponseForwarding defines how apache4 forwards
                             the response from the upstream Kubernetes Service to the
                             client.
                           properties:
@@ -280,13 +280,13 @@ spec:
                         serversTransport:
                           description: |-
                             ServersTransport defines the name of ServersTransport resource to use.
-                            It allows to configure the transport between Traefik and your servers.
+                            It allows to configure the transport between apache4 and your servers.
                             Can only be used on a Kubernetes Service.
                           type: string
                         sticky:
                           description: |-
                             Sticky defines the sticky sessions configuration.
-                            More info: https://doc.traefik.io/traefik/v3.5/routing/services/#sticky-sessions
+                            More info: https://doc.apache4.io/apache4/v3.5/routing/services/#sticky-sessions
                           properties:
                             cookie:
                               description: Cookie defines the sticky cookie configuration.
@@ -343,7 +343,7 @@ spec:
                           type: string
                         weight:
                           description: |-
-                            Weight defines the weight and should only be specified when Name references a TraefikService object
+                            Weight defines the weight and should only be specified when Name references a apache4Service object
                             (and to be precise, one that embeds a Weighted Round Robin).
                           minimum: 0
                           type: integer
@@ -353,12 +353,12 @@ spec:
                     type: array
                   name:
                     description: |-
-                      Name defines the name of the referenced Kubernetes Service or TraefikService.
+                      Name defines the name of the referenced Kubernetes Service or apache4Service.
                       The differentiation between the two is specified in the Kind field.
                     type: string
                   namespace:
                     description: Namespace defines the namespace of the referenced
-                      Kubernetes Service or TraefikService.
+                      Kubernetes Service or apache4Service.
                     type: string
                   nativeLB:
                     description: |-
@@ -371,7 +371,7 @@ spec:
                     description: |-
                       NodePortLB controls, when creating the load-balancer,
                       whether the LB's children are directly the nodes internal IPs using the nodePort when the service type is NodePort.
-                      It allows services to be reachable when Traefik runs externally from the Kubernetes cluster but within the same network of the nodes.
+                      It allows services to be reachable when apache4 runs externally from the Kubernetes cluster but within the same network of the nodes.
                       By default, NodePortLB is false.
                     type: boolean
                   passHostHeader:
@@ -388,7 +388,7 @@ spec:
                       This can be a reference to a named port.
                     x-kubernetes-int-or-string: true
                   responseForwarding:
-                    description: ResponseForwarding defines how Traefik forwards the
+                    description: ResponseForwarding defines how apache4 forwards the
                       response from the upstream Kubernetes Service to the client.
                     properties:
                       flushInterval:
@@ -408,13 +408,13 @@ spec:
                   serversTransport:
                     description: |-
                       ServersTransport defines the name of ServersTransport resource to use.
-                      It allows to configure the transport between Traefik and your servers.
+                      It allows to configure the transport between apache4 and your servers.
                       Can only be used on a Kubernetes Service.
                     type: string
                   sticky:
                     description: |-
                       Sticky defines the sticky sessions configuration.
-                      More info: https://doc.traefik.io/traefik/v3.5/routing/services/#sticky-sessions
+                      More info: https://doc.apache4.io/apache4/v3.5/routing/services/#sticky-sessions
                     properties:
                       cookie:
                         description: Cookie defines the sticky cookie configuration.
@@ -470,7 +470,7 @@ spec:
                     type: string
                   weight:
                     description: |-
-                      Weight defines the weight and should only be specified when Name references a TraefikService object
+                      Weight defines the weight and should only be specified when Name references a apache4Service object
                       (and to be precise, one that embeds a Weighted Round Robin).
                     minimum: 0
                     type: integer
@@ -482,7 +482,7 @@ spec:
                 properties:
                   services:
                     description: Services defines the list of Kubernetes Service and/or
-                      TraefikService to load-balance, with weight.
+                      apache4Service to load-balance, with weight.
                     items:
                       description: Service defines an upstream HTTP service to proxy
                         traffic to.
@@ -544,7 +544,7 @@ spec:
                               - type: integer
                               - type: string
                               description: |-
-                                Timeout defines the maximum duration Traefik will wait for a health check request before considering the server unhealthy.
+                                Timeout defines the maximum duration apache4 will wait for a health check request before considering the server unhealthy.
                                 Default: 5s
                               x-kubernetes-int-or-string: true
                             unhealthyInterval:
@@ -561,16 +561,16 @@ spec:
                           description: Kind defines the kind of the Service.
                           enum:
                           - Service
-                          - TraefikService
+                          - apache4Service
                           type: string
                         name:
                           description: |-
-                            Name defines the name of the referenced Kubernetes Service or TraefikService.
+                            Name defines the name of the referenced Kubernetes Service or apache4Service.
                             The differentiation between the two is specified in the Kind field.
                           type: string
                         namespace:
                           description: Namespace defines the namespace of the referenced
-                            Kubernetes Service or TraefikService.
+                            Kubernetes Service or apache4Service.
                           type: string
                         nativeLB:
                           description: |-
@@ -583,7 +583,7 @@ spec:
                           description: |-
                             NodePortLB controls, when creating the load-balancer,
                             whether the LB's children are directly the nodes internal IPs using the nodePort when the service type is NodePort.
-                            It allows services to be reachable when Traefik runs externally from the Kubernetes cluster but within the same network of the nodes.
+                            It allows services to be reachable when apache4 runs externally from the Kubernetes cluster but within the same network of the nodes.
                             By default, NodePortLB is false.
                           type: boolean
                         passHostHeader:
@@ -600,7 +600,7 @@ spec:
                             This can be a reference to a named port.
                           x-kubernetes-int-or-string: true
                         responseForwarding:
-                          description: ResponseForwarding defines how Traefik forwards
+                          description: ResponseForwarding defines how apache4 forwards
                             the response from the upstream Kubernetes Service to the
                             client.
                           properties:
@@ -621,13 +621,13 @@ spec:
                         serversTransport:
                           description: |-
                             ServersTransport defines the name of ServersTransport resource to use.
-                            It allows to configure the transport between Traefik and your servers.
+                            It allows to configure the transport between apache4 and your servers.
                             Can only be used on a Kubernetes Service.
                           type: string
                         sticky:
                           description: |-
                             Sticky defines the sticky sessions configuration.
-                            More info: https://doc.traefik.io/traefik/v3.5/routing/services/#sticky-sessions
+                            More info: https://doc.apache4.io/apache4/v3.5/routing/services/#sticky-sessions
                           properties:
                             cookie:
                               description: Cookie defines the sticky cookie configuration.
@@ -684,7 +684,7 @@ spec:
                           type: string
                         weight:
                           description: |-
-                            Weight defines the weight and should only be specified when Name references a TraefikService object
+                            Weight defines the weight and should only be specified when Name references a apache4Service object
                             (and to be precise, one that embeds a Weighted Round Robin).
                           minimum: 0
                           type: integer
@@ -695,7 +695,7 @@ spec:
                   sticky:
                     description: |-
                       Sticky defines whether sticky sessions are enabled.
-                      More info: https://doc.traefik.io/traefik/v3.5/routing/providers/kubernetes-crd/#stickiness-and-load-balancing
+                      More info: https://doc.apache4.io/apache4/v3.5/routing/providers/kubernetes-crd/#stickiness-and-load-balancing
                     properties:
                       cookie:
                         description: Cookie defines the sticky cookie configuration.

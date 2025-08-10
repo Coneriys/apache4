@@ -8,7 +8,7 @@ import (
 	"github.com/kvtools/valkeyrie/store"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/traefik/paerser/parser"
+	"github.com/apache4/paerser/parser"
 )
 
 func TestDecodeToNode(t *testing.T) {
@@ -31,10 +31,10 @@ func TestDecodeToNode(t *testing.T) {
 		{
 			desc: "level 1",
 			in: map[string]string{
-				"traefik/foo": "bar",
+				"apache4/foo": "bar",
 			},
 			expected: expected{node: &parser.Node{
-				Name: "traefik",
+				Name: "apache4",
 				Children: []*parser.Node{
 					{Name: "foo", Value: "bar"},
 				},
@@ -43,10 +43,10 @@ func TestDecodeToNode(t *testing.T) {
 		{
 			desc: "level 1 empty value",
 			in: map[string]string{
-				"traefik/foo": "",
+				"apache4/foo": "",
 			},
 			expected: expected{node: &parser.Node{
-				Name: "traefik",
+				Name: "apache4",
 				Children: []*parser.Node{
 					{Name: "foo", Value: ""},
 				},
@@ -55,10 +55,10 @@ func TestDecodeToNode(t *testing.T) {
 		{
 			desc: "level 2",
 			in: map[string]string{
-				"traefik/foo/bar": "bar",
+				"apache4/foo/bar": "bar",
 			},
 			expected: expected{node: &parser.Node{
-				Name: "traefik",
+				Name: "apache4",
 				Children: []*parser.Node{{
 					Name: "foo",
 					Children: []*parser.Node{
@@ -70,20 +70,20 @@ func TestDecodeToNode(t *testing.T) {
 		{
 			desc: "several entries, level 0",
 			in: map[string]string{
-				"traefik":  "bar",
-				"traefik_": "bur",
+				"apache4":  "bar",
+				"apache4_": "bur",
 			},
 			expected: expected{error: true},
 		},
 		{
 			desc: "several entries, prefix filter",
 			in: map[string]string{
-				"traefik/foo": "bar",
-				"traefik/fii": "bir",
+				"apache4/foo": "bar",
+				"apache4/fii": "bir",
 			},
-			filters: []string{"traefik/Foo"},
+			filters: []string{"apache4/Foo"},
 			expected: expected{node: &parser.Node{
-				Name: "traefik",
+				Name: "apache4",
 				Children: []*parser.Node{
 					{Name: "foo", Value: "bar"},
 				},
@@ -92,11 +92,11 @@ func TestDecodeToNode(t *testing.T) {
 		{
 			desc: "several entries, level 1",
 			in: map[string]string{
-				"traefik/foo": "bar",
-				"traefik/fii": "bur",
+				"apache4/foo": "bar",
+				"apache4/fii": "bur",
 			},
 			expected: expected{node: &parser.Node{
-				Name: "traefik",
+				Name: "apache4",
 				Children: []*parser.Node{
 					{Name: "fii", Value: "bur"},
 					{Name: "foo", Value: "bar"},
@@ -106,11 +106,11 @@ func TestDecodeToNode(t *testing.T) {
 		{
 			desc: "several entries, level 2",
 			in: map[string]string{
-				"traefik/foo/aaa": "bar",
-				"traefik/foo/bbb": "bur",
+				"apache4/foo/aaa": "bar",
+				"apache4/foo/bbb": "bur",
 			},
 			expected: expected{node: &parser.Node{
-				Name: "traefik",
+				Name: "apache4",
 				Children: []*parser.Node{
 					{Name: "foo", Children: []*parser.Node{
 						{Name: "aaa", Value: "bar"},
@@ -122,11 +122,11 @@ func TestDecodeToNode(t *testing.T) {
 		{
 			desc: "several entries, level 2, case-insensitive",
 			in: map[string]string{
-				"traefik/foo/aaa": "bar",
-				"traefik/Foo/bbb": "bur",
+				"apache4/foo/aaa": "bar",
+				"apache4/Foo/bbb": "bur",
 			},
 			expected: expected{node: &parser.Node{
-				Name: "traefik",
+				Name: "apache4",
 				Children: []*parser.Node{
 					{Name: "Foo", Children: []*parser.Node{
 						{Name: "bbb", Value: "bur"},
@@ -138,12 +138,12 @@ func TestDecodeToNode(t *testing.T) {
 		{
 			desc: "several entries, level 2, 3 children",
 			in: map[string]string{
-				"traefik/foo/aaa": "bar",
-				"traefik/foo/bbb": "bur",
-				"traefik/foo/ccc": "bir",
+				"apache4/foo/aaa": "bar",
+				"apache4/foo/bbb": "bur",
+				"apache4/foo/ccc": "bir",
 			},
 			expected: expected{node: &parser.Node{
-				Name: "traefik",
+				Name: "apache4",
 				Children: []*parser.Node{
 					{Name: "foo", Children: []*parser.Node{
 						{Name: "aaa", Value: "bar"},
@@ -156,11 +156,11 @@ func TestDecodeToNode(t *testing.T) {
 		{
 			desc: "several entries, level 3",
 			in: map[string]string{
-				"traefik/foo/bar/aaa": "bar",
-				"traefik/foo/bar/bbb": "bur",
+				"apache4/foo/bar/aaa": "bar",
+				"apache4/foo/bar/bbb": "bur",
 			},
 			expected: expected{node: &parser.Node{
-				Name: "traefik",
+				Name: "apache4",
 				Children: []*parser.Node{
 					{Name: "foo", Children: []*parser.Node{
 						{Name: "bar", Children: []*parser.Node{
@@ -174,12 +174,12 @@ func TestDecodeToNode(t *testing.T) {
 		{
 			desc: "several entries, level 3, 2 children level 1",
 			in: map[string]string{
-				"traefik/foo/bar/aaa": "bar",
-				"traefik/foo/bar/bbb": "bur",
-				"traefik/bar/foo/bbb": "bir",
+				"apache4/foo/bar/aaa": "bar",
+				"apache4/foo/bar/bbb": "bur",
+				"apache4/bar/foo/bbb": "bir",
 			},
 			expected: expected{node: &parser.Node{
-				Name: "traefik",
+				Name: "apache4",
 				Children: []*parser.Node{
 					{Name: "bar", Children: []*parser.Node{
 						{Name: "foo", Children: []*parser.Node{
@@ -198,13 +198,13 @@ func TestDecodeToNode(t *testing.T) {
 		{
 			desc: "several entries, slice syntax",
 			in: map[string]string{
-				"traefik/foo/0/aaa": "bar0",
-				"traefik/foo/0/bbb": "bur0",
-				"traefik/foo/1/aaa": "bar1",
-				"traefik/foo/1/bbb": "bur1",
+				"apache4/foo/0/aaa": "bar0",
+				"apache4/foo/0/bbb": "bur0",
+				"apache4/foo/1/aaa": "bar1",
+				"apache4/foo/1/bbb": "bur1",
 			},
 			expected: expected{node: &parser.Node{
-				Name: "traefik",
+				Name: "apache4",
 				Children: []*parser.Node{
 					{Name: "foo", Children: []*parser.Node{
 						{Name: "[0]", Children: []*parser.Node{
@@ -222,13 +222,13 @@ func TestDecodeToNode(t *testing.T) {
 		{
 			desc: "several entries, slice in slice of struct",
 			in: map[string]string{
-				"traefik/foo/0/aaa/0": "bar0",
-				"traefik/foo/0/aaa/1": "bar1",
-				"traefik/foo/1/aaa/0": "bar2",
-				"traefik/foo/1/aaa/1": "bar3",
+				"apache4/foo/0/aaa/0": "bar0",
+				"apache4/foo/0/aaa/1": "bar1",
+				"apache4/foo/1/aaa/0": "bar2",
+				"apache4/foo/1/aaa/1": "bar3",
 			},
 			expected: expected{node: &parser.Node{
-				Name: "traefik",
+				Name: "apache4",
 				Children: []*parser.Node{
 					{Name: "foo", Children: []*parser.Node{
 						{Name: "[0]", Children: []*parser.Node{
@@ -247,7 +247,7 @@ func TestDecodeToNode(t *testing.T) {
 		t.Run(test.desc, func(t *testing.T) {
 			t.Parallel()
 
-			out, err := DecodeToNode(mapToPairs(test.in), "traefik", test.filters...)
+			out, err := DecodeToNode(mapToPairs(test.in), "apache4", test.filters...)
 
 			if test.expected.error {
 				require.Error(t, err)

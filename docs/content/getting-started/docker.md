@@ -1,17 +1,17 @@
 ---
-title: "Docker and Traefik Quick Start"
-description: "Deploy Traefik in Docker and expose your first service"
+title: "Docker and apache4 Quick Start"
+description: "Deploy apache4 in Docker and expose your first service"
 ---
 
-# Getting Started with Docker and Traefik
+# Getting Started with Docker and apache4
 
-Docker is a first-class citizen in Traefik, offering native support for Docker containers and services. 
-Whether you're using Docker Compose or running containers directly, Traefik provides a seamless experience for managing your Docker traffic.
+Docker is a first-class citizen in apache4, offering native support for Docker containers and services. 
+Whether you're using Docker Compose or running containers directly, apache4 provides a seamless experience for managing your Docker traffic.
 
 This guide shows you how to:
 
-- Install Traefik using Docker
-- Expose the Traefik dashboard
+- Install apache4 using Docker
+- Expose the apache4 dashboard
 - Deploy a sample application
 - Configure basic routing
 
@@ -20,7 +20,7 @@ This guide shows you how to:
 - Docker 
 - Docker Compose (optional)
 
-## Install Traefik
+## Install apache4
 
 ### Using Docker Compose
 
@@ -35,8 +35,8 @@ This configuration:
 ```yaml
 # docker-compose.yml
 services:
-  traefik:
-    image: traefik:v3.5
+  apache4:
+    image: apache4:v3.5
     command:
       - "--api.insecure=true"
       - "--providers.docker=true"
@@ -48,7 +48,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 ```
 
-Start Traefik:
+Start apache4:
 
 ```bash
 docker-compose up -d
@@ -56,7 +56,7 @@ docker-compose up -d
 
 ### Using Docker CLI
 
-Alternatively, you can run Traefik directly with Docker. 
+Alternatively, you can run apache4 directly with Docker. 
 This command:
 
 - Exposes ports 80 and 8080 for web traffic and dashboard access
@@ -66,7 +66,7 @@ This command:
 Create a configuration file:
 
 ```yaml
-# traefik.yml
+# apache4.yml
 api:
   insecure: true
 entryPoints:
@@ -76,15 +76,15 @@ providers:
   docker: {}
 ```
 
-Start Traefik:
+Start apache4:
 
 ```bash
 docker run -d \
   -p 80:80 \
   -p 8080:8080 \
-  -v $PWD/traefik.yml:/etc/traefik/traefik.yml \
+  -v $PWD/apache4.yml:/etc/apache4/apache4.yml \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  traefik:v3.5
+  apache4:v3.5
 ```
 
 ## Expose the Dashboard
@@ -96,7 +96,7 @@ You can access the dashboard at:
 
 [http://localhost:8080/dashboard/](http://localhost:8080/dashboard/)
 
-![Traefik Dashboard Screenshot](../assets/img/getting-started/traefik-dashboard.png)
+![apache4 Dashboard Screenshot](../assets/img/getting-started/apache4-dashboard.png)
 
 ## Deploy a Sample Application
 
@@ -106,9 +106,9 @@ Create a whoami service:
 # whoami.yml
 services:
   whoami:
-    image: traefik/whoami
+    image: apache4/whoami
     labels:
-      - "traefik.http.routers.whoami.rule=Host(`whoami.localhost`)"
+      - "apache4.http.routers.whoami.rule=Host(`whoami.localhost`)"
 ```
 
 Apply the configuration:
@@ -146,11 +146,11 @@ You can also open [http://whoami.localhost](http://whoami.localhost) in a browse
 
 ![whoami application Screenshot](../assets/img/getting-started/whoami-localhost.png)
 
-If you navigate to the **HTTP Routers** section of the Traefik dashboard, you can see that the `whoami.localhost` route is managed by the Traefik Docker provider:
+If you navigate to the **HTTP Routers** section of the apache4 dashboard, you can see that the `whoami.localhost` route is managed by the apache4 Docker provider:
 
-![Traefik Dashboard HTTP Routers Section Screenshot](../assets/img/getting-started/docker-router.png)
+![apache4 Dashboard HTTP Routers Section Screenshot](../assets/img/getting-started/docker-router.png)
 
-That's it! You've successfully deployed Traefik and configured routing in Docker.
+That's it! You've successfully deployed apache4 and configured routing in Docker.
 
 ## Next Steps
 
@@ -159,4 +159,4 @@ That's it! You've successfully deployed Traefik and configured routing in Docker
 - [Enable Metrics](../reference/install-configuration/observability/metrics.md)
 - [Learn more about Docker provider](../reference/install-configuration/providers/docker.md)
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

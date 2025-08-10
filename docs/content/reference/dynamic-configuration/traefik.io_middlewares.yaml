@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.16.1
-  name: middlewares.traefik.io
+  name: middlewares.apache4.io
 spec:
-  group: traefik.io
+  group: apache4.io
   names:
     kind: Middleware
     listKind: MiddlewareList
@@ -18,8 +18,8 @@ spec:
     schema:
       openAPIV3Schema:
         description: |-
-          Middleware is the CRD implementation of a Traefik Middleware.
-          More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/overview/
+          Middleware is the CRD implementation of a apache4 Middleware.
+          More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/overview/
         properties:
           apiVersion:
             description: |-
@@ -45,7 +45,7 @@ spec:
                 description: |-
                   AddPrefix holds the add prefix middleware configuration.
                   This middleware updates the path of a request before forwarding it.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/addprefix/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/addprefix/
                 properties:
                   prefix:
                     description: |-
@@ -60,17 +60,17 @@ spec:
                 description: |-
                   BasicAuth holds the basic auth middleware configuration.
                   This middleware restricts access to your services to known users.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/basicauth/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/basicauth/
                 properties:
                   headerField:
                     description: |-
                       HeaderField defines a header field to store the authenticated user.
-                      More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/basicauth/#headerfield
+                      More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/basicauth/#headerfield
                     type: string
                   realm:
                     description: |-
                       Realm allows the protected resources on a server to be partitioned into a set of protection spaces, each with its own authentication scheme.
-                      Default: traefik.
+                      Default: apache4.
                     type: string
                   removeHeader:
                     description: |-
@@ -86,7 +86,7 @@ spec:
                 description: |-
                   Buffering holds the buffering middleware configuration.
                   This middleware retries or limits the size of requests that can be forwarded to backends.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/buffering/#maxrequestbodybytes
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/buffering/#maxrequestbodybytes
                 properties:
                   maxRequestBodyBytes:
                     description: |-
@@ -118,14 +118,14 @@ spec:
                     description: |-
                       RetryExpression defines the retry conditions.
                       It is a logical combination of functions with operators AND (&&) and OR (||).
-                      More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/buffering/#retryexpression
+                      More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/buffering/#retryexpression
                     type: string
                 type: object
               chain:
                 description: |-
                   Chain holds the configuration of the chain middleware.
                   This middleware enables to define reusable combinations of other pieces of middleware.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/chain/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/chain/
                 properties:
                   middlewares:
                     description: Middlewares is the list of MiddlewareRef which composes
@@ -188,7 +188,7 @@ spec:
                 description: |-
                   Compress holds the compress middleware configuration.
                   This middleware compresses responses before sending them to the client, using gzip, brotli, or zstd compression.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/compress/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/compress/
                 properties:
                   defaultEncoding:
                     description: DefaultEncoding specifies the default encoding if
@@ -238,17 +238,17 @@ spec:
                 description: |-
                   DigestAuth holds the digest auth middleware configuration.
                   This middleware restricts access to your services to known users.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/digestauth/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/digestauth/
                 properties:
                   headerField:
                     description: |-
                       HeaderField defines a header field to store the authenticated user.
-                      More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/basicauth/#headerfield
+                      More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/basicauth/#headerfield
                     type: string
                   realm:
                     description: |-
                       Realm allows the protected resources on a server to be partitioned into a set of protection spaces, each with its own authentication scheme.
-                      Default: traefik.
+                      Default: apache4.
                     type: string
                   removeHeader:
                     description: RemoveHeader defines whether to remove the authorization
@@ -263,7 +263,7 @@ spec:
                 description: |-
                   ErrorPage holds the custom error middleware configuration.
                   This middleware returns a custom page in lieu of the default, according to configured ranges of HTTP Status codes.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/errorpages/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/errorpages/
                 properties:
                   query:
                     description: |-
@@ -275,7 +275,7 @@ spec:
                   service:
                     description: |-
                       Service defines the reference to a Kubernetes Service that will serve the error page.
-                      More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/errorpages/#service
+                      More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/errorpages/#service
                     properties:
                       healthCheck:
                         description: Healthcheck defines health checks for ExternalName
@@ -334,7 +334,7 @@ spec:
                             - type: integer
                             - type: string
                             description: |-
-                              Timeout defines the maximum duration Traefik will wait for a health check request before considering the server unhealthy.
+                              Timeout defines the maximum duration apache4 will wait for a health check request before considering the server unhealthy.
                               Default: 5s
                             x-kubernetes-int-or-string: true
                           unhealthyInterval:
@@ -351,16 +351,16 @@ spec:
                         description: Kind defines the kind of the Service.
                         enum:
                         - Service
-                        - TraefikService
+                        - apache4Service
                         type: string
                       name:
                         description: |-
-                          Name defines the name of the referenced Kubernetes Service or TraefikService.
+                          Name defines the name of the referenced Kubernetes Service or apache4Service.
                           The differentiation between the two is specified in the Kind field.
                         type: string
                       namespace:
                         description: Namespace defines the namespace of the referenced
-                          Kubernetes Service or TraefikService.
+                          Kubernetes Service or apache4Service.
                         type: string
                       nativeLB:
                         description: |-
@@ -373,7 +373,7 @@ spec:
                         description: |-
                           NodePortLB controls, when creating the load-balancer,
                           whether the LB's children are directly the nodes internal IPs using the nodePort when the service type is NodePort.
-                          It allows services to be reachable when Traefik runs externally from the Kubernetes cluster but within the same network of the nodes.
+                          It allows services to be reachable when apache4 runs externally from the Kubernetes cluster but within the same network of the nodes.
                           By default, NodePortLB is false.
                         type: boolean
                       passHostHeader:
@@ -390,7 +390,7 @@ spec:
                           This can be a reference to a named port.
                         x-kubernetes-int-or-string: true
                       responseForwarding:
-                        description: ResponseForwarding defines how Traefik forwards
+                        description: ResponseForwarding defines how apache4 forwards
                           the response from the upstream Kubernetes Service to the
                           client.
                         properties:
@@ -411,13 +411,13 @@ spec:
                       serversTransport:
                         description: |-
                           ServersTransport defines the name of ServersTransport resource to use.
-                          It allows to configure the transport between Traefik and your servers.
+                          It allows to configure the transport between apache4 and your servers.
                           Can only be used on a Kubernetes Service.
                         type: string
                       sticky:
                         description: |-
                           Sticky defines the sticky sessions configuration.
-                          More info: https://doc.traefik.io/traefik/v3.5/routing/services/#sticky-sessions
+                          More info: https://doc.apache4.io/apache4/v3.5/routing/services/#sticky-sessions
                         properties:
                           cookie:
                             description: Cookie defines the sticky cookie configuration.
@@ -474,7 +474,7 @@ spec:
                         type: string
                       weight:
                         description: |-
-                          Weight defines the weight and should only be specified when Name references a TraefikService object
+                          Weight defines the weight and should only be specified when Name references a apache4Service object
                           (and to be precise, one that embeds a Weighted Round Robin).
                         minimum: 0
                         type: integer
@@ -504,7 +504,7 @@ spec:
                 description: |-
                   ForwardAuth holds the forward auth middleware configuration.
                   This middleware delegates the request authentication to a Service.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/forwardauth/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/forwardauth/
                 properties:
                   addAuthCookiesToResponse:
                     description: AddAuthCookiesToResponse defines the list of cookies
@@ -532,7 +532,7 @@ spec:
                   authResponseHeadersRegex:
                     description: |-
                       AuthResponseHeadersRegex defines the regex to match headers to copy from the authentication server response and set on forwarded request, after stripping all headers that match the regex.
-                      More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/forwardauth/#authresponseheadersregex
+                      More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/forwardauth/#authresponseheadersregex
                     type: string
                   forwardBody:
                     description: ForwardBody defines whether to send the request body
@@ -541,7 +541,7 @@ spec:
                   headerField:
                     description: |-
                       HeaderField defines a header field to store the authenticated user.
-                      More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/forwardauth/#headerfield
+                      More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/forwardauth/#headerfield
                     type: string
                   maxBodySize:
                     description: MaxBodySize defines the maximum body size in bytes
@@ -603,7 +603,7 @@ spec:
                 description: |-
                   Headers holds the headers middleware configuration.
                   This middleware manages the requests and responses headers.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/headers/#customrequestheaders
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/headers/#customrequestheaders
                 properties:
                   accessControlAllowCredentials:
                     description: AccessControlAllowCredentials defines whether the
@@ -775,7 +775,7 @@ spec:
                 description: |-
                   InFlightReq holds the in-flight request middleware configuration.
                   This middleware limits the number of requests being processed and served concurrently.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/inflightreq/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/inflightreq/
                 properties:
                   amount:
                     description: |-
@@ -789,28 +789,28 @@ spec:
                       SourceCriterion defines what criterion is used to group requests as originating from a common source.
                       If several strategies are defined at the same time, an error will be raised.
                       If none are set, the default is to use the requestHost.
-                      More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/inflightreq/#sourcecriterion
+                      More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/inflightreq/#sourcecriterion
                     properties:
                       ipStrategy:
                         description: |-
-                          IPStrategy holds the IP strategy configuration used by Traefik to determine the client IP.
-                          More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/ipallowlist/#ipstrategy
+                          IPStrategy holds the IP strategy configuration used by apache4 to determine the client IP.
+                          More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/ipallowlist/#ipstrategy
                         properties:
                           depth:
-                            description: Depth tells Traefik to use the X-Forwarded-For
+                            description: Depth tells apache4 to use the X-Forwarded-For
                               header and take the IP located at the depth position
                               (starting from the right).
                             minimum: 0
                             type: integer
                           excludedIPs:
-                            description: ExcludedIPs configures Traefik to scan the
+                            description: ExcludedIPs configures apache4 to scan the
                               X-Forwarded-For header and select the first IP not in
                               the list.
                             items:
                               type: string
                             type: array
                           ipv6Subnet:
-                            description: IPv6Subnet configures Traefik to consider
+                            description: IPv6Subnet configures apache4 to consider
                               all IPv6 addresses from the defined subnet as originating
                               from the same IP. Applies to RemoteAddrStrategy and
                               DepthStrategy.
@@ -830,27 +830,27 @@ spec:
                 description: |-
                   IPAllowList holds the IP allowlist middleware configuration.
                   This middleware limits allowed requests based on the client IP.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/ipallowlist/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/ipallowlist/
                 properties:
                   ipStrategy:
                     description: |-
-                      IPStrategy holds the IP strategy configuration used by Traefik to determine the client IP.
-                      More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/ipallowlist/#ipstrategy
+                      IPStrategy holds the IP strategy configuration used by apache4 to determine the client IP.
+                      More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/ipallowlist/#ipstrategy
                     properties:
                       depth:
-                        description: Depth tells Traefik to use the X-Forwarded-For
+                        description: Depth tells apache4 to use the X-Forwarded-For
                           header and take the IP located at the depth position (starting
                           from the right).
                         minimum: 0
                         type: integer
                       excludedIPs:
-                        description: ExcludedIPs configures Traefik to scan the X-Forwarded-For
+                        description: ExcludedIPs configures apache4 to scan the X-Forwarded-For
                           header and select the first IP not in the list.
                         items:
                           type: string
                         type: array
                       ipv6Subnet:
-                        description: IPv6Subnet configures Traefik to consider all
+                        description: IPv6Subnet configures apache4 to consider all
                           IPv6 addresses from the defined subnet as originating from
                           the same IP. Applies to RemoteAddrStrategy and DepthStrategy.
                         type: integer
@@ -872,23 +872,23 @@ spec:
                 properties:
                   ipStrategy:
                     description: |-
-                      IPStrategy holds the IP strategy configuration used by Traefik to determine the client IP.
-                      More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/ipallowlist/#ipstrategy
+                      IPStrategy holds the IP strategy configuration used by apache4 to determine the client IP.
+                      More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/ipallowlist/#ipstrategy
                     properties:
                       depth:
-                        description: Depth tells Traefik to use the X-Forwarded-For
+                        description: Depth tells apache4 to use the X-Forwarded-For
                           header and take the IP located at the depth position (starting
                           from the right).
                         minimum: 0
                         type: integer
                       excludedIPs:
-                        description: ExcludedIPs configures Traefik to scan the X-Forwarded-For
+                        description: ExcludedIPs configures apache4 to scan the X-Forwarded-For
                           header and select the first IP not in the list.
                         items:
                           type: string
                         type: array
                       ipv6Subnet:
-                        description: IPv6Subnet configures Traefik to consider all
+                        description: IPv6Subnet configures apache4 to consider all
                           IPv6 addresses from the defined subnet as originating from
                           the same IP. Applies to RemoteAddrStrategy and DepthStrategy.
                         type: integer
@@ -904,7 +904,7 @@ spec:
                 description: |-
                   PassTLSClientCert holds the pass TLS client cert middleware configuration.
                   This middleware adds the selected data from the passed client TLS certificate to a header.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/passtlsclientcert/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/passtlsclientcert/
                 properties:
                   info:
                     description: Info selects the specific client certificate details
@@ -1007,13 +1007,13 @@ spec:
                   x-kubernetes-preserve-unknown-fields: true
                 description: |-
                   Plugin defines the middleware plugin configuration.
-                  More info: https://doc.traefik.io/traefik/plugins/
+                  More info: https://doc.apache4.io/apache4/plugins/
                 type: object
               rateLimit:
                 description: |-
                   RateLimit holds the rate limit configuration.
                   This middleware ensures that services will receive a fair amount of requests, and allows one to define what fair is.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/ratelimit/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/ratelimit/
                 properties:
                   average:
                     description: |-
@@ -1131,24 +1131,24 @@ spec:
                     properties:
                       ipStrategy:
                         description: |-
-                          IPStrategy holds the IP strategy configuration used by Traefik to determine the client IP.
-                          More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/ipallowlist/#ipstrategy
+                          IPStrategy holds the IP strategy configuration used by apache4 to determine the client IP.
+                          More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/ipallowlist/#ipstrategy
                         properties:
                           depth:
-                            description: Depth tells Traefik to use the X-Forwarded-For
+                            description: Depth tells apache4 to use the X-Forwarded-For
                               header and take the IP located at the depth position
                               (starting from the right).
                             minimum: 0
                             type: integer
                           excludedIPs:
-                            description: ExcludedIPs configures Traefik to scan the
+                            description: ExcludedIPs configures apache4 to scan the
                               X-Forwarded-For header and select the first IP not in
                               the list.
                             items:
                               type: string
                             type: array
                           ipv6Subnet:
-                            description: IPv6Subnet configures Traefik to consider
+                            description: IPv6Subnet configures apache4 to consider
                               all IPv6 addresses from the defined subnet as originating
                               from the same IP. Applies to RemoteAddrStrategy and
                               DepthStrategy.
@@ -1168,7 +1168,7 @@ spec:
                 description: |-
                   RedirectRegex holds the redirect regex middleware configuration.
                   This middleware redirects a request using regex matching and replacement.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/redirectregex/#regex
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/redirectregex/#regex
                 properties:
                   permanent:
                     description: Permanent defines whether the redirection is permanent
@@ -1187,7 +1187,7 @@ spec:
                 description: |-
                   RedirectScheme holds the redirect scheme middleware configuration.
                   This middleware redirects requests from a scheme/port to another.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/redirectscheme/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/redirectscheme/
                 properties:
                   permanent:
                     description: Permanent defines whether the redirection is permanent
@@ -1204,7 +1204,7 @@ spec:
                 description: |-
                   ReplacePath holds the replace path middleware configuration.
                   This middleware replaces the path of the request URL and store the original path in an X-Replaced-Path header.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/replacepath/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/replacepath/
                 properties:
                   path:
                     description: Path defines the path to use as replacement in the
@@ -1215,7 +1215,7 @@ spec:
                 description: |-
                   ReplacePathRegex holds the replace path regex middleware configuration.
                   This middleware replaces the path of a URL using regex matching and replacement.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/replacepathregex/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/replacepathregex/
                 properties:
                   regex:
                     description: Regex defines the regular expression used to match
@@ -1231,7 +1231,7 @@ spec:
                   Retry holds the retry middleware configuration.
                   This middleware reissues requests a given number of times to a backend server if that server does not reply.
                   As soon as the server answers, the middleware stops retrying, regardless of the response status.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/retry/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/retry/
                 properties:
                   attempts:
                     description: Attempts defines how many times the request should
@@ -1255,7 +1255,7 @@ spec:
                 description: |-
                   StripPrefix holds the strip prefix middleware configuration.
                   This middleware removes the specified prefixes from the URL path.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/stripprefix/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/stripprefix/
                 properties:
                   forceSlash:
                     description: |-
@@ -1274,7 +1274,7 @@ spec:
                 description: |-
                   StripPrefixRegex holds the strip prefix regex middleware configuration.
                   This middleware removes the matching prefixes from the URL path.
-                  More info: https://doc.traefik.io/traefik/v3.5/middlewares/http/stripprefixregex/
+                  More info: https://doc.apache4.io/apache4/v3.5/middlewares/http/stripprefixregex/
                 properties:
                   regex:
                     description: Regex defines the regular expression to match the

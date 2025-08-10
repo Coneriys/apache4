@@ -14,10 +14,10 @@ import (
 	"github.com/docker/go-connections/nat"
 	"github.com/docker/go-connections/sockets"
 	"github.com/rs/zerolog/log"
-	ptypes "github.com/traefik/paerser/types"
-	"github.com/traefik/traefik/v3/pkg/provider"
-	"github.com/traefik/traefik/v3/pkg/types"
-	"github.com/traefik/traefik/v3/pkg/version"
+	ptypes "github.com/apache4/paerser/types"
+	"github.com/apache4/apache4/v3/pkg/provider"
+	"github.com/apache4/apache4/v3/pkg/types"
+	"github.com/apache4/apache4/v3/pkg/version"
 )
 
 // DefaultTemplateRule The default template for the default rule.
@@ -25,7 +25,7 @@ const DefaultTemplateRule = "Host(`{{ normalize .Name }}`)"
 
 type Shared struct {
 	ExposedByDefault   bool   `description:"Expose containers by default." json:"exposedByDefault,omitempty" toml:"exposedByDefault,omitempty" yaml:"exposedByDefault,omitempty" export:"true"`
-	Constraints        string `description:"Constraints is an expression that Traefik matches against the container's labels to determine whether to create any route for that container." json:"constraints,omitempty" toml:"constraints,omitempty" yaml:"constraints,omitempty" export:"true"`
+	Constraints        string `description:"Constraints is an expression that apache4 matches against the container's labels to determine whether to create any route for that container." json:"constraints,omitempty" toml:"constraints,omitempty" yaml:"constraints,omitempty" export:"true"`
 	AllowEmptyServices bool   `description:"Disregards the Docker containers health checks with respect to the creation or removal of the corresponding services." json:"allowEmptyServices,omitempty" toml:"allowEmptyServices,omitempty" yaml:"allowEmptyServices,omitempty" export:"true"`
 	Network            string `description:"Default Docker network used." json:"network,omitempty" toml:"network,omitempty" yaml:"network,omitempty" export:"true"`
 	UseBindPortIP      bool   `description:"Use the ip address from the bound port, rather than from the inner network." json:"useBindPortIP,omitempty" toml:"useBindPortIP,omitempty" yaml:"useBindPortIP,omitempty" export:"true"`
@@ -43,7 +43,7 @@ func inspectContainers(ctx context.Context, dockerClient client.ContainerAPIClie
 		return dockerData{}
 	}
 
-	// This condition is here to avoid to have empty IP https://github.com/traefik/traefik/issues/2459
+	// This condition is here to avoid to have empty IP https://github.com/apache4/apache4/issues/2459
 	// We register only container which are running
 	if containerInspected.ContainerJSONBase != nil && containerInspected.ContainerJSONBase.State != nil && containerInspected.ContainerJSONBase.State.Running {
 		return parseContainer(containerInspected)
@@ -116,7 +116,7 @@ func createClient(ctx context.Context, cfg ClientConfig) (*client.Client, error)
 	}
 
 	httpHeaders := map[string]string{
-		"User-Agent": "Traefik " + version.Version,
+		"User-Agent": "apache4 " + version.Version,
 	}
 	if cfg.Username != "" && cfg.Password != "" {
 		httpHeaders["Authorization"] = "Basic " + base64.StdEncoding.EncodeToString([]byte(cfg.Username+":"+cfg.Password))

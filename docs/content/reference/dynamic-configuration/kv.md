@@ -1,6 +1,6 @@
 ---
-title: "Traefik Dynamic Configuration with KV stores"
-description: "Read the technical documentation to learn the Traefik Dynamic Configuration with KV stores."
+title: "apache4 Dynamic Configuration with KV stores"
+description: "Read the technical documentation to learn the apache4 Dynamic Configuration with KV stores."
 ---
 
 # KV Configuration Reference

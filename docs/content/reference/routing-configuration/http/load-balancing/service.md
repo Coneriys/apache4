@@ -1,5 +1,5 @@
 ---
-title: "Traefik HTTP Services Documentation"
+title: "apache4 HTTP Services Documentation"
 description: "A service is in charge of connecting incoming requests to the Servers that can handle them. Read the technical documentation."
 ---
 
@@ -56,31 +56,31 @@ http:
 
 ```yaml tab="Labels"
 labels:
-  - "traefik.http.services.my-service.loadBalancer.servers[0].url=http://private-ip-server-1/"
-  - "traefik.http.services.my-service.loadBalancer.servers[0].weight=2"
-  - "traefik.http.services.my-service.loadBalancer.servers[0].preservePath=true"
-  - "traefik.http.services.my-service.loadBalancer.sticky.cookie.name=sticky-cookie"
-  - "traefik.http.services.my-service.loadBalancer.healthcheck.path=/health"
-  - "traefik.http.services.my-service.loadBalancer.healthcheck.interval=10s"
-  - "traefik.http.services.my-service.loadBalancer.healthcheck.timeout=3s"
-  - "traefik.http.services.my-service.loadBalancer.passHostHeader=true"
-  - "traefik.http.services.my-service.loadBalancer.serversTransport=customTransport@file"
-  - "traefik.http.services.my-service.loadBalancer.responseForwarding.flushInterval=150ms"
+  - "apache4.http.services.my-service.loadBalancer.servers[0].url=http://private-ip-server-1/"
+  - "apache4.http.services.my-service.loadBalancer.servers[0].weight=2"
+  - "apache4.http.services.my-service.loadBalancer.servers[0].preservePath=true"
+  - "apache4.http.services.my-service.loadBalancer.sticky.cookie.name=sticky-cookie"
+  - "apache4.http.services.my-service.loadBalancer.healthcheck.path=/health"
+  - "apache4.http.services.my-service.loadBalancer.healthcheck.interval=10s"
+  - "apache4.http.services.my-service.loadBalancer.healthcheck.timeout=3s"
+  - "apache4.http.services.my-service.loadBalancer.passHostHeader=true"
+  - "apache4.http.services.my-service.loadBalancer.serversTransport=customTransport@file"
+  - "apache4.http.services.my-service.loadBalancer.responseForwarding.flushInterval=150ms"
 ```
 
 ```json tab="Tags"
 {
   "Tags": [
-    "traefik.http.services.my-service.loadBalancer.servers[0].url=http://private-ip-server-1/",
-    "traefik.http.services.my-service.loadBalancer.servers[0].weight=2",
-    "traefik.http.services.my-service.loadBalancer.servers[0].preservePath=true",
-    "traefik.http.services.my-service.loadBalancer.sticky.cookie.name=sticky-cookie",
-    "traefik.http.services.my-service.loadBalancer.healthcheck.path=/health",
-    "traefik.http.services.my-service.loadBalancer.healthcheck.interval=10s",
-    "traefik.http.services.my-service.loadBalancer.healthcheck.timeout=3s",
-    "traefik.http.services.my-service.loadBalancer.passHostHeader=true",
-    "traefik.http.services.my-service.loadBalancer.serversTransport=customTransport@file",
-    "traefik.http.services.my-service.loadBalancer.responseForwarding.flushInterval=150ms"
+    "apache4.http.services.my-service.loadBalancer.servers[0].url=http://private-ip-server-1/",
+    "apache4.http.services.my-service.loadBalancer.servers[0].weight=2",
+    "apache4.http.services.my-service.loadBalancer.servers[0].preservePath=true",
+    "apache4.http.services.my-service.loadBalancer.sticky.cookie.name=sticky-cookie",
+    "apache4.http.services.my-service.loadBalancer.healthcheck.path=/health",
+    "apache4.http.services.my-service.loadBalancer.healthcheck.interval=10s",
+    "apache4.http.services.my-service.loadBalancer.healthcheck.timeout=3s",
+    "apache4.http.services.my-service.loadBalancer.passHostHeader=true",
+    "apache4.http.services.my-service.loadBalancer.serversTransport=customTransport@file",
+    "apache4.http.services.my-service.loadBalancer.responseForwarding.flushInterval=150ms"
   ]
 }
 ```
@@ -93,8 +93,8 @@ labels:
 | `sticky`                           | Defines a `Set-Cookie` header is set on the initial response to let the client know which server handles the first response.                                                                                                                                                                                                                                                                  | No       |
 | `healthcheck`                      | Configures health check to remove unhealthy servers from the load balancing rotation.                                                                                                                                                                                                                                                                                                         | No       |
 | `passHostHeader`                   | Allows forwarding of the client Host header to server. By default, `passHostHeader` is true.                                                                                                                                                                                                                                                                                                  | No       |
-| `serversTransport`                 | Allows to reference an [HTTP ServersTransport](./serverstransport.md) configuration for the communication between Traefik and your servers. If no `serversTransport` is specified, the `default@internal` will be used.                                                                                                                                                                       | No       |
-| `responseForwarding`               | Configures how Traefik forwards the response from the backend server to the client.                                                                                                                                                                                                                                                                                                           | No       |
+| `serversTransport`                 | Allows to reference an [HTTP ServersTransport](./serverstransport.md) configuration for the communication between apache4 and your servers. If no `serversTransport` is specified, the `default@internal` will be used.                                                                                                                                                                       | No       |
+| `responseForwarding`               | Configures how apache4 forwards the response from the backend server to the client.                                                                                                                                                                                                                                                                                                           | No       |
 | `responseForwarding.FlushInterval` | Specifies the interval in between flushes to the client while copying the response body. It is a duration in milliseconds, defaulting to 100ms. A negative value means to flush immediately after each write to the client. The `FlushInterval` is ignored when ReverseProxy recognizes a response as a streaming response; for such responses, writes are flushed to the client immediately. | No       |
 
 #### Servers
@@ -111,7 +111,7 @@ Servers represent individual backend instances for your service. The [service lo
 
 #### Health Check
 
-The `healthcheck` option configures health check to remove unhealthy servers from the load balancing rotation. Traefik will consider HTTP(s) servers healthy as long as they return a status code to the health check request (carried out every interval) between `2XX` and `3XX`, or matching the configured status. For gRPC servers, Traefik will consider them healthy as long as they return SERVING to [gRPC health check v1 requests](https://github.com/grpc/grpc/blob/master/doc/health-checking.md).
+The `healthcheck` option configures health check to remove unhealthy servers from the load balancing rotation. apache4 will consider HTTP(s) servers healthy as long as they return a status code to the health check request (carried out every interval) between `2XX` and `3XX`, or matching the configured status. For gRPC servers, apache4 will consider them healthy as long as they return SERVING to [gRPC health check v1 requests](https://github.com/grpc/grpc/blob/master/doc/health-checking.md).
 
 To propagate status changes (e.g. all servers of this service are down) upwards, HealthCheck must also be enabled on the parent(s) of this service.
 
@@ -126,7 +126,7 @@ Below are the available options for the health check mechanism:
 | `port`              | Replaces the server URL port for the health check endpoint.                                                                   |         | No       |
 | `interval`          | Defines the frequency of the health check calls for healthy targets.                                                          | 30s     | No       |
 | `unhealthyInterval` | Defines the frequency of the health check calls for unhealthy targets. When not defined, it defaults to the `interval` value. | 30s     | No       |
-| `timeout`           | Defines the maximum duration Traefik will wait for a health check request before considering the server unhealthy.            | 5s      | No       |
+| `timeout`           | Defines the maximum duration apache4 will wait for a health check request before considering the server unhealthy.            | 5s      | No       |
 | `headers`           | Defines custom headers to be sent to the health check endpoint.                                                               |         | No       |
 | `followRedirects`   | Defines whether redirects should be followed during the health check calls.                                                   | true    | No       |
 | `hostname`          | Defines the value of hostname in the Host header of the health check request.                                                 | ""      | No       |

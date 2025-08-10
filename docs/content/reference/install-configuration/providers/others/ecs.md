@@ -1,9 +1,9 @@
 ---
-title: "Traefik AWS ECS Documentation"
-description: "Configuration discovery in Traefik is achieved through Providers. Read the technical documentation for leveraging AWS ECS in Traefik."
+title: "apache4 AWS ECS Documentation"
+description: "Configuration discovery in apache4 is achieved through Providers. Read the technical documentation for leveraging AWS ECS in apache4."
 ---
 
-# Traefik & AWS ECS
+# apache4 & AWS ECS
 
 ## Configuration Example
 
@@ -30,9 +30,9 @@ providers:
 | `providers.ecs.autoDiscoverClusters` | Search for services in cluster list. If set to `true` service discovery is enabled for all clusters. |  false  | No   |
 | `providers.ecs.ecsAnywhere` | Enable ECS Anywhere support. |  false    | No   |
 | `providers.ecs.clusters` | Search for services in cluster list. This option is ignored if `autoDiscoverClusters` is set to `true`. |  `["default"]`  | No   |
-| `providers.ecs.exposedByDefault` | Expose ECS services by default in Traefik. | true  | No   |
-| `providers.ecs.constraints` |  Defines an expression that Traefik matches against the container labels to determine whether to create any route for that container. See [here](#constraints) for more information.  | true  | No   |
-| `providers.ecs.healthyTasksOnly` |  Defines whether Traefik discovers only healthy tasks (`HEALTHY` healthStatus).  | false  | No   |
+| `providers.ecs.exposedByDefault` | Expose ECS services by default in apache4. | true  | No   |
+| `providers.ecs.constraints` |  Defines an expression that apache4 matches against the container labels to determine whether to create any route for that container. See [here](#constraints) for more information.  | true  | No   |
+| `providers.ecs.healthyTasksOnly` |  Defines whether apache4 discovers only healthy tasks (`HEALTHY` healthStatus).  | false  | No   |
 | `providers.ecs.defaultRule` | The Default Host rule for all services. See [here](#defaultrule) for more information. |   ```"Host(`{{ normalize .Name }}`)"```  | No   |
 | `providers.ecs.refreshSeconds` | Defines the polling interval (in seconds).   | 15   | No |
 | `providers.ecs.region` | Defines the region of the ECS instance. See [here](#credentials) for more information.  | ""   | No |
@@ -41,7 +41,7 @@ providers:
 
 ### `constraints`
 
-The `constraints` option can be set to an expression that Traefik matches against the container labels (task),
+The `constraints` option can be set to an expression that apache4 matches against the container labels (task),
 to determine whether to create any route for that container. 
 If none of the container labels match the expression, no route for that container is created. 
 If the expression is empty, all detected containers are included.
@@ -51,7 +51,7 @@ as well as the usual boolean logic, as shown in examples below.
 
 !!! tip "Constraints key limitations"
 
-    Note that `traefik.*` is a reserved label namespace for configuration and can not be used as a key for custom constraints.
+    Note that `apache4.*` is a reserved label namespace for configuration and can not be used as a key for custom constraints.
 
 ??? example "Constraints Expression Examples"
 
@@ -132,12 +132,12 @@ providers:
 # ...
 ```
 
-??? info "Default rule and Traefik service"
+??? info "Default rule and apache4 service"
 
-    The exposure of the Traefik container, combined with the default rule mechanism,
+    The exposure of the apache4 container, combined with the default rule mechanism,
     can lead to create a router targeting itself in a loop.
     In this case, to prevent an infinite loop,
-    Traefik adds an internal middleware to refuse the request if it comes from the same router.
+    apache4 adds an internal middleware to refuse the request if it comes from the same router.
 
 ### Credentials
 
@@ -177,14 +177,14 @@ providers:
 
 ## Policy
 
-Traefik needs the following policy to read ECS information:
+apache4 needs the following policy to read ECS information:
 
 ```json
 {
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "TraefikECSReadAccess",
+            "Sid": "apache4ECSReadAccess",
             "Effect": "Allow",
             "Action": [
                 "ecs:ListClusters",

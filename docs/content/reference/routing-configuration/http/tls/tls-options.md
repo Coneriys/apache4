@@ -1,6 +1,6 @@
 ---
-title: "Traefik TLS Options Documentation"
-description: "Learn how to configure the transport layer security (TLS) connection in Traefik Proxy. Read the technical documentation."
+title: "apache4 TLS Options Documentation"
+description: "Learn how to configure the transport layer security (TLS) connection in apache4 Proxy. Read the technical documentation."
 ---
 
 The TLS options allow one to configure some parameters of the TLS connection.
@@ -12,7 +12,7 @@ The TLS options allow one to configure some parameters of the TLS connection.
     When specifying the `default` option explicitly, make sure not to specify provider namespace as the `default` option does not have one.  
     Conversely, for cross-provider references, for example, when referencing the file provider from a docker label,
     you must specify the provider namespace, for example:  
-    `traefik.http.routers.myrouter.tls.options=myoptions@file`
+    `apache4.http.routers.myrouter.tls.options=myoptions@file`
 
 !!! important "Providers"
 
@@ -133,7 +133,7 @@ tls:
 
 ### Strict SNI Checking
 
-With strict SNI checking enabled, Traefik won't allow connections from clients that do not specify a server_name extension
+With strict SNI checking enabled, apache4 won't allow connections from clients that do not specify a server_name extension
 or don't match any of the configured certificates.
 The default certificate is irrelevant on that matter.
 
@@ -184,7 +184,7 @@ tls:
 
 ### Client Authentication (mTLS)
 
-Traefik supports mutual authentication, through the `clientAuth` section.
+apache4 supports mutual authentication, through the `clientAuth` section.
 
 For authentication policies that require verification of the client certificate, the certificate authority for the certificates should be set in `clientAuth.caFiles`.
 
@@ -229,7 +229,7 @@ tls:
 
 _Optional, Default="false"_
 
-When set to true, Traefik disables the use of session tickets, forcing every client to perform a full TLS handshake instead of resuming sessions.
+When set to true, apache4 disables the use of session tickets, forcing every client to perform a full TLS handshake instead of resuming sessions.
 
 ```yaml tab="File (YAML)"
 # Dynamic configuration
@@ -249,7 +249,7 @@ tls:
 ```
 
 ```yaml tab="Kubernetes"
-apiVersion: traefik.io/v1alpha1
+apiVersion: apache4.io/v1alpha1
 kind: TLSOption
 metadata:
   name: default
@@ -259,4 +259,4 @@ spec:
   disableSessionTickets: true
 ```
 
-{!traefik-for-business-applications.md!}
+{!apache4-for-business-applications.md!}

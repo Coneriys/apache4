@@ -6,7 +6,7 @@ metadata:
 
 spec:
   rules:
-  - host: traefik.tchouk
+  - host: apache4.tchouk
     http:
       paths:
       - path: /bar
@@ -24,11 +24,11 @@ metadata:
   name: service1
   namespace: testing
   annotations:
-    traefik.ingress.kubernetes.io/service.nativelb: "true"
+    apache4.ingress.kubernetes.io/service.nativelb: "true"
 
 spec:
   ports:
     - port: 8080
   clusterIP: 10.0.0.1
   type: ClusterIP
-  externalName: traefik.wtf
+  externalName: apache4.wtf

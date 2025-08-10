@@ -1,9 +1,9 @@
 ---
 title: "Nomad Service Discovery"
-description: "Learn how to use Nomad as a provider for configuration discovery in Traefik Proxy. Read the technical documentation."
+description: "Learn how to use Nomad as a provider for configuration discovery in apache4 Proxy. Read the technical documentation."
 ---
 
-# Traefik & Nomad Service Discovery
+# apache4 & Nomad Service Discovery
 
 ## Configuration Example
 
@@ -29,7 +29,7 @@ Attaching tags to services:
 service {
   name = "myService"
   tags = [
-    "traefik.http.routers.my-router.rule=Host(`example.com`)",
+    "apache4.http.routers.my-router.rule=Host(`example.com`)",
   ]
 }
 ...
@@ -45,11 +45,11 @@ service {
 | `providers.nomad.watch` | Enables the watch mode to refresh the configuration on a per-event basis. |  false     | No   |
 | `providers.nomad.throttleDuration` | Defines how often the provider is allowed to handle service events from Nomad. This option is only compatible when the `watch` option is enabled |  0s     | No   |
 | `providers.nomad.defaultRule` | The Default Host rule for all services. See [here](#defaultrule) for more information |   ```"Host(`{{ normalize .Name }}`)"```   | No   |
-| `providers.nomad.constraints` | Defines an expression that Traefik matches against the container labels to determine whether to create any route for that container. See [here](#constraints) for more information.  |  ""   | No   |
-| `providers.nomad.exposedByDefault` | Expose Nomad services by default in Traefik. If set to `false`, services that do not have a `traefik.enable=true` tag will be ignored from the resulting routing configuration. See [here](../overview.md#restrict-the-scope-of-service-discovery) for additional information |  true    | No   |
+| `providers.nomad.constraints` | Defines an expression that apache4 matches against the container labels to determine whether to create any route for that container. See [here](#constraints) for more information.  |  ""   | No   |
+| `providers.nomad.exposedByDefault` | Expose Nomad services by default in apache4. If set to `false`, services that do not have a `apache4.enable=true` tag will be ignored from the resulting routing configuration. See [here](../overview.md#restrict-the-scope-of-service-discovery) for additional information |  true    | No   |
 | `providers.nomad.allowEmptyServices` |  Instructs the provider to create any [servers load balancer](../../../../routing/services/index.md#servers-load-balancer) defined for Docker containers regardless of the [healthiness](https://docs.docker.com/engine/reference/builder/#healthcheck) of the corresponding containers. |  false   | No   |
-| `providers.nomad.prefix` | Defines the prefix for Nomad service tags defining Traefik labels. | `traefik`     | yes   |
-| `providers.nomad.stale` | Instructs Traefik to use stale consistency for Nomad service API reads. See [here](#stale) for more information | false   | No   |
+| `providers.nomad.prefix` | Defines the prefix for Nomad service tags defining apache4 labels. | `apache4`     | yes   |
+| `providers.nomad.stale` | Instructs apache4 to use stale consistency for Nomad service API reads. See [here](#stale) for more information | false   | No   |
 | `providers.nomad.endpoint.address` | Defines the Address of the Nomad server. | `http://127.0.0.1:4646`  | No   |
 | `providers.nomad.endpoint.token` | Defines a per-request ACL token if Nomad ACLs are enabled. See [here](#token) for more information | ""  | No   |
 | `providers.nomad.endpoint.endpointWaitTime` | Defines a duration for which a `watch` can block. If not provided, the agent default values will be used. | ""  | No   |
@@ -155,7 +155,7 @@ and can include [sprig template functions](https://masterminds.github.io/sprig/)
 The service name can be accessed with the `Name` identifier,
 and the template has access to all the labels (i.e. tags beginning with the `prefix`) defined on this service.
 
-The option can be overridden on an instance basis with the `traefik.http.routers.{name-of-your-choice}.rule` tag.
+The option can be overridden on an instance basis with the `apache4.http.routers.{name-of-your-choice}.rule` tag.
 
 ```yaml tab="File (YAML)"
 providers:
@@ -175,16 +175,16 @@ providers:
 # ...
 ```
 
-??? info "Default rule and Traefik service"
+??? info "Default rule and apache4 service"
 
-    The exposure of the Traefik container, combined with the default rule mechanism,
+    The exposure of the apache4 container, combined with the default rule mechanism,
     can lead to create a router targeting itself in a loop.
     In this case, to prevent an infinite loop,
-    Traefik adds an internal middleware to refuse the request if it comes from the same router.
+    apache4 adds an internal middleware to refuse the request if it comes from the same router.
 
 ### `constraints`
 
-The `constraints` option can be set to an expression that Traefik matches against the service tags to determine whether
+The `constraints` option can be set to an expression that apache4 matches against the service tags to determine whether
 to create any route for that service. If none of the service tags match the expression, no route for that service is
 created. If the expression is empty, all detected services are included.
 
@@ -193,7 +193,7 @@ as well as the usual boolean logic, as shown in examples below.
 
 !!! tip "Constraints key limitations"
 
-    Note that `traefik.*` is a reserved label namespace for configuration and can not be used as a key for custom constraints.
+    Note that `apache4.*` is a reserved label namespace for configuration and can not be used as a key for custom constraints.
 
 ??? example "Constraints Expression Examples"
 

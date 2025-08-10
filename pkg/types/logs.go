@@ -6,8 +6,8 @@ import (
 	"net"
 	"net/url"
 
-	"github.com/traefik/paerser/types"
-	"github.com/traefik/traefik/v3/pkg/version"
+	"github.com/apache4/paerser/types"
+	"github.com/apache4/apache4/v3/pkg/version"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploggrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp"
@@ -32,15 +32,15 @@ const (
 	CommonFormat string = "common"
 )
 
-const OTelTraefikServiceName = "traefik"
+const OTelapache4ServiceName = "apache4"
 
-// TraefikLog holds the configuration settings for the traefik logger.
-type TraefikLog struct {
-	Level   string `description:"Log level set to traefik logs." json:"level,omitempty" toml:"level,omitempty" yaml:"level,omitempty" export:"true"`
-	Format  string `description:"Traefik log format: json | common" json:"format,omitempty" toml:"format,omitempty" yaml:"format,omitempty" export:"true"`
+// apache4Log holds the configuration settings for the apache4 logger.
+type apache4Log struct {
+	Level   string `description:"Log level set to apache4 logs." json:"level,omitempty" toml:"level,omitempty" yaml:"level,omitempty" export:"true"`
+	Format  string `description:"apache4 log format: json | common" json:"format,omitempty" toml:"format,omitempty" yaml:"format,omitempty" export:"true"`
 	NoColor bool   `description:"When using the 'common' format, disables the colorized output." json:"noColor,omitempty" toml:"noColor,omitempty" yaml:"noColor,omitempty" export:"true"`
 
-	FilePath   string `description:"Traefik log file path. Stdout is used when omitted or empty." json:"filePath,omitempty" toml:"filePath,omitempty" yaml:"filePath,omitempty"`
+	FilePath   string `description:"apache4 log file path. Stdout is used when omitted or empty." json:"filePath,omitempty" toml:"filePath,omitempty" yaml:"filePath,omitempty"`
 	MaxSize    int    `description:"Maximum size in megabytes of the log file before it gets rotated." json:"maxSize,omitempty" toml:"maxSize,omitempty" yaml:"maxSize,omitempty" export:"true"`
 	MaxAge     int    `description:"Maximum number of days to retain old log files based on the timestamp encoded in their filename." json:"maxAge,omitempty" toml:"maxAge,omitempty" yaml:"maxAge,omitempty" export:"true"`
 	MaxBackups int    `description:"Maximum number of old log files to retain." json:"maxBackups,omitempty" toml:"maxBackups,omitempty" yaml:"maxBackups,omitempty" export:"true"`
@@ -50,7 +50,7 @@ type TraefikLog struct {
 }
 
 // SetDefaults sets the default values.
-func (l *TraefikLog) SetDefaults() {
+func (l *apache4Log) SetDefaults() {
 	l.Format = CommonFormat
 	l.Level = "ERROR"
 }
@@ -158,7 +158,7 @@ type OTelLog struct {
 
 // SetDefaults sets the default values.
 func (o *OTelLog) SetDefaults() {
-	o.ServiceName = OTelTraefikServiceName
+	o.ServiceName = OTelapache4ServiceName
 	o.HTTP = &OTelHTTP{}
 	o.HTTP.SetDefaults()
 }

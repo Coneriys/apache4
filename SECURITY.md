@@ -1,9 +1,9 @@
 # Security Policy
 
 You can join our security mailing list to be aware of the latest announcements from our security team.
-You can subscribe by sending an email to security+subscribe@traefik.io or on [the online viewer](https://groups.google.com/a/traefik.io/forum/#!forum/security).
+You can subscribe by sending an email to security+subscribe@apache4.io or on [the online viewer](https://groups.google.com/a/apache4.io/forum/#!forum/security).
 
-Reported vulnerabilities can be found on [cve.mitre.org](https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=traefik).
+Reported vulnerabilities can be found on [cve.mitre.org](https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=apache4).
 
 ## Supported Versions
 
@@ -24,7 +24,7 @@ We use [Semantic Versioning](https://semver.org/).
 
 ## Reporting a Vulnerability
 
-We want to keep Traefik safe for everyone.
-If you've discovered a security vulnerability in Traefik,
+We want to keep apache4 safe for everyone.
+If you've discovered a security vulnerability in apache4,
 we appreciate your help in disclosing it to us in a responsible manner,
-by creating a [security advisory](https://github.com/traefik/traefik/security/advisories).
+by creating a [security advisory](https://github.com/apache4/apache4/security/advisories).

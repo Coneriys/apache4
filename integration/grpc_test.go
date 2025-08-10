@@ -14,8 +14,8 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
-	"github.com/traefik/traefik/v3/integration/helloworld"
-	"github.com/traefik/traefik/v3/integration/try"
+	"github.com/apache4/apache4/v3/integration/helloworld"
+	"github.com/apache4/apache4/v3/integration/try"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"
@@ -168,9 +168,9 @@ func (s *GRPCSuite) TestGRPC() {
 		GRPCServerPort: port,
 	})
 
-	s.traefikCmd(withConfigFile(file))
+	s.apache4Cmd(withConfigFile(file))
 
-	// wait for Traefik
+	// wait for apache4
 	err = try.GetRequest("http://127.0.0.1:8080/api/rawdata", 1*time.Second, try.BodyContains("Host(`127.0.0.1`)"))
 	assert.NoError(s.T(), err)
 
@@ -200,9 +200,9 @@ func (s *GRPCSuite) TestGRPCh2c() {
 		GRPCServerPort: port,
 	})
 
-	s.traefikCmd(withConfigFile(file))
+	s.apache4Cmd(withConfigFile(file))
 
-	// wait for Traefik
+	// wait for apache4
 	err = try.GetRequest("http://127.0.0.1:8080/api/rawdata", 1*time.Second, try.BodyContains("Host(`127.0.0.1`)"))
 	assert.NoError(s.T(), err)
 
@@ -236,9 +236,9 @@ func (s *GRPCSuite) TestGRPCh2cTermination() {
 		GRPCServerPort: port,
 	})
 
-	s.traefikCmd(withConfigFile(file))
+	s.apache4Cmd(withConfigFile(file))
 
-	// wait for Traefik
+	// wait for apache4
 	err = try.GetRequest("http://127.0.0.1:8080/api/rawdata", 1*time.Second, try.BodyContains("Host(`127.0.0.1`)"))
 	assert.NoError(s.T(), err)
 
@@ -272,9 +272,9 @@ func (s *GRPCSuite) TestGRPCInsecure() {
 		GRPCServerPort: port,
 	})
 
-	s.traefikCmd(withConfigFile(file))
+	s.apache4Cmd(withConfigFile(file))
 
-	// wait for Traefik
+	// wait for apache4
 	err = try.GetRequest("http://127.0.0.1:8080/api/rawdata", 1*time.Second, try.BodyContains("Host(`127.0.0.1`)"))
 	assert.NoError(s.T(), err)
 
@@ -312,9 +312,9 @@ func (s *GRPCSuite) TestGRPCBuffer() {
 		GRPCServerPort: port,
 	})
 
-	s.traefikCmd(withConfigFile(file))
+	s.apache4Cmd(withConfigFile(file))
 
-	// wait for Traefik
+	// wait for apache4
 	err = try.GetRequest("http://127.0.0.1:8080/api/rawdata", 1*time.Second, try.BodyContains("Host(`127.0.0.1`)"))
 	assert.NoError(s.T(), err)
 	var client helloworld.Greeter_StreamExampleClient
@@ -365,8 +365,8 @@ func (s *GRPCSuite) TestGRPCBufferWithFlushInterval() {
 		GRPCServerPort: port,
 	})
 
-	s.traefikCmd(withConfigFile(file))
-	// wait for Traefik
+	s.apache4Cmd(withConfigFile(file))
+	// wait for apache4
 	err = try.GetRequest("http://127.0.0.1:8080/api/rawdata", 1*time.Second, try.BodyContains("Host(`127.0.0.1`)"))
 	assert.NoError(s.T(), err)
 
@@ -418,9 +418,9 @@ func (s *GRPCSuite) TestGRPCWithRetry() {
 		GRPCServerPort: port,
 	})
 
-	s.traefikCmd(withConfigFile(file))
+	s.apache4Cmd(withConfigFile(file))
 
-	// wait for Traefik
+	// wait for apache4
 	err = try.GetRequest("http://127.0.0.1:8080/api/rawdata", 1*time.Second, try.BodyContains("Host(`127.0.0.1`)"))
 	assert.NoError(s.T(), err)
 

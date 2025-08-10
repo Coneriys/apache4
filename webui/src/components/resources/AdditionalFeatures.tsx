@@ -1,4 +1,4 @@
-import { Badge, Box, Text } from '@traefiklabs/faency'
+import { Badge, Box, Text } from '@apache4labs/faency'
 
 import Tooltip from 'components/Tooltip'
 import { MiddlewareProps, ValuesMapType } from 'hooks/use-resource-detail'

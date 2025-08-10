@@ -1,19 +1,19 @@
 ---
-title: "Traefik Docker Swarm Routing Documentation"
-description: "This guide will teach you how to attach labels to your containers, to route traffic and load balance with Traefik and Docker."
+title: "apache4 Docker Swarm Routing Documentation"
+description: "This guide will teach you how to attach labels to your containers, to route traffic and load balance with apache4 and Docker."
 ---
 
-# Traefik & Docker Swarm
+# apache4 & Docker Swarm
 
 A Story of Labels & Containers
 {: .subtitle }
 
 ![Swarm](../../assets/img/providers/docker.png)
 
-Attach labels to your containers and let Traefik do the rest!
+Attach labels to your containers and let apache4 do the rest!
 
-One of the best feature of Traefik is to delegate the routing configuration to the application level.
-With Docker Swarm, Traefik can leverage labels attached to a service to generate routing rules.
+One of the best feature of apache4 is to delegate the routing configuration to the application level.
+With Docker Swarm, apache4 can leverage labels attached to a service to generate routing rules.
 
 !!! warning "Labels & sensitive data"
 
@@ -59,12 +59,12 @@ With Docker Swarm, Traefik can leverage labels attached to a service to generate
       my-container:
         deploy:
           labels:
-            - traefik.http.routers.my-container.rule=Host(`example.com`)
-            - traefik.http.services.my-container-service.loadbalancer.server.port=8080
+            - apache4.http.routers.my-container.rule=Host(`example.com`)
+            - apache4.http.services.my-container-service.loadbalancer.server.port=8080
     ```
 
     !!! important "Labels in Docker Swarm Mode"
-        While in Swarm Mode, Traefik uses labels found on services, not on individual containers.
+        While in Swarm Mode, apache4 uses labels found on services, not on individual containers.
         Therefore, if you use a compose file with Swarm Mode, labels should be defined in the `deploy` part of your service.
         This behavior is only enabled for docker-compose version 3+ ([Compose file reference](https://docs.docker.com/compose/compose-file/compose-file-v3/#labels-1)).
 
@@ -78,17 +78,17 @@ With Docker Swarm, Traefik can leverage labels attached to a service to generate
         # ...
         deploy:
           labels:
-            - traefik.http.routers.my-container.rule=Host(`example.com`)
-            - traefik.http.routers.my-container.service=my-service"
-            # Tell Traefik to use the port 12345 to connect to `my-container`
-            - traefik.http.services.my-service.loadbalancer.server.port=12345
+            - apache4.http.routers.my-container.rule=Host(`example.com`)
+            - apache4.http.routers.my-container.service=my-service"
+            # Tell apache4 to use the port 12345 to connect to `my-container`
+            - apache4.http.services.my-service.loadbalancer.server.port=12345
     ```
 
-    !!! important "Traefik Connecting to the Wrong Port: `HTTP/502 Gateway Error`"
-        By default, Traefik uses the lowest exposed port of a container as detailed in
+    !!! important "apache4 Connecting to the Wrong Port: `HTTP/502 Gateway Error`"
+        By default, apache4 uses the lowest exposed port of a container as detailed in
         [Port Detection](../providers/swarm.md#port-detection) of the Swarm provider.
 
-        Setting the label `traefik.http.services.xxx.loadbalancer.server.port`
+        Setting the label `apache4.http.services.xxx.loadbalancer.server.port`
         overrides this behavior.
 
 ??? example "Specifying more than one router and service per container"
@@ -103,12 +103,12 @@ With Docker Swarm, Traefik can leverage labels attached to a service to generate
         # ...
         deploy:
           labels:
-            - traefik.http.routers.www-router.rule=Host(`example-a.com`)
-            - traefik.http.routers.www-router.service=www-service
-            - traefik.http.services.www-service.loadbalancer.server.port=8000
-            - traefik.http.routers.admin-router.rule=Host(`example-b.com`)
-            - traefik.http.routers.admin-router.service=admin-service
-            - traefik.http.services.admin-service.loadbalancer.server.port=9000
+            - apache4.http.routers.www-router.rule=Host(`example-a.com`)
+            - apache4.http.routers.www-router.service=www-service
+            - apache4.http.services.www-service.loadbalancer.server.port=8000
+            - apache4.http.routers.admin-router.rule=Host(`example-b.com`)
+            - apache4.http.routers.admin-router.service=admin-service
+            - apache4.http.services.admin-service.loadbalancer.server.port=9000
     ```
 
 ## Routing Configuration
@@ -120,7 +120,7 @@ With Docker Swarm, Traefik can leverage labels attached to a service to generate
 
 ### General
 
-Traefik creates, for each container, a corresponding [service](../services/index.md) and [router](../routers/index.md).
+apache4 creates, for each container, a corresponding [service](../services/index.md) and [router](../routers/index.md).
 
 The Service automatically gets a server per instance of the container,
 and the router automatically gets a rule defined by `defaultRule` (if no rule for it was defined in labels).
@@ -135,9 +135,9 @@ and the router automatically gets a rule defined by `defaultRule` (if no rule fo
 
     ```yaml
     labels:
-      - "traefik.http.routers.myproxy.rule=Host(`example.net`)"
+      - "apache4.http.routers.myproxy.rule=Host(`example.net`)"
       # service myservice gets automatically assigned to router myproxy
-      - "traefik.http.services.myservice.loadbalancer.server.port=80"
+      - "apache4.http.services.myservice.loadbalancer.server.port=80"
     ```
 
 ??? example "Automatic service creation and assignment with labels"
@@ -148,133 +148,133 @@ and the router automatically gets a rule defined by `defaultRule` (if no rule fo
     labels:
       # no service specified or defined and yet one gets automatically created
       # and assigned to router myproxy.
-      - "traefik.http.routers.myproxy.rule=Host(`example.net`)"
+      - "apache4.http.routers.myproxy.rule=Host(`example.net`)"
     ```
 
 ### Routers
 
 To update the configuration of the Router automatically attached to the container,
-add labels starting with `traefik.http.routers.<name-of-your-choice>.` and followed by the option you want to change.
+add labels starting with `apache4.http.routers.<name-of-your-choice>.` and followed by the option you want to change.
 
-For example, to change the rule, you could add the label ```traefik.http.routers.my-container.rule=Host(`example.com`)```.
+For example, to change the rule, you could add the label ```apache4.http.routers.my-container.rule=Host(`example.com`)```.
 
 !!! warning "The character `@` is not authorized in the router name `<router_name>`."
 
-??? info "`traefik.http.routers.<router_name>.rule`"
+??? info "`apache4.http.routers.<router_name>.rule`"
 
     See [rule](../routers/index.md#rule) for more information.
 
     ```yaml
-    - "traefik.http.routers.myrouter.rule=Host(`example.com`)"
+    - "apache4.http.routers.myrouter.rule=Host(`example.com`)"
     ```
 
-??? info "`traefik.http.routers.<router_name>.entrypoints`"
+??? info "`apache4.http.routers.<router_name>.entrypoints`"
 
     See [entry points](../routers/index.md#entrypoints) for more information.
 
     ```yaml
-    - "traefik.http.routers.myrouter.entrypoints=ep1,ep2"
+    - "apache4.http.routers.myrouter.entrypoints=ep1,ep2"
     ```
 
-??? info "`traefik.http.routers.<router_name>.middlewares`"
+??? info "`apache4.http.routers.<router_name>.middlewares`"
 
     See [middlewares](../routers/index.md#middlewares) and [middlewares overview](../../middlewares/overview.md) for more information.
 
     ```yaml
-    - "traefik.http.routers.myrouter.middlewares=auth,prefix,cb"
+    - "apache4.http.routers.myrouter.middlewares=auth,prefix,cb"
     ```
 
-??? info "`traefik.http.routers.<router_name>.service`"
+??? info "`apache4.http.routers.<router_name>.service`"
 
     See [service](../routers/index.md#service) for more information.
 
     ```yaml
-    - "traefik.http.routers.myrouter.service=myservice"
+    - "apache4.http.routers.myrouter.service=myservice"
     ```
 
-??? info "`traefik.http.routers.<router_name>.tls`"
+??? info "`apache4.http.routers.<router_name>.tls`"
 
     See [tls](../routers/index.md#tls) for more information.
 
     ```yaml
-    - "traefik.http.routers.myrouter.tls=true"
+    - "apache4.http.routers.myrouter.tls=true"
     ```
 
-??? info "`traefik.http.routers.<router_name>.tls.certresolver`"
+??? info "`apache4.http.routers.<router_name>.tls.certresolver`"
 
     See [certResolver](../routers/index.md#certresolver) for more information.
 
     ```yaml
-    - "traefik.http.routers.myrouter.tls.certresolver=myresolver"
+    - "apache4.http.routers.myrouter.tls.certresolver=myresolver"
     ```
 
-??? info "`traefik.http.routers.<router_name>.tls.domains[n].main`"
+??? info "`apache4.http.routers.<router_name>.tls.domains[n].main`"
 
     See [domains](../routers/index.md#domains) for more information.
 
     ```yaml
-    - "traefik.http.routers.myrouter.tls.domains[0].main=example.org"
+    - "apache4.http.routers.myrouter.tls.domains[0].main=example.org"
     ```
 
-??? info "`traefik.http.routers.<router_name>.tls.domains[n].sans`"
+??? info "`apache4.http.routers.<router_name>.tls.domains[n].sans`"
 
     See [domains](../routers/index.md#domains) for more information.
 
     ```yaml
-    - "traefik.http.routers.myrouter.tls.domains[0].sans=test.example.org,dev.example.org"
+    - "apache4.http.routers.myrouter.tls.domains[0].sans=test.example.org,dev.example.org"
     ```
 
-??? info "`traefik.http.routers.<router_name>.tls.options`"
+??? info "`apache4.http.routers.<router_name>.tls.options`"
 
     See [options](../routers/index.md#options) for more information.
 
     ```yaml
-    - "traefik.http.routers.myrouter.tls.options=foobar"
+    - "apache4.http.routers.myrouter.tls.options=foobar"
     ```
 
-??? info "`traefik.http.routers.<router_name>.observability.accesslogs`"
+??? info "`apache4.http.routers.<router_name>.observability.accesslogs`"
 
     See accesslogs [option](../routers/index.md#accesslogs) for more information.
     
     ```yaml
-    - "traefik.http.routers.myrouter.observability.accesslogs=true"
+    - "apache4.http.routers.myrouter.observability.accesslogs=true"
     ```
 
-??? info "`traefik.http.routers.<router_name>.observability.metrics`"
+??? info "`apache4.http.routers.<router_name>.observability.metrics`"
 
     See metrics [option](../routers/index.md#metrics) for more information.
     
     ```yaml
-    - "traefik.http.routers.myrouter.observability.metrics=true"
+    - "apache4.http.routers.myrouter.observability.metrics=true"
     ```
 
-??? info "`traefik.http.routers.<router_name>.observability.tracing`"
+??? info "`apache4.http.routers.<router_name>.observability.tracing`"
 
     See tracing [option](../routers/index.md#tracing) for more information.
     
     ```yaml
-    - "traefik.http.routers.myrouter.observability.tracing=true"
+    - "apache4.http.routers.myrouter.observability.tracing=true"
     ```
 
-??? info "`traefik.http.routers.<router_name>.priority`"
+??? info "`apache4.http.routers.<router_name>.priority`"
 
     See [priority](../routers/index.md#priority) for more information.
 
     ```yaml
-    - "traefik.http.routers.myrouter.priority=42"
+    - "apache4.http.routers.myrouter.priority=42"
     ```
 
 ### Services
 
 To update the configuration of the Service automatically attached to the container,
-add labels starting with `traefik.http.services.<name-of-your-choice>.`, followed by the option you want to change.
+add labels starting with `apache4.http.services.<name-of-your-choice>.`, followed by the option you want to change.
 
 For example, to change the `passHostHeader` behavior,
-you'd add the label `traefik.http.services.<name-of-your-choice>.loadbalancer.passhostheader=false`.
+you'd add the label `apache4.http.services.<name-of-your-choice>.loadbalancer.passhostheader=false`.
 
 !!! warning "The character `@` is not authorized in the service name `<service_name>`."
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.server.port`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.server.port`"
 
     Registers a port.
     Useful when the container exposes multiples ports.
@@ -283,210 +283,210 @@ you'd add the label `traefik.http.services.<name-of-your-choice>.loadbalancer.pa
     {: #port }
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.server.port=8080"
+    - "apache4.http.services.myservice.loadbalancer.server.port=8080"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.server.scheme`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.server.scheme`"
 
     Overrides the default scheme.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.server.scheme=http"
+    - "apache4.http.services.myservice.loadbalancer.server.scheme=http"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.server.url`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.server.url`"
 
     Defines the service URL.
     This option cannot be used in combination with `port` or `scheme` definition.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.server.url=http://foobar:8080"
+    - "apache4.http.services.myservice.loadbalancer.server.url=http://foobar:8080"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.serverstransport`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.serverstransport`"
 
     Allows to reference a ServersTransport resource that is defined either with the File provider or the Kubernetes CRD one.
     See [serverstransport](../services/index.md#serverstransport) for more information.
 
     ```yaml
-    - "traefik.http.services.<service_name>.loadbalancer.serverstransport=foobar@file"
+    - "apache4.http.services.<service_name>.loadbalancer.serverstransport=foobar@file"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.passhostheader`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.passhostheader`"
 
     See [pass Host header](../services/index.md#pass-host-header) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.passhostheader=true"
+    - "apache4.http.services.myservice.loadbalancer.passhostheader=true"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.healthcheck.headers.<header_name>`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.healthcheck.headers.<header_name>`"
 
     See [health check](../services/index.md#health-check) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.healthcheck.headers.X-Foo=foobar"
+    - "apache4.http.services.myservice.loadbalancer.healthcheck.headers.X-Foo=foobar"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.healthcheck.hostname`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.healthcheck.hostname`"
 
     See [health check](../services/index.md#health-check) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.healthcheck.hostname=example.org"
+    - "apache4.http.services.myservice.loadbalancer.healthcheck.hostname=example.org"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.healthcheck.interval`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.healthcheck.interval`"
 
     See [health check](../services/index.md#health-check) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.healthcheck.interval=10s"
+    - "apache4.http.services.myservice.loadbalancer.healthcheck.interval=10s"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.healthcheck.unhealthyinterval`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.healthcheck.unhealthyinterval`"
 
     See [health check](../services/index.md#health-check) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.healthcheck.unhealthyinterval=10s"
+    - "apache4.http.services.myservice.loadbalancer.healthcheck.unhealthyinterval=10s"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.healthcheck.path`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.healthcheck.path`"
 
     See [health check](../services/index.md#health-check) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.healthcheck.path=/foo"
+    - "apache4.http.services.myservice.loadbalancer.healthcheck.path=/foo"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.healthcheck.method`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.healthcheck.method`"
 
     See [health check](../services/index.md#health-check) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.healthcheck.method=foobar"
+    - "apache4.http.services.myservice.loadbalancer.healthcheck.method=foobar"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.healthcheck.status`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.healthcheck.status`"
 
     See [health check](../services/index.md#health-check) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.healthcheck.status=42"
+    - "apache4.http.services.myservice.loadbalancer.healthcheck.status=42"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.healthcheck.port`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.healthcheck.port`"
 
     See [health check](../services/index.md#health-check) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.healthcheck.port=42"
+    - "apache4.http.services.myservice.loadbalancer.healthcheck.port=42"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.healthcheck.scheme`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.healthcheck.scheme`"
 
     See [health check](../services/index.md#health-check) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.healthcheck.scheme=http"
+    - "apache4.http.services.myservice.loadbalancer.healthcheck.scheme=http"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.healthcheck.timeout`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.healthcheck.timeout`"
 
     See [health check](../services/index.md#health-check) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.healthcheck.timeout=10s"
+    - "apache4.http.services.myservice.loadbalancer.healthcheck.timeout=10s"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.healthcheck.followredirects`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.healthcheck.followredirects`"
 
     See [health check](../services/index.md#health-check) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.healthcheck.followredirects=true"
+    - "apache4.http.services.myservice.loadbalancer.healthcheck.followredirects=true"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.sticky.cookie`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.sticky.cookie`"
 
     See [sticky sessions](../services/index.md#sticky-sessions) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.sticky.cookie=true"
+    - "apache4.http.services.myservice.loadbalancer.sticky.cookie=true"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.sticky.cookie.httponly`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.sticky.cookie.httponly`"
 
     See [sticky sessions](../services/index.md#sticky-sessions) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.sticky.cookie.httponly=true"
+    - "apache4.http.services.myservice.loadbalancer.sticky.cookie.httponly=true"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.sticky.cookie.name`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.sticky.cookie.name`"
 
     See [sticky sessions](../services/index.md#sticky-sessions) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.sticky.cookie.name=foobar"
+    - "apache4.http.services.myservice.loadbalancer.sticky.cookie.name=foobar"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.sticky.cookie.path`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.sticky.cookie.path`"
 
     See [sticky sessions](../services/index.md#sticky-sessions) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.sticky.cookie.path=/foobar"
+    - "apache4.http.services.myservice.loadbalancer.sticky.cookie.path=/foobar"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.sticky.cookie.secure`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.sticky.cookie.secure`"
 
     See [sticky sessions](../services/index.md#sticky-sessions) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.sticky.cookie.secure=true"
+    - "apache4.http.services.myservice.loadbalancer.sticky.cookie.secure=true"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.sticky.cookie.samesite`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.sticky.cookie.samesite`"
 
     See [sticky sessions](../services/index.md#sticky-sessions) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.sticky.cookie.samesite=none"
+    - "apache4.http.services.myservice.loadbalancer.sticky.cookie.samesite=none"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.sticky.cookie.domain`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.sticky.cookie.domain`"
 
     See [sticky sessions](../services/index.md#sticky-sessions) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.sticky.cookie.domain=foo.com"
+    - "apache4.http.services.myservice.loadbalancer.sticky.cookie.domain=foo.com"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.responseforwarding.flushinterval`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.responseforwarding.flushinterval`"
 
     See [response forwarding](../services/index.md#response-forwarding) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.responseforwarding.flushinterval=10"
+    - "apache4.http.services.myservice.loadbalancer.responseforwarding.flushinterval=10"
     ```
 
-??? info "`traefik.http.services.<service_name>.loadbalancer.strategy`"
+??? info "`apache4.http.services.<service_name>.loadbalancer.strategy`"
 
     See [load balancing strategy](../services/index.md#load-balancing-strategy) for more information.
 
     ```yaml
-    - "traefik.http.services.myservice.loadbalancer.strategy=p2c"
+    - "apache4.http.services.myservice.loadbalancer.strategy=p2c"
     ```
 
 ### Middleware
 
-You can declare pieces of middleware using labels starting with `traefik.http.middlewares.<name-of-your-choice>.`,
+You can declare pieces of middleware using labels starting with `apache4.http.middlewares.<name-of-your-choice>.`,
 followed by the middleware type/options.
 
 For example, to declare a middleware [`redirectscheme`](../../middlewares/http/redirectscheme.md) named `my-redirect`,
-you'd write `traefik.http.middlewares.my-redirect.redirectscheme.scheme=https`.
+you'd write `apache4.http.middlewares.my-redirect.redirectscheme.scheme=https`.
 
 More information about available middlewares in the dedicated [middlewares section](../../middlewares/overview.md).
 
@@ -501,9 +501,9 @@ More information about available middlewares in the dedicated [middlewares secti
         deploy:
         labels:
         # Declaring a middleware
-        - traefik.http.middlewares.my-redirect.redirectscheme.scheme=https
+        - apache4.http.middlewares.my-redirect.redirectscheme.scheme=https
             # Referencing a middleware
-            - traefik.http.routers.my-container.middlewares=my-redirect
+            - apache4.http.routers.my-container.middlewares=my-redirect
     ```
 
 !!! warning "Conflicts in Declaration"
@@ -522,131 +522,131 @@ You can declare TCP Routers and/or Services using labels.
         # ...
         deploy:
           labels:
-            - "traefik.tcp.routers.my-router.rule=HostSNI(`example.com`)"
-            - "traefik.tcp.routers.my-router.tls=true"
-            - "traefik.tcp.services.my-service.loadbalancer.server.port=4123"
+            - "apache4.tcp.routers.my-router.rule=HostSNI(`example.com`)"
+            - "apache4.tcp.routers.my-router.tls=true"
+            - "apache4.tcp.services.my-service.loadbalancer.server.port=4123"
     ```
 
 !!! warning "TCP and HTTP"
 
-    If you declare a TCP Router/Service, it will prevent Traefik from automatically creating an HTTP Router/Service (like it does by default if no TCP Router/Service is defined).
+    If you declare a TCP Router/Service, it will prevent apache4 from automatically creating an HTTP Router/Service (like it does by default if no TCP Router/Service is defined).
     You can declare both a TCP Router/Service and an HTTP Router/Service for the same container (but you have to do so manually).
 
 #### TCP Routers
 
-??? info "`traefik.tcp.routers.<router_name>.entrypoints`"
+??? info "`apache4.tcp.routers.<router_name>.entrypoints`"
 
     See [entry points](../routers/index.md#entrypoints_1) for more information.
 
     ```yaml
-    - "traefik.tcp.routers.mytcprouter.entrypoints=ep1,ep2"
+    - "apache4.tcp.routers.mytcprouter.entrypoints=ep1,ep2"
     ```
 
-??? info "`traefik.tcp.routers.<router_name>.rule`"
+??? info "`apache4.tcp.routers.<router_name>.rule`"
 
     See [rule](../routers/index.md#rule_1) for more information.
 
     ```yaml
-    - "traefik.tcp.routers.mytcprouter.rule=HostSNI(`example.com`)"
+    - "apache4.tcp.routers.mytcprouter.rule=HostSNI(`example.com`)"
     ```
 
-??? info "`traefik.tcp.routers.<router_name>.service`"
+??? info "`apache4.tcp.routers.<router_name>.service`"
 
     See [service](../routers/index.md#services) for more information.
 
     ```yaml
-    - "traefik.tcp.routers.mytcprouter.service=myservice"
+    - "apache4.tcp.routers.mytcprouter.service=myservice"
     ```
 
-??? info "`traefik.tcp.routers.<router_name>.tls`"
+??? info "`apache4.tcp.routers.<router_name>.tls`"
 
     See [TLS](../routers/index.md#tls_1) for more information.
 
     ```yaml
-    - "traefik.tcp.routers.mytcprouter.tls=true"
+    - "apache4.tcp.routers.mytcprouter.tls=true"
     ```
 
-??? info "`traefik.tcp.routers.<router_name>.tls.certresolver`"
+??? info "`apache4.tcp.routers.<router_name>.tls.certresolver`"
 
     See [certResolver](../routers/index.md#certresolver_1) for more information.
 
     ```yaml
-    - "traefik.tcp.routers.mytcprouter.tls.certresolver=myresolver"
+    - "apache4.tcp.routers.mytcprouter.tls.certresolver=myresolver"
     ```
 
-??? info "`traefik.tcp.routers.<router_name>.tls.domains[n].main`"
+??? info "`apache4.tcp.routers.<router_name>.tls.domains[n].main`"
 
     See [domains](../routers/index.md#domains_1) for more information.
 
     ```yaml
-    - "traefik.tcp.routers.mytcprouter.tls.domains[0].main=example.org"
+    - "apache4.tcp.routers.mytcprouter.tls.domains[0].main=example.org"
     ```
 
-??? info "`traefik.tcp.routers.<router_name>.tls.domains[n].sans`"
+??? info "`apache4.tcp.routers.<router_name>.tls.domains[n].sans`"
 
     See [domains](../routers/index.md#domains_1) for more information.
 
     ```yaml
-    - "traefik.tcp.routers.mytcprouter.tls.domains[0].sans=test.example.org,dev.example.org"
+    - "apache4.tcp.routers.mytcprouter.tls.domains[0].sans=test.example.org,dev.example.org"
     ```
 
-??? info "`traefik.tcp.routers.<router_name>.tls.options`"
+??? info "`apache4.tcp.routers.<router_name>.tls.options`"
 
     See [options](../routers/index.md#options_1) for more information.
 
     ```yaml
-    - "traefik.tcp.routers.mytcprouter.tls.options=mysoptions"
+    - "apache4.tcp.routers.mytcprouter.tls.options=mysoptions"
     ```
 
-??? info "`traefik.tcp.routers.<router_name>.tls.passthrough`"
+??? info "`apache4.tcp.routers.<router_name>.tls.passthrough`"
 
     See [TLS](../routers/index.md#tls_1) for more information.
 
     ```yaml
-    - "traefik.tcp.routers.mytcprouter.tls.passthrough=true"
+    - "apache4.tcp.routers.mytcprouter.tls.passthrough=true"
     ```
 
-??? info "`traefik.tcp.routers.<router_name>.priority`"
+??? info "`apache4.tcp.routers.<router_name>.priority`"
 
     See [priority](../routers/index.md#priority_1) for more information.
 
     ```yaml
-    - "traefik.tcp.routers.myrouter.priority=42"
+    - "apache4.tcp.routers.myrouter.priority=42"
     ```
 
 #### TCP Services
 
-??? info "`traefik.tcp.services.<service_name>.loadbalancer.server.port`"
+??? info "`apache4.tcp.services.<service_name>.loadbalancer.server.port`"
 
     Registers a port of the application.
 
     ```yaml
-    - "traefik.tcp.services.mytcpservice.loadbalancer.server.port=423"
+    - "apache4.tcp.services.mytcpservice.loadbalancer.server.port=423"
     ```
 
-??? info "`traefik.tcp.services.<service_name>.loadbalancer.server.tls`"
+??? info "`apache4.tcp.services.<service_name>.loadbalancer.server.tls`"
 
     Determines whether to use TLS when dialing with the backend.
 
     ```yaml
-    - "traefik.tcp.services.mytcpservice.loadbalancer.server.tls=true"
+    - "apache4.tcp.services.mytcpservice.loadbalancer.server.tls=true"
     ```
 
-??? info "`traefik.tcp.services.<service_name>.loadbalancer.proxyprotocol.version`"
+??? info "`apache4.tcp.services.<service_name>.loadbalancer.proxyprotocol.version`"
 
     See [PROXY protocol](../services/index.md#proxy-protocol) for more information.
 
     ```yaml
-    - "traefik.tcp.services.mytcpservice.loadbalancer.proxyprotocol.version=1"
+    - "apache4.tcp.services.mytcpservice.loadbalancer.proxyprotocol.version=1"
     ```
 
-??? info "`traefik.tcp.services.<service_name>.loadbalancer.serverstransport`"
+??? info "`apache4.tcp.services.<service_name>.loadbalancer.serverstransport`"
 
     Allows to reference a ServersTransport resource that is defined either with the File provider or the Kubernetes CRD one.
     See [serverstransport](../services/index.md#serverstransport_2) for more information.
 
     ```yaml
-    - "traefik.tcp.services.<service_name>.loadbalancer.serverstransport=foobar@file"
+    - "apache4.tcp.services.<service_name>.loadbalancer.serverstransport=foobar@file"
     ```
 
 ### UDP
@@ -661,59 +661,59 @@ You can declare UDP Routers and/or Services using labels.
         # ...
         deploy:
           labels:
-            - "traefik.udp.routers.my-router.entrypoints=udp"
-            - "traefik.udp.services.my-service.loadbalancer.server.port=4123"
+            - "apache4.udp.routers.my-router.entrypoints=udp"
+            - "apache4.udp.services.my-service.loadbalancer.server.port=4123"
     ```
 
 !!! warning "UDP and HTTP"
 
-    If you declare a UDP Router/Service, it will prevent Traefik from automatically creating an HTTP Router/Service (like it does by default if no UDP Router/Service is defined).
+    If you declare a UDP Router/Service, it will prevent apache4 from automatically creating an HTTP Router/Service (like it does by default if no UDP Router/Service is defined).
     You can declare both a UDP Router/Service and an HTTP Router/Service for the same container (but you have to do so manually).
 
 #### UDP Routers
 
-??? info "`traefik.udp.routers.<router_name>.entrypoints`"
+??? info "`apache4.udp.routers.<router_name>.entrypoints`"
 
     See [entry points](../routers/index.md#entrypoints_2) for more information.
 
     ```yaml
-    - "traefik.udp.routers.myudprouter.entrypoints=ep1,ep2"
+    - "apache4.udp.routers.myudprouter.entrypoints=ep1,ep2"
     ```
 
-??? info "`traefik.udp.routers.<router_name>.service`"
+??? info "`apache4.udp.routers.<router_name>.service`"
 
     See [service](../routers/index.md#services_1) for more information.
 
     ```yaml
-    - "traefik.udp.routers.myudprouter.service=myservice"
+    - "apache4.udp.routers.myudprouter.service=myservice"
     ```
 
 #### UDP Services
 
-??? info "`traefik.udp.services.<service_name>.loadbalancer.server.port`"
+??? info "`apache4.udp.services.<service_name>.loadbalancer.server.port`"
 
     Registers a port of the application.
 
     ```yaml
-    - "traefik.udp.services.myudpservice.loadbalancer.server.port=423"
+    - "apache4.udp.services.myudpservice.loadbalancer.server.port=423"
     ```
 
 ### Specific Provider Options
 
-#### `traefik.enable`
+#### `apache4.enable`
 
 ```yaml
-- "traefik.enable=true"
+- "apache4.enable=true"
 ```
 
-You can tell Traefik to consider (or not) the container by setting `traefik.enable` to true or false.
+You can tell apache4 to consider (or not) the container by setting `apache4.enable` to true or false.
 
 This option overrides the value of `exposedByDefault`.
 
-#### `traefik.swarm.network`
+#### `apache4.swarm.network`
 
 ```yaml
-- "traefik.swarm.network=mynetwork"
+- "apache4.swarm.network=mynetwork"
 ```
 
 Overrides the default docker network to use for connections to the container.
@@ -724,13 +724,13 @@ otherwise it will randomly pick one (depending on how docker is returning them).
 !!! warning
     When deploying a stack from a compose file `stack`, the networks defined are prefixed with `stack`.
 
-#### `traefik.swarm.lbswarm`
+#### `apache4.swarm.lbswarm`
 
 ```yaml
-- "traefik.docker.lbswarm=true"
+- "apache4.docker.lbswarm=true"
 ```
 
 Enables Swarm's inbuilt load balancer (only relevant in Swarm Mode).
 
-If you enable this option, Traefik will use the virtual IP provided by docker swarm instead of the containers IPs.
-Which means that Traefik will not perform any kind of load balancing and will delegate this task to swarm.
+If you enable this option, apache4 will use the virtual IP provided by docker swarm instead of the containers IPs.
+Which means that apache4 will not perform any kind of load balancing and will delegate this task to swarm.

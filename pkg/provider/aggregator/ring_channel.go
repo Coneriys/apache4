@@ -1,7 +1,7 @@
 package aggregator
 
 import (
-	"github.com/traefik/traefik/v3/pkg/config/dynamic"
+	"github.com/apache4/apache4/v3/pkg/config/dynamic"
 )
 
 // RingChannel implements a channel in a way that never blocks the writer.

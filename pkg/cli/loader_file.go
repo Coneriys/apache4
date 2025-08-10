@@ -5,9 +5,9 @@ import (
 	"strings"
 
 	"github.com/rs/zerolog/log"
-	"github.com/traefik/paerser/cli"
-	"github.com/traefik/paerser/file"
-	"github.com/traefik/paerser/flag"
+	"github.com/apache4/paerser/cli"
+	"github.com/apache4/paerser/file"
+	"github.com/apache4/paerser/flag"
 )
 
 // FileLoader loads a configuration from a file.
@@ -21,7 +21,7 @@ func (f *FileLoader) GetFilename() string {
 	return f.filename
 }
 
-// Load loads the command's configuration from a file either specified with the -traefik.configfile flag, or from default locations.
+// Load loads the command's configuration from a file either specified with the -apache4.configfile flag, or from default locations.
 func (f *FileLoader) Load(args []string, cmd *cli.Command) (bool, error) {
 	ref, err := flag.Parse(args, cmd.Configuration)
 	if err != nil {
@@ -29,15 +29,15 @@ func (f *FileLoader) Load(args []string, cmd *cli.Command) (bool, error) {
 		return false, err
 	}
 
-	configFileFlag := "traefik.configfile"
-	if _, ok := ref["traefik.configFile"]; ok {
-		configFileFlag = "traefik.configFile"
+	configFileFlag := "apache4.configfile"
+	if _, ok := ref["apache4.configFile"]; ok {
+		configFileFlag = "apache4.configFile"
 	}
 
 	if f.ConfigFileFlag != "" {
-		configFileFlag = "traefik." + f.ConfigFileFlag
+		configFileFlag = "apache4." + f.ConfigFileFlag
 		if _, ok := ref[strings.ToLower(configFileFlag)]; ok {
-			configFileFlag = "traefik." + strings.ToLower(f.ConfigFileFlag)
+			configFileFlag = "apache4." + strings.ToLower(f.ConfigFileFlag)
 		}
 	}
 
@@ -64,7 +64,7 @@ func (f *FileLoader) Load(args []string, cmd *cli.Command) (bool, error) {
 // It stops as soon as decoding one of them is successful.
 func loadConfigFiles(configFile string, element interface{}) (string, error) {
 	finder := cli.Finder{
-		BasePaths:  []string{"/etc/traefik/traefik", "$XDG_CONFIG_HOME/traefik", "$HOME/.config/traefik", "./traefik"},
+		BasePaths:  []string{"/etc/apache4/apache4", "$XDG_CONFIG_HOME/apache4", "$HOME/.config/apache4", "./apache4"},
 		Extensions: []string{"toml", "yaml", "yml"},
 	}
 
